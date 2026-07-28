@@ -1,6 +1,6 @@
-# Website1337 - Advanced 3D Model Viewer
+# ZeroDevLLC Website
 
-Website1337 is a high-performance, interactive 3D model viewer built with Next.js, React Three Fiber, and Three.js. It's designed to provide a seamless experience for viewing, interacting with, and exporting 3D models directly in the browser.
+ZeroDevLLC corporate site and interactive 3D model viewer, built with Next.js, React Three Fiber, and Three.js. Browse, interact with, and export 3D models directly in the browser.
 
 ## Features
 
@@ -32,8 +32,8 @@ Website1337 is a high-performance, interactive 3D model viewer built with Next.j
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/website1337.git
-   cd website1337
+   git clone https://github.com/ZeroXSHDW/ZERODEVLLC-Website-Source-Code.git
+   cd ZERODEVLLC-Website-Source-Code
    ```
 
 2. Install dependencies:
@@ -70,5 +70,4 @@ Website1337 is a high-performance, interactive 3D model viewer built with Next.j
 
 ## License
 
-MIT
-
+MIT — see [LICENSE](LICENSE)

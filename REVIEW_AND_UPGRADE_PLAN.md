@@ -6,7 +6,7 @@
 
 ### Current Architecture
 
-This report analyzes the `Website1337` GLB Viewer system. The current system is a high-performance, feature-rich 3D viewer built with Next.js 15 and Three.js. It features advanced optimizations like frustum culling, LOD, and adaptive performance.
+This report analyzes the ZeroDevLLC site / GLB Viewer system. The current system is a high-performance, feature-rich 3D viewer built with Next.js 15 and Three.js. It features advanced optimizations like frustum culling, LOD, and adaptive performance.
 
 However, the codebase exhibits signs of "monolithic component" growth, particularly in the UI layer, and lacks a unified command interface for power users.
 

@@ -1,7 +1,7 @@
 {
-  "name": "Website1337 - GLB Viewer",
-  "short_name": "GLB Viewer",
-  "description": "Interactive 3D GLB model viewer built with Next.js and Three.js",
+  "name": "ZeroDevLLC",
+  "short_name": "ZeroDevLLC",
+  "description": "ZeroDevLLC enterprise software site and interactive 3D GLB model viewer",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
