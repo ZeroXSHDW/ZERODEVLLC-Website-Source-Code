@@ -1,28 +1,112 @@
 import '@testing-library/jest-dom'
 
+// Blob URL APIs used by model upload / reset paths (jsdom does not implement these)
+if (typeof URL.createObjectURL !== 'function') {
+  URL.createObjectURL = jest.fn(() => 'blob:mock-url')
+}
+if (typeof URL.revokeObjectURL !== 'function') {
+  URL.revokeObjectURL = jest.fn()
+}
+
 // Mock WebGL for testing
 const mockWebGLContext = {
-  getSupportedExtensions: jest.fn(() => []),
-  getExtension: jest.fn(),
-  createShader: jest.fn(),
-  createProgram: jest.fn(),
-  createBuffer: jest.fn(),
+  canvas: document.createElement('canvas'),
+  drawingBufferWidth: 1,
+  drawingBufferHeight: 1,
+  getSupportedExtensions: jest.fn(() => ['WEBGL_lose_context', 'OES_texture_float']),
+  getExtension: jest.fn((name) => {
+    if (name === 'WEBGL_lose_context') {
+      return { loseContext: jest.fn(), restoreContext: jest.fn() }
+    }
+    return {}
+  }),
+  getParameter: jest.fn(() => 0),
+  getShaderPrecisionFormat: jest.fn(() => ({
+    rangeMin: 127,
+    rangeMax: 127,
+    precision: 23,
+  })),
+  createShader: jest.fn(() => ({})),
+  shaderSource: jest.fn(),
+  compileShader: jest.fn(),
+  getShaderParameter: jest.fn(() => true),
+  createProgram: jest.fn(() => ({})),
+  attachShader: jest.fn(),
+  linkProgram: jest.fn(),
+  getProgramParameter: jest.fn(() => true),
+  deleteShader: jest.fn(),
+  deleteProgram: jest.fn(),
+  createBuffer: jest.fn(() => ({})),
   bindBuffer: jest.fn(),
   bufferData: jest.fn(),
-  getAttribLocation: jest.fn(),
-  getUniformLocation: jest.fn(),
+  createTexture: jest.fn(() => ({})),
+  bindTexture: jest.fn(),
+  texParameteri: jest.fn(),
+  texImage2D: jest.fn(),
+  createFramebuffer: jest.fn(() => ({})),
+  bindFramebuffer: jest.fn(),
+  framebufferTexture2D: jest.fn(),
+  createRenderbuffer: jest.fn(() => ({})),
+  bindRenderbuffer: jest.fn(),
+  renderbufferStorage: jest.fn(),
+  framebufferRenderbuffer: jest.fn(),
+  getAttribLocation: jest.fn(() => 0),
+  getUniformLocation: jest.fn(() => ({})),
+  enableVertexAttribArray: jest.fn(),
+  vertexAttribPointer: jest.fn(),
   uniformMatrix4fv: jest.fn(),
+  uniform1i: jest.fn(),
+  uniform1f: jest.fn(),
+  uniform2f: jest.fn(),
+  uniform3f: jest.fn(),
+  uniform4f: jest.fn(),
+  useProgram: jest.fn(),
   enable: jest.fn(),
   disable: jest.fn(),
+  blendFunc: jest.fn(),
+  depthFunc: jest.fn(),
+  cullFace: jest.fn(),
+  frontFace: jest.fn(),
   clear: jest.fn(),
+  clearColor: jest.fn(),
+  clearDepth: jest.fn(),
   viewport: jest.fn(),
+  scissor: jest.fn(),
   drawArrays: jest.fn(),
   drawElements: jest.fn(),
+  pixelStorei: jest.fn(),
+  activeTexture: jest.fn(),
+  generateMipmap: jest.fn(),
+  deleteBuffer: jest.fn(),
+  deleteTexture: jest.fn(),
+  deleteFramebuffer: jest.fn(),
+  deleteRenderbuffer: jest.fn(),
+  isContextLost: jest.fn(() => false),
 };
 
 HTMLCanvasElement.prototype.getContext = jest.fn((contextType) => {
-  if (contextType === 'webgl' || contextType === 'experimental-webgl') {
+  if (
+    contextType === 'webgl' ||
+    contextType === 'webgl2' ||
+    contextType === 'experimental-webgl'
+  ) {
     return mockWebGLContext;
+  }
+  if (contextType === '2d') {
+    return {
+      clearRect: jest.fn(),
+      fillRect: jest.fn(),
+      getImageData: jest.fn(() => ({ data: [] })),
+      putImageData: jest.fn(),
+      drawImage: jest.fn(),
+      save: jest.fn(),
+      restore: jest.fn(),
+      scale: jest.fn(),
+      rotate: jest.fn(),
+      translate: jest.fn(),
+      transform: jest.fn(),
+      setTransform: jest.fn(),
+    };
   }
   return null;
 });

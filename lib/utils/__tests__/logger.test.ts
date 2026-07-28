@@ -9,6 +9,8 @@ const mockConsoleError = jest.spyOn(console, 'error').mockImplementation();
 describe('Logger', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    // Jest runs with NODE_ENV=test (not development); enable logging so level filtering is testable
+    logger.enableProductionLogging();
     logger.setLevel('debug');
   });
 
@@ -17,6 +19,7 @@ describe('Logger', () => {
     mockConsoleInfo.mockRestore();
     mockConsoleWarn.mockRestore();
     mockConsoleError.mockRestore();
+    logger.disableProductionLogging();
   });
 
   describe('log.debug', () => {
@@ -73,4 +76,3 @@ describe('Logger', () => {
     });
   });
 });
-

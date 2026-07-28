@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  typecheck:
+  quality:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,6 +24,8 @@ jobs:
           HUSKY: "0"
 
       # Lint has no committed ESLint config (next lint prompts interactively).
-      # Full Jest suite currently has failing UI/WebGL cases; keep CI on type-check.
       - name: Type check
         run: npm run type-check
+
+      - name: Unit tests
+        run: npm test -- --ci

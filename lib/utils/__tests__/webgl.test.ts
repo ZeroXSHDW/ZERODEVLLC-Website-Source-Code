@@ -54,7 +54,7 @@ describe('WebGL Detection', () => {
 
       expect(result.isSupported).toBe(true);
       expect(result.isAvailable).toBe(false);
-      expect(result.error).toContain('Missing required WebGL extensions');
+      expect(result.error).toContain('Missing essential WebGL extensions');
     });
   });
 

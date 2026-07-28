@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { useDeviceState } from '../useDeviceState';
 
 // Mock navigator
@@ -59,7 +59,9 @@ describe('useDeviceState', () => {
     const { result } = renderHook(() => useDeviceState());
 
     const timestamp = Date.now();
-    result.current.setTouchStartTime(timestamp);
+    act(() => {
+      result.current.setTouchStartTime(timestamp);
+    });
 
     expect(result.current.deviceState.touchStartTime).toBe(timestamp);
   });
@@ -68,7 +70,9 @@ describe('useDeviceState', () => {
     const { result } = renderHook(() => useDeviceState());
 
     const timestamp = Date.now();
-    result.current.setLastTapTime(timestamp);
+    act(() => {
+      result.current.setLastTapTime(timestamp);
+    });
 
     expect(result.current.deviceState.lastTapTime).toBe(timestamp);
   });

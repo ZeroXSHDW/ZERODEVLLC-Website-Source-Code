@@ -69,7 +69,15 @@ describe('MemoryManager', () => {
 
   describe('getMemoryStats', () => {
     it('should return memory statistics', () => {
-      const renderer = new THREE.WebGLRenderer();
+      // Avoid constructing a real WebGLRenderer in jsdom; exercise the stats shape only
+      const renderer = {
+        info: {
+          memory: { geometries: 2, textures: 3 },
+          programs: [{}, {}],
+        },
+        dispose: jest.fn(),
+      } as unknown as THREE.WebGLRenderer;
+
       const stats = memoryManager.getMemoryStats(renderer);
 
       expect(stats).toHaveProperty('geometries');
@@ -77,8 +85,21 @@ describe('MemoryManager', () => {
       expect(stats).toHaveProperty('materials');
       expect(stats).toHaveProperty('programs');
       expect(stats).toHaveProperty('totalMemory');
+      expect(stats.geometries).toBe(2);
+      expect(stats.textures).toBe(3);
+      expect(stats.programs).toBe(2);
+      expect(stats.totalMemory).toBe(5);
+    });
 
-      renderer.dispose();
+    it('should return zeros when renderer is omitted', () => {
+      const stats = memoryManager.getMemoryStats();
+      expect(stats).toEqual({
+        geometries: 0,
+        textures: 0,
+        materials: 0,
+        programs: 0,
+        totalMemory: 0,
+      });
     });
   });
 

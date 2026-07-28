@@ -1,15 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import { ViewerActionButtons } from '../ViewerActionButtons';
-import type { ViewerUIState } from '@/lib/hooks/useViewerState';
-
-const mockUIState: ViewerUIState = {
-  isControlsPanelOpen: false,
-  isKeyboardHelpOpen: false,
-  isModelInfoOpen: false,
-  isPerformanceMonitorOpen: false,
-  isExportDialogOpen: false,
-  isMobileGestureHelpOpen: false,
-};
 
 const mockHandlers = {
   onToggleModelInfo: jest.fn(),
@@ -27,7 +17,6 @@ describe('ViewerActionButtons', () => {
   it('should render all action buttons', () => {
     render(
       <ViewerActionButtons
-        uiState={mockUIState}
         isMobile={false}
         hasSceneData={true}
         {...mockHandlers}
@@ -43,7 +32,6 @@ describe('ViewerActionButtons', () => {
   it('should disable model info button when no scene data', () => {
     render(
       <ViewerActionButtons
-        uiState={mockUIState}
         isMobile={false}
         hasSceneData={false}
         {...mockHandlers}
@@ -57,20 +45,20 @@ describe('ViewerActionButtons', () => {
   it('should show mobile gesture help button on mobile', () => {
     render(
       <ViewerActionButtons
-        uiState={mockUIState}
         isMobile={true}
         hasSceneData={true}
         {...mockHandlers}
       />
     );
 
-    expect(screen.getByLabelText(/touch gestures tutorial/i)).toBeInTheDocument();
+    // On mobile, both the dedicated gesture button and the help button share this label
+    const gestureButtons = screen.getAllByLabelText(/touch gestures tutorial/i);
+    expect(gestureButtons.length).toBeGreaterThanOrEqual(1);
   });
 
   it('should call handlers when buttons are clicked', () => {
     render(
       <ViewerActionButtons
-        uiState={mockUIState}
         isMobile={false}
         hasSceneData={true}
         {...mockHandlers}
@@ -90,4 +78,3 @@ describe('ViewerActionButtons', () => {
     expect(mockHandlers.onToggleExportDialog).toHaveBeenCalledTimes(1);
   });
 });
-
