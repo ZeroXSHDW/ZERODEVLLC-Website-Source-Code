@@ -36,10 +36,11 @@ ZeroDevLLC corporate site and interactive 3D model viewer, built with Next.js, R
    cd ZERODEVLLC-Website-Source-Code
    ```
 
-2. Install dependencies:
+2. Install dependencies (prefer lockfile install):
    ```bash
-   npm install
+   npm ci
    ```
+   Or `npm install` if you are intentionally updating dependencies.
 
 3. Run the development server:
    ```bash
@@ -47,6 +48,15 @@ ZeroDevLLC corporate site and interactive 3D model viewer, built with Next.js, R
    ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Useful scripts
+
+| Script | Purpose |
+|--------|---------|
+| `npm run type-check` | TypeScript (`tsc --noEmit`) — used in CI |
+| `npm test` | Jest unit/component tests |
+| `npm run lint` | Next.js ESLint (requires a local ESLint config) |
+| `npm run build` | Production build |
 
 ## Project Structure
 

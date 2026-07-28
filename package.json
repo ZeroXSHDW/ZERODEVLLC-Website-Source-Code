@@ -18,7 +18,7 @@
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
     "quality": "npm run type-check && npm run lint && npm run format:check && npm run test:coverage",
     "analyze": "ANALYZE=true npm run build",
-    "prepare": "husky"
+    "prepare": "husky || true"
   },
   "dependencies": {
     "@loadable/component": "^5.16.7",

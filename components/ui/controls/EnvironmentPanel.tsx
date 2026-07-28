@@ -20,8 +20,12 @@ interface EnvironmentPanelProps {
   }) => void;
 }
 
+type EnvironmentPreset = NonNullable<
+  Parameters<NonNullable<EnvironmentPanelProps['onEnvironmentChange']>>[0]['preset']
+>;
+
 export function EnvironmentPanel({ currentSettings, onEnvironmentChange }: EnvironmentPanelProps) {
-  const presets = [
+  const presets: EnvironmentPreset[] = [
     'sunset',
     'dawn',
     'night',
@@ -73,7 +77,7 @@ export function EnvironmentPanel({ currentSettings, onEnvironmentChange }: Envir
               onChange={e =>
                 onEnvironmentChange?.({
                   ...currentSettings?.environment,
-                  preset: e.target.value,
+                  preset: e.target.value as EnvironmentPreset,
                 })
               }
               className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
