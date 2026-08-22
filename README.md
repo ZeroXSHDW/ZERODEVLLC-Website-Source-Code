@@ -1,79 +1,59 @@
-# ZeroDev LLC — European Operations Index
+# ZeroDev LLC — European operations index
 
-The European operations surface for ZeroDev LLC, linking regional context to
-the canonical DEFCON Signal Fusion and Threat Ops systems. The production host
-is `https://zerodevllc.eu`; the Sites preview host is
-`https://zerodevllc-eu.michaelmorangeometri.chatgpt.site`.
+The public European operations surface for ZeroDev LLC. It provides regional
+context and links to the canonical DEFCON Signal Fusion and Threat Ops
+systems.
 
-## Stack and layout
+- Production: <https://zerodevllc.eu>
+- Sites preview: <https://zerodevllc-eu.michaelmorangeometri.chatgpt.site>
 
-- React and Next-compatible App Router pages under `app/`.
-- Vinext/Vite and the Cloudflare adapter for the Sites runtime.
-- `proxy.ts` enforces HTTPS, canonical-host redirects, security headers, and
-  `noindex` behavior on the preview host. Malformed forwarded-protocol headers
-  fail closed to the canonical HTTPS host.
-- `.openai/hosting.json` records the existing Sites project identity. Keep it
-  unchanged when working on this project.
+## Project shape
+
+- `app/` contains the App Router pages, metadata, robots policy, and sitemap.
+- `proxy.ts` enforces HTTPS, the canonical host, security headers, and preview
+  `noindex` behavior. Malformed forwarded-protocol headers fail closed.
+- `scripts/security-check.mjs` verifies the security contract in CI.
+- `.openai/hosting.json` identifies the existing Sites project and must remain
+  unchanged.
+
+The application uses React, Next-compatible routing, Vinext/Vite, and the
+Cloudflare adapter. It has no required local runtime secret.
 
 ## Local development
+
+Requirements: Node.js 22.13 or newer and npm.
 
 ```bash
 npm ci
 npm run dev
 ```
 
-Use the local URL printed by Vinext. This site has no required local secrets;
-store credentials and runtime values only in ignored `.env*` files or Sites
-runtime settings.
+Use the local URL printed by Vinext. Keep runtime values in ignored `.env*`
+files or Sites settings; do not commit them.
 
-## Quality gate
+## Verification
+
+Run the release gate before review:
 
 ```bash
-npm run typecheck
-npm run lint
-npm run build
-npm audit --audit-level=high
+npm run quality
 ```
 
-CI runs the locked install, audit, type-check, lint, and production build on
-pushes, pull requests, and manual dispatch. It does not deploy production or
-call external systems.
+This runs the security contract, TypeScript checks, ESLint, a production
+build, and `npm audit --audit-level=high`. The same gate runs in
+`.github/workflows/quality.yml` for pushes to `main`, pull requests, and
+manual dispatch. CI has read-only repository permissions and never deploys.
 
-## Deployment and security notes
+## Domains, previews, and deployment
 
-Push the exact reviewed commit before saving or deploying a Sites version. Do
-not commit `.env` files, credentials, customer data, or generated `.next`,
-`.vinext`, `.wrangler`, `dist`, or `out` directories. Preview deployments are
-marked `noindex`; the production origin remains the canonical public host.
+The production origin is `https://zerodevllc.eu`. Preview deployments are
+marked `noindex` and must not be treated as production. Save or deploy only
+the exact commit that passed review. Do not commit `.next`, `.vinext`,
+`.wrangler`, `dist`, `out`, credentials, customer data, or generated output.
 
-## Contributing
+## Contributing and security
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Run `npm run quality` before saving or deploying a Sites version.
-
-## Security
-
-See [SECURITY.md](SECURITY.md). Report vulnerabilities privately and never commit runtime secrets.
-
-## License
-
-No license is declared for this private hosted project. Reuse requires written permission from the owner.
-
-## Purpose
-
-This is the public European ZeroDev LLC landing page and service-discovery
-surface.
-
-## Features
-
-- Responsive public navigation, regional service summaries, canonical-domain
-  controls, and preview crawler protection.
-
-## Prerequisites
-
-Use Node.js 22.13+ and npm. No local runtime secret is required for the
-landing page.
-
-## Usage
-
-Run `npm run dev` for local development and use `npm run quality` for the
-release gate. Production changes are saved through the approved Sites flow.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the review contract and
+[SECURITY.md](SECURITY.md) for private vulnerability reporting. The project
+is private and has no declared open-source license; reuse requires written
+permission from the owner.
