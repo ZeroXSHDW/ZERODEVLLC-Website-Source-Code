@@ -44,3 +44,15 @@ Push the exact reviewed commit before saving or deploying a Sites version. Do
 not commit `.env` files, credentials, customer data, or generated `.next`,
 `.vinext`, `.wrangler`, `dist`, or `out` directories. Preview deployments are
 marked `noindex`; the production origin remains the canonical public host.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Run `npm run quality` before saving or deploying a Sites version.
+
+## Security
+
+See [SECURITY.md](SECURITY.md). Report vulnerabilities privately and never commit runtime secrets.
+
+## License
+
+No license is declared for this private hosted project. Reuse requires written permission from the owner.
