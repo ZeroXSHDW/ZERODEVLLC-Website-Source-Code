@@ -47,6 +47,7 @@ for (const marker of [
   'payment=',
   'X-Robots-Tag',
   'noindex, nofollow, noarchive',
+  'applyPreviewPrivacy',
   'host === previewHost',
   'Referrer-Policy',
   'Strict-Transport-Security',
