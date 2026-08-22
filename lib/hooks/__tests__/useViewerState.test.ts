@@ -1,8 +1,8 @@
-import { renderHook, act } from '@testing-library/react';
-import { useViewerState } from '../useViewerState';
+import { renderHook, act } from "@testing-library/react";
+import { useViewerState } from "../useViewerState";
 
-describe('useViewerState', () => {
-  it('should initialize with default state', () => {
+describe("useViewerState", () => {
+  it("should initialize with default state", () => {
     const { result } = renderHook(() => useViewerState());
 
     expect(result.current.uiState).toEqual({
@@ -15,7 +15,7 @@ describe('useViewerState', () => {
     });
   });
 
-  it('should toggle controls panel', () => {
+  it("should toggle controls panel", () => {
     const { result } = renderHook(() => useViewerState());
 
     act(() => {
@@ -31,7 +31,7 @@ describe('useViewerState', () => {
     expect(result.current.uiState.isControlsPanelOpen).toBe(false);
   });
 
-  it('should toggle keyboard help', () => {
+  it("should toggle keyboard help", () => {
     const { result } = renderHook(() => useViewerState());
 
     act(() => {
@@ -47,7 +47,7 @@ describe('useViewerState', () => {
     expect(result.current.uiState.isKeyboardHelpOpen).toBe(false);
   });
 
-  it('should toggle model info', () => {
+  it("should toggle model info", () => {
     const { result } = renderHook(() => useViewerState());
 
     act(() => {
@@ -63,7 +63,7 @@ describe('useViewerState', () => {
     expect(result.current.uiState.isModelInfoOpen).toBe(false);
   });
 
-  it('should close all panels', () => {
+  it("should close all panels", () => {
     const { result } = renderHook(() => useViewerState());
 
     // Open some panels
@@ -90,4 +90,3 @@ describe('useViewerState', () => {
     expect(result.current.uiState.isMobileGestureHelpOpen).toBe(false);
   });
 });
-

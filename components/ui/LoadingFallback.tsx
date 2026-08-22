@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { LOADING_MESSAGES } from '@/config/ui';
-import type { LoadingFallbackProps } from '@/lib/types';
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { LOADING_MESSAGES } from "@/config/ui";
+import type { LoadingFallbackProps } from "@/lib/types";
 
 const loadingVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -21,8 +21,11 @@ function LoadingParticles() {
           key={i}
           className="absolute w-1 h-1 bg-white/10 rounded-full"
           initial={{
-            x: typeof window !== 'undefined' ? Math.random() * window.innerWidth : 0,
-            y: typeof window !== 'undefined' ? window.innerHeight + 10 : 0,
+            x:
+              typeof window !== "undefined"
+                ? Math.random() * window.innerWidth
+                : 0,
+            y: typeof window !== "undefined" ? window.innerHeight + 10 : 0,
             opacity: 0,
           }}
           animate={{
@@ -33,7 +36,7 @@ function LoadingParticles() {
             duration: 3 + Math.random() * 2,
             repeat: Infinity,
             delay: Math.random() * 3,
-            ease: 'linear',
+            ease: "linear",
           }}
         />
       ))}
@@ -41,11 +44,17 @@ function LoadingParticles() {
   );
 }
 
-export function LoadingFallback({ message, progress = 0 }: LoadingFallbackProps) {
-  const [displayMessage, setDisplayMessage] = useState<string>('');
+export function LoadingFallback({
+  message,
+  progress = 0,
+}: LoadingFallbackProps) {
+  const [displayMessage, setDisplayMessage] = useState<string>("");
 
   useEffect(() => {
-    setDisplayMessage(message || LOADING_MESSAGES[Math.floor(Math.random() * LOADING_MESSAGES.length)]);
+    setDisplayMessage(
+      message ||
+        LOADING_MESSAGES[Math.floor(Math.random() * LOADING_MESSAGES.length)],
+    );
   }, [message]);
 
   return (
@@ -64,20 +73,20 @@ export function LoadingFallback({ message, progress = 0 }: LoadingFallbackProps)
         <motion.div
           className="relative mx-auto w-24 h-24"
           animate={{ rotate: 360 }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
         >
           {/* Outer ring */}
           <motion.div
             className="absolute inset-0 border-4 border-transparent border-t-blue-500 border-r-purple-500 rounded-full"
             animate={{ rotate: -360 }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
           />
 
           {/* Inner ring */}
           <motion.div
             className="absolute inset-2 border-4 border-transparent border-b-pink-500 border-l-cyan-500 rounded-full"
             animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
           />
 
           {/* Center dot */}
@@ -111,15 +120,23 @@ export function LoadingFallback({ message, progress = 0 }: LoadingFallbackProps)
             <motion.div
               className="h-full relative rounded-full overflow-hidden"
               animate={{
-                width: progress > 0 ? `${Math.min(100, Math.max(0, progress))}%` : '30%',
+                width:
+                  progress > 0
+                    ? `${Math.min(100, Math.max(0, progress))}%`
+                    : "30%",
               }}
               transition={{
                 width:
                   progress > 0
-                    ? { duration: 0.5, ease: 'easeOut' }
-                    : { duration: 3, repeat: Infinity, ease: 'easeInOut', repeatType: 'reverse' },
+                    ? { duration: 0.5, ease: "easeOut" }
+                    : {
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        repeatType: "reverse",
+                      },
               }}
-              key={progress > 0 ? 'progress' : 'loading'}
+              key={progress > 0 ? "progress" : "loading"}
             >
               {/* Gradient background */}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
@@ -127,8 +144,12 @@ export function LoadingFallback({ message, progress = 0 }: LoadingFallbackProps)
               {/* Animated shine effect */}
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                animate={{ x: ['-100%', '100%'] }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                animate={{ x: ["-100%", "100%"] }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
               />
 
               {/* Glow effect */}
@@ -143,9 +164,9 @@ export function LoadingFallback({ message, progress = 0 }: LoadingFallbackProps)
               animate={{
                 y: [0, -3, 0],
                 textShadow: [
-                  '0 0 0px rgba(255,255,255,0)',
-                  '0 0 10px rgba(255,255,255,0.5)',
-                  '0 0 0px rgba(255,255,255,0)',
+                  "0 0 0px rgba(255,255,255,0)",
+                  "0 0 10px rgba(255,255,255,0.5)",
+                  "0 0 0px rgba(255,255,255,0)",
                 ],
               }}
               transition={{ duration: 2, repeat: Infinity }}
@@ -158,9 +179,9 @@ export function LoadingFallback({ message, progress = 0 }: LoadingFallbackProps)
         {/* Animated status indicators */}
         <div className="flex justify-center space-x-4">
           {[
-            { label: 'Loading', color: 'bg-blue-500', delay: 0 },
-            { label: 'Processing', color: 'bg-purple-500', delay: 0.2 },
-            { label: 'Rendering', color: 'bg-pink-500', delay: 0.4 },
+            { label: "Loading", color: "bg-blue-500", delay: 0 },
+            { label: "Processing", color: "bg-purple-500", delay: 0.2 },
+            { label: "Rendering", color: "bg-pink-500", delay: 0.4 },
           ].map((item, i) => (
             <motion.div
               key={item.label}
@@ -180,7 +201,9 @@ export function LoadingFallback({ message, progress = 0 }: LoadingFallbackProps)
                   opacity: { duration: 2, repeat: Infinity },
                 }}
               />
-              <span className="text-xs text-gray-400 font-medium">{item.label}</span>
+              <span className="text-xs text-gray-400 font-medium">
+                {item.label}
+              </span>
             </motion.div>
           ))}
         </div>

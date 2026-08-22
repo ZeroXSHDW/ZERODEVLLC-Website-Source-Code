@@ -1,23 +1,23 @@
 // Service Worker for advanced caching strategies
 // This provides offline capabilities and faster loading
 
-import { log } from '@/lib/utils/logger';
+import { log } from "@/lib/utils/logger";
 
-const STATIC_CACHE = '3d-viewer-static-v1';
-const MODEL_CACHE = '3d-viewer-models-v1';
+const STATIC_CACHE = "3d-viewer-static-v1";
+const MODEL_CACHE = "3d-viewer-models-v1";
 
 const STATIC_ASSETS = [
-  '/',
-  '/manifest.json',
-  '/icon-192x192.png',
-  '/icon-512x512.png',
+  "/",
+  "/manifest.json",
+  "/icon-192x192.png",
+  "/icon-512x512.png",
 ];
 
 interface CacheEntry {
   url: string;
   timestamp: number;
   size: number;
-  type: 'model' | 'texture' | 'static' | 'api';
+  type: "model" | "texture" | "static" | "api";
 }
 
 export class ServiceWorkerCache {
@@ -33,17 +33,20 @@ export class ServiceWorkerCache {
 
   // Register service worker
   async register(): Promise<void> {
-    if ('serviceWorker' in navigator) {
+    if ("serviceWorker" in navigator) {
       try {
-        const registration = await navigator.serviceWorker.register('/sw.js');
-        log.debug('Service Worker registered:', registration.scope);
+        const registration = await navigator.serviceWorker.register("/sw.js");
+        log.debug("Service Worker registered:", registration.scope);
 
         // Handle updates
-        registration.addEventListener('updatefound', () => {
+        registration.addEventListener("updatefound", () => {
           const newWorker = registration.installing;
           if (newWorker) {
-            newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            newWorker.addEventListener("statechange", () => {
+              if (
+                newWorker.state === "installed" &&
+                navigator.serviceWorker.controller
+              ) {
                 // New version available
                 this.notifyUserOfUpdate();
               }
@@ -52,20 +55,22 @@ export class ServiceWorkerCache {
         });
 
         // Handle messages from service worker
-        navigator.serviceWorker.addEventListener('message', this.handleMessage.bind(this));
-
+        navigator.serviceWorker.addEventListener(
+          "message",
+          this.handleMessage.bind(this),
+        );
       } catch (error) {
-        log.error('Service Worker registration failed:', error);
+        log.error("Service Worker registration failed:", error);
       }
     }
   }
 
   private notifyUserOfUpdate(): void {
     // Show update notification
-    if ('Notification' in window && Notification.permission === 'granted') {
-      new Notification('3D Viewer Update Available', {
-        body: 'A new version is available. Refresh to update.',
-        icon: '/icon-192x192.png',
+    if ("Notification" in window && Notification.permission === "granted") {
+      new Notification("3D Viewer Update Available", {
+        body: "A new version is available. Refresh to update.",
+        icon: "/icon-192x192.png",
       });
     }
   }
@@ -74,25 +79,28 @@ export class ServiceWorkerCache {
     const { type, data } = event.data;
 
     switch (type) {
-      case 'CACHE_HIT':
-        log.debug('Cache hit for:', data.url);
+      case "CACHE_HIT":
+        log.debug("Cache hit for:", data.url);
         break;
-      case 'CACHE_MISS':
-        log.debug('Cache miss for:', data.url);
+      case "CACHE_MISS":
+        log.debug("Cache miss for:", data.url);
         break;
-      case 'BACKGROUND_SYNC':
+      case "BACKGROUND_SYNC":
         this.handleBackgroundSync(data);
         break;
     }
   }
 
-  private async handleBackgroundSync(data: { url: string; options: RequestInit }): Promise<void> {
+  private async handleBackgroundSync(data: {
+    url: string;
+    options: RequestInit;
+  }): Promise<void> {
     // Retry failed requests
     try {
       await fetch(data.url, data.options);
-      log.info('Background sync successful for:', data.url);
+      log.info("Background sync successful for:", data.url);
     } catch (error) {
-      log.error('Background sync failed:', error);
+      log.error("Background sync failed:", error);
     }
   }
 
@@ -105,9 +113,9 @@ export class ServiceWorkerCache {
     try {
       const cache = await this.openCache(STATIC_CACHE);
       await cache.addAll(STATIC_ASSETS);
-      log.debug('Static assets cached');
+      log.debug("Static assets cached");
     } catch (error) {
-      log.error('Failed to cache static assets:', error);
+      log.error("Failed to cache static assets:", error);
     }
   }
 
@@ -121,13 +129,13 @@ export class ServiceWorkerCache {
         url,
         timestamp: Date.now(),
         size: 0, // Would need to calculate actual size
-        type: 'model',
+        type: "model",
       };
       this.cache.set(url, entry);
 
-      log.debug('Model cached:', url);
+      log.debug("Model cached:", url);
     } catch (error) {
-      log.error('Failed to cache model:', error);
+      log.error("Failed to cache model:", error);
     }
   }
 
@@ -137,7 +145,7 @@ export class ServiceWorkerCache {
       const response = await cache.match(url);
       return response || null;
     } catch (error) {
-      log.error('Failed to get cached model:', error);
+      log.error("Failed to get cached model:", error);
       return null;
     }
   }
@@ -152,7 +160,7 @@ export class ServiceWorkerCache {
           await cache.put(url, response);
         }
       } catch (error) {
-        log.warn('Failed to prefetch:', url, error);
+        log.warn("Failed to prefetch:", url, error);
       }
     });
 
@@ -178,7 +186,7 @@ export class ServiceWorkerCache {
               response,
               size: 0, // Would need to estimate size
             };
-          })
+          }),
         );
 
         // Remove oldest entries if over limit
@@ -192,25 +200,27 @@ export class ServiceWorkerCache {
         }
       }
 
-      log.info('Cache cleanup completed');
+      log.info("Cache cleanup completed");
     } catch (error) {
-      log.error('Cache cleanup failed:', error);
+      log.error("Cache cleanup failed:", error);
     }
   }
 
   // Background sync for offline requests
   async queueRequest(url: string, options: RequestInit): Promise<void> {
-    if ('serviceWorker' in navigator) {
+    if ("serviceWorker" in navigator) {
       try {
         const registration = await navigator.serviceWorker.ready;
-        if ('sync' in registration) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          await (registration as any).sync.register('background-sync');
+        if ("sync" in registration) {
+          await (registration as any).sync.register("background-sync");
           // Store request data for background sync
-          localStorage.setItem(`queued-request-${Date.now()}`, JSON.stringify({ url, options }));
+          localStorage.setItem(
+            `queued-request-${Date.now()}`,
+            JSON.stringify({ url, options }),
+          );
         }
       } catch (error) {
-        log.error('Background sync registration failed:', error);
+        log.error("Background sync registration failed:", error);
       }
     }
   }
@@ -241,18 +251,18 @@ export class ServiceWorkerCache {
         const cache = await caches.open(cacheName);
         const keys = await cache.keys();
 
-        if (cacheName.includes('static')) {
+        if (cacheName.includes("static")) {
           stats.staticCache += keys.length;
-        } else if (cacheName.includes('model')) {
+        } else if (cacheName.includes("model")) {
           stats.modelCache += keys.length;
-        } else if (cacheName.includes('texture')) {
+        } else if (cacheName.includes("texture")) {
           stats.textureCache += keys.length;
         }
 
         stats.total += keys.length;
       }
     } catch (error) {
-      log.error('Failed to get cache stats:', error);
+      log.error("Failed to get cache stats:", error);
     }
 
     return stats;
@@ -263,30 +273,30 @@ export class ServiceWorkerCache {
     try {
       const cacheNames = await caches.keys();
       await Promise.all(
-        cacheNames.map(cacheName => caches.delete(cacheName))
+        cacheNames.map((cacheName) => caches.delete(cacheName)),
       );
       this.cache.clear();
-      log.info('All caches cleared');
+      log.info("All caches cleared");
     } catch (error) {
-      log.error('Failed to clear caches:', error);
+      log.error("Failed to clear caches:", error);
     }
   }
 }
 
 // Service Worker message utilities
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 export const sendMessageToSW = async (message: any): Promise<void> => {
-  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+  if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
     navigator.serviceWorker.controller.postMessage(message);
   }
 };
 
 export const requestCacheStats = async (): Promise<void> => {
-  await sendMessageToSW({ type: 'GET_CACHE_STATS' });
+  await sendMessageToSW({ type: "GET_CACHE_STATS" });
 };
 
 export const requestCacheCleanup = async (): Promise<void> => {
-  await sendMessageToSW({ type: 'CLEANUP_CACHE' });
+  await sendMessageToSW({ type: "CLEANUP_CACHE" });
 };
 
 // Export singleton instance

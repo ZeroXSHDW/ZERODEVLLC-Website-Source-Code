@@ -1,7 +1,7 @@
 "use client";
 
-import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { log } from '@/lib/utils/logger';
+import React, { Component, ErrorInfo, ReactNode } from "react";
+import { log } from "@/lib/utils/logger";
 
 interface Props {
   children: ReactNode;
@@ -28,7 +28,7 @@ export class ModelErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    log.error('Model error caught by boundary:', error, errorInfo);
+    log.error("Model error caught by boundary:", error, errorInfo);
     this.props.onError?.(error, errorInfo);
   }
 
@@ -43,7 +43,7 @@ export class ModelErrorBoundary extends Component<Props, State> {
           <div className="text-center space-y-4">
             <div className="text-2xl font-bold">MODEL ERROR</div>
             <div className="text-sm text-gray-500">
-              {this.state.error?.message || 'Failed to load or render model'}
+              {this.state.error?.message || "Failed to load or render model"}
             </div>
             <button
               onClick={() => this.setState({ hasError: false, error: null })}
@@ -59,4 +59,3 @@ export class ModelErrorBoundary extends Component<Props, State> {
     return this.props.children;
   }
 }
-

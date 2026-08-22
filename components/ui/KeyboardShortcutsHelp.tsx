@@ -1,23 +1,26 @@
 "use client";
 
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Keyboard } from 'lucide-react';
+import { motion, AnimatePresence } from "framer-motion";
+import { X, Keyboard } from "lucide-react";
 
 interface KeyboardShortcutsHelpProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export function KeyboardShortcutsHelp({ isOpen, onClose }: KeyboardShortcutsHelpProps) {
+export function KeyboardShortcutsHelp({
+  isOpen,
+  onClose,
+}: KeyboardShortcutsHelpProps) {
   const shortcuts = [
-    { key: 'Ctrl/Cmd + R', description: 'Reset camera view' },
-    { key: 'Space', description: 'Toggle auto-rotation' },
-    { key: 'Ctrl/Cmd + C', description: 'Toggle controls panel' },
-    { key: 'Ctrl/Cmd + P', description: 'Toggle performance mode' },
-    { key: '1', description: 'Front camera preset' },
-    { key: '2', description: 'Side camera preset' },
-    { key: '3', description: 'Top camera preset' },
-    { key: '4', description: 'Isometric camera preset' },
+    { key: "Ctrl/Cmd + R", description: "Reset camera view" },
+    { key: "Space", description: "Toggle auto-rotation" },
+    { key: "Ctrl/Cmd + C", description: "Toggle controls panel" },
+    { key: "Ctrl/Cmd + P", description: "Toggle performance mode" },
+    { key: "1", description: "Front camera preset" },
+    { key: "2", description: "Side camera preset" },
+    { key: "3", description: "Top camera preset" },
+    { key: "4", description: "Isometric camera preset" },
   ];
 
   return (
@@ -58,8 +61,13 @@ export function KeyboardShortcutsHelp({ isOpen, onClose }: KeyboardShortcutsHelp
             <div className="p-4">
               <div className="space-y-3">
                 {shortcuts.map((shortcut, index) => (
-                  <div key={index} className="flex items-center justify-between py-2">
-                    <span className="text-gray-300 text-sm">{shortcut.description}</span>
+                  <div
+                    key={index}
+                    className="flex items-center justify-between py-2"
+                  >
+                    <span className="text-gray-300 text-sm">
+                      {shortcut.description}
+                    </span>
                     <kbd className="px-2 py-1 bg-gray-800 border border-gray-600 rounded text-xs text-white font-mono">
                       {shortcut.key}
                     </kbd>

@@ -2,22 +2,24 @@
  * Hook for performance budget monitoring
  */
 
-import { useEffect, useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { performanceBudget } from '@/lib/utils/performanceBudget';
-import { log } from '@/lib/utils/logger';
+import { useEffect, useRef } from "react";
+import { useFrame } from "@react-three/fiber";
+import { performanceBudget } from "@/lib/utils/performanceBudget";
+import { log } from "@/lib/utils/logger";
 
 interface UsePerformanceBudgetOptions {
   enabled?: boolean;
   targetFPS?: number;
-  onBudgetExceeded?: (quality: 'high' | 'medium' | 'low') => void;
+  onBudgetExceeded?: (quality: "high" | "medium" | "low") => void;
   logStats?: boolean;
 }
 
 /**
  * Monitors frame time and triggers optimizations when budget is exceeded
  */
-export function usePerformanceBudget(options: UsePerformanceBudgetOptions = {}) {
+export function usePerformanceBudget(
+  options: UsePerformanceBudgetOptions = {},
+) {
   const {
     enabled = true,
     targetFPS = 60,
@@ -32,7 +34,7 @@ export function usePerformanceBudget(options: UsePerformanceBudgetOptions = {}) 
   useEffect(() => {
     const targetFrameTime = 1000 / targetFPS;
     const maxFrameTime = targetFrameTime * 2; // Allow up to 2x for minimum acceptable FPS
-    
+
     performanceBudget.updateBudget({
       targetFrameTime,
       maxFrameTime,
@@ -58,9 +60,10 @@ export function usePerformanceBudget(options: UsePerformanceBudgetOptions = {}) 
     // Log stats periodically
     if (logStats) {
       logIntervalRef.current++;
-      if (logIntervalRef.current % 60 === 0) { // Every 60 frames
+      if (logIntervalRef.current % 60 === 0) {
+        // Every 60 frames
         const stats = performanceBudget.getStats();
-        log.debug('Performance budget stats:', {
+        log.debug("Performance budget stats:", {
           avgFrameTime: `${stats.averageFrameTime.toFixed(2)}ms`,
           currentFPS: `${(1000 / stats.currentFrameTime).toFixed(1)}`,
           budgetExceeded: stats.budgetExceeded,
@@ -70,4 +73,3 @@ export function usePerformanceBudget(options: UsePerformanceBudgetOptions = {}) 
     }
   });
 }
-

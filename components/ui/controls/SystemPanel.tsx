@@ -1,13 +1,13 @@
-import { useServiceWorkerContext } from '@/components/ServiceWorkerProvider';
-import { HardDrive } from 'lucide-react';
-import { toast } from 'sonner';
+import { useServiceWorkerContext } from "@/components/ServiceWorkerProvider";
+import { HardDrive } from "lucide-react";
+import { toast } from "sonner";
 
 export function SystemPanel() {
   const { isRegistered, version, clearCache } = useServiceWorkerContext();
 
   const handleClearCache = async () => {
     await clearCache();
-    toast.success('Cache cleared');
+    toast.success("Cache cleared");
   };
 
   return (
@@ -20,12 +20,14 @@ export function SystemPanel() {
           <div className="flex justify-between items-center mb-2">
             <span className="text-gray-300 text-sm">Service Worker</span>
             <span
-              className={`text-xs px-2 py-1 rounded-full ${isRegistered ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}
+              className={`text-xs px-2 py-1 rounded-full ${isRegistered ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"}`}
             >
-              {isRegistered ? 'Active' : 'Inactive'}
+              {isRegistered ? "Active" : "Inactive"}
             </span>
           </div>
-          <div className="text-xs text-gray-500">Version: {version || 'Unknown'}</div>
+          <div className="text-xs text-gray-500">
+            Version: {version || "Unknown"}
+          </div>
         </div>
 
         {/* Clear Cache */}

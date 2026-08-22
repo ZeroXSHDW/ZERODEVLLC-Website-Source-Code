@@ -3,7 +3,7 @@
  * Tracks performance metrics and sends to analytics service (optional)
  */
 
-import { log } from './logger';
+import { log } from "./logger";
 
 export interface PerformanceMetrics {
   loadTime: number;
@@ -25,7 +25,7 @@ export class PerformanceAnalytics {
    * Initialize performance monitoring
    */
   init(): void {
-    if (typeof window === 'undefined' || !('PerformanceObserver' in window)) {
+    if (typeof window === "undefined" || !("PerformanceObserver" in window)) {
       return;
     }
 
@@ -33,45 +33,58 @@ export class PerformanceAnalytics {
     try {
       const paintObserver = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
-          if (entry.name === 'first-paint') {
-            this.recordMetric('firstPaint', entry.startTime);
-          } else if (entry.name === 'first-contentful-paint') {
-            this.recordMetric('firstContentfulPaint', entry.startTime);
+          if (entry.name === "first-paint") {
+            this.recordMetric("firstPaint", entry.startTime);
+          } else if (entry.name === "first-contentful-paint") {
+            this.recordMetric("firstContentfulPaint", entry.startTime);
           }
         }
       });
-      paintObserver.observe({ entryTypes: ['paint'] });
+      paintObserver.observe({ entryTypes: ["paint"] });
       this.observers.push(paintObserver);
     } catch (e) {
-      log.warn('Paint timing not supported:', e);
+      log.warn("Paint timing not supported:", e);
     }
 
     // Observe navigation timing
     try {
       const navObserver = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
-          if (entry.entryType === 'navigation') {
+          if (entry.entryType === "navigation") {
             const navEntry = entry as PerformanceNavigationTiming;
-            this.recordMetric('loadTime', navEntry.loadEventEnd - navEntry.fetchStart);
-            this.recordMetric('timeToInteractive', navEntry.domInteractive - navEntry.fetchStart);
+            this.recordMetric(
+              "loadTime",
+              navEntry.loadEventEnd - navEntry.fetchStart,
+            );
+            this.recordMetric(
+              "timeToInteractive",
+              navEntry.domInteractive - navEntry.fetchStart,
+            );
           }
         }
       });
-      navObserver.observe({ entryTypes: ['navigation'] });
+      navObserver.observe({ entryTypes: ["navigation"] });
       this.observers.push(navObserver);
     } catch (e) {
-      log.warn('Navigation timing not supported:', e);
+      log.warn("Navigation timing not supported:", e);
     }
   }
 
   /**
    * Record a performance metric
    */
-  recordMetric<K extends keyof PerformanceMetrics>(key: K, value: PerformanceMetrics[K]): void {
-    const latest = this.metrics[this.metrics.length - 1] || this.createEmptyMetrics();
+  recordMetric<K extends keyof PerformanceMetrics>(
+    key: K,
+    value: PerformanceMetrics[K],
+  ): void {
+    const latest =
+      this.metrics[this.metrics.length - 1] || this.createEmptyMetrics();
     latest[key] = value;
-    
-    if (this.metrics.length === 0 || this.metrics[this.metrics.length - 1] !== latest) {
+
+    if (
+      this.metrics.length === 0 ||
+      this.metrics[this.metrics.length - 1] !== latest
+    ) {
       this.metrics.push(latest);
     }
   }
@@ -80,10 +93,14 @@ export class PerformanceAnalytics {
    * Record complete metrics
    */
   recordMetrics(metrics: Partial<PerformanceMetrics>): void {
-    const latest = this.metrics[this.metrics.length - 1] || this.createEmptyMetrics();
+    const latest =
+      this.metrics[this.metrics.length - 1] || this.createEmptyMetrics();
     Object.assign(latest, metrics);
-    
-    if (this.metrics.length === 0 || this.metrics[this.metrics.length - 1] !== latest) {
+
+    if (
+      this.metrics.length === 0 ||
+      this.metrics[this.metrics.length - 1] !== latest
+    ) {
       this.metrics.push(latest);
     }
   }
@@ -92,7 +109,9 @@ export class PerformanceAnalytics {
    * Get latest metrics
    */
   getLatestMetrics(): PerformanceMetrics | null {
-    return this.metrics.length > 0 ? { ...this.metrics[this.metrics.length - 1] } : null;
+    return this.metrics.length > 0
+      ? { ...this.metrics[this.metrics.length - 1] }
+      : null;
   }
 
   /**
@@ -110,19 +129,19 @@ export class PerformanceAnalytics {
     if (!latest) return;
 
     // Log metrics (can be replaced with actual analytics service)
-    log.info('Performance metrics:', latest);
+    log.info("Performance metrics:", latest);
 
     // Example: Send to analytics endpoint
-    if (endpoint && typeof fetch !== 'undefined') {
+    if (endpoint && typeof fetch !== "undefined") {
       fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           metrics: latest,
           timestamp: Date.now(),
           userAgent: navigator.userAgent,
         }),
-      }).catch(err => log.warn('Failed to send analytics:', err));
+      }).catch((err) => log.warn("Failed to send analytics:", err));
     }
   }
 
@@ -137,7 +156,7 @@ export class PerformanceAnalytics {
    * Cleanup observers
    */
   disconnect(): void {
-    this.observers.forEach(observer => observer.disconnect());
+    this.observers.forEach((observer) => observer.disconnect());
     this.observers = [];
   }
 
@@ -160,7 +179,6 @@ export class PerformanceAnalytics {
 export const performanceAnalytics = new PerformanceAnalytics();
 
 // Auto-initialize
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   performanceAnalytics.init();
 }
-

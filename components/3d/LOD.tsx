@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useRef, useMemo, useEffect, useState } from 'react';
-import * as THREE from 'three';
-import { useLOD, LODLevel } from '@/lib/hooks/useLOD';
+import { useRef, useMemo, useEffect, useState } from "react";
+import * as THREE from "three";
+import { useLOD, LODLevel } from "@/lib/hooks/useLOD";
 
 interface LODProps {
   children: React.ReactNode;
@@ -12,12 +12,12 @@ interface LODProps {
 }
 
 function applyLODToObject(object: THREE.Object3D, level: LODLevel): void {
-  object.traverse(child => {
+  object.traverse((child) => {
     if (child instanceof THREE.Mesh) {
       const mesh = child as THREE.Mesh;
       // We don't modify geometry or materials here anymore to avoid corruption and performance issues.
       // Instead, we just handle basic visibility if needed.
-      if (level.quality === 'low' && mesh.userData.isExpensive) {
+      if (level.quality === "low" && mesh.userData.isExpensive) {
         mesh.visible = false;
       } else {
         mesh.visible = true;
@@ -26,15 +26,22 @@ function applyLODToObject(object: THREE.Object3D, level: LODLevel): void {
   });
 }
 
-export function LOD({ children, levels, position = [0, 0, 0], onLODChange }: LODProps) {
+export function LOD({
+  children,
+  levels,
+  position = [0, 0, 0],
+  onLODChange,
+}: LODProps) {
   const groupRef = useRef<THREE.Group>(null);
-  const [lastAppliedLevel, setLastAppliedLevel] = useState<LODLevel | null>(null);
+  const [lastAppliedLevel, setLastAppliedLevel] = useState<LODLevel | null>(
+    null,
+  );
 
   const { currentLOD, targetRef } = useLOD({
     levels: levels || [
-      { distance: 0, quality: 'high' },
-      { distance: 15, quality: 'medium', maxTriangles: 50000 },
-      { distance: 30, quality: 'low', maxTriangles: 10000 },
+      { distance: 0, quality: "high" },
+      { distance: 15, quality: "medium", maxTriangles: 50000 },
+      { distance: 30, quality: "low", maxTriangles: 10000 },
     ],
   });
 
@@ -70,7 +77,7 @@ export function withLOD<P extends object>(
   lodConfig?: {
     levels?: LODLevel[];
     onLODChange?: (level: LODLevel) => void;
-  }
+  },
 ) {
   return function LODWrappedComponent(props: P) {
     return (

@@ -3,7 +3,7 @@
  * Optimizes rendering by culling objects outside the camera's view
  */
 
-import * as THREE from 'three';
+import * as THREE from "three";
 
 interface CullingStats {
   totalObjects: number;
@@ -26,7 +26,10 @@ export class FrustumCuller {
    * Update frustum from camera
    */
   updateFromCamera(camera: THREE.Camera): void {
-    this.matrix.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+    this.matrix.multiplyMatrices(
+      camera.projectionMatrix,
+      camera.matrixWorldInverse,
+    );
     this.frustum.setFromProjectionMatrix(this.matrix);
   }
 
@@ -63,9 +66,13 @@ export class FrustumCuller {
     let culled = 0;
 
     scene.traverse((object) => {
-      if (object instanceof THREE.Mesh || object instanceof THREE.Light || object instanceof THREE.Camera) {
+      if (
+        object instanceof THREE.Mesh ||
+        object instanceof THREE.Light ||
+        object instanceof THREE.Camera
+      ) {
         total++;
-        
+
         // Store original visibility if not already stored
         if (object.userData.originalVisible === undefined) {
           object.userData.originalVisible = object.visible;
@@ -116,4 +123,3 @@ export class FrustumCuller {
 
 // Singleton instance
 export const frustumCuller = new FrustumCuller();
-

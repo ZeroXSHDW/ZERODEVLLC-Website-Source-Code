@@ -3,8 +3,8 @@
  * Handles cleanup of geometries, materials, textures, and models
  */
 
-import * as THREE from 'three';
-import { log } from './logger';
+import * as THREE from "three";
+import { log } from "./logger";
 
 interface MemoryStats {
   geometries: number;
@@ -29,7 +29,7 @@ class MemoryManager {
       return; // Already disposed
     }
 
-    object.traverse(child => {
+    object.traverse((child) => {
       if (child instanceof THREE.Mesh) {
         // Dispose geometry
         if (child.geometry) {
@@ -38,8 +38,10 @@ class MemoryManager {
 
         // Dispose materials
         if (child.material) {
-          const materials = Array.isArray(child.material) ? child.material : [child.material];
-          materials.forEach(material => {
+          const materials = Array.isArray(child.material)
+            ? child.material
+            : [child.material];
+          materials.forEach((material) => {
             this.disposeMaterial(material);
           });
         }
@@ -64,7 +66,7 @@ class MemoryManager {
     }
 
     this.disposedResources.add(uuid);
-    log.debug('Disposed object:', uuid);
+    log.debug("Disposed object:", uuid);
   }
 
   /**
@@ -79,23 +81,22 @@ class MemoryManager {
     }
 
     // Dispose attributes
-    Object.values(geometry.attributes).forEach(attribute => {
-      if (attribute && 'array' in attribute) {
+    Object.values(geometry.attributes).forEach((attribute) => {
+      if (attribute && "array" in attribute) {
         // Clear array reference to free memory
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
         (attribute as any).array = null;
       }
     });
 
     // Dispose index
-    if (geometry.index && 'array' in geometry.index) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (geometry.index && "array" in geometry.index) {
       (geometry.index as any).array = null;
     }
 
     geometry.dispose();
     this.disposedResources.add(uuid);
-    log.debug('Disposed geometry:', uuid);
+    log.debug("Disposed geometry:", uuid);
   }
 
   /**
@@ -111,31 +112,31 @@ class MemoryManager {
 
     // Dispose textures - use string keys since Material interface doesn't include all texture properties
     const textureKeys: string[] = [
-      'map',
-      'normalMap',
-      'roughnessMap',
-      'metalnessMap',
-      'aoMap',
-      'emissiveMap',
-      'envMap',
-      'lightMap',
-      'bumpMap',
-      'displacementMap',
-      'alphaMap',
-      'clearcoatMap',
-      'clearcoatNormalMap',
-      'clearcoatRoughnessMap',
-      'sheenColorMap',
-      'sheenRoughnessMap',
-      'transmissionMap',
-      'thicknessMap',
-      'specularColorMap',
-      'specularIntensityMap',
-      'iridescenceMap',
-      'iridescenceThicknessMap',
+      "map",
+      "normalMap",
+      "roughnessMap",
+      "metalnessMap",
+      "aoMap",
+      "emissiveMap",
+      "envMap",
+      "lightMap",
+      "bumpMap",
+      "displacementMap",
+      "alphaMap",
+      "clearcoatMap",
+      "clearcoatNormalMap",
+      "clearcoatRoughnessMap",
+      "sheenColorMap",
+      "sheenRoughnessMap",
+      "transmissionMap",
+      "thicknessMap",
+      "specularColorMap",
+      "specularIntensityMap",
+      "iridescenceMap",
+      "iridescenceThicknessMap",
     ];
 
-    textureKeys.forEach(key => {
+    textureKeys.forEach((key) => {
       const texture = (material as unknown as Record<string, unknown>)[key];
       if (texture instanceof THREE.Texture) {
         this.disposeTexture(texture);
@@ -144,7 +145,7 @@ class MemoryManager {
 
     material.dispose();
     this.disposedResources.add(uuid);
-    log.debug('Disposed material:', uuid);
+    log.debug("Disposed material:", uuid);
   }
 
   /**
@@ -161,9 +162,9 @@ class MemoryManager {
     // Dispose image if it's a canvas or image element
     if (texture.image) {
       if (texture.image instanceof HTMLImageElement) {
-        texture.image.src = '';
+        texture.image.src = "";
       } else if (texture.image instanceof HTMLCanvasElement) {
-        const ctx = texture.image.getContext('2d');
+        const ctx = texture.image.getContext("2d");
         if (ctx) {
           ctx.clearRect(0, 0, texture.image.width, texture.image.height);
         }
@@ -174,7 +175,7 @@ class MemoryManager {
 
     texture.dispose();
     this.disposedResources.add(uuid);
-    log.debug('Disposed texture:', uuid);
+    log.debug("Disposed texture:", uuid);
   }
 
   /**
@@ -191,12 +192,12 @@ class MemoryManager {
         // but we can at least reset the renderer which helps
       }
     } catch (e) {
-      log.warn('Failed to clear some renderer resources:', e);
+      log.warn("Failed to clear some renderer resources:", e);
     }
 
     // Clear renderer info
     renderer.info.reset();
-    log.debug('Cleared renderer resources');
+    log.debug("Cleared renderer resources");
   }
 
   /**
@@ -229,12 +230,12 @@ class MemoryManager {
     const globalGC = (global as unknown as { gc?: () => void }).gc;
     const windowGC = (window as unknown as { gc?: () => void }).gc;
 
-    if (typeof globalGC === 'function') {
+    if (typeof globalGC === "function") {
       globalGC();
-      log.debug('Forced garbage collection');
-    } else if (typeof windowGC === 'function') {
+      log.debug("Forced garbage collection");
+    } else if (typeof windowGC === "function") {
       windowGC();
-      log.debug('Forced garbage collection');
+      log.debug("Forced garbage collection");
     }
   }
 
@@ -255,11 +256,11 @@ class MemoryManager {
    * Run all cleanup callbacks
    */
   cleanup(): void {
-    this.cleanupCallbacks.forEach(callback => {
+    this.cleanupCallbacks.forEach((callback) => {
       try {
         callback();
       } catch (error) {
-        log.error('Cleanup callback error:', error);
+        log.error("Cleanup callback error:", error);
       }
     });
     this.cleanupCallbacks = [];

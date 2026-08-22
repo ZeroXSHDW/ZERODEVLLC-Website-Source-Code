@@ -1,5 +1,5 @@
-import { render, screen } from '@testing-library/react';
-import { ViewerActionButtons } from '../ViewerActionButtons';
+import { render, screen } from "@testing-library/react";
+import { ViewerActionButtons } from "../ViewerActionButtons";
 
 const mockHandlers = {
   onToggleModelInfo: jest.fn(),
@@ -9,18 +9,18 @@ const mockHandlers = {
   onToggleExportDialog: jest.fn(),
 };
 
-describe('ViewerActionButtons', () => {
+describe("ViewerActionButtons", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should render all action buttons', () => {
+  it("should render all action buttons", () => {
     render(
       <ViewerActionButtons
         isMobile={false}
         hasSceneData={true}
         {...mockHandlers}
-      />
+      />,
     );
 
     expect(screen.getByLabelText(/model information/i)).toBeInTheDocument();
@@ -29,26 +29,28 @@ describe('ViewerActionButtons', () => {
     expect(screen.getByLabelText(/export dialog/i)).toBeInTheDocument();
   });
 
-  it('should disable model info button when no scene data', () => {
+  it("should disable model info button when no scene data", () => {
     render(
       <ViewerActionButtons
         isMobile={false}
         hasSceneData={false}
         {...mockHandlers}
-      />
+      />,
     );
 
-    const modelInfoButton = screen.getByLabelText(/model information not available/i);
+    const modelInfoButton = screen.getByLabelText(
+      /model information not available/i,
+    );
     expect(modelInfoButton).toBeDisabled();
   });
 
-  it('should show mobile gesture help button on mobile', () => {
+  it("should show mobile gesture help button on mobile", () => {
     render(
       <ViewerActionButtons
         isMobile={true}
         hasSceneData={true}
         {...mockHandlers}
-      />
+      />,
     );
 
     // On mobile, both the dedicated gesture button and the help button share this label
@@ -56,13 +58,13 @@ describe('ViewerActionButtons', () => {
     expect(gestureButtons.length).toBeGreaterThanOrEqual(1);
   });
 
-  it('should call handlers when buttons are clicked', () => {
+  it("should call handlers when buttons are clicked", () => {
     render(
       <ViewerActionButtons
         isMobile={false}
         hasSceneData={true}
         {...mockHandlers}
-      />
+      />,
     );
 
     screen.getByLabelText(/model information/i).click();

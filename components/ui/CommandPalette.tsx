@@ -1,11 +1,18 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { Command } from 'cmdk';
-import { Settings, Palette, RotateCcw, Monitor, Camera, Layers } from 'lucide-react';
-import { ViewerSettings } from '@/lib/types/3d';
-import { CAMERA_PRESETS } from '@/config/three';
-import { toast } from 'sonner';
+import * as React from "react";
+import { Command } from "cmdk";
+import {
+  Settings,
+  Palette,
+  RotateCcw,
+  Monitor,
+  Camera,
+  Layers,
+} from "lucide-react";
+import { ViewerSettings } from "@/lib/types/3d";
+import { CAMERA_PRESETS } from "@/config/three";
+import { toast } from "sonner";
 
 // CommandItem wrapper
 const CommandItemWrapper = ({
@@ -32,13 +39,13 @@ interface CommandPaletteProps {
     setAutoRotate: (value: boolean) => void;
     setPerformanceMode: (value: boolean) => void;
     onResetView: () => void;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
     onCameraPreset: (preset: any) => void;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
     updateLighting: (updates: any) => void;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
     updateEnvironment: (updates: any) => void;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
     updateLod: (updates: any) => void;
     toggleModelInfo: () => void;
     toggleControls: () => void;
@@ -54,7 +61,7 @@ export function CommandPalette({
 }: CommandPaletteProps) {
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         if (isOpen) {
           onCloseAction();
@@ -64,8 +71,8 @@ export function CommandPalette({
       }
     };
 
-    document.addEventListener('keydown', down);
-    return () => document.removeEventListener('keydown', down);
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
   }, [isOpen, onCloseAction]);
 
   if (!isOpen) return null;
@@ -74,7 +81,10 @@ export function CommandPalette({
     <div className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
       <div className="w-full max-w-lg bg-gray-900 border border-gray-800 rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
         <Command className="w-full">
-          <div className="flex items-center border-b border-gray-800 px-3" cmdk-input-wrapper="">
+          <div
+            className="flex items-center border-b border-gray-800 px-3"
+            cmdk-input-wrapper=""
+          >
             <Command.Input
               autoFocus
               placeholder="Type a command..."
@@ -94,7 +104,7 @@ export function CommandPalette({
                 onSelect={() => {
                   actions.onResetView();
                   onCloseAction();
-                  toast.success('View reset');
+                  toast.success("View reset");
                 }}
               >
                 <RotateCcw className="mr-2 h-4 w-4" />
@@ -106,7 +116,7 @@ export function CommandPalette({
                   actions.setAutoRotate(!currentSettings.autoRotate);
                   onCloseAction();
                   toast.success(
-                    `Auto-rotate ${!currentSettings.autoRotate ? 'enabled' : 'disabled'}`
+                    `Auto-rotate ${!currentSettings.autoRotate ? "enabled" : "disabled"}`,
                   );
                 }}
               >
@@ -119,7 +129,7 @@ export function CommandPalette({
                   actions.setPerformanceMode(!currentSettings.performanceMode);
                   onCloseAction();
                   toast.success(
-                    `Performance mode ${!currentSettings.performanceMode ? 'enabled' : 'disabled'}`
+                    `Performance mode ${!currentSettings.performanceMode ? "enabled" : "disabled"}`,
                   );
                 }}
               >
@@ -152,7 +162,7 @@ export function CommandPalette({
               heading="Camera Presets"
               className="text-gray-400 text-xs font-medium px-2 mb-2 mt-2"
             >
-              {Object.keys(CAMERA_PRESETS).map(preset => (
+              {Object.keys(CAMERA_PRESETS).map((preset) => (
                 <CommandItemWrapper
                   key={preset}
                   onSelect={() => {
@@ -161,7 +171,9 @@ export function CommandPalette({
                   }}
                 >
                   <Camera className="mr-2 h-4 w-4" />
-                  <span>Camera: {preset.charAt(0).toUpperCase() + preset.slice(1)}</span>
+                  <span>
+                    Camera: {preset.charAt(0).toUpperCase() + preset.slice(1)}
+                  </span>
                 </CommandItemWrapper>
               ))}
             </Command.Group>
@@ -171,17 +183,17 @@ export function CommandPalette({
               className="text-gray-400 text-xs font-medium px-2 mb-2 mt-2"
             >
               {[
-                'sunset',
-                'dawn',
-                'night',
-                'warehouse',
-                'forest',
-                'apartment',
-                'studio',
-                'city',
-                'park',
-                'lobby',
-              ].map(env => (
+                "sunset",
+                "dawn",
+                "night",
+                "warehouse",
+                "forest",
+                "apartment",
+                "studio",
+                "city",
+                "park",
+                "lobby",
+              ].map((env) => (
                 <CommandItemWrapper
                   key={env}
                   onSelect={() => {
@@ -191,7 +203,9 @@ export function CommandPalette({
                   }}
                 >
                   <Palette className="mr-2 h-4 w-4" />
-                  <span>Environment: {env.charAt(0).toUpperCase() + env.slice(1)}</span>
+                  <span>
+                    Environment: {env.charAt(0).toUpperCase() + env.slice(1)}
+                  </span>
                 </CommandItemWrapper>
               ))}
             </Command.Group>
@@ -204,13 +218,15 @@ export function CommandPalette({
                 onSelect={() => {
                   actions.updateLod({ enabled: !currentSettings.lod?.enabled });
                   onCloseAction();
-                  toast.success(`LOD ${!currentSettings.lod?.enabled ? 'enabled' : 'disabled'}`);
+                  toast.success(
+                    `LOD ${!currentSettings.lod?.enabled ? "enabled" : "disabled"}`,
+                  );
                 }}
               >
                 <Layers className="mr-2 h-4 w-4" />
                 <span>Toggle LOD</span>
               </CommandItemWrapper>
-              {['auto', 'high', 'medium', 'low'].map(quality => (
+              {["auto", "high", "medium", "low"].map((quality) => (
                 <CommandItemWrapper
                   key={quality}
                   onSelect={() => {
@@ -220,7 +236,10 @@ export function CommandPalette({
                   }}
                 >
                   <Layers className="mr-2 h-4 w-4" />
-                  <span>LOD Quality: {quality.charAt(0).toUpperCase() + quality.slice(1)}</span>
+                  <span>
+                    LOD Quality:{" "}
+                    {quality.charAt(0).toUpperCase() + quality.slice(1)}
+                  </span>
                 </CommandItemWrapper>
               ))}
             </Command.Group>

@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from "three";
 
 interface CachedModel {
   scene: THREE.Group;
@@ -26,7 +26,7 @@ class ModelCache {
     this.maxAge = maxAgeHours * 60 * 60 * 1000; // Convert to milliseconds
   }
 
-  set(key: string, model: Omit<CachedModel, 'timestamp'>): void {
+  set(key: string, model: Omit<CachedModel, "timestamp">): void {
     // Remove from access order if already exists
     const existingIndex = this.accessOrder.indexOf(key);
     if (existingIndex > -1) {
@@ -80,7 +80,7 @@ class ModelCache {
 
   has(key: string): boolean {
     const entry = this.cache.get(key);
-    return entry !== undefined && (Date.now() - entry.timestamp) <= this.maxAge;
+    return entry !== undefined && Date.now() - entry.timestamp <= this.maxAge;
   }
 
   delete(key: string): void {
@@ -119,7 +119,7 @@ class ModelCache {
       }
     });
 
-    keysToDelete.forEach(key => {
+    keysToDelete.forEach((key) => {
       this.cache.delete(key);
       const index = this.accessOrder.indexOf(key);
       if (index > -1) {

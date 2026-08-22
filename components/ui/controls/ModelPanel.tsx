@@ -1,4 +1,4 @@
-import { ViewerSettings } from '@/lib/types/3d';
+import { ViewerSettings } from "@/lib/types/3d";
 
 interface ModelPanelProps {
   currentSettings: ViewerSettings;
@@ -20,12 +20,12 @@ export function ModelPanel({
         <button
           onClick={onToggleRotation}
           className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-            currentSettings?.autoRotate ? 'bg-blue-600' : 'bg-gray-600'
+            currentSettings?.autoRotate ? "bg-blue-600" : "bg-gray-600"
           }`}
         >
           <span
             className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-              currentSettings?.autoRotate ? 'translate-x-6' : 'translate-x-1'
+              currentSettings?.autoRotate ? "translate-x-6" : "translate-x-1"
             }`}
           />
         </button>
@@ -39,8 +39,11 @@ export function ModelPanel({
           max="5"
           step="0.1"
           value={currentSettings?.scale || 1}
-          onChange={e =>
-            onModelSettingsChange?.({ ...currentSettings, scale: parseFloat(e.target.value) })
+          onChange={(e) =>
+            onModelSettingsChange?.({
+              ...currentSettings,
+              scale: parseFloat(e.target.value),
+            })
           }
           className="w-full h-2 bg-gray-700 rounded-lg cursor-pointer accent-blue-500"
         />

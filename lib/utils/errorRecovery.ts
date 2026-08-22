@@ -3,8 +3,8 @@
  * Provides automatic recovery strategies for various error types
  */
 
-import { log } from './logger';
-import type { ModelError } from '@/lib/types/3d';
+import { log } from "./logger";
+import type { ModelError } from "@/lib/types/3d";
 
 export interface RecoveryStrategy {
   canRecover: (error: ModelError) => boolean;
@@ -14,7 +14,12 @@ export interface RecoveryStrategy {
 
 export class ErrorRecoveryManager {
   private strategies: RecoveryStrategy[] = [];
-  private recoveryHistory: Array<{ error: ModelError; strategy: string; success: boolean; timestamp: number }> = [];
+  private recoveryHistory: Array<{
+    error: ModelError;
+    strategy: string;
+    success: boolean;
+    timestamp: number;
+  }> = [];
 
   /**
    * Register a recovery strategy
@@ -29,7 +34,10 @@ export class ErrorRecoveryManager {
    * Attempt to recover from an error
    */
   async attemptRecovery(error: ModelError): Promise<boolean> {
-    log.info('Attempting error recovery:', { type: error.type, message: error.message });
+    log.info("Attempting error recovery:", {
+      type: error.type,
+      message: error.message,
+    });
 
     for (const strategy of this.strategies) {
       if (strategy.canRecover(error)) {
@@ -41,7 +49,9 @@ export class ErrorRecoveryManager {
             success: true,
             timestamp: Date.now(),
           });
-          log.info('Recovery successful:', { strategy: strategy.constructor.name });
+          log.info("Recovery successful:", {
+            strategy: strategy.constructor.name,
+          });
           return true;
         } catch (recoveryError) {
           this.recoveryHistory.push({
@@ -50,13 +60,16 @@ export class ErrorRecoveryManager {
             success: false,
             timestamp: Date.now(),
           });
-          log.warn('Recovery failed:', { strategy: strategy.constructor.name, error: recoveryError });
+          log.warn("Recovery failed:", {
+            strategy: strategy.constructor.name,
+            error: recoveryError,
+          });
           // Continue to next strategy
         }
       }
     }
 
-    log.warn('No recovery strategy succeeded for error:', { type: error.type });
+    log.warn("No recovery strategy succeeded for error:", { type: error.type });
     return false;
   }
 
@@ -81,13 +94,13 @@ export class ErrorRecoveryManager {
  * Network error recovery - retry with exponential backoff
  */
 export const networkRecoveryStrategy: RecoveryStrategy = {
-  canRecover: (error) => error.type === 'network' && error.recoverable,
+  canRecover: (error) => error.type === "network" && error.recoverable,
   priority: 10,
   recover: async (_error) => {
     // Wait before retry
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     // Trigger page reload or model reload
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       window.location.reload();
     }
   },
@@ -97,24 +110,27 @@ export const networkRecoveryStrategy: RecoveryStrategy = {
  * Memory error recovery - clear caches and reduce quality
  */
 export const memoryRecoveryStrategy: RecoveryStrategy = {
-  canRecover: (error) => error.type === 'memory',
+  canRecover: (error) => error.type === "memory",
   priority: 9,
   recover: async () => {
     // Clear all caches
-    if ('caches' in window) {
+    if ("caches" in window) {
       const cacheNames = await caches.keys();
-      await Promise.all(cacheNames.map(name => caches.delete(name)));
+      await Promise.all(cacheNames.map((name) => caches.delete(name)));
     }
 
     // Clear localStorage
     localStorage.clear();
 
     // Force garbage collection if available
-    if ('gc' in window && typeof (window as { gc?: () => void }).gc === 'function') {
+    if (
+      "gc" in window &&
+      typeof (window as { gc?: () => void }).gc === "function"
+    ) {
       (window as { gc?: () => void }).gc?.();
     }
 
-    log.info('Memory recovery: Cleared caches and storage');
+    log.info("Memory recovery: Cleared caches and storage");
   },
 };
 
@@ -122,13 +138,14 @@ export const memoryRecoveryStrategy: RecoveryStrategy = {
  * Context loss recovery - reinitialize WebGL
  */
 export const contextLossRecoveryStrategy: RecoveryStrategy = {
-  canRecover: (error) => error.type === 'render' && error.message.includes('context'),
+  canRecover: (error) =>
+    error.type === "render" && error.message.includes("context"),
   priority: 8,
   recover: async () => {
     // The context loss handler should handle this, but we can trigger a reload
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       // Wait a bit before reload
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       window.location.reload();
     }
   },
@@ -141,4 +158,3 @@ export const errorRecoveryManager = new ErrorRecoveryManager();
 errorRecoveryManager.registerStrategy(networkRecoveryStrategy);
 errorRecoveryManager.registerStrategy(memoryRecoveryStrategy);
 errorRecoveryManager.registerStrategy(contextLossRecoveryStrategy);
-

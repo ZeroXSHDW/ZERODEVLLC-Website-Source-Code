@@ -2,13 +2,17 @@
 // This runs in a separate thread to prevent blocking the main UI
 
 export interface GeometryWorkerMessage {
-  type: 'process_geometry' | 'optimize_texture' | 'simplify_mesh';
+  type: "process_geometry" | "optimize_texture" | "simplify_mesh";
   data: unknown;
   id: string;
 }
 
 export interface GeometryWorkerResponse {
-  type: 'geometry_processed' | 'texture_optimized' | 'mesh_simplified' | 'error';
+  type:
+    | "geometry_processed"
+    | "texture_optimized"
+    | "mesh_simplified"
+    | "error";
   data: unknown;
   id: string;
   error?: string;
@@ -18,7 +22,7 @@ export interface GeometryWorkerResponse {
 export function simplifyMesh(
   positions: Float32Array,
   indices: Uint32Array,
-  targetTriangleCount: number
+  targetTriangleCount: number,
 ): { positions: Float32Array; indices: Uint32Array } {
   // Simple vertex clustering approach for performance
   const vertexCount = positions.length / 3;
@@ -97,7 +101,10 @@ export function simplifyMesh(
   };
 }
 
-function getBounds(positions: Float32Array): { min: [number, number, number]; max: [number, number, number] } {
+function getBounds(positions: Float32Array): {
+  min: [number, number, number];
+  max: [number, number, number];
+} {
   const min: [number, number, number] = [Infinity, Infinity, Infinity];
   const max: [number, number, number] = [-Infinity, -Infinity, -Infinity];
 
@@ -121,14 +128,14 @@ export function optimizeTexture(
     maxSize: number;
     quality: number;
     performanceMode: boolean;
-  }
+  },
 ): ImageData {
   const { maxSize, performanceMode } = options;
 
   // Create canvas for processing
   const canvas = new OffscreenCanvas(imageData.width, imageData.height);
-  const ctx = canvas.getContext('2d');
-  if (!ctx) throw new Error('Unable to get 2D context');
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("Unable to get 2D context");
 
   // Put image data
   ctx.putImageData(imageData, 0, 0);
@@ -147,7 +154,7 @@ export function optimizeTexture(
     }
 
     const resizedCanvas = new OffscreenCanvas(width, height);
-    const resizedCtx = resizedCanvas.getContext('2d');
+    const resizedCtx = resizedCanvas.getContext("2d");
     if (resizedCtx) {
       resizedCtx.drawImage(canvas, 0, 0, width, height);
       canvas.width = width;
@@ -160,7 +167,7 @@ export function optimizeTexture(
   if (performanceMode) {
     // Simple downsampling for distant textures
     const downsampledCanvas = new OffscreenCanvas(width / 2, height / 2);
-    const downsampledCtx = downsampledCanvas.getContext('2d');
+    const downsampledCtx = downsampledCanvas.getContext("2d");
     if (downsampledCtx) {
       downsampledCtx.drawImage(canvas, 0, 0, width / 2, height / 2);
       return downsampledCtx.getImageData(0, 0, width / 2, height / 2);
@@ -178,18 +185,29 @@ self.onmessage = (e: MessageEvent<GeometryWorkerMessage>) => {
     let result: unknown;
 
     switch (type) {
-      case 'process_geometry':
+      case "process_geometry":
         result = data; // Pass through for now
         break;
 
-      case 'simplify_mesh': {
-        const d = data as { positions: Float32Array; indices: Uint32Array; targetTriangleCount: number };
+      case "simplify_mesh": {
+        const d = data as {
+          positions: Float32Array;
+          indices: Uint32Array;
+          targetTriangleCount: number;
+        };
         result = simplifyMesh(d.positions, d.indices, d.targetTriangleCount);
         break;
       }
 
-      case 'optimize_texture': {
-        const d = data as { imageData: ImageData; options: { maxSize: number; quality: number; performanceMode: boolean } };
+      case "optimize_texture": {
+        const d = data as {
+          imageData: ImageData;
+          options: {
+            maxSize: number;
+            quality: number;
+            performanceMode: boolean;
+          };
+        };
         result = optimizeTexture(d.imageData, d.options);
         break;
       }
@@ -199,9 +217,12 @@ self.onmessage = (e: MessageEvent<GeometryWorkerMessage>) => {
     }
 
     const response: GeometryWorkerResponse = {
-      type: type === 'process_geometry' ? 'geometry_processed' :
-            type === 'simplify_mesh' ? 'mesh_simplified' :
-            'texture_optimized',
+      type:
+        type === "process_geometry"
+          ? "geometry_processed"
+          : type === "simplify_mesh"
+            ? "mesh_simplified"
+            : "texture_optimized",
       data: result,
       id,
     };
@@ -209,10 +230,10 @@ self.onmessage = (e: MessageEvent<GeometryWorkerMessage>) => {
     self.postMessage(response);
   } catch (error) {
     const response: GeometryWorkerResponse = {
-      type: 'error',
+      type: "error",
       data: null,
       id,
-      error: error instanceof Error ? error.message : 'Unknown error',
+      error: error instanceof Error ? error.message : "Unknown error",
     };
     self.postMessage(response);
   }

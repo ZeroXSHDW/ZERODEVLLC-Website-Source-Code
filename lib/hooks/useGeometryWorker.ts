@@ -1,8 +1,8 @@
-import { useRef, useCallback, useEffect } from 'react';
+import { useRef, useCallback, useEffect } from "react";
 
 interface WorkerTask {
   id: string;
-  type: 'simplify_mesh' | 'optimize_texture';
+  type: "simplify_mesh" | "optimize_texture";
   data: unknown;
   resolve: (result: unknown) => void;
   reject: (error: Error) => void;
@@ -15,7 +15,7 @@ export function useGeometryWorker() {
 
   useEffect(() => {
     // Create worker
-    workerRef.current = new Worker('/workers/geometryWorker.js');
+    workerRef.current = new Worker("/workers/geometryWorker.js");
 
     workerRef.current.onmessage = (e: MessageEvent) => {
       const { data, id, error } = e.data;
@@ -33,8 +33,8 @@ export function useGeometryWorker() {
 
     workerRef.current.onerror = (_error) => {
       // Reject all pending tasks on worker error
-      tasksRef.current.forEach(task => {
-        task.reject(new Error('Worker error'));
+      tasksRef.current.forEach((task) => {
+        task.reject(new Error("Worker error"));
       });
       tasksRef.current.clear();
     };
@@ -47,61 +47,70 @@ export function useGeometryWorker() {
     };
   }, []);
 
-  const postTask = useCallback(<T>(type: WorkerTask['type'], data: unknown): Promise<T> => {
-    return new Promise((resolve, reject) => {
-      if (!workerRef.current) {
-        reject(new Error('Worker not available'));
-        return;
-      }
+  const postTask = useCallback(
+    <T>(type: WorkerTask["type"], data: unknown): Promise<T> => {
+      return new Promise((resolve, reject) => {
+        if (!workerRef.current) {
+          reject(new Error("Worker not available"));
+          return;
+        }
 
-      const id = `task_${nextIdRef.current++}`;
-      const task: WorkerTask = {
-        id,
-        type,
-        data,
-        resolve: resolve as (result: unknown) => void,
-        reject,
-      };
+        const id = `task_${nextIdRef.current++}`;
+        const task: WorkerTask = {
+          id,
+          type,
+          data,
+          resolve: resolve as (result: unknown) => void,
+          reject,
+        };
 
-      tasksRef.current.set(id, task);
+        tasksRef.current.set(id, task);
 
-      workerRef.current.postMessage({
-        type,
-        data,
-        id,
+        workerRef.current.postMessage({
+          type,
+          data,
+          id,
+        });
       });
-    });
-  }, []);
+    },
+    [],
+  );
 
-  const simplifyMesh = useCallback(async (
-    positions: Float32Array,
-    indices: Uint32Array,
-    targetTriangleCount: number
-  ) => {
-    return postTask('simplify_mesh', {
-      positions,
-      indices,
-      targetTriangleCount,
-    });
-  }, [postTask]);
+  const simplifyMesh = useCallback(
+    async (
+      positions: Float32Array,
+      indices: Uint32Array,
+      targetTriangleCount: number,
+    ) => {
+      return postTask("simplify_mesh", {
+        positions,
+        indices,
+        targetTriangleCount,
+      });
+    },
+    [postTask],
+  );
 
-  const optimizeTexture = useCallback(async (
-    imageData: ImageData,
-    options: {
-      maxSize: number;
-      quality: number;
-      performanceMode: boolean;
-    }
-  ) => {
-    return postTask('optimize_texture', {
-      imageData,
-      options,
-    });
-  }, [postTask]);
+  const optimizeTexture = useCallback(
+    async (
+      imageData: ImageData,
+      options: {
+        maxSize: number;
+        quality: number;
+        performanceMode: boolean;
+      },
+    ) => {
+      return postTask("optimize_texture", {
+        imageData,
+        options,
+      });
+    },
+    [postTask],
+  );
 
   return {
     simplifyMesh,
     optimizeTexture,
-    isSupported: typeof Worker !== 'undefined',
+    isSupported: typeof Worker !== "undefined",
   };
 }

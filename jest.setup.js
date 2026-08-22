@@ -1,24 +1,27 @@
-import '@testing-library/jest-dom'
+import "@testing-library/jest-dom";
 
 // Blob URL APIs used by model upload / reset paths (jsdom does not implement these)
-if (typeof URL.createObjectURL !== 'function') {
-  URL.createObjectURL = jest.fn(() => 'blob:mock-url')
+if (typeof URL.createObjectURL !== "function") {
+  URL.createObjectURL = jest.fn(() => "blob:mock-url");
 }
-if (typeof URL.revokeObjectURL !== 'function') {
-  URL.revokeObjectURL = jest.fn()
+if (typeof URL.revokeObjectURL !== "function") {
+  URL.revokeObjectURL = jest.fn();
 }
 
 // Mock WebGL for testing
 const mockWebGLContext = {
-  canvas: document.createElement('canvas'),
+  canvas: document.createElement("canvas"),
   drawingBufferWidth: 1,
   drawingBufferHeight: 1,
-  getSupportedExtensions: jest.fn(() => ['WEBGL_lose_context', 'OES_texture_float']),
+  getSupportedExtensions: jest.fn(() => [
+    "WEBGL_lose_context",
+    "OES_texture_float",
+  ]),
   getExtension: jest.fn((name) => {
-    if (name === 'WEBGL_lose_context') {
-      return { loseContext: jest.fn(), restoreContext: jest.fn() }
+    if (name === "WEBGL_lose_context") {
+      return { loseContext: jest.fn(), restoreContext: jest.fn() };
     }
-    return {}
+    return {};
   }),
   getParameter: jest.fn(() => 0),
   getShaderPrecisionFormat: jest.fn(() => ({
@@ -86,13 +89,13 @@ const mockWebGLContext = {
 
 HTMLCanvasElement.prototype.getContext = jest.fn((contextType) => {
   if (
-    contextType === 'webgl' ||
-    contextType === 'webgl2' ||
-    contextType === 'experimental-webgl'
+    contextType === "webgl" ||
+    contextType === "webgl2" ||
+    contextType === "experimental-webgl"
   ) {
     return mockWebGLContext;
   }
-  if (contextType === '2d') {
+  if (contextType === "2d") {
     return {
       clearRect: jest.fn(),
       fillRect: jest.fn(),
@@ -112,9 +115,9 @@ HTMLCanvasElement.prototype.getContext = jest.fn((contextType) => {
 });
 
 // Mock window.matchMedia
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
-  value: jest.fn().mockImplementation(query => ({
+  value: jest.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,

@@ -1,8 +1,8 @@
-import { ControlsPanelProps } from '@/lib/types';
-import { Play, Pause } from 'lucide-react';
+import { ControlsPanelProps } from "@/lib/types";
+import { Play, Pause } from "lucide-react";
 
 interface AnimationsPanelProps {
-  currentSettings: NonNullable<ControlsPanelProps['currentSettings']>;
+  currentSettings: NonNullable<ControlsPanelProps["currentSettings"]>;
   onAnimationPlay?: () => void;
   onAnimationPause?: () => void;
   onAnimationSelect?: (name: string) => void;
@@ -58,15 +58,16 @@ export function AnimationsPanel({
           <div className="grid gap-2 max-h-[250px] overflow-y-auto pr-1 custom-scrollbar">
             {available.map((anim: any) => {
               // Ensure anim is string, although type definition says any[] in ViewerSettings
-              const animName = typeof anim === 'string' ? anim : anim.name || String(anim);
+              const animName =
+                typeof anim === "string" ? anim : anim.name || String(anim);
               return (
                 <button
                   key={animName}
                   onClick={() => handleSelect(animName)}
                   className={`w-full text-left px-3 py-2.5 rounded-lg text-sm transition-all border ${
                     current === animName
-                      ? 'bg-blue-600/20 border-blue-500/50 text-blue-200'
-                      : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
+                      ? "bg-blue-600/20 border-blue-500/50 text-blue-200"
+                      : "bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:text-white"
                   }`}
                 >
                   <div className="flex items-center justify-between">

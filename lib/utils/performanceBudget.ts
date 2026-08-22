@@ -61,7 +61,8 @@ export class PerformanceBudgetManager {
     // Check if budget is exceeded
     if (frameTime > this.budget.maxFrameTime) {
       this.stats.consecutiveExceeded++;
-      this.stats.budgetExceeded = this.stats.consecutiveExceeded >= this.budget.budgetExceededThreshold;
+      this.stats.budgetExceeded =
+        this.stats.consecutiveExceeded >= this.budget.budgetExceededThreshold;
     } else {
       this.stats.consecutiveExceeded = 0;
       this.stats.budgetExceeded = false;
@@ -85,15 +86,15 @@ export class PerformanceBudgetManager {
   /**
    * Get recommended quality level
    */
-  getRecommendedQuality(): 'high' | 'medium' | 'low' {
+  getRecommendedQuality(): "high" | "medium" | "low" {
     const avg = this.stats.averageFrameTime;
-    
+
     if (avg > this.budget.maxFrameTime * 1.5) {
-      return 'low';
+      return "low";
     } else if (avg > this.budget.maxFrameTime) {
-      return 'medium';
+      return "medium";
     }
-    return 'high';
+    return "high";
   }
 
   /**
@@ -120,4 +121,3 @@ export class PerformanceBudgetManager {
 
 // Singleton instance
 export const performanceBudget = new PerformanceBudgetManager();
-

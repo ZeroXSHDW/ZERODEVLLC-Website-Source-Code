@@ -1,4 +1,4 @@
-import { Upload, FileText } from 'lucide-react';
+import { Upload, FileText } from "lucide-react";
 
 interface UploadPanelProps {
   onFileUpload?: (file: File) => void;
@@ -29,8 +29,12 @@ export function UploadPanel({ onFileUpload }: UploadPanelProps) {
               <Upload className="w-6 h-6 text-gray-400 group-hover:text-blue-400" />
             </div>
             <div>
-              <p className="text-sm font-medium text-white">Click or drag file to upload</p>
-              <p className="text-xs text-gray-500 mt-1">Supports .glb and .gltf</p>
+              <p className="text-sm font-medium text-white">
+                Click or drag file to upload
+              </p>
+              <p className="text-xs text-gray-500 mt-1">
+                Supports .glb and .gltf
+              </p>
             </div>
           </div>
         </div>
@@ -38,8 +42,8 @@ export function UploadPanel({ onFileUpload }: UploadPanelProps) {
         <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg flex gap-3">
           <FileText className="w-5 h-5 text-blue-400 shrink-0" />
           <p className="text-xs text-blue-200/80">
-            Uploaded models are processed locally and optimized for performance. Large files may
-            take a moment to load.
+            Uploaded models are processed locally and optimized for performance.
+            Large files may take a moment to load.
           </p>
         </div>
       </div>

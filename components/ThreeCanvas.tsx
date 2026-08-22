@@ -1,38 +1,40 @@
-'use client';
+"use client";
 
-import React, { Suspense, useMemo, useEffect, useState, memo } from 'react';
-import * as THREE from 'three';
-import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
-import { Canvas } from '@react-three/fiber';
-import { CAMERA_CONFIG, CANVAS_CONFIG } from '@/config/three';
-import type { ViewerSettings } from '@/lib/types/3d';
-import { useStableCallback } from '@/lib/hooks/useStableCallback';
-import { Model } from './3d/Model';
-import { Lighting } from './3d/Lighting';
-import { Controls } from './3d/Controls';
-import { Environment } from './3d/Environment';
-import { PostProcessing } from './3d/PostProcessing';
-import { XRSupport } from './3d/XR';
-import { SceneOptimizer } from './3d/SceneOptimizer';
-import { AdaptivePerformance } from './3d/AdaptivePerformance';
-import { useMemoryCleanup } from '@/lib/hooks/useMemoryCleanup';
+import React, { Suspense, useMemo, useEffect, useState, memo } from "react";
+import * as THREE from "three";
+import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
+import { Canvas } from "@react-three/fiber";
+import { CAMERA_CONFIG, CANVAS_CONFIG } from "@/config/three";
+import type { ViewerSettings } from "@/lib/types/3d";
+import { useStableCallback } from "@/lib/hooks/useStableCallback";
+import { Model } from "./3d/Model";
+import { Lighting } from "./3d/Lighting";
+import { Controls } from "./3d/Controls";
+import { Environment } from "./3d/Environment";
+import { PostProcessing } from "./3d/PostProcessing";
+import { XRSupport } from "./3d/XR";
+import { SceneOptimizer } from "./3d/SceneOptimizer";
+import { AdaptivePerformance } from "./3d/AdaptivePerformance";
+import { useMemoryCleanup } from "@/lib/hooks/useMemoryCleanup";
 
 interface ThreeCanvasProps {
   uploadedFileUrl: string | null;
   modelPath: string;
   viewerSettings: ViewerSettings;
   enableControls: boolean;
-  xrMode: 'none' | 'ar' | 'vr';
+  xrMode: "none" | "ar" | "vr";
   modelRef: React.RefObject<THREE.Group>;
   controlsRef: React.RefObject<OrbitControlsImpl>;
   handleModelLoad: (scene: THREE.Group) => void;
   handleModelProgress: (progress: number) => void;
-  handleModelError: (error: Error | import('@/lib/types/3d').ModelError) => void;
+  handleModelError: (
+    error: Error | import("@/lib/types/3d").ModelError,
+  ) => void;
   handleAnimationsLoaded: (
     animations: THREE.AnimationClip[],
-    actions: Record<string, THREE.AnimationAction>
+    actions: Record<string, THREE.AnimationAction>,
   ) => void;
-  onQualityChange?: (quality: 'high' | 'medium' | 'low') => void;
+  onQualityChange?: (quality: "high" | "medium" | "low") => void;
 }
 
 export function ThreeCanvas({
@@ -54,7 +56,7 @@ export function ThreeCanvas({
   // Ensure component only renders on client
   useEffect(() => {
     // Double-check we're on client
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       setIsMounted(true);
     }
   }, []);
@@ -65,7 +67,7 @@ export function ThreeCanvas({
 
   // Memoize DPR calculation to avoid recalculation on every render
   const dpr = useMemo(() => {
-    if (!isMounted || typeof window === 'undefined') return 1;
+    if (!isMounted || typeof window === "undefined") return 1;
     if (performanceMode) return 1;
     return Math.min(window.devicePixelRatio || 1, 2);
   }, [performanceMode, isMounted]);
@@ -73,16 +75,18 @@ export function ThreeCanvas({
     () => ({
       alpha: CANVAS_CONFIG.alpha,
       antialias: CANVAS_CONFIG.antialias && !performanceMode,
-      powerPreference: (performanceMode ? 'low-power' : CANVAS_CONFIG.powerPreference) as
-        | 'high-performance'
-        | 'low-power'
-        | 'default',
+      powerPreference: (performanceMode
+        ? "low-power"
+        : CANVAS_CONFIG.powerPreference) as
+        | "high-performance"
+        | "low-power"
+        | "default",
       stencil: false,
       depth: true,
       logarithmicDepthBuffer: !performanceMode, // Logarithmic depth buffer is more expensive
       preserveDrawingBuffer: true, // Necessary for screenshots
     }),
-    [performanceMode]
+    [performanceMode],
   );
 
   // Use stable callbacks to prevent unnecessary re-renders
@@ -90,10 +94,14 @@ export function ThreeCanvas({
   const handleModelLoadMemoized = useStableCallback(handleModelLoad);
   const handleModelProgressMemoized = useStableCallback(handleModelProgress);
   const handleModelErrorMemoized = useStableCallback(handleModelError);
-  const handleAnimationsLoadedMemoized = useStableCallback(handleAnimationsLoaded);
-  const handleQualityChangeMemoized = useStableCallback((quality: 'high' | 'medium' | 'low') => {
-    onQualityChange?.(quality);
-  });
+  const handleAnimationsLoadedMemoized = useStableCallback(
+    handleAnimationsLoaded,
+  );
+  const handleQualityChangeMemoized = useStableCallback(
+    (quality: "high" | "medium" | "low") => {
+      onQualityChange?.(quality);
+    },
+  );
 
   // Automatic memory management
   useMemoryCleanup({
@@ -102,7 +110,7 @@ export function ThreeCanvas({
   });
 
   // Don't render Canvas until mounted on client
-  if (!isMounted || typeof window === 'undefined') {
+  if (!isMounted || typeof window === "undefined") {
     return null;
   }
 
@@ -114,9 +122,9 @@ export function ThreeCanvas({
       shadows={CANVAS_CONFIG.shadows && !performanceMode}
       gl={glConfig}
       // Performance optimizations
-      frameloop={performanceMode ? 'demand' : 'always'}
+      frameloop={performanceMode ? "demand" : "always"}
       dpr={dpr}
-      style={{ background: '#000000' }}
+      style={{ background: "#000000" }}
     >
       <XRSupport mode={xrMode}>
         <AdaptivePerformance
@@ -147,7 +155,9 @@ export function ThreeCanvas({
               ref={modelRef}
               url={uploadedFileUrl || modelPath}
               scale={viewerSettings.scale}
-              autoRotateSpeed={viewerSettings.autoRotate ? viewerSettings.rotationSpeed : 0}
+              autoRotateSpeed={
+                viewerSettings.autoRotate ? viewerSettings.rotationSpeed : 0
+              }
               lodEnabled={viewerSettings.lod.enabled}
               lodQuality={viewerSettings.lod.quality}
               onLoad={handleModelLoadMemoized}
@@ -156,16 +166,20 @@ export function ThreeCanvas({
               onAnimationsLoaded={handleAnimationsLoadedMemoized}
             />
             <Controls
-              enabled={enableControls && xrMode === 'none'}
-              autoRotate={viewerSettings.autoRotate && xrMode === 'none'}
+              enabled={enableControls && xrMode === "none"}
+              autoRotate={viewerSettings.autoRotate && xrMode === "none"}
               performanceMode={performanceMode}
               ref={controlsRef}
             />
 
-            {!performanceMode && xrMode === 'none' && (
+            {!performanceMode && xrMode === "none" && (
               <MemoizedPostProcessing
-                toneMappingEnabled={viewerSettings.postProcessing.toneMapping.enabled}
-                toneMappingExposure={viewerSettings.postProcessing.toneMapping.exposure}
+                toneMappingEnabled={
+                  viewerSettings.postProcessing.toneMapping.enabled
+                }
+                toneMappingExposure={
+                  viewerSettings.postProcessing.toneMapping.exposure
+                }
               />
             )}
           </Suspense>
@@ -178,7 +192,7 @@ export function ThreeCanvas({
 // Memoized sub-components with custom comparison to prevent unnecessary re-renders
 const MemoizedEnvironment = memo(
   Environment,
-  (prev, next) => prev.enabled === next.enabled && prev.preset === next.preset
+  (prev, next) => prev.enabled === next.enabled && prev.preset === next.preset,
 );
 
 const MemoizedLighting = memo(
@@ -187,12 +201,12 @@ const MemoizedLighting = memo(
     prev.ambientIntensity === next.ambientIntensity &&
     prev.directionalIntensity === next.directionalIntensity &&
     prev.pointIntensity === next.pointIntensity &&
-    prev.performanceMode === next.performanceMode
+    prev.performanceMode === next.performanceMode,
 );
 
 const MemoizedPostProcessing = memo(
   PostProcessing,
   (prev, next) =>
     prev.toneMappingEnabled === next.toneMappingEnabled &&
-    prev.toneMappingExposure === next.toneMappingExposure
+    prev.toneMappingExposure === next.toneMappingExposure,
 );

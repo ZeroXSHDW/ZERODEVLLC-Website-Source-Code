@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from "three";
 
 interface GPUCapabilities {
   maxTextureSize: number;
@@ -15,11 +15,12 @@ export class GPUAccelerator {
   private capabilities: GPUCapabilities;
 
   constructor(canvas?: HTMLCanvasElement) {
-    const testCanvas = canvas || document.createElement('canvas');
-    const gl = testCanvas.getContext('webgl2') || testCanvas.getContext('webgl');
+    const testCanvas = canvas || document.createElement("canvas");
+    const gl =
+      testCanvas.getContext("webgl2") || testCanvas.getContext("webgl");
 
     if (!gl) {
-      throw new Error('WebGL not supported');
+      throw new Error("WebGL not supported");
     }
 
     this.gl = gl;
@@ -29,38 +30,42 @@ export class GPUAccelerator {
   private detectCapabilities(): GPUCapabilities {
     const gl = this.gl;
     // Check for debug extension but don't store it
-    gl.getExtension('WEBGL_debug_renderer_info');
+    gl.getExtension("WEBGL_debug_renderer_info");
 
     return {
       maxTextureSize: gl.getParameter(gl.MAX_TEXTURE_SIZE),
       maxRenderbufferSize: gl.getParameter(gl.MAX_RENDERBUFFER_SIZE),
       extensions: gl.getSupportedExtensions() || [],
       precision: {
-        vertex: this.getPrecision('vertex'),
-        fragment: this.getPrecision('fragment'),
+        vertex: this.getPrecision("vertex"),
+        fragment: this.getPrecision("fragment"),
       },
     };
   }
 
-  private getPrecision(shaderType: 'vertex' | 'fragment'): string {
+  private getPrecision(shaderType: "vertex" | "fragment"): string {
     const gl = this.gl;
-    const type = shaderType === 'vertex' ? gl.VERTEX_SHADER : gl.FRAGMENT_SHADER;
+    const type =
+      shaderType === "vertex" ? gl.VERTEX_SHADER : gl.FRAGMENT_SHADER;
 
     if (gl.getShaderPrecisionFormat) {
       const precision = gl.getShaderPrecisionFormat(type, gl.HIGH_FLOAT);
-      if (precision && precision.precision > 0) return 'highp';
+      if (precision && precision.precision > 0) return "highp";
 
-      const mediumPrecision = gl.getShaderPrecisionFormat(type, gl.MEDIUM_FLOAT);
-      if (mediumPrecision && mediumPrecision.precision > 0) return 'mediump';
+      const mediumPrecision = gl.getShaderPrecisionFormat(
+        type,
+        gl.MEDIUM_FLOAT,
+      );
+      if (mediumPrecision && mediumPrecision.precision > 0) return "mediump";
     }
 
-    return 'lowp';
+    return "lowp";
   }
 
   // GPU-accelerated texture compression
   async compressTexture(
     texture: THREE.Texture,
-    _format: 'astc' | 'etc' | 'dxt' | 'fallback' = 'fallback'
+    _format: "astc" | "etc" | "dxt" | "fallback" = "fallback",
   ): Promise<THREE.Texture> {
     // GPU texture compression not fully implemented yet
     // Return original texture for now
@@ -71,31 +76,37 @@ export class GPUAccelerator {
     const extensions = this.capabilities.extensions;
 
     switch (format) {
-      case 'astc':
-        if (extensions.includes('WEBGL_compressed_texture_astc')) {
-          return 'astc';
+      case "astc":
+        if (extensions.includes("WEBGL_compressed_texture_astc")) {
+          return "astc";
         }
         break;
-      case 'etc':
-        if (extensions.includes('WEBGL_compressed_texture_etc') ||
-            extensions.includes('WEBGL_compressed_texture_etc1')) {
-          return 'etc';
+      case "etc":
+        if (
+          extensions.includes("WEBGL_compressed_texture_etc") ||
+          extensions.includes("WEBGL_compressed_texture_etc1")
+        ) {
+          return "etc";
         }
         break;
-      case 'dxt':
-        if (extensions.includes('WEBGL_compressed_texture_s3tc') ||
-            extensions.includes('WEBKIT_WEBGL_compressed_texture_pvrtc')) {
-          return 'dxt';
+      case "dxt":
+        if (
+          extensions.includes("WEBGL_compressed_texture_s3tc") ||
+          extensions.includes("WEBKIT_WEBGL_compressed_texture_pvrtc")
+        ) {
+          return "dxt";
         }
         break;
     }
 
-    return 'fallback';
+    return "fallback";
   }
 
-
   // GPU-accelerated geometry processing
-  async processGeometry(geometry: THREE.BufferGeometry, _operation: string): Promise<THREE.BufferGeometry> {
+  async processGeometry(
+    geometry: THREE.BufferGeometry,
+    _operation: string,
+  ): Promise<THREE.BufferGeometry> {
     // This would use WebGL compute shaders or transform feedback
     // For now, return the original geometry
     return geometry;
@@ -104,15 +115,18 @@ export class GPUAccelerator {
   // Check if GPU acceleration is available and beneficial
   static isAccelerationAvailable(): boolean {
     try {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+      const canvas = document.createElement("canvas");
+      const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
       return !!gl;
     } catch {
       return false;
     }
   }
 
-  static shouldUseAcceleration(modelSize: number, deviceMemory: number): boolean {
+  static shouldUseAcceleration(
+    modelSize: number,
+    deviceMemory: number,
+  ): boolean {
     // Use GPU acceleration for large models on capable devices
     const minModelSize = 100000; // triangles
     const minMemory = 1024 * 1024 * 1024; // 1GB
@@ -133,13 +147,14 @@ export class GPUAccelerator {
 // Performance monitoring for GPU operations
 export class GPUMonitor {
   private gl: WebGLRenderingContext | WebGL2RenderingContext;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   private queryExt: any;
 
   constructor(gl: WebGLRenderingContext | WebGL2RenderingContext) {
     this.gl = gl;
-    this.queryExt = gl.getExtension('EXT_disjoint_timer_query_webgl2') ||
-                   gl.getExtension('EXT_disjoint_timer_query');
+    this.queryExt =
+      gl.getExtension("EXT_disjoint_timer_query_webgl2") ||
+      gl.getExtension("EXT_disjoint_timer_query");
   }
 
   beginQuery(): void {

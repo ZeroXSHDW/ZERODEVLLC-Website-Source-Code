@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import { lazy } from "react";
 
 // Route-based code splitting (for future use)
 // export const routes = {
@@ -9,28 +9,28 @@ import { lazy } from 'react';
 // Feature-based code splitting
 export const features = {
   // Core 3D features
-  threeCore: () => import('three'),
-  drei: () => import('@react-three/drei'),
-  fiber: () => import('@react-three/fiber'),
+  threeCore: () => import("three"),
+  drei: () => import("@react-three/drei"),
+  fiber: () => import("@react-three/fiber"),
 
   // Advanced features loaded on demand
-  xr: () => import('@react-three/xr'),
-  postprocessing: () => import('@react-three/postprocessing'),
+  xr: () => import("@react-three/xr"),
+  postprocessing: () => import("@react-three/postprocessing"),
 
   // UI libraries loaded progressively
-  framerMotion: () => import('framer-motion'),
-  lucideIcons: () => import('lucide-react'),
-  sonner: () => import('sonner'),
+  framerMotion: () => import("framer-motion"),
+  lucideIcons: () => import("lucide-react"),
+  sonner: () => import("sonner"),
 
   // Utilities
-  dracoLoader: () => import('three/examples/jsm/loaders/DRACOLoader.js'),
-  gltfLoader: () => import('three/examples/jsm/loaders/GLTFLoader.js'),
+  dracoLoader: () => import("three/examples/jsm/loaders/DRACOLoader.js"),
+  gltfLoader: () => import("three/examples/jsm/loaders/GLTFLoader.js"),
 };
 
 // Dynamic component loader with error boundaries
 // Note: JSX removed to keep this as a .ts file
 export function createLazyComponent<T extends React.ComponentType<unknown>>(
-  importFunc: () => Promise<{ default: T }>
+  importFunc: () => Promise<{ default: T }>,
 ) {
   return lazy(importFunc);
 }
@@ -39,11 +39,13 @@ export function createLazyComponent<T extends React.ComponentType<unknown>>(
 export const loadStrategy = {
   // Load immediately on fast devices
   immediate: async (imports: (() => Promise<unknown>)[]) => {
-    return Promise.all(imports.map(imp => imp()));
+    return Promise.all(imports.map((imp) => imp()));
   },
 
   // Load with priority queue
-  prioritized: async (imports: { import: () => Promise<unknown>; priority: number }[]) => {
+  prioritized: async (
+    imports: { import: () => Promise<unknown>; priority: number }[],
+  ) => {
     const sortedImports = imports.sort((a, b) => a.priority - b.priority);
     const results = [];
 
@@ -52,7 +54,7 @@ export const loadStrategy = {
         const result = await item.import();
         results.push(result);
       } catch (error) {
-        console.warn('Failed to load prioritized import:', error);
+        console.warn("Failed to load prioritized import:", error);
       }
     }
 
@@ -62,20 +64,20 @@ export const loadStrategy = {
   // Load on user interaction
   onInteraction: (imports: (() => Promise<unknown>)[]) => {
     const loadOnInteraction = () => {
-      imports.forEach(imp =>
+      imports.forEach((imp) =>
         imp().catch(() => {
           // Failed to load on interaction - continue silently
-        })
+        }),
       );
     };
 
-    const events = ['mousedown', 'touchstart', 'keydown', 'scroll'];
-    events.forEach(event => {
+    const events = ["mousedown", "touchstart", "keydown", "scroll"];
+    events.forEach((event) => {
       document.addEventListener(event, loadOnInteraction, { once: true });
     });
 
     return () => {
-      events.forEach(event => {
+      events.forEach((event) => {
         document.removeEventListener(event, loadOnInteraction);
       });
     };
@@ -83,13 +85,15 @@ export const loadStrategy = {
 
   // Load based on network conditions
   networkAware: async (imports: (() => Promise<unknown>)[]) => {
-    if ('connection' in navigator) {
+    if ("connection" in navigator) {
       const connection = (
-        navigator as unknown as { connection: { effectiveType: string; downlink: number } }
+        navigator as unknown as {
+          connection: { effectiveType: string; downlink: number };
+        }
       ).connection;
       const isSlowConnection =
-        connection.effectiveType === 'slow-2g' ||
-        connection.effectiveType === '2g' ||
+        connection.effectiveType === "slow-2g" ||
+        connection.effectiveType === "2g" ||
         connection.downlink < 1;
 
       if (isSlowConnection) {
@@ -100,7 +104,7 @@ export const loadStrategy = {
             const result = await imp();
             results.push(result);
           } catch (error) {
-            console.warn('Failed to load import on slow connection:', error);
+            console.warn("Failed to load import on slow connection:", error);
           }
         }
         return results;
@@ -108,17 +112,18 @@ export const loadStrategy = {
     }
 
     // Load in parallel on fast connections
-    return Promise.allSettled(imports.map(imp => imp()));
+    return Promise.allSettled(imports.map((imp) => imp()));
   },
 };
 
 // Automatic bundle splitting based on route and user behavior
 export const setupAutomaticSplitting = () => {
   // Detect device capabilities
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  );
-  const hasTouch = 'ontouchstart' in window;
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent,
+    );
+  const hasTouch = "ontouchstart" in window;
 
   // Load appropriate bundles based on device
   if (isMobile || hasTouch) {
@@ -146,13 +151,13 @@ export const setupAutomaticSplitting = () => {
     }, 2000);
   };
 
-  const engagementEvents = ['click', 'touchstart', 'keydown', 'scroll'];
-  engagementEvents.forEach(event => {
+  const engagementEvents = ["click", "touchstart", "keydown", "scroll"];
+  engagementEvents.forEach((event) => {
     document.addEventListener(event, handleEngagement, { once: true });
   });
 
   return () => {
-    engagementEvents.forEach(event => {
+    engagementEvents.forEach((event) => {
       document.removeEventListener(event, handleEngagement);
     });
   };
@@ -165,7 +170,7 @@ export const createPerformanceAwareLoader = <T>(
     timeout?: number;
     retries?: number;
     fallback?: T;
-  } = {}
+  } = {},
 ) => {
   const { timeout = 10000, retries = 2, fallback } = options;
 
@@ -175,7 +180,7 @@ export const createPerformanceAwareLoader = <T>(
         const result = await Promise.race([
           loadFunction(),
           new Promise<never>((_, reject) =>
-            setTimeout(() => reject(new Error('Load timeout')), timeout)
+            setTimeout(() => reject(new Error("Load timeout")), timeout),
           ),
         ]);
         return result;
@@ -183,15 +188,17 @@ export const createPerformanceAwareLoader = <T>(
         console.warn(`Load attempt ${attempt + 1} failed:`, error);
         if (attempt === retries) {
           if (fallback !== undefined) {
-            console.warn('Using fallback value');
+            console.warn("Using fallback value");
             return fallback;
           }
           throw error;
         }
         // Exponential backoff
-        await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
+        await new Promise((resolve) =>
+          setTimeout(resolve, Math.pow(2, attempt) * 1000),
+        );
       }
     }
-    throw new Error('All load attempts failed');
+    throw new Error("All load attempts failed");
   };
 };

@@ -3,8 +3,8 @@
  * Optimizes rendering of repeated objects using instancing
  */
 
-import * as THREE from 'three';
-import { log } from './logger';
+import * as THREE from "three";
+import { log } from "./logger";
 
 interface InstancingOptions {
   maxInstances?: number;
@@ -18,15 +18,16 @@ export function createInstancedMesh(
   geometry: THREE.BufferGeometry,
   material: THREE.Material,
   count: number,
-  options: InstancingOptions = {}
+  options: InstancingOptions = {},
 ): THREE.InstancedMesh {
-  const {
-    maxInstances = 1000,
-    enableFrustumCulling = true,
-  } = options;
+  const { maxInstances = 1000, enableFrustumCulling = true } = options;
 
   const instanceCount = Math.min(count, maxInstances);
-  const instancedMesh = new THREE.InstancedMesh(geometry, material, instanceCount);
+  const instancedMesh = new THREE.InstancedMesh(
+    geometry,
+    material,
+    instanceCount,
+  );
 
   // Set up instance matrices
   const matrix = new THREE.Matrix4();
@@ -51,7 +52,11 @@ export function createInstancedMesh(
  */
 export function updateInstanceTransforms(
   instancedMesh: THREE.InstancedMesh,
-  transforms: Array<{ position?: [number, number, number]; rotation?: [number, number, number]; scale?: [number, number, number] }>
+  transforms: Array<{
+    position?: [number, number, number];
+    rotation?: [number, number, number];
+    scale?: [number, number, number];
+  }>,
 ): void {
   const matrix = new THREE.Matrix4();
   const count = Math.min(transforms.length, instancedMesh.count);
@@ -81,15 +86,15 @@ export function updateInstanceTransforms(
  */
 export function optimizeSceneWithInstancing(
   scene: THREE.Scene,
-  threshold: number = 5 // Minimum number of identical meshes to instance
+  threshold: number = 5, // Minimum number of identical meshes to instance
 ): void {
   const meshGroups = new Map<string, THREE.Mesh[]>();
 
   // Group identical meshes
   scene.traverse((object) => {
     if (object instanceof THREE.Mesh && object.geometry && object.material) {
-      const key = `${object.geometry.uuid}_${object.material instanceof THREE.Material ? object.material.uuid : 'multi'}`;
-      
+      const key = `${object.geometry.uuid}_${object.material instanceof THREE.Material ? object.material.uuid : "multi"}`;
+
       if (!meshGroups.has(key)) {
         meshGroups.set(key, []);
       }
@@ -97,34 +102,42 @@ export function optimizeSceneWithInstancing(
     }
   });
 
-      // Convert groups with enough meshes to instanced meshes
-      meshGroups.forEach((meshes, key) => {
-        if (meshes.length >= threshold) {
-          const firstMesh = meshes[0];
-          const geometry = firstMesh.geometry;
-          const material = firstMesh.material instanceof THREE.Material ? firstMesh.material : firstMesh.material[0];
+  // Convert groups with enough meshes to instanced meshes
+  meshGroups.forEach((meshes, key) => {
+    if (meshes.length >= threshold) {
+      const firstMesh = meshes[0];
+      const geometry = firstMesh.geometry;
+      const material =
+        firstMesh.material instanceof THREE.Material
+          ? firstMesh.material
+          : firstMesh.material[0];
 
-          // Create instanced mesh
-          const instancedMesh = createInstancedMesh(geometry, material, meshes.length);
+      // Create instanced mesh
+      const instancedMesh = createInstancedMesh(
+        geometry,
+        material,
+        meshes.length,
+      );
 
-          // Use world matrices for instancing to handle different parents
-          meshes.forEach((mesh, i) => {
-            mesh.updateMatrixWorld();
-            instancedMesh.setMatrixAt(i, mesh.matrixWorld);
-          });
-          instancedMesh.instanceMatrix.needsUpdate = true;
-
-          // Add to the scene root or a common parent to maintain world positions
-          scene.add(instancedMesh);
-          
-          // Hide original meshes instead of removing to maintain scene structure if needed,
-          // but for optimization, removing is better. Let's remove but be careful.
-          meshes.forEach(mesh => {
-            if (mesh.parent) mesh.parent.remove(mesh);
-          });
-
-          log.debug(`Optimized ${meshes.length} meshes into instanced mesh (key: ${key})`);
-        }
+      // Use world matrices for instancing to handle different parents
+      meshes.forEach((mesh, i) => {
+        mesh.updateMatrixWorld();
+        instancedMesh.setMatrixAt(i, mesh.matrixWorld);
       });
-}
+      instancedMesh.instanceMatrix.needsUpdate = true;
 
+      // Add to the scene root or a common parent to maintain world positions
+      scene.add(instancedMesh);
+
+      // Hide original meshes instead of removing to maintain scene structure if needed,
+      // but for optimization, removing is better. Let's remove but be careful.
+      meshes.forEach((mesh) => {
+        if (mesh.parent) mesh.parent.remove(mesh);
+      });
+
+      log.debug(
+        `Optimized ${meshes.length} meshes into instanced mesh (key: ${key})`,
+      );
+    }
+  });
+}

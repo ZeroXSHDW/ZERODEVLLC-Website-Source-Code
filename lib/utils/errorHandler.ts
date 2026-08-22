@@ -1,4 +1,4 @@
-import type { ModelError } from '@/lib/types/3d';
+import type { ModelError } from "@/lib/types/3d";
 
 export interface RetryOptions {
   maxRetries?: number;
@@ -24,50 +24,78 @@ export class ErrorHandler {
     const message = error.message.toLowerCase();
 
     // Network errors
-    if (message.includes('network') || message.includes('fetch') || message.includes('404') || message.includes('500')) {
+    if (
+      message.includes("network") ||
+      message.includes("fetch") ||
+      message.includes("404") ||
+      message.includes("500")
+    ) {
       return {
-        type: 'network',
-        message: 'Network error while loading model. Please check your connection.',
+        type: "network",
+        message:
+          "Network error while loading model. Please check your connection.",
         originalError: error,
         recoverable: true,
       };
     }
 
     // Memory errors
-    if (message.includes('memory') || message.includes('out of memory') || message.includes('allocation failed')) {
+    if (
+      message.includes("memory") ||
+      message.includes("out of memory") ||
+      message.includes("allocation failed")
+    ) {
       return {
-        type: 'memory',
-        message: 'Not enough memory to load this model. Try a simpler model or free up system memory.',
+        type: "memory",
+        message:
+          "Not enough memory to load this model. Try a simpler model or free up system memory.",
         originalError: error,
         recoverable: false,
       };
     }
 
     // Parse errors
-    if (message.includes('parse') || message.includes('invalid') || message.includes('corrupt') || message.includes('malformed')) {
+    if (
+      message.includes("parse") ||
+      message.includes("invalid") ||
+      message.includes("corrupt") ||
+      message.includes("malformed")
+    ) {
       return {
-        type: 'parse',
-        message: 'Model file appears to be corrupted or in an unsupported format.',
+        type: "parse",
+        message:
+          "Model file appears to be corrupted or in an unsupported format.",
         originalError: error,
         recoverable: false,
       };
     }
 
     // Load errors
-    if (message.includes('load') || message.includes('timeout') || message.includes('abort')) {
+    if (
+      message.includes("load") ||
+      message.includes("timeout") ||
+      message.includes("abort")
+    ) {
       return {
-        type: 'load',
-        message: 'Failed to load model file. The file may be missing or inaccessible.',
+        type: "load",
+        message:
+          "Failed to load model file. The file may be missing or inaccessible.",
         originalError: error,
         recoverable: true,
       };
     }
 
     // Render errors
-    if (message.includes('render') || message.includes('webgl') || message.includes('shader') || message.includes('context')) {
+    if (
+      message.includes("render") ||
+      message.includes("webgl") ||
+      message.includes("shader") ||
+      message.includes("context")
+    ) {
       return {
-        type: 'render',
-        message: 'Rendering error. Your graphics card may not support this feature.',
+        type: "render",
+        message:
+          "Rendering error. Your graphics card may not support this feature.",
         originalError: error,
         recoverable: false,
       };
@@ -75,8 +103,8 @@ export class ErrorHandler {
 
     // Generic error
     return {
-      type: 'load',
-      message: 'An unexpected error occurred while loading the model.',
+      type: "load",
+      message: "An unexpected error occurred while loading the model.",
       originalError: error,
       recoverable: true,
     };
@@ -87,7 +115,7 @@ export class ErrorHandler {
    */
   static async withRetry<T>(
     operation: () => Promise<T>,
-    options: RetryOptions = {}
+    options: RetryOptions = {},
   ): Promise<T> {
     const {
       maxRetries = 3,
@@ -111,15 +139,20 @@ export class ErrorHandler {
         }
 
         // Calculate delay with exponential backoff
-        const delay = Math.min(baseDelay * Math.pow(backoffFactor, attempt), maxDelay);
+        const delay = Math.min(
+          baseDelay * Math.pow(backoffFactor, attempt),
+          maxDelay,
+        );
 
         // Use logger instead of console.warn (will be imported where needed)
-        if (typeof window !== 'undefined') {
-          // eslint-disable-next-line no-console
-          console.warn(`Operation failed (attempt ${attempt + 1}/${maxRetries + 1}), retrying in ${delay}ms:`, lastError.message);
+        if (typeof window !== "undefined") {
+          console.warn(
+            `Operation failed (attempt ${attempt + 1}/${maxRetries + 1}), retrying in ${delay}ms:`,
+            lastError.message,
+          );
         }
 
-        await new Promise(resolve => setTimeout(resolve, delay));
+        await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }
 
@@ -136,7 +169,7 @@ export class ErrorHandler {
       failureThreshold: 5,
       recoveryTimeout: 60000,
       monitoringPeriod: 10000,
-    }
+    },
   ): Promise<T> {
     let breaker = this.circuitBreakers.get(key);
 
@@ -158,43 +191,48 @@ export class ErrorHandler {
     retryable: boolean;
   } {
     switch (error.type) {
-      case 'network':
+      case "network":
         return {
-          title: 'Connection Error',
-          message: 'Unable to download the model. Please check your internet connection and try again.',
-          action: 'Retry',
+          title: "Connection Error",
+          message:
+            "Unable to download the model. Please check your internet connection and try again.",
+          action: "Retry",
           retryable: true,
         };
 
-      case 'memory':
+      case "memory":
         return {
-          title: 'Memory Error',
-          message: 'Your device doesn\'t have enough memory to load this model. Try closing other applications or use a simpler model.',
-          action: 'Close other apps',
+          title: "Memory Error",
+          message:
+            "Your device doesn't have enough memory to load this model. Try closing other applications or use a simpler model.",
+          action: "Close other apps",
           retryable: false,
         };
 
-      case 'parse':
+      case "parse":
         return {
-          title: 'Invalid File',
-          message: 'The model file appears to be corrupted or in an unsupported format. Please check the file and try again.',
-          action: 'Choose different file',
+          title: "Invalid File",
+          message:
+            "The model file appears to be corrupted or in an unsupported format. Please check the file and try again.",
+          action: "Choose different file",
           retryable: false,
         };
 
-      case 'render':
+      case "render":
         return {
-          title: 'Graphics Error',
-          message: 'Your graphics card doesn\'t support this feature. Try updating your drivers or using a different device.',
-          action: 'Update drivers',
+          title: "Graphics Error",
+          message:
+            "Your graphics card doesn't support this feature. Try updating your drivers or using a different device.",
+          action: "Update drivers",
           retryable: false,
         };
 
       default:
         return {
-          title: 'Loading Error',
-          message: 'An unexpected error occurred while loading the model. Please try again.',
-          action: 'Retry',
+          title: "Loading Error",
+          message:
+            "An unexpected error occurred while loading the model. Please try again.",
+          action: "Retry",
           retryable: error.recoverable,
         };
     }
@@ -210,28 +248,29 @@ export class ErrorHandler {
       recoverable: error.recoverable,
       context,
       timestamp: new Date().toISOString(),
-      userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'unknown',
+      userAgent:
+        typeof navigator !== "undefined" ? navigator.userAgent : "unknown",
     };
 
     // Use logger instead of console
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       // Dynamic import to avoid circular dependencies
-      import('@/lib/utils/logger').then(({ log }) => {
-        if (error.type === 'memory' || error.type === 'render') {
-          log.error('Critical model error:', logData);
-        } else {
-          log.warn('Model loading error:', logData);
-        }
-      }).catch(() => {
-        // Fallback if logger fails to load
-        if (error.type === 'memory' || error.type === 'render') {
-          // eslint-disable-next-line no-console
-          console.error('Critical model error:', logData);
-        } else {
-          // eslint-disable-next-line no-console
-          console.warn('Model loading error:', logData);
-        }
-      });
+      import("@/lib/utils/logger")
+        .then(({ log }) => {
+          if (error.type === "memory" || error.type === "render") {
+            log.error("Critical model error:", logData);
+          } else {
+            log.warn("Model loading error:", logData);
+          }
+        })
+        .catch(() => {
+          // Fallback if logger fails to load
+          if (error.type === "memory" || error.type === "render") {
+            console.error("Critical model error:", logData);
+          } else {
+            console.warn("Model loading error:", logData);
+          }
+        });
     }
 
     // In production, you might want to send this to an error reporting service
@@ -242,16 +281,16 @@ export class ErrorHandler {
 class CircuitBreaker {
   private failures = 0;
   private lastFailureTime = 0;
-  private state: 'closed' | 'open' | 'half-open' = 'closed';
+  private state: "closed" | "open" | "half-open" = "closed";
 
   constructor(private options: CircuitBreakerOptions) {}
 
   async execute<T>(operation: () => Promise<T>): Promise<T> {
-    if (this.state === 'open') {
+    if (this.state === "open") {
       if (Date.now() - this.lastFailureTime > this.options.recoveryTimeout) {
-        this.state = 'half-open';
+        this.state = "half-open";
       } else {
-        throw new Error('Circuit breaker is open');
+        throw new Error("Circuit breaker is open");
       }
     }
 
@@ -267,7 +306,7 @@ class CircuitBreaker {
 
   private onSuccess(): void {
     this.failures = 0;
-    this.state = 'closed';
+    this.state = "closed";
   }
 
   private onFailure(): void {
@@ -275,7 +314,7 @@ class CircuitBreaker {
     this.lastFailureTime = Date.now();
 
     if (this.failures >= this.options.failureThreshold) {
-      this.state = 'open';
+      this.state = "open";
     }
   }
 }
@@ -285,22 +324,22 @@ export type { ModelError };
 
 // Utility functions for common error handling patterns
 export const retryModelLoad = async <T>(
-  loadFunction: () => Promise<T>
+  loadFunction: () => Promise<T>,
 ): Promise<T> => {
-  return ErrorHandler.withRetry(
-    loadFunction,
-    {
-      maxRetries: 3,
-      baseDelay: 1000,
-      retryCondition: (error) => {
-        const classified = ErrorHandler.classifyError(error);
-        return classified.recoverable && classified.type === 'network';
-      },
-    }
-  );
+  return ErrorHandler.withRetry(loadFunction, {
+    maxRetries: 3,
+    baseDelay: 1000,
+    retryCondition: (error) => {
+      const classified = ErrorHandler.classifyError(error);
+      return classified.recoverable && classified.type === "network";
+    },
+  });
 };
 
-export const handleModelError = (error: Error, context?: Record<string, unknown>): ModelError => {
+export const handleModelError = (
+  error: Error,
+  context?: Record<string, unknown>,
+): ModelError => {
   const classified = ErrorHandler.classifyError(error);
   ErrorHandler.logError(classified, context);
   return classified;

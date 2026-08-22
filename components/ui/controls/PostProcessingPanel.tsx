@@ -1,4 +1,4 @@
-import { ViewerSettings } from '@/lib/types/3d';
+import { ViewerSettings } from "@/lib/types/3d";
 
 interface PostProcessingPanelProps {
   currentSettings: ViewerSettings;
@@ -23,19 +23,22 @@ export function PostProcessingPanel({
               onPostProcessingChange?.({
                 toneMapping: {
                   ...currentSettings?.postProcessing?.toneMapping,
-                  enabled: !currentSettings?.postProcessing?.toneMapping?.enabled,
+                  enabled:
+                    !currentSettings?.postProcessing?.toneMapping?.enabled,
                 },
               })
             }
             className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-              currentSettings?.postProcessing?.toneMapping?.enabled ? 'bg-blue-600' : 'bg-gray-600'
+              currentSettings?.postProcessing?.toneMapping?.enabled
+                ? "bg-blue-600"
+                : "bg-gray-600"
             }`}
           >
             <span
               className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
                 currentSettings?.postProcessing?.toneMapping?.enabled
-                  ? 'translate-x-6'
-                  : 'translate-x-1'
+                  ? "translate-x-6"
+                  : "translate-x-1"
               }`}
             />
           </button>
@@ -45,15 +48,20 @@ export function PostProcessingPanel({
         {currentSettings?.postProcessing?.toneMapping?.enabled && (
           <div>
             <label className="block text-sm text-gray-300 mb-2">
-              Exposure: {(currentSettings?.postProcessing?.toneMapping?.exposure || 1.0).toFixed(1)}
+              Exposure:{" "}
+              {(
+                currentSettings?.postProcessing?.toneMapping?.exposure || 1.0
+              ).toFixed(1)}
             </label>
             <input
               type="range"
               min="0.1"
               max="3"
               step="0.1"
-              value={currentSettings?.postProcessing?.toneMapping?.exposure || 1.0}
-              onChange={e =>
+              value={
+                currentSettings?.postProcessing?.toneMapping?.exposure || 1.0
+              }
+              onChange={(e) =>
                 onPostProcessingChange?.({
                   toneMapping: {
                     ...currentSettings?.postProcessing?.toneMapping,

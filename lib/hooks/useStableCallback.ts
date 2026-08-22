@@ -3,15 +3,15 @@
  * Useful for preventing unnecessary re-renders of memoized components
  */
 
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback } from "react";
 
 /**
  * Creates a stable callback that always calls the latest version of the function
  * without causing re-renders when the function reference changes
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 export function useStableCallback<T extends (...args: any[]) => any>(
-  callback: T
+  callback: T,
 ): T {
   const callbackRef = useRef(callback);
 
@@ -19,12 +19,11 @@ export function useStableCallback<T extends (...args: any[]) => any>(
   callbackRef.current = callback;
 
   // Return stable callback that always calls the latest version
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   return useCallback(
     ((...args: Parameters<T>) => {
       return callbackRef.current(...args);
     }) as T,
-    [] // Empty deps - callback never changes (intentional)
+    [], // Empty deps - callback never changes (intentional)
   );
 }
-

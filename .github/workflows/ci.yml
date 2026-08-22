@@ -26,9 +26,20 @@ jobs:
         env:
           HUSKY: "0"
 
-      # Lint has no committed ESLint config (next lint prompts interactively).
       - name: Type check
         run: npm run type-check
 
+      - name: Lint
+        run: npm run lint
+
+      - name: Format check
+        run: npm run format:check
+
+      - name: Dependency audit
+        run: npm audit --audit-level=high
+
       - name: Unit tests
         run: npm test -- --ci
+
+      - name: Production build
+        run: npm run build

@@ -1,7 +1,7 @@
 "use client";
 
-import { memo, useMemo } from 'react';
-import { LIGHTING_CONFIG } from '@/config/three';
+import { memo, useMemo } from "react";
+import { LIGHTING_CONFIG } from "@/config/three";
 
 interface LightingProps {
   ambientIntensity?: number;
@@ -17,7 +17,10 @@ export const Lighting = memo(function Lighting({
   performanceMode = false,
 }: LightingProps = {}) {
   // Adaptive shadow map size based on performance mode
-  const shadowMapSize = useMemo(() => performanceMode ? 1024 : 2048, [performanceMode]);
+  const shadowMapSize = useMemo(
+    () => (performanceMode ? 1024 : 2048),
+    [performanceMode],
+  );
 
   return (
     <>
@@ -28,7 +31,9 @@ export const Lighting = memo(function Lighting({
       <directionalLight
         position={LIGHTING_CONFIG.directional.primary.position}
         intensity={directionalIntensity}
-        castShadow={LIGHTING_CONFIG.directional.primary.castShadow && !performanceMode}
+        castShadow={
+          LIGHTING_CONFIG.directional.primary.castShadow && !performanceMode
+        }
         shadow-mapSize={[shadowMapSize, shadowMapSize]}
         shadow-camera-far={50}
         shadow-camera-left={-10}

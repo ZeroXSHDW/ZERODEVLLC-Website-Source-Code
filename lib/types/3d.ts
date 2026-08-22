@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from "three";
 
 // Core 3D Types
 export interface Vector3D {
@@ -50,7 +50,7 @@ export interface PerformanceMetrics {
 }
 
 export interface PerformanceSettings {
-  mode: 'normal' | 'performance';
+  mode: "normal" | "performance";
   targetFps: number;
   maxMemoryUsage?: number;
   enableInstancing: boolean;
@@ -69,7 +69,17 @@ export interface ViewerSettings {
     point: number;
   };
   environment: {
-    preset: 'sunset' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'studio' | 'city' | 'park' | 'lobby';
+    preset:
+      | "sunset"
+      | "dawn"
+      | "night"
+      | "warehouse"
+      | "forest"
+      | "apartment"
+      | "studio"
+      | "city"
+      | "park"
+      | "lobby";
     intensity: number;
     enabled: boolean;
   };
@@ -82,7 +92,7 @@ export interface ViewerSettings {
   performanceMode: boolean;
   lod: {
     enabled: boolean;
-    quality: 'auto' | 'high' | 'medium' | 'low';
+    quality: "auto" | "high" | "medium" | "low";
   };
 }
 
@@ -92,11 +102,14 @@ export interface ModelProps {
   scale?: number;
   autoRotateSpeed?: number;
   lodEnabled?: boolean;
-  lodQuality?: 'auto' | 'high' | 'medium' | 'low';
+  lodQuality?: "auto" | "high" | "medium" | "low";
   onLoad?: (scene: THREE.Group) => void;
   onProgress?: (progress: number) => void;
   onError?: (error: Error) => void;
-  onAnimationsLoaded?: (animations: THREE.AnimationClip[], actions: Record<string, THREE.AnimationAction>) => void;
+  onAnimationsLoaded?: (
+    animations: THREE.AnimationClip[],
+    actions: Record<string, THREE.AnimationAction>,
+  ) => void;
 }
 
 export interface ControlsProps {
@@ -112,7 +125,17 @@ export interface LightingProps {
 }
 
 export interface EnvironmentProps {
-  preset?: 'sunset' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'studio' | 'city' | 'park' | 'lobby';
+  preset?:
+    | "sunset"
+    | "dawn"
+    | "night"
+    | "warehouse"
+    | "forest"
+    | "apartment"
+    | "studio"
+    | "city"
+    | "park"
+    | "lobby";
   enabled?: boolean;
   intensity?: number;
 }
@@ -127,14 +150,14 @@ export interface CanvasConfig {
   shadows: boolean;
   alpha: boolean;
   antialias: boolean;
-  powerPreference: 'default' | 'high-performance' | 'low-power';
+  powerPreference: "default" | "high-performance" | "low-power";
   stencil: boolean;
   depth: boolean;
   logarithmicDepthBuffer: boolean;
 }
 
 export interface RenderSettings {
-  frameloop: 'always' | 'demand' | 'never';
+  frameloop: "always" | "demand" | "never";
   dpr: number;
   camera: {
     fov: number;
@@ -147,7 +170,7 @@ export interface RenderSettings {
 // LOD Types
 export interface LODLevel {
   distance: number;
-  quality: 'high' | 'medium' | 'low';
+  quality: "high" | "medium" | "low";
   maxTriangles?: number;
 }
 
@@ -213,7 +236,7 @@ export interface AnimationControls {
 
 // Error Types
 export interface ModelError {
-  type: 'load' | 'parse' | 'render' | 'memory' | 'network';
+  type: "load" | "parse" | "render" | "memory" | "network";
   message: string;
   originalError?: Error;
   recoverable: boolean;

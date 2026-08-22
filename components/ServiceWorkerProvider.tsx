@@ -1,9 +1,15 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { useServiceWorker } from '@/lib/serviceWorker';
-import { toast } from 'sonner';
-import { log } from '@/lib/utils/logger';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
+import { useServiceWorker } from "@/lib/serviceWorker";
+import { toast } from "sonner";
+import { log } from "@/lib/utils/logger";
 
 interface ServiceWorkerContextType {
   isRegistered: boolean;
@@ -14,12 +20,16 @@ interface ServiceWorkerContextType {
   clearCache: () => Promise<boolean>;
 }
 
-const ServiceWorkerContext = createContext<ServiceWorkerContextType | null>(null);
+const ServiceWorkerContext = createContext<ServiceWorkerContextType | null>(
+  null,
+);
 
 export function useServiceWorkerContext() {
   const context = useContext(ServiceWorkerContext);
   if (!context) {
-    throw new Error('useServiceWorkerContext must be used within ServiceWorkerProvider');
+    throw new Error(
+      "useServiceWorkerContext must be used within ServiceWorkerProvider",
+    );
   }
   return context;
 }
@@ -28,34 +38,44 @@ interface ServiceWorkerProviderProps {
   children: ReactNode;
 }
 
-export function ServiceWorkerProvider({ children }: ServiceWorkerProviderProps) {
+export function ServiceWorkerProvider({
+  children,
+}: ServiceWorkerProviderProps) {
   const [version, setVersion] = useState<string | null>(null);
   const [updateAvailable, setUpdateAvailable] = useState(false);
 
-  const { register, update, getVersion, clearCache, isRegistered, isControlled } = useServiceWorker({
+  const {
+    register,
+    update,
+    getVersion,
+    clearCache,
+    isRegistered,
+    isControlled,
+  } = useServiceWorker({
     onUpdate: (registration) => {
-      log.info('Service worker update available');
+      log.info("Service worker update available");
       setUpdateAvailable(true);
-      toast.info('Update Available', {
-        description: 'A new version is available. Refresh to update.',
+      toast.info("Update Available", {
+        description: "A new version is available. Refresh to update.",
         action: {
-          label: 'Update',
+          label: "Update",
           onClick: () => {
-            registration.waiting?.postMessage({ type: 'SKIP_WAITING' });
+            registration.waiting?.postMessage({ type: "SKIP_WAITING" });
           },
         },
         duration: 10000,
       });
     },
     onSuccess: async () => {
-      log.info('Service worker registered successfully');
+      log.info("Service worker registered successfully");
       const swVersion = await getVersion();
       setVersion(swVersion);
     },
     onError: (error) => {
-      log.error('Service worker registration failed:', error);
-      toast.error('Service Worker Error', {
-        description: 'Failed to register service worker for offline functionality.',
+      log.error("Service worker registration failed:", error);
+      toast.error("Service Worker Error", {
+        description:
+          "Failed to register service worker for offline functionality.",
       });
     },
   });
@@ -68,12 +88,12 @@ export function ServiceWorkerProvider({ children }: ServiceWorkerProviderProps) 
   const handleClearCache = async () => {
     const success = await clearCache();
     if (success) {
-      toast.success('Cache Cleared', {
-        description: 'Application cache has been cleared.',
+      toast.success("Cache Cleared", {
+        description: "Application cache has been cleared.",
       });
     } else {
-      toast.error('Cache Clear Failed', {
-        description: 'Failed to clear application cache.',
+      toast.error("Cache Clear Failed", {
+        description: "Failed to clear application cache.",
       });
     }
     return success;
@@ -81,7 +101,10 @@ export function ServiceWorkerProvider({ children }: ServiceWorkerProviderProps) 
 
   useEffect(() => {
     // Only register service worker in production and when not in development
-    if (process.env.NODE_ENV === 'production' && typeof window !== 'undefined') {
+    if (
+      process.env.NODE_ENV === "production" &&
+      typeof window !== "undefined"
+    ) {
       register();
     }
 

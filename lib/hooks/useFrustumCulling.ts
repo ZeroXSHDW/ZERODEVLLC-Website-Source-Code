@@ -2,10 +2,10 @@
  * Hook for frustum culling optimization
  */
 
-import { useEffect, useRef } from 'react';
-import { useThree, useFrame } from '@react-three/fiber';
-import { frustumCuller } from '@/lib/utils/frustumCulling';
-import { log } from '@/lib/utils/logger';
+import { useEffect, useRef } from "react";
+import { useThree, useFrame } from "@react-three/fiber";
+import { frustumCuller } from "@/lib/utils/frustumCulling";
+import { log } from "@/lib/utils/logger";
 
 interface UseFrustumCullingOptions {
   enabled?: boolean;
@@ -30,14 +30,14 @@ export function useFrustumCulling(options: UseFrustumCullingOptions = {}) {
     if (!enabled) return;
 
     frameCountRef.current++;
-    
+
     // Only update every N frames for performance
     if (frameCountRef.current % updateInterval === 0) {
       frustumCuller.cullScene(scene, camera);
 
       if (logStats) {
         const stats = frustumCuller.getStats();
-        log.debug('Frustum culling stats:', {
+        log.debug("Frustum culling stats:", {
           culled: stats.culledObjects,
           visible: stats.visibleObjects,
           total: stats.totalObjects,
@@ -54,4 +54,3 @@ export function useFrustumCulling(options: UseFrustumCullingOptions = {}) {
     };
   }, [scene]);
 }
-

@@ -3,7 +3,7 @@
  * Respects environment and provides structured logging
  */
 
-type LogLevel = 'debug' | 'info' | 'warn' | 'error';
+type LogLevel = "debug" | "info" | "warn" | "error";
 
 interface LoggerConfig {
   level: LogLevel;
@@ -22,41 +22,45 @@ class Logger {
   private isDevelopment: boolean;
 
   constructor() {
-    this.isDevelopment = process.env.NODE_ENV === 'development';
+    this.isDevelopment = process.env.NODE_ENV === "development";
     this.config = {
-      level: this.isDevelopment ? 'debug' : 'warn',
+      level: this.isDevelopment ? "debug" : "warn",
       enableInProduction: false,
     };
   }
 
   private shouldLog(level: LogLevel): boolean {
     if (!this.isDevelopment && !this.config.enableInProduction) {
-      return level === 'error' || level === 'warn';
+      return level === "error" || level === "warn";
     }
     return LOG_LEVELS[level] >= LOG_LEVELS[this.config.level];
   }
 
-  private formatMessage(level: LogLevel, message: string, ...args: unknown[]): void {
+  private formatMessage(
+    level: LogLevel,
+    message: string,
+    ...args: unknown[]
+  ): void {
     const timestamp = new Date().toISOString();
     const prefix = `[${timestamp}] [${level.toUpperCase()}]`;
 
     switch (level) {
-      case 'debug':
+      case "debug":
         if (this.shouldLog(level)) {
           console.debug(prefix, message, ...args);
         }
         break;
-      case 'info':
+      case "info":
         if (this.shouldLog(level)) {
           console.info(prefix, message, ...args);
         }
         break;
-      case 'warn':
+      case "warn":
         if (this.shouldLog(level)) {
           console.warn(prefix, message, ...args);
         }
         break;
-      case 'error':
+      case "error":
         if (this.shouldLog(level)) {
           console.error(prefix, message, ...args);
         }
@@ -65,19 +69,19 @@ class Logger {
   }
 
   debug(message: string, ...args: unknown[]): void {
-    this.formatMessage('debug', message, ...args);
+    this.formatMessage("debug", message, ...args);
   }
 
   info(message: string, ...args: unknown[]): void {
-    this.formatMessage('info', message, ...args);
+    this.formatMessage("info", message, ...args);
   }
 
   warn(message: string, ...args: unknown[]): void {
-    this.formatMessage('warn', message, ...args);
+    this.formatMessage("warn", message, ...args);
   }
 
   error(message: string, ...args: unknown[]): void {
-    this.formatMessage('error', message, ...args);
+    this.formatMessage("error", message, ...args);
   }
 
   setLevel(level: LogLevel): void {
@@ -97,9 +101,10 @@ export const logger = new Logger();
 
 // Export convenience functions
 export const log = {
-  debug: (message: string, ...args: unknown[]) => logger.debug(message, ...args),
+  debug: (message: string, ...args: unknown[]) =>
+    logger.debug(message, ...args),
   info: (message: string, ...args: unknown[]) => logger.info(message, ...args),
   warn: (message: string, ...args: unknown[]) => logger.warn(message, ...args),
-  error: (message: string, ...args: unknown[]) => logger.error(message, ...args),
+  error: (message: string, ...args: unknown[]) =>
+    logger.error(message, ...args),
 };
-

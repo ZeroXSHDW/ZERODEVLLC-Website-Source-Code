@@ -1,13 +1,13 @@
-import { memoryManager } from '../memoryManager';
-import * as THREE from 'three';
+import { memoryManager } from "../memoryManager";
+import * as THREE from "three";
 
-describe('MemoryManager', () => {
+describe("MemoryManager", () => {
   beforeEach(() => {
     memoryManager.reset();
   });
 
-  describe('disposeObject', () => {
-    it('should dispose a simple mesh', () => {
+  describe("disposeObject", () => {
+    it("should dispose a simple mesh", () => {
       const geometry = new THREE.BoxGeometry(1, 1, 1);
       const material = new THREE.MeshStandardMaterial();
       const mesh = new THREE.Mesh(geometry, material);
@@ -15,7 +15,7 @@ describe('MemoryManager', () => {
       expect(() => memoryManager.disposeObject(mesh)).not.toThrow();
     });
 
-    it('should dispose a group with children', () => {
+    it("should dispose a group with children", () => {
       const group = new THREE.Group();
       const geometry = new THREE.BoxGeometry(1, 1, 1);
       const material = new THREE.MeshStandardMaterial();
@@ -25,7 +25,7 @@ describe('MemoryManager', () => {
       expect(() => memoryManager.disposeObject(group)).not.toThrow();
     });
 
-    it('should not dispose the same object twice', () => {
+    it("should not dispose the same object twice", () => {
       const geometry = new THREE.BoxGeometry(1, 1, 1);
       const material = new THREE.MeshStandardMaterial();
       const mesh = new THREE.Mesh(geometry, material);
@@ -40,35 +40,35 @@ describe('MemoryManager', () => {
     });
   });
 
-  describe('disposeGeometry', () => {
-    it('should dispose a geometry', () => {
+  describe("disposeGeometry", () => {
+    it("should dispose a geometry", () => {
       const geometry = new THREE.BoxGeometry(1, 1, 1);
       expect(() => memoryManager.disposeGeometry(geometry)).not.toThrow();
     });
   });
 
-  describe('disposeMaterial', () => {
-    it('should dispose a material', () => {
+  describe("disposeMaterial", () => {
+    it("should dispose a material", () => {
       const material = new THREE.MeshStandardMaterial();
       expect(() => memoryManager.disposeMaterial(material)).not.toThrow();
     });
 
-    it('should dispose material textures', () => {
+    it("should dispose material textures", () => {
       const texture = new THREE.Texture();
       const material = new THREE.MeshStandardMaterial({ map: texture });
       expect(() => memoryManager.disposeMaterial(material)).not.toThrow();
     });
   });
 
-  describe('disposeTexture', () => {
-    it('should dispose a texture', () => {
+  describe("disposeTexture", () => {
+    it("should dispose a texture", () => {
       const texture = new THREE.Texture();
       expect(() => memoryManager.disposeTexture(texture)).not.toThrow();
     });
   });
 
-  describe('getMemoryStats', () => {
-    it('should return memory statistics', () => {
+  describe("getMemoryStats", () => {
+    it("should return memory statistics", () => {
       // Avoid constructing a real WebGLRenderer in jsdom; exercise the stats shape only
       const renderer = {
         info: {
@@ -80,18 +80,18 @@ describe('MemoryManager', () => {
 
       const stats = memoryManager.getMemoryStats(renderer);
 
-      expect(stats).toHaveProperty('geometries');
-      expect(stats).toHaveProperty('textures');
-      expect(stats).toHaveProperty('materials');
-      expect(stats).toHaveProperty('programs');
-      expect(stats).toHaveProperty('totalMemory');
+      expect(stats).toHaveProperty("geometries");
+      expect(stats).toHaveProperty("textures");
+      expect(stats).toHaveProperty("materials");
+      expect(stats).toHaveProperty("programs");
+      expect(stats).toHaveProperty("totalMemory");
       expect(stats.geometries).toBe(2);
       expect(stats.textures).toBe(3);
       expect(stats.programs).toBe(2);
       expect(stats.totalMemory).toBe(5);
     });
 
-    it('should return zeros when renderer is omitted', () => {
+    it("should return zeros when renderer is omitted", () => {
       const stats = memoryManager.getMemoryStats();
       expect(stats).toEqual({
         geometries: 0,
@@ -103,8 +103,8 @@ describe('MemoryManager', () => {
     });
   });
 
-  describe('cleanup callbacks', () => {
-    it('should register and call cleanup callbacks', () => {
+  describe("cleanup callbacks", () => {
+    it("should register and call cleanup callbacks", () => {
       const callback = jest.fn();
       const unregister = memoryManager.registerCleanup(callback);
 
@@ -117,4 +117,3 @@ describe('MemoryManager', () => {
     });
   });
 });
-

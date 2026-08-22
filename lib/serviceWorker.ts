@@ -1,5 +1,5 @@
 // Service Worker registration utilities
-import { useMemo } from 'react';
+import { useMemo } from "react";
 
 export interface ServiceWorkerConfig {
   onUpdate?: (registration: ServiceWorkerRegistration) => void;
@@ -16,24 +16,27 @@ export class ServiceWorkerManager {
   }
 
   async register(): Promise<void> {
-    if (!('serviceWorker' in navigator)) {
-      console.warn('Service workers are not supported in this browser');
+    if (!("serviceWorker" in navigator)) {
+      console.warn("Service workers are not supported in this browser");
       return;
     }
 
     try {
-      const registration = await navigator.serviceWorker.register('/sw.js', {
-        scope: '/',
+      const registration = await navigator.serviceWorker.register("/sw.js", {
+        scope: "/",
       });
 
       this.registration = registration;
 
       // Handle updates
-      registration.addEventListener('updatefound', () => {
+      registration.addEventListener("updatefound", () => {
         const newWorker = registration.installing;
         if (newWorker) {
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+          newWorker.addEventListener("statechange", () => {
+            if (
+              newWorker.state === "installed" &&
+              navigator.serviceWorker.controller
+            ) {
               // New version available
               this.config.onUpdate?.(registration);
             }
@@ -42,21 +45,24 @@ export class ServiceWorkerManager {
       });
 
       // Handle controller change (new SW activated)
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        console.log('Service worker updated, refreshing page...');
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        console.log("Service worker updated, refreshing page...");
         window.location.reload();
       });
 
       // Handle messages from service worker
-      navigator.serviceWorker.addEventListener('message', event => {
+      navigator.serviceWorker.addEventListener("message", (event) => {
         const { type, data } = event.data || {};
-        console.log('[SW Message]', type, data);
+        console.log("[SW Message]", type, data);
       });
 
-      console.log('Service worker registered successfully:', registration.scope);
+      console.log(
+        "Service worker registered successfully:",
+        registration.scope,
+      );
       this.config.onSuccess?.(registration);
     } catch (error) {
-      console.error('Service worker registration failed:', error);
+      console.error("Service worker registration failed:", error);
       this.config.onError?.(error as Error);
     }
   }
@@ -65,30 +71,30 @@ export class ServiceWorkerManager {
     if (this.registration) {
       await this.registration.unregister();
       this.registration = null;
-      console.log('Service worker unregistered');
+      console.log("Service worker unregistered");
     }
   }
 
   async update(): Promise<void> {
     if (this.registration) {
       await this.registration.update();
-      console.log('Service worker update triggered');
+      console.log("Service worker update triggered");
     }
   }
 
   async getVersion(): Promise<string | null> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (!navigator.serviceWorker.controller) {
         resolve(null);
         return;
       }
 
       const messageChannel = new MessageChannel();
-      messageChannel.port1.onmessage = event => {
+      messageChannel.port1.onmessage = (event) => {
         resolve(event.data?.version || null);
       };
 
-      navigator.serviceWorker.controller.postMessage({ type: 'GET_VERSION' }, [
+      navigator.serviceWorker.controller.postMessage({ type: "GET_VERSION" }, [
         messageChannel.port2,
       ]);
 
@@ -98,18 +104,18 @@ export class ServiceWorkerManager {
   }
 
   async clearCache(): Promise<boolean> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (!navigator.serviceWorker.controller) {
         resolve(false);
         return;
       }
 
       const messageChannel = new MessageChannel();
-      messageChannel.port1.onmessage = event => {
+      messageChannel.port1.onmessage = (event) => {
         resolve(event.data?.success || false);
       };
 
-      navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_CACHE' }, [
+      navigator.serviceWorker.controller.postMessage({ type: "CLEAR_CACHE" }, [
         messageChannel.port2,
       ]);
 

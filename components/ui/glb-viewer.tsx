@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
-import { toast } from 'sonner';
-import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
-import { MODEL_CONFIG, CAMERA_PRESETS } from '@/config/three';
-import { useWebGL } from '@/lib/hooks/useWebGL';
-import { useKeyboardShortcuts } from '@/lib/hooks/useKeyboardShortcuts';
-import { useViewerState } from '@/lib/hooks/useViewerState';
-import { useModelState } from '@/lib/hooks/useModelState';
-import { useDeviceState } from '@/lib/hooks/useDeviceState';
-import { LoadingFallback } from '@/components/ui/LoadingFallback';
-import { ErrorFallback } from '@/components/ui/ErrorFallback';
-import { ViewerActionButtons } from '@/components/ui/ViewerActionButtons';
+import { useState, useCallback, useRef, useEffect, useMemo } from "react";
+import { toast } from "sonner";
+import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
+import { MODEL_CONFIG, CAMERA_PRESETS } from "@/config/three";
+import { useWebGL } from "@/lib/hooks/useWebGL";
+import { useKeyboardShortcuts } from "@/lib/hooks/useKeyboardShortcuts";
+import { useViewerState } from "@/lib/hooks/useViewerState";
+import { useModelState } from "@/lib/hooks/useModelState";
+import { useDeviceState } from "@/lib/hooks/useDeviceState";
+import { LoadingFallback } from "@/components/ui/LoadingFallback";
+import { ErrorFallback } from "@/components/ui/ErrorFallback";
+import { ViewerActionButtons } from "@/components/ui/ViewerActionButtons";
 import {
   LazyKeyboardShortcutsHelp,
   LazyModelInfo,
@@ -22,34 +22,37 @@ import {
   LazyControlsPanel,
   LazyCommandPalette,
   setupSmartPreloading,
-} from '@/lib/utils/lazyComponents';
-import { SkipLinks } from '@/components/ui/SkipLinks';
-import { useAccessibility } from '@/lib/hooks/useAccessibility';
-import { useViewerSettings } from '@/lib/hooks/useViewerSettings';
+} from "@/lib/utils/lazyComponents";
+import { SkipLinks } from "@/components/ui/SkipLinks";
+import { useAccessibility } from "@/lib/hooks/useAccessibility";
+import { useViewerSettings } from "@/lib/hooks/useViewerSettings";
 // Model loading is handled by Model component - no need to import useProgressiveLoader here
-import { modelCache } from '@/lib/cache/modelCache';
-import { swCache } from '@/lib/cache/serviceWorkerCache';
-import { ClientOnly } from '@/components/ClientOnly';
-import dynamic from 'next/dynamic';
-import { XRControlPanel } from '@/components/3d/XR';
+import { modelCache } from "@/lib/cache/modelCache";
+import { swCache } from "@/lib/cache/serviceWorkerCache";
+import { ClientOnly } from "@/components/ClientOnly";
+import dynamic from "next/dynamic";
+import { XRControlPanel } from "@/components/3d/XR";
 
-const ThreeCanvas = dynamic(() => import('@/components/ThreeCanvas').then(mod => mod.ThreeCanvas), {
-  ssr: false,
-  loading: () => (
-    <div className="flex items-center justify-center w-full h-full bg-black text-white">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-        <p>Initializing 3D Viewer...</p>
+const ThreeCanvas = dynamic(
+  () => import("@/components/ThreeCanvas").then((mod) => mod.ThreeCanvas),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex items-center justify-center w-full h-full bg-black text-white">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+          <p>Initializing 3D Viewer...</p>
+        </div>
       </div>
-    </div>
-  ),
-});
-import { ModelErrorBoundary } from '@/components/ErrorBoundary/ModelErrorBoundary';
-import { CanvasErrorBoundary } from '@/components/ErrorBoundary/CanvasErrorBoundary';
-import { handleModelError as classifyModelError } from '@/lib/utils/errorHandler';
-import { log } from '@/lib/utils/logger';
-import type { GLBViewerProps } from '@/lib/types';
-import * as THREE from 'three';
+    ),
+  },
+);
+import { ModelErrorBoundary } from "@/components/ErrorBoundary/ModelErrorBoundary";
+import { CanvasErrorBoundary } from "@/components/ErrorBoundary/CanvasErrorBoundary";
+import { handleModelError as classifyModelError } from "@/lib/utils/errorHandler";
+import { log } from "@/lib/utils/logger";
+import type { GLBViewerProps } from "@/lib/types";
+import * as THREE from "three";
 
 export default function GLBViewer({
   modelPath = MODEL_CONFIG.defaultModel,
@@ -102,7 +105,7 @@ export default function GLBViewer({
   });
 
   // Separate xrMode since it rarely changes
-  const [xrMode] = useState<'none' | 'ar' | 'vr'>('none');
+  const [xrMode] = useState<"none" | "ar" | "vr">("none");
 
   const { isSupported, isAvailable, error: webglError } = useWebGL();
 
@@ -123,19 +126,19 @@ export default function GLBViewer({
     if (
       modelPath &&
       !cachedModel &&
-      typeof window !== 'undefined' &&
-      'requestIdleCallback' in window
+      typeof window !== "undefined" &&
+      "requestIdleCallback" in window
     ) {
       window.requestIdleCallback(
         () => {
           // Prefetch the model file
-          const link = document.createElement('link');
-          link.rel = 'prefetch';
+          const link = document.createElement("link");
+          link.rel = "prefetch";
           link.href = modelPath;
-          link.as = 'fetch';
+          link.as = "fetch";
           document.head.appendChild(link);
         },
-        { timeout: 2000 }
+        { timeout: 2000 },
       );
     }
   }, [modelPath, cachedModel]);
@@ -144,13 +147,15 @@ export default function GLBViewer({
   useEffect(() => {
     if (cachedModel && !modelState.sceneData) {
       setModelLoaded(cachedModel.scene, cachedModel.animations || []);
-      log.debug('Loaded model from cache:', modelPath);
+      log.debug("Loaded model from cache:", modelPath);
     }
   }, [cachedModel, modelState.sceneData, modelPath, setModelLoaded]);
 
   // Service worker integration for offline caching
   useEffect(() => {
-    swCache.register().catch(error => log.warn('Service worker registration failed:', error));
+    swCache
+      .register()
+      .catch((error) => log.warn("Service worker registration failed:", error));
   }, []);
   const { announce } = useAccessibility();
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
@@ -164,7 +169,7 @@ export default function GLBViewer({
 
       try {
         // Cache the loaded model for future use (defer to idle callback for better performance)
-        if ('requestIdleCallback' in window) {
+        if ("requestIdleCallback" in window) {
           window.requestIdleCallback(
             () => {
               modelCache.set(modelPath, {
@@ -172,7 +177,7 @@ export default function GLBViewer({
                 animations: modelState.animations,
               });
             },
-            { timeout: 2000 }
+            { timeout: 2000 },
           );
         } else {
           // Fallback for browsers without requestIdleCallback
@@ -191,7 +196,7 @@ export default function GLBViewer({
         const loadTime = modelState.loadTime;
         const message = loadTime
           ? `Model loaded successfully in ${loadTime}ms. Ready for interaction.`
-          : 'Model loaded successfully. Ready for interaction.';
+          : "Model loaded successfully. Ready for interaction.";
 
         // Use requestAnimationFrame instead of setTimeout for better performance
         requestAnimationFrame(() => {
@@ -201,40 +206,51 @@ export default function GLBViewer({
 
         onLoad?.();
       } catch (error) {
-        log.error('Model caching failed:', error);
+        log.error("Model caching failed:", error);
         // Still update UI even if caching fails
         setModelLoaded(scene, modelState.animations);
         onLoad?.();
       }
     },
-    [modelPath, modelState.animations, modelState.loadTime, setModelLoaded, onLoad, announce]
+    [
+      modelPath,
+      modelState.animations,
+      modelState.loadTime,
+      setModelLoaded,
+      onLoad,
+      announce,
+    ],
   );
 
   const handleAnimationsLoaded = useCallback(
-    (loadedAnimations: THREE.AnimationClip[], actions: Record<string, THREE.AnimationAction>) => {
+    (
+      loadedAnimations: THREE.AnimationClip[],
+      actions: Record<string, THREE.AnimationAction>,
+    ) => {
       setAnimations(loadedAnimations, actions);
     },
-    [setAnimations]
+    [setAnimations],
   );
 
   const handleModelProgress = useCallback(
     (progress: number) => {
       setLoadingProgress(progress);
     },
-    [setLoadingProgress]
+    [setLoadingProgress],
   );
 
   const handleModelError = useCallback(
-    (err: Error | import('@/lib/types/3d').ModelError) => {
+    (err: Error | import("@/lib/types/3d").ModelError) => {
       // If it's already a ModelError, use it directly
-      const modelError = 'type' in err ? err : classifyModelError(err, { url: modelPath });
+      const modelError =
+        "type" in err ? err : classifyModelError(err, { url: modelPath });
       setModelError(modelError);
-      toast.error('Failed to load model', {
+      toast.error("Failed to load model", {
         description: modelError.message,
       });
       onError?.(modelError.originalError || (err as Error)); // Pass original error to maintain compatibility
     },
-    [modelPath, onError, setModelError]
+    [modelPath, onError, setModelError],
   );
 
   const handleRetry = useCallback(() => {
@@ -242,36 +258,40 @@ export default function GLBViewer({
     setLoadingProgress(0);
   }, [setModelError, setLoadingProgress]);
 
-  const handleCameraPreset = useCallback((preset: keyof typeof CAMERA_PRESETS) => {
-    if (!controlsRef.current) {
-      toast.error('Camera controls not available');
-      return;
-    }
+  const handleCameraPreset = useCallback(
+    (preset: keyof typeof CAMERA_PRESETS) => {
+      if (!controlsRef.current) {
+        toast.error("Camera controls not available");
+        return;
+      }
 
-    try {
-      const { position, target } = CAMERA_PRESETS[preset];
+      try {
+        const { position, target } = CAMERA_PRESETS[preset];
 
-      // Set camera position
-      controlsRef.current.object.position.set(...position);
-      // Set controls target
-      controlsRef.current.target.set(...target);
-      // Update controls
-      controlsRef.current.update();
+        // Set camera position
+        controlsRef.current.object.position.set(...position);
+        // Set controls target
+        controlsRef.current.target.set(...target);
+        // Update controls
+        controlsRef.current.update();
 
-      // Capitalize first letter for display
-      const displayName = preset.charAt(0).toUpperCase() + preset.slice(1);
-      toast.success(`Camera moved to ${displayName} view`);
-    } catch {
-      toast.error('Failed to change camera view');
-    }
-  }, []);
+        // Capitalize first letter for display
+        const displayName = preset.charAt(0).toUpperCase() + preset.slice(1);
+        toast.success(`Camera moved to ${displayName} view`);
+      } catch {
+        toast.error("Failed to change camera view");
+      }
+    },
+    [],
+  );
 
   const handleModelSettingsChange = useCallback(
     (settings: { scale?: number; rotationSpeed?: number }) => {
       if (settings.scale !== undefined) setScale(settings.scale);
-      if (settings.rotationSpeed !== undefined) setRotationSpeed(settings.rotationSpeed);
+      if (settings.rotationSpeed !== undefined)
+        setRotationSpeed(settings.rotationSpeed);
     },
-    [setScale, setRotationSpeed]
+    [setScale, setRotationSpeed],
   );
 
   const handleResetView = useCallback(() => {
@@ -280,9 +300,9 @@ export default function GLBViewer({
     }
 
     if (deviceState.isMobile) {
-      toast.success('View reset to default position');
+      toast.success("View reset to default position");
     }
-    announce('View reset to default position');
+    announce("View reset to default position");
   }, [deviceState.isMobile, announce]);
 
   // Enhanced touch gesture handlers
@@ -295,7 +315,10 @@ export default function GLBViewer({
     const touchDuration = touchEndTime - (deviceState.touchStartTime || 0);
 
     // Double tap detection
-    if (deviceState.lastTapTime && touchEndTime - deviceState.lastTapTime < 300) {
+    if (
+      deviceState.lastTapTime &&
+      touchEndTime - deviceState.lastTapTime < 300
+    ) {
       // Double tap - reset view
       handleResetView();
       setLastTapTime(null);
@@ -329,19 +352,19 @@ export default function GLBViewer({
       try {
         // Validate file type
         if (
-          !file.name.toLowerCase().endsWith('.glb') &&
-          !file.name.toLowerCase().endsWith('.gltf')
+          !file.name.toLowerCase().endsWith(".glb") &&
+          !file.name.toLowerCase().endsWith(".gltf")
         ) {
-          toast.error('Invalid file type', {
-            description: 'Please upload a .glb or .gltf file',
+          toast.error("Invalid file type", {
+            description: "Please upload a .glb or .gltf file",
           });
           return;
         }
 
         // Check file size (limit to 50MB)
         if (file.size > 50 * 1024 * 1024) {
-          toast.error('File too large', {
-            description: 'Please upload a file smaller than 50MB',
+          toast.error("File too large", {
+            description: "Please upload a file smaller than 50MB",
           });
           return;
         }
@@ -354,12 +377,12 @@ export default function GLBViewer({
           description: `${(file.size / 1024 / 1024).toFixed(2)}MB file uploaded`,
         });
       } catch {
-        toast.error('Upload failed', {
-          description: 'An unexpected error occurred while uploading',
+        toast.error("Upload failed", {
+          description: "An unexpected error occurred while uploading",
         });
       }
     },
-    [setUploadedFile]
+    [setUploadedFile],
   );
 
   // Animation controls
@@ -372,7 +395,11 @@ export default function GLBViewer({
       modelState.animationActions[modelState.currentAnimation]?.play();
       setAnimationPlaying(true);
     }
-  }, [modelState.currentAnimation, modelState.animationActions, setAnimationPlaying]);
+  }, [
+    modelState.currentAnimation,
+    modelState.animationActions,
+    setAnimationPlaying,
+  ]);
 
   const handleAnimationPause = useCallback(() => {
     if (
@@ -383,7 +410,11 @@ export default function GLBViewer({
       modelState.animationActions[modelState.currentAnimation]!.paused = true;
       setAnimationPlaying(false);
     }
-  }, [modelState.currentAnimation, modelState.animationActions, setAnimationPlaying]);
+  }, [
+    modelState.currentAnimation,
+    modelState.animationActions,
+    setAnimationPlaying,
+  ]);
 
   const handleAnimationSelect = useCallback(
     (animationName: string) => {
@@ -398,7 +429,10 @@ export default function GLBViewer({
 
       // Start new animation
       setCurrentAnimation(animationName);
-      if (modelState.animationActions && modelState.animationActions[animationName]) {
+      if (
+        modelState.animationActions &&
+        modelState.animationActions[animationName]
+      ) {
         modelState.animationActions[animationName]?.play();
         setAnimationPlaying(true);
       }
@@ -408,7 +442,7 @@ export default function GLBViewer({
       modelState.animationActions,
       setCurrentAnimation,
       setAnimationPlaying,
-    ]
+    ],
   );
 
   const handleScreenshot = useCallback(() => {
@@ -442,19 +476,19 @@ export default function GLBViewer({
       updateLod,
       toggleModelInfo,
       handleToggleControlsPanel,
-    ]
+    ],
   );
 
   // Open Command Palette with Cmd+K
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         toggleCommandPalette(true);
       }
     };
-    document.addEventListener('keydown', down);
-    return () => document.removeEventListener('keydown', down);
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
   }, [toggleCommandPalette]);
 
   // Keyboard shortcuts
@@ -495,8 +529,9 @@ export default function GLBViewer({
       }
     };
 
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, [setPerformanceMode]);
 
   // Show WebGL error if not supported (client-only check)
@@ -505,10 +540,10 @@ export default function GLBViewer({
 
   useEffect(() => {
     // Only check WebGL on client side
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       // Use the existing hook result
       if (!isSupported || !isAvailable) {
-        setWebglErrorState(webglError || 'WebGL not supported');
+        setWebglErrorState(webglError || "WebGL not supported");
       }
       setWebglCheckComplete(true);
     }
@@ -516,7 +551,9 @@ export default function GLBViewer({
 
   // Show WebGL error if not supported
   if (webglCheckComplete && webglErrorState) {
-    return <ErrorFallback error={new Error(webglErrorState)} onRetry={handleRetry} />;
+    return (
+      <ErrorFallback error={new Error(webglErrorState)} onRetry={handleRetry} />
+    );
   }
 
   // Show error state
@@ -526,7 +563,7 @@ export default function GLBViewer({
 
   return (
     <div
-      className={`w-full h-full relative ${className || ''}`}
+      className={`w-full h-full relative ${className || ""}`}
       onTouchStart={deviceState.isMobile ? handleTouchStart : undefined}
       onTouchEnd={deviceState.isMobile ? handleTouchEnd : undefined}
       role="application"
@@ -536,13 +573,16 @@ export default function GLBViewer({
     >
       {/* Hidden description for screen readers */}
       <div id="viewer-description" className="sr-only">
-        Interactive 3D model viewer. Use mouse or touch to rotate, zoom, and pan the model. Press
-        &apos;H&apos; for keyboard shortcuts, &apos;I&apos; for model information, &apos;P&apos; for
-        performance monitor, &apos;C&apos; to toggle controls.
-        {deviceState.isMobile ? ' Double-tap to reset view, long-press for model info.' : ''}
+        Interactive 3D model viewer. Use mouse or touch to rotate, zoom, and pan
+        the model. Press &apos;H&apos; for keyboard shortcuts, &apos;I&apos; for
+        model information, &apos;P&apos; for performance monitor, &apos;C&apos;
+        to toggle controls.
+        {deviceState.isMobile
+          ? " Double-tap to reset view, long-press for model info."
+          : ""}
         {modelState.sceneData
-          ? ` Currently viewing: ${modelState.uploadedFileUrl ? 'Uploaded model' : modelPath.split('/').pop()}`
-          : ' Loading model...'}
+          ? ` Currently viewing: ${modelState.uploadedFileUrl ? "Uploaded model" : modelPath.split("/").pop()}`
+          : " Loading model..."}
       </div>
 
       {/* Skip Links for accessibility */}
@@ -580,7 +620,10 @@ export default function GLBViewer({
       {/* Loading overlay */}
       {!modelState.isLoaded && !modelState.error && (
         <div className="absolute inset-0 z-10">
-          <LoadingFallback progress={modelState.loadingProgress} message="Loading model..." />
+          <LoadingFallback
+            progress={modelState.loadingProgress}
+            message="Loading model..."
+          />
         </div>
       )}
 
@@ -632,7 +675,10 @@ export default function GLBViewer({
 
       {/* Keyboard Shortcuts Help */}
       {/* @loadable/component handles Suspense internally */}
-      <LazyKeyboardShortcutsHelp isOpen={uiState.isKeyboardHelpOpen} onClose={toggleKeyboardHelp} />
+      <LazyKeyboardShortcutsHelp
+        isOpen={uiState.isKeyboardHelpOpen}
+        onClose={toggleKeyboardHelp}
+      />
 
       {/* Model Info */}
       {modelState.sceneData && (
@@ -640,7 +686,11 @@ export default function GLBViewer({
           isOpen={uiState.isModelInfoOpen}
           onClose={toggleModelInfo}
           scene={modelState.sceneData}
-          fileName={modelState.uploadedFileUrl ? 'Uploaded Model' : modelPath.split('/').pop()}
+          fileName={
+            modelState.uploadedFileUrl
+              ? "Uploaded Model"
+              : modelPath.split("/").pop()
+          }
           animations={modelState.animations}
           loadTime={modelState.loadTime || undefined}
         />
@@ -663,14 +713,14 @@ export default function GLBViewer({
         isOpen={uiState.isExportDialogOpen}
         onClose={toggleExportDialog}
         canvas={
-          typeof window !== 'undefined'
-            ? (document.querySelector('canvas') as HTMLCanvasElement | null)
+          typeof window !== "undefined"
+            ? (document.querySelector("canvas") as HTMLCanvasElement | null)
             : null
         }
         modelName={
           modelState.uploadedFileUrl
-            ? 'Uploaded Model'
-            : modelPath.split('/').pop()?.replace('.glb', '')
+            ? "Uploaded Model"
+            : modelPath.split("/").pop()?.replace(".glb", "")
         }
       />
 

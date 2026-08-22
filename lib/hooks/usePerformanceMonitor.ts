@@ -1,6 +1,6 @@
-import { useState, useRef, useCallback, useMemo, useEffect } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
-import * as THREE from 'three';
+import { useState, useRef, useCallback, useMemo, useEffect } from "react";
+import { useFrame, useThree } from "@react-three/fiber";
+import * as THREE from "three";
 
 interface PerformanceMetrics {
   fps: number;
@@ -49,8 +49,12 @@ export function usePerformanceMonitor(enabled: boolean = true) {
     // Update metrics every 500ms for better responsiveness
     if (deltaTime >= 500) {
       const timeElapsed = now - lastTimeRef.current;
-      const fps = frameCountRef.current > 0 ? Math.round((frameCountRef.current * 1000) / timeElapsed) : 0;
-      const frameTime = frameCountRef.current > 0 ? timeElapsed / frameCountRef.current : 0;
+      const fps =
+        frameCountRef.current > 0
+          ? Math.round((frameCountRef.current * 1000) / timeElapsed)
+          : 0;
+      const frameTime =
+        frameCountRef.current > 0 ? timeElapsed / frameCountRef.current : 0;
 
       // Keep FPS history for smoothing (last 5 seconds)
       fpsHistoryRef.current.push(fps);
@@ -58,21 +62,32 @@ export function usePerformanceMonitor(enabled: boolean = true) {
         fpsHistoryRef.current.shift();
       }
 
-      const avgFps = fpsHistoryRef.current.length > 0
-        ? Math.round(fpsHistoryRef.current.reduce((a, b) => a + b, 0) / fpsHistoryRef.current.length)
-        : fps;
+      const avgFps =
+        fpsHistoryRef.current.length > 0
+          ? Math.round(
+              fpsHistoryRef.current.reduce((a, b) => a + b, 0) /
+                fpsHistoryRef.current.length,
+            )
+          : fps;
 
       // Get memory usage less frequently (every 20 updates to reduce overhead)
       let memoryUsage: number | undefined;
       memoryCheckCountRef.current++;
-      if ('memory' in performance && memoryCheckCountRef.current >= 20) {
-        const memInfo = (performance as unknown as { memory: { usedJSHeapSize: number; totalJSHeapSize: number } }).memory;
+      if ("memory" in performance && memoryCheckCountRef.current >= 20) {
+        const memInfo = (
+          performance as unknown as {
+            memory: { usedJSHeapSize: number; totalJSHeapSize: number };
+          }
+        ).memory;
         memoryUsage = Math.round(memInfo.usedJSHeapSize / 1024 / 1024); // MB
         memoryCheckCountRef.current = 0;
       }
 
       // Get renderer info if available
-      let drawCalls = 0, triangles = 0, geometries = 0, textures = 0;
+      let drawCalls = 0,
+        triangles = 0,
+        geometries = 0,
+        textures = 0;
       if (rendererRef.current?.info) {
         const info = rendererRef.current.info;
         drawCalls = info.render.calls;
@@ -82,7 +97,7 @@ export function usePerformanceMonitor(enabled: boolean = true) {
       }
 
       // Batch state update
-      setMetrics(prev => ({
+      setMetrics((prev) => ({
         ...prev,
         fps: avgFps,
         frameTime: Math.round(frameTime * 100) / 100,
@@ -105,7 +120,8 @@ export function usePerformanceMonitor(enabled: boolean = true) {
       frameCountRef.current++;
       // Only check for updates occasionally, not every frame
       const now = performance.now();
-      if (now - lastUpdateRef.current >= 100) { // Check every 100ms instead of every frame
+      if (now - lastUpdateRef.current >= 100) {
+        // Check every 100ms instead of every frame
         updateMetrics();
       }
     }
@@ -115,7 +131,7 @@ export function usePerformanceMonitor(enabled: boolean = true) {
   useEffect(() => {
     // Capture ref values to avoid stale closure warnings
     const fpsHistory = fpsHistoryRef.current;
-    
+
     return () => {
       frameCountRef.current = 0;
       fpsHistory.length = 0;

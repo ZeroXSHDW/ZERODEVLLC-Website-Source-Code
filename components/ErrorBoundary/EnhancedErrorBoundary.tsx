@@ -4,10 +4,10 @@
 
 "use client";
 
-import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { log } from '@/lib/utils/logger';
-import { errorRecoveryManager } from '@/lib/utils/errorRecovery';
-import type { ModelError } from '@/lib/types/3d';
+import React, { Component, ErrorInfo, ReactNode } from "react";
+import { log } from "@/lib/utils/logger";
+import { errorRecoveryManager } from "@/lib/utils/errorRecovery";
+import type { ModelError } from "@/lib/types/3d";
 
 interface Props {
   children: ReactNode;
@@ -50,8 +50,8 @@ export class EnhancedErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    log.error('Error caught by enhanced boundary:', error, errorInfo);
-    
+    log.error("Error caught by enhanced boundary:", error, errorInfo);
+
     this.setState({
       error,
       errorInfo,
@@ -60,14 +60,17 @@ export class EnhancedErrorBoundary extends Component<Props, State> {
     this.props.onError?.(error, errorInfo);
 
     // Attempt automatic recovery if enabled
-    if (this.props.enableRecovery && this.state.retryCount < (this.props.maxRetries || 3)) {
+    if (
+      this.props.enableRecovery &&
+      this.state.retryCount < (this.props.maxRetries || 3)
+    ) {
       this.attemptRecovery(error);
     }
   }
 
   private async attemptRecovery(error: Error): Promise<void> {
     const modelError: ModelError = {
-      type: 'load',
+      type: "load",
       message: error.message,
       originalError: error,
       recoverable: true,
@@ -77,7 +80,7 @@ export class EnhancedErrorBoundary extends Component<Props, State> {
 
     try {
       const recovered = await errorRecoveryManager.attemptRecovery(modelError);
-      
+
       if (recovered) {
         // Wait a bit before resetting
         this.retryTimeoutId = setTimeout(() => {
@@ -93,7 +96,7 @@ export class EnhancedErrorBoundary extends Component<Props, State> {
         this.setState({ isRecovering: false });
       }
     } catch (recoveryError) {
-      log.error('Recovery attempt failed:', recoveryError);
+      log.error("Recovery attempt failed:", recoveryError);
       this.setState({ isRecovering: false });
     }
   }
@@ -125,7 +128,9 @@ export class EnhancedErrorBoundary extends Component<Props, State> {
           <div className="flex items-center justify-center w-full h-full bg-black text-yellow-400 font-mono p-8">
             <div className="text-center space-y-4">
               <div className="text-2xl font-bold">RECOVERING...</div>
-              <div className="text-sm text-gray-500">Attempting to recover from error</div>
+              <div className="text-sm text-gray-500">
+                Attempting to recover from error
+              </div>
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-400 mx-auto"></div>
             </div>
           </div>
@@ -137,7 +142,7 @@ export class EnhancedErrorBoundary extends Component<Props, State> {
           <div className="text-center space-y-4">
             <div className="text-2xl font-bold">RENDERING ERROR</div>
             <div className="text-sm text-gray-500">
-              {this.state.error?.message || 'An unexpected error occurred'}
+              {this.state.error?.message || "An unexpected error occurred"}
             </div>
             {this.state.errorInfo && (
               <details className="text-xs text-gray-600 text-left max-w-md">
@@ -176,4 +181,3 @@ export class EnhancedErrorBoundary extends Component<Props, State> {
     return this.props.children;
   }
 }
-

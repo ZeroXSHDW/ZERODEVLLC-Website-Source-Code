@@ -2,8 +2,8 @@
  * Custom hook for WebGL support detection
  */
 
-import { useState, useEffect } from 'react';
-import { detectWebGLSupport } from '../utils/webgl';
+import { useState, useEffect } from "react";
+import { detectWebGLSupport } from "../utils/webgl";
 
 export function useWebGL() {
   const [webglSupport, setWebglSupport] = useState<{

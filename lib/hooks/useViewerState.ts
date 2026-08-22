@@ -3,7 +3,7 @@
  * Separates UI concerns from model/rendering logic
  */
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 
 export interface ViewerUIState {
   isControlsPanelOpen: boolean;
@@ -28,31 +28,49 @@ export function useViewerState() {
   const [uiState, setUIState] = useState<ViewerUIState>(initialUIState);
 
   const toggleControlsPanel = useCallback(() => {
-    setUIState(prev => ({ ...prev, isControlsPanelOpen: !prev.isControlsPanelOpen }));
+    setUIState((prev) => ({
+      ...prev,
+      isControlsPanelOpen: !prev.isControlsPanelOpen,
+    }));
   }, []);
 
   const toggleKeyboardHelp = useCallback(() => {
-    setUIState(prev => ({ ...prev, isKeyboardHelpOpen: !prev.isKeyboardHelpOpen }));
+    setUIState((prev) => ({
+      ...prev,
+      isKeyboardHelpOpen: !prev.isKeyboardHelpOpen,
+    }));
   }, []);
 
   const toggleModelInfo = useCallback(() => {
-    setUIState(prev => ({ ...prev, isModelInfoOpen: !prev.isModelInfoOpen }));
+    setUIState((prev) => ({ ...prev, isModelInfoOpen: !prev.isModelInfoOpen }));
   }, []);
 
   const togglePerformanceMonitor = useCallback(() => {
-    setUIState(prev => ({ ...prev, isPerformanceMonitorOpen: !prev.isPerformanceMonitorOpen }));
+    setUIState((prev) => ({
+      ...prev,
+      isPerformanceMonitorOpen: !prev.isPerformanceMonitorOpen,
+    }));
   }, []);
 
   const toggleExportDialog = useCallback(() => {
-    setUIState(prev => ({ ...prev, isExportDialogOpen: !prev.isExportDialogOpen }));
+    setUIState((prev) => ({
+      ...prev,
+      isExportDialogOpen: !prev.isExportDialogOpen,
+    }));
   }, []);
 
   const toggleMobileGestureHelp = useCallback(() => {
-    setUIState(prev => ({ ...prev, isMobileGestureHelpOpen: !prev.isMobileGestureHelpOpen }));
+    setUIState((prev) => ({
+      ...prev,
+      isMobileGestureHelpOpen: !prev.isMobileGestureHelpOpen,
+    }));
   }, []);
 
   const toggleCommandPalette = useCallback((isOpen?: boolean) => {
-    setUIState(prev => ({ ...prev, isCommandPaletteOpen: isOpen ?? !prev.isCommandPaletteOpen }));
+    setUIState((prev) => ({
+      ...prev,
+      isCommandPaletteOpen: isOpen ?? !prev.isCommandPaletteOpen,
+    }));
   }, []);
 
   const closeAll = useCallback(() => {
@@ -71,4 +89,3 @@ export function useViewerState() {
     closeAll,
   };
 }
-

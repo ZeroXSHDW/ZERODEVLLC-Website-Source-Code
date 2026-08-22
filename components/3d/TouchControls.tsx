@@ -1,19 +1,22 @@
 "use client";
 
-import { useRef, useEffect } from 'react';
-import { useThree } from '@react-three/fiber';
-import { useGesture } from '@use-gesture/react';
-import * as THREE from 'three';
-import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
+import { useRef, useEffect } from "react";
+import { useThree } from "@react-three/fiber";
+import { useGesture } from "@use-gesture/react";
+import * as THREE from "three";
+import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 
 interface TouchControlsProps {
   controlsRef: React.RefObject<OrbitControlsImpl | null>;
   enabled?: boolean;
 }
 
-export function TouchControls({ controlsRef, enabled = true }: TouchControlsProps) {
+export function TouchControls({
+  controlsRef,
+  enabled = true,
+}: TouchControlsProps) {
   const { camera, gl } = useThree();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const initialDistance = useRef<number>(0);
   const initialCameraPosition = useRef<THREE.Vector3>();
   const initialCameraTarget = useRef<THREE.Vector3>();
@@ -45,7 +48,9 @@ export function TouchControls({ controlsRef, enabled = true }: TouchControlsProp
           const direction = target.clone().sub(cameraPosition).normalize();
 
           // Move camera along the direction
-          const newPosition = cameraPosition.clone().add(direction.multiplyScalar(zoomDelta * 10));
+          const newPosition = cameraPosition
+            .clone()
+            .add(direction.multiplyScalar(zoomDelta * 10));
           camera.position.copy(newPosition);
 
           controls.update();
@@ -102,7 +107,9 @@ export function TouchControls({ controlsRef, enabled = true }: TouchControlsProp
           const direction = target.clone().sub(cameraPosition).normalize();
 
           // Move camera along the direction
-          const newPosition = cameraPosition.clone().add(direction.multiplyScalar(zoomDelta));
+          const newPosition = cameraPosition
+            .clone()
+            .add(direction.multiplyScalar(zoomDelta));
           camera.position.copy(newPosition);
 
           controls.update();
@@ -121,18 +128,17 @@ export function TouchControls({ controlsRef, enabled = true }: TouchControlsProp
       wheel: {
         eventOptions: { passive: false },
       },
-    }
+    },
   );
 
   // Apply gesture bindings to the canvas
   useEffect(() => {
     if (!enabled) return;
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const canvas = gl.domElement;
 
     // Bind gestures to canvas
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     const _gestureBindings = bind();
 
     // No cleanup needed for useGesture - it handles cleanup automatically

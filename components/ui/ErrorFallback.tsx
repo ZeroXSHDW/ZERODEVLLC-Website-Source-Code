@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from 'framer-motion';
-import { RefreshCw, Bug, Monitor, FileX, Wifi, Zap } from 'lucide-react';
-import type { ErrorFallbackProps } from '@/lib/types';
-import type { ModelError } from '@/lib/types/3d';
+import { motion } from "framer-motion";
+import { RefreshCw, Bug, Monitor, FileX, Wifi, Zap } from "lucide-react";
+import type { ErrorFallbackProps } from "@/lib/types";
+import type { ModelError } from "@/lib/types/3d";
 
 const errorVariants = {
   hidden: { opacity: 0, scale: 0.8 },
@@ -13,126 +13,130 @@ const errorVariants = {
 export function ErrorFallback({ error, onRetry }: ErrorFallbackProps) {
   const getErrorDetails = () => {
     // Handle both Error and ModelError types
-    const isModelError = error && 'type' in error;
-    const message = error?.message || '';
+    const isModelError = error && "type" in error;
+    const message = error?.message || "";
 
     if (isModelError) {
       const modelError = error as ModelError;
       switch (modelError.type) {
-        case 'network':
+        case "network":
           return {
             icon: Wifi,
-            title: 'Connection Error',
+            title: "Connection Error",
             message: modelError.message,
             solutions: [
-              'Check your internet connection',
-              'Try refreshing the page',
-              'Contact support if the problem persists',
+              "Check your internet connection",
+              "Try refreshing the page",
+              "Contact support if the problem persists",
             ],
           };
-        case 'memory':
+        case "memory":
           return {
             icon: Zap,
-            title: 'Memory Error',
+            title: "Memory Error",
             message: modelError.message,
             solutions: [
-              'Close other browser tabs and applications',
-              'Try a simpler 3D model',
-              'Restart your browser',
+              "Close other browser tabs and applications",
+              "Try a simpler 3D model",
+              "Restart your browser",
             ],
           };
-        case 'parse':
+        case "parse":
           return {
             icon: FileX,
-            title: 'File Error',
+            title: "File Error",
             message: modelError.message,
             solutions: [
-              'Check that the file is a valid GLTF/GLB format',
-              'Ensure the file is not corrupted',
-              'Try uploading a different model file',
+              "Check that the file is a valid GLTF/GLB format",
+              "Ensure the file is not corrupted",
+              "Try uploading a different model file",
             ],
           };
-        case 'render':
+        case "render":
           return {
             icon: Monitor,
-            title: 'Rendering Error',
+            title: "Rendering Error",
             message: modelError.message,
             solutions: [
-              'Update your browser to the latest version',
-              'Enable hardware acceleration in browser settings',
-              'Try using a different browser',
+              "Update your browser to the latest version",
+              "Enable hardware acceleration in browser settings",
+              "Try using a different browser",
             ],
           };
         default:
           return {
             icon: Bug,
-            title: 'Loading Error',
+            title: "Loading Error",
             message: modelError.message,
             solutions: [
-              'Try refreshing the page',
-              'Check the browser console for more details',
-              'Contact support if the problem persists',
+              "Try refreshing the page",
+              "Check the browser console for more details",
+              "Contact support if the problem persists",
             ],
           };
       }
     }
 
-    if (message.includes('WebGL')) {
+    if (message.includes("WebGL")) {
       return {
         icon: Monitor,
-        title: 'WebGL Not Supported',
-        message: 'Your browser or device does not support WebGL, which is required for 3D rendering.',
-        type: 'webgl',
+        title: "WebGL Not Supported",
+        message:
+          "Your browser or device does not support WebGL, which is required for 3D rendering.",
+        type: "webgl",
         solutions: [
-          'Update your browser to the latest version',
-          'Try using Chrome, Firefox, or Edge',
-          'Enable hardware acceleration in browser settings',
-          'Check if your graphics drivers are up to date'
-        ]
+          "Update your browser to the latest version",
+          "Try using Chrome, Firefox, or Edge",
+          "Enable hardware acceleration in browser settings",
+          "Check if your graphics drivers are up to date",
+        ],
       };
     }
 
-    if (message.includes('load') || message.includes('fetch')) {
+    if (message.includes("load") || message.includes("fetch")) {
       return {
         icon: FileX,
-        title: 'Failed to Load Model',
-        message: 'The 3D model file could not be loaded. This might be due to network issues or an invalid file.',
-        type: 'network',
+        title: "Failed to Load Model",
+        message:
+          "The 3D model file could not be loaded. This might be due to network issues or an invalid file.",
+        type: "network",
         solutions: [
-          'Check your internet connection',
-          'Verify the model file is not corrupted',
-          'Try uploading a different file',
-          'Ensure the file size is under 50MB'
-        ]
+          "Check your internet connection",
+          "Verify the model file is not corrupted",
+          "Try uploading a different file",
+          "Ensure the file size is under 50MB",
+        ],
       };
     }
 
-    if (message.includes('memory') || message.includes('heap')) {
+    if (message.includes("memory") || message.includes("heap")) {
       return {
         icon: Zap,
-        title: 'Out of Memory',
-        message: 'The application ran out of memory while processing the 3D model.',
-        type: 'memory',
+        title: "Out of Memory",
+        message:
+          "The application ran out of memory while processing the 3D model.",
+        type: "memory",
         solutions: [
-          'Try a simpler 3D model',
-          'Enable performance mode in settings',
-          'Close other browser tabs',
-          'Restart your browser'
-        ]
+          "Try a simpler 3D model",
+          "Enable performance mode in settings",
+          "Close other browser tabs",
+          "Restart your browser",
+        ],
       };
     }
 
     return {
       icon: Bug,
-      title: 'Unexpected Error',
-      message: message || 'An unexpected error occurred while rendering the 3D scene.',
-      type: 'generic',
+      title: "Unexpected Error",
+      message:
+        message || "An unexpected error occurred while rendering the 3D scene.",
+      type: "generic",
       solutions: [
-        'Try refreshing the page',
-        'Clear your browser cache',
-        'Disable browser extensions temporarily',
-        'Contact support if the problem persists'
-      ]
+        "Try refreshing the page",
+        "Clear your browser cache",
+        "Disable browser extensions temporarily",
+        "Contact support if the problem persists",
+      ],
     };
   };
 
@@ -168,14 +172,14 @@ export function ErrorFallback({ error, onRetry }: ErrorFallbackProps) {
         </div>
 
         {/* Technical details (collapsible) */}
-        {error && 'stack' in error && error.stack && (
+        {error && "stack" in error && error.stack && (
           <details className="text-left bg-gray-800/50 rounded-lg p-3">
             <summary className="text-xs text-gray-500 cursor-pointer hover:text-gray-400">
               Technical Details
             </summary>
             <pre className="text-xs text-gray-600 mt-2 overflow-auto max-h-32 whitespace-pre-wrap">
               {error.message}
-              {error.stack && '\n\nStack Trace:\n' + error.stack}
+              {error.stack && "\n\nStack Trace:\n" + error.stack}
             </pre>
           </details>
         )}

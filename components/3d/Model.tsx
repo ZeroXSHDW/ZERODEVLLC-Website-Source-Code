@@ -1,14 +1,22 @@
-'use client';
+"use client";
 
-import { forwardRef, useEffect, useMemo, useRef, useImperativeHandle, memo, useState } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { useAnimations, useGLTF, useProgress } from '@react-three/drei';
-import * as THREE from 'three';
-import { Group } from 'three';
-import { MODEL_LOADING_OPTIONS } from '@/config/models';
-import { LOD } from './LOD';
-import type { ModelProps } from '@/lib/types';
-import { log } from '@/lib/utils/logger';
+import {
+  forwardRef,
+  useEffect,
+  useMemo,
+  useRef,
+  useImperativeHandle,
+  memo,
+  useState,
+} from "react";
+import { useFrame } from "@react-three/fiber";
+import { useAnimations, useGLTF, useProgress } from "@react-three/drei";
+import * as THREE from "three";
+import { Group } from "three";
+import { MODEL_LOADING_OPTIONS } from "@/config/models";
+import { LOD } from "./LOD";
+import type { ModelProps } from "@/lib/types";
+import { log } from "@/lib/utils/logger";
 
 const ModelComponent = forwardRef<Group, ModelProps>(function Model(
   {
@@ -16,14 +24,14 @@ const ModelComponent = forwardRef<Group, ModelProps>(function Model(
     scale,
     autoRotateSpeed,
     lodEnabled = true,
-    lodQuality = 'auto',
+    lodQuality = "auto",
     onLoad,
     onProgress,
     onAnimationsLoaded,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     onError, // Reserved for future error handling
   },
-  ref
+  ref,
 ) {
   // Create internal ref for the group
   const internalRef = useRef<THREE.Group>(null);
@@ -57,7 +65,10 @@ const ModelComponent = forwardRef<Group, ModelProps>(function Model(
   // - Better error handling
   const gltf = useGLTF(url, MODEL_LOADING_OPTIONS.useDraco);
   const scene = gltf.scene;
-  const gltfAnimations = useMemo(() => gltf.animations || [], [gltf.animations]);
+  const gltfAnimations = useMemo(
+    () => gltf.animations || [],
+    [gltf.animations],
+  );
 
   // Track loading progress using drei's useProgress hook
   const { progress, active } = useProgress();
@@ -73,7 +84,10 @@ const ModelComponent = forwardRef<Group, ModelProps>(function Model(
           : progressRef.current;
 
     // Only update if progress changed significantly (0.5% threshold)
-    if (Math.abs(currentProgress - progressRef.current) >= 0.005 || currentProgress === 1) {
+    if (
+      Math.abs(currentProgress - progressRef.current) >= 0.005 ||
+      currentProgress === 1
+    ) {
       progressRef.current = currentProgress;
       onProgress?.(currentProgress);
     }
@@ -87,10 +101,12 @@ const ModelComponent = forwardRef<Group, ModelProps>(function Model(
       try {
         // Call Model's onLoad callback with the scene
         onLoad?.(scene);
-        log.debug('Model loaded successfully:', url);
+        log.debug("Model loaded successfully:", url);
       } catch (error) {
-        log.error('Error processing loaded model:', error);
-        onError?.(error instanceof Error ? error : new Error('Model processing error'));
+        log.error("Error processing loaded model:", error);
+        onError?.(
+          error instanceof Error ? error : new Error("Model processing error"),
+        );
         processedSceneRef.current = null; // Reset on error to allow retry
       }
     }
@@ -103,7 +119,12 @@ const ModelComponent = forwardRef<Group, ModelProps>(function Model(
   // Use ref to prevent duplicate calls
   const animationsLoadedRef = useRef(false);
   useEffect(() => {
-    if (gltfAnimations && gltfAnimations.length > 0 && actions && !animationsLoadedRef.current) {
+    if (
+      gltfAnimations &&
+      gltfAnimations.length > 0 &&
+      actions &&
+      !animationsLoadedRef.current
+    ) {
       animationsLoadedRef.current = true;
       onAnimationsLoaded?.(gltfAnimations, actions);
     }
@@ -112,12 +133,14 @@ const ModelComponent = forwardRef<Group, ModelProps>(function Model(
   // Material optimization for performance mode - memoized to prevent duplicate traversals
   const optimizedMaterialsRef = useRef<Set<THREE.Material>>(new Set());
   useEffect(() => {
-    if (scene && lodQuality === 'low') {
+    if (scene && lodQuality === "low") {
       // Only optimize materials that haven't been optimized yet
-      scene.traverse(child => {
+      scene.traverse((child) => {
         if (child instanceof THREE.Mesh && child.material) {
-          const materials = Array.isArray(child.material) ? child.material : [child.material];
-          materials.forEach(material => {
+          const materials = Array.isArray(child.material)
+            ? child.material
+            : [child.material];
+          materials.forEach((material) => {
             // Skip if already optimized
             if (optimizedMaterialsRef.current.has(material)) return;
 
@@ -144,7 +167,7 @@ const ModelComponent = forwardRef<Group, ModelProps>(function Model(
           });
         }
       });
-    } else if (lodQuality !== 'low') {
+    } else if (lodQuality !== "low") {
       // Reset optimization tracking when quality changes away from low
       optimizedMaterialsRef.current.clear();
     }
@@ -174,7 +197,7 @@ const ModelComponent = forwardRef<Group, ModelProps>(function Model(
     // Defer expensive calculation to idle callback
     const calculateTriangleCount = () => {
       let count = 0;
-      scene.traverse(child => {
+      scene.traverse((child) => {
         if (child instanceof THREE.Mesh && child.geometry) {
           const geometry = child.geometry;
           if (geometry.index) {
@@ -191,7 +214,7 @@ const ModelComponent = forwardRef<Group, ModelProps>(function Model(
     };
 
     // Use requestIdleCallback if available, otherwise calculate immediately
-    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
       window.requestIdleCallback(calculateTriangleCount, { timeout: 1000 });
     } else {
       // Fallback: calculate on next frame
@@ -201,7 +224,7 @@ const ModelComponent = forwardRef<Group, ModelProps>(function Model(
 
   // Calculate adaptive LOD levels based on model size and quality settings
   const lodLevels = useMemo(() => {
-    if (!scene) return [{ distance: 0, quality: 'high' as const }];
+    if (!scene) return [{ distance: 0, quality: "high" as const }];
 
     // Calculate model bounds and complexity
     const box = new THREE.Box3().setFromObject(scene);
@@ -209,18 +232,18 @@ const ModelComponent = forwardRef<Group, ModelProps>(function Model(
     const maxDimension = Math.max(size.x, size.y, size.z);
 
     // Adaptive LOD based on model size and triangle count
-    if (lodQuality === 'auto') {
+    if (lodQuality === "auto") {
       const baseDistance = Math.max(5, maxDimension * 2);
       const levels: Array<{
         distance: number;
-        quality: 'high' | 'medium' | 'low';
+        quality: "high" | "medium" | "low";
         maxTriangles?: number;
-      }> = [{ distance: 0, quality: 'high' }];
+      }> = [{ distance: 0, quality: "high" }];
 
       if (triangleCount > 10000) {
         levels.push({
           distance: baseDistance,
-          quality: 'medium',
+          quality: "medium",
           maxTriangles: Math.floor(triangleCount * 0.5),
         });
       }
@@ -228,7 +251,7 @@ const ModelComponent = forwardRef<Group, ModelProps>(function Model(
       if (triangleCount > 50000) {
         levels.push({
           distance: baseDistance * 3,
-          quality: 'low',
+          quality: "low",
           maxTriangles: Math.floor(triangleCount * 0.1),
         });
       }
@@ -236,15 +259,15 @@ const ModelComponent = forwardRef<Group, ModelProps>(function Model(
       return levels;
     }
 
-    if (lodQuality === 'high') {
-      return [{ distance: 0, quality: 'high' as const }];
+    if (lodQuality === "high") {
+      return [{ distance: 0, quality: "high" as const }];
     }
 
-    if (lodQuality === 'medium') {
+    if (lodQuality === "medium") {
       return [
         {
           distance: 0,
-          quality: 'medium' as const,
+          quality: "medium" as const,
           maxTriangles: Math.floor(triangleCount * 0.5),
         },
       ];
@@ -253,7 +276,7 @@ const ModelComponent = forwardRef<Group, ModelProps>(function Model(
     return [
       {
         distance: 0,
-        quality: 'low' as const,
+        quality: "low" as const,
         maxTriangles: Math.floor(triangleCount * 0.1),
       },
     ];
@@ -273,7 +296,11 @@ const ModelComponent = forwardRef<Group, ModelProps>(function Model(
     </group>
   );
 
-  return lodEnabled ? <LOD levels={lodLevels}>{modelContent}</LOD> : modelContent;
+  return lodEnabled ? (
+    <LOD levels={lodLevels}>{modelContent}</LOD>
+  ) : (
+    modelContent
+  );
 });
 
 // Memoize Model component with custom comparison to prevent unnecessary re-renders

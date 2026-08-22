@@ -1,26 +1,26 @@
-import { detectWebGLSupport, getWebGLErrorMessage } from '../webgl';
+import { detectWebGLSupport, getWebGLErrorMessage } from "../webgl";
 
 // Mock canvas and WebGL context
 const mockGetContext = jest.fn();
 const mockGetSupportedExtensions = jest.fn();
 
-Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+Object.defineProperty(HTMLCanvasElement.prototype, "getContext", {
   writable: true,
   value: mockGetContext,
 });
 
-describe('WebGL Detection', () => {
+describe("WebGL Detection", () => {
   beforeEach(() => {
     mockGetContext.mockClear();
     mockGetSupportedExtensions.mockClear();
   });
 
-  describe('detectWebGLSupport', () => {
-    it('returns success when WebGL is supported', () => {
+  describe("detectWebGLSupport", () => {
+    it("returns success when WebGL is supported", () => {
       const mockContext = {
         getSupportedExtensions: mockGetSupportedExtensions.mockReturnValue([
-          'WEBGL_lose_context',
-          'OES_texture_float',
+          "WEBGL_lose_context",
+          "OES_texture_float",
         ]),
       };
 
@@ -33,17 +33,17 @@ describe('WebGL Detection', () => {
       expect(result.error).toBeUndefined();
     });
 
-    it('returns error when WebGL context cannot be created', () => {
+    it("returns error when WebGL context cannot be created", () => {
       mockGetContext.mockReturnValue(null);
 
       const result = detectWebGLSupport();
 
       expect(result.isSupported).toBe(false);
       expect(result.isAvailable).toBe(false);
-      expect(result.error).toBe('WebGL is not supported in this browser');
+      expect(result.error).toBe("WebGL is not supported in this browser");
     });
 
-    it('returns error when required extensions are missing', () => {
+    it("returns error when required extensions are missing", () => {
       const mockContext = {
         getSupportedExtensions: mockGetSupportedExtensions.mockReturnValue([]),
       };
@@ -54,24 +54,26 @@ describe('WebGL Detection', () => {
 
       expect(result.isSupported).toBe(true);
       expect(result.isAvailable).toBe(false);
-      expect(result.error).toContain('Missing essential WebGL extensions');
+      expect(result.error).toContain("Missing essential WebGL extensions");
     });
   });
 
-  describe('getWebGLErrorMessage', () => {
-    it('returns WebGL not supported message when context unavailable', () => {
+  describe("getWebGLErrorMessage", () => {
+    it("returns WebGL not supported message when context unavailable", () => {
       mockGetContext.mockReturnValue(null);
 
       const message = getWebGLErrorMessage();
 
-      expect(message).toBe('WebGL is not supported in your browser. Please update your browser or enable WebGL.');
+      expect(message).toBe(
+        "WebGL is not supported in your browser. Please update your browser or enable WebGL.",
+      );
     });
 
-    it('returns empty string when WebGL is available', () => {
+    it("returns empty string when WebGL is available", () => {
       const mockContext = {
         getSupportedExtensions: mockGetSupportedExtensions.mockReturnValue([
-          'WEBGL_lose_context',
-          'OES_texture_float',
+          "WEBGL_lose_context",
+          "OES_texture_float",
         ]),
       };
 
@@ -79,7 +81,7 @@ describe('WebGL Detection', () => {
 
       const message = getWebGLErrorMessage();
 
-      expect(message).toBe('');
+      expect(message).toBe("");
     });
   });
 });

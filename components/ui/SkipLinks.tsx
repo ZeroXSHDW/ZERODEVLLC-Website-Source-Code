@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { SkipForward } from 'lucide-react';
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { SkipForward } from "lucide-react";
 
 export function SkipLinks() {
   const [isVisible, setIsVisible] = useState(false);
@@ -10,7 +10,7 @@ export function SkipLinks() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Show skip links when Tab is first pressed
-      if (e.key === 'Tab' && !isVisible) {
+      if (e.key === "Tab" && !isVisible) {
         setIsVisible(true);
       }
     };
@@ -28,24 +28,24 @@ export function SkipLinks() {
       setIsVisible(false);
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('focusin', handleFocus);
-    document.addEventListener('click', handleClick);
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("focusin", handleFocus);
+    document.addEventListener("click", handleClick);
 
     const timer = setTimeout(handleTimeout, 3000);
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('focusin', handleFocus);
-      document.removeEventListener('click', handleClick);
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("focusin", handleFocus);
+      document.removeEventListener("click", handleClick);
       clearTimeout(timer);
     };
   }, [isVisible]);
 
   const skipLinks = [
-    { href: '#main-content', label: 'Skip to main content' },
-    { href: '#controls', label: 'Skip to controls' },
-    { href: '#model-info', label: 'Skip to model information' },
+    { href: "#main-content", label: "Skip to main content" },
+    { href: "#controls", label: "Skip to controls" },
+    { href: "#model-info", label: "Skip to model information" },
   ];
 
   return (

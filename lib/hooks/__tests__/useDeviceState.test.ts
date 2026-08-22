@@ -1,29 +1,29 @@
-import { act, renderHook, waitFor } from '@testing-library/react';
-import { useDeviceState } from '../useDeviceState';
+import { act, renderHook, waitFor } from "@testing-library/react";
+import { useDeviceState } from "../useDeviceState";
 
 // Mock navigator
 const mockNavigator = {
-  userAgent: 'Mozilla/5.0',
+  userAgent: "Mozilla/5.0",
   maxTouchPoints: 0,
   xr: undefined,
 };
 
-Object.defineProperty(window, 'navigator', {
+Object.defineProperty(window, "navigator", {
   writable: true,
   value: mockNavigator,
 });
 
-describe('useDeviceState', () => {
+describe("useDeviceState", () => {
   beforeEach(() => {
     // Reset window size
-    Object.defineProperty(window, 'innerWidth', {
+    Object.defineProperty(window, "innerWidth", {
       writable: true,
       configurable: true,
       value: 1024,
     });
   });
 
-  it('should initialize with default state', () => {
+  it("should initialize with default state", () => {
     const { result } = renderHook(() => useDeviceState());
 
     expect(result.current.deviceState).toEqual({
@@ -35,14 +35,14 @@ describe('useDeviceState', () => {
     });
   });
 
-  it('should detect mobile device', async () => {
-    Object.defineProperty(window.navigator, 'userAgent', {
+  it("should detect mobile device", async () => {
+    Object.defineProperty(window.navigator, "userAgent", {
       writable: true,
       configurable: true,
-      value: 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X)',
+      value: "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X)",
     });
 
-    Object.defineProperty(window, 'innerWidth', {
+    Object.defineProperty(window, "innerWidth", {
       writable: true,
       configurable: true,
       value: 375,
@@ -55,7 +55,7 @@ describe('useDeviceState', () => {
     });
   });
 
-  it('should set touch start time', () => {
+  it("should set touch start time", () => {
     const { result } = renderHook(() => useDeviceState());
 
     const timestamp = Date.now();
@@ -66,7 +66,7 @@ describe('useDeviceState', () => {
     expect(result.current.deviceState.touchStartTime).toBe(timestamp);
   });
 
-  it('should set last tap time', () => {
+  it("should set last tap time", () => {
     const { result } = renderHook(() => useDeviceState());
 
     const timestamp = Date.now();
@@ -77,4 +77,3 @@ describe('useDeviceState', () => {
     expect(result.current.deviceState.lastTapTime).toBe(timestamp);
   });
 });
-

@@ -1,41 +1,46 @@
-import { ViewerSettings } from '@/lib/types/3d';
-import { Palette } from 'lucide-react';
+import { ViewerSettings } from "@/lib/types/3d";
+import { Palette } from "lucide-react";
 
 interface EnvironmentPanelProps {
   currentSettings: ViewerSettings;
   onEnvironmentChange?: (updates: {
     preset?:
-      | 'sunset'
-      | 'dawn'
-      | 'night'
-      | 'warehouse'
-      | 'forest'
-      | 'apartment'
-      | 'studio'
-      | 'city'
-      | 'park'
-      | 'lobby';
+      | "sunset"
+      | "dawn"
+      | "night"
+      | "warehouse"
+      | "forest"
+      | "apartment"
+      | "studio"
+      | "city"
+      | "park"
+      | "lobby";
     intensity?: number;
     enabled?: boolean;
   }) => void;
 }
 
 type EnvironmentPreset = NonNullable<
-  Parameters<NonNullable<EnvironmentPanelProps['onEnvironmentChange']>>[0]['preset']
+  Parameters<
+    NonNullable<EnvironmentPanelProps["onEnvironmentChange"]>
+  >[0]["preset"]
 >;
 
-export function EnvironmentPanel({ currentSettings, onEnvironmentChange }: EnvironmentPanelProps) {
+export function EnvironmentPanel({
+  currentSettings,
+  onEnvironmentChange,
+}: EnvironmentPanelProps) {
   const presets: EnvironmentPreset[] = [
-    'sunset',
-    'dawn',
-    'night',
-    'warehouse',
-    'forest',
-    'apartment',
-    'studio',
-    'city',
-    'park',
-    'lobby',
+    "sunset",
+    "dawn",
+    "night",
+    "warehouse",
+    "forest",
+    "apartment",
+    "studio",
+    "city",
+    "park",
+    "lobby",
   ];
 
   return (
@@ -56,12 +61,16 @@ export function EnvironmentPanel({ currentSettings, onEnvironmentChange }: Envir
             })
           }
           className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-            currentSettings?.environment?.enabled ? 'bg-blue-600' : 'bg-gray-600'
+            currentSettings?.environment?.enabled
+              ? "bg-blue-600"
+              : "bg-gray-600"
           }`}
         >
           <span
             className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-              currentSettings?.environment?.enabled ? 'translate-x-6' : 'translate-x-1'
+              currentSettings?.environment?.enabled
+                ? "translate-x-6"
+                : "translate-x-1"
             }`}
           />
         </button>
@@ -73,8 +82,8 @@ export function EnvironmentPanel({ currentSettings, onEnvironmentChange }: Envir
           <div>
             <label className="block text-sm text-gray-300 mb-2">Preset</label>
             <select
-              value={currentSettings?.environment?.preset || 'studio'}
-              onChange={e =>
+              value={currentSettings?.environment?.preset || "studio"}
+              onChange={(e) =>
                 onEnvironmentChange?.({
                   ...currentSettings?.environment,
                   preset: e.target.value as EnvironmentPreset,
@@ -82,7 +91,7 @@ export function EnvironmentPanel({ currentSettings, onEnvironmentChange }: Envir
               }
               className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
             >
-              {presets.map(preset => (
+              {presets.map((preset) => (
                 <option key={preset} value={preset}>
                   {preset.charAt(0).toUpperCase() + preset.slice(1)}
                 </option>
@@ -104,7 +113,7 @@ export function EnvironmentPanel({ currentSettings, onEnvironmentChange }: Envir
               max="2"
               step="0.1"
               value={currentSettings?.environment?.intensity || 1}
-              onChange={e =>
+              onChange={(e) =>
                 onEnvironmentChange?.({
                   ...currentSettings?.environment,
                   intensity: parseFloat(e.target.value),

@@ -1,11 +1,18 @@
-import { ViewerSettings } from '@/lib/types/3d';
+import { ViewerSettings } from "@/lib/types/3d";
 
 interface LightingPanelProps {
   currentSettings: ViewerSettings;
-  onLightingChange?: (updates: { ambient?: number; directional?: number; point?: number }) => void;
+  onLightingChange?: (updates: {
+    ambient?: number;
+    directional?: number;
+    point?: number;
+  }) => void;
 }
 
-export function LightingPanel({ currentSettings, onLightingChange }: LightingPanelProps) {
+export function LightingPanel({
+  currentSettings,
+  onLightingChange,
+}: LightingPanelProps) {
   return (
     <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
       <h4 className="text-white font-medium mb-3">Lighting Controls</h4>
@@ -24,7 +31,7 @@ export function LightingPanel({ currentSettings, onLightingChange }: LightingPan
           max="2"
           step="0.1"
           value={currentSettings?.lighting?.ambient || 0.4}
-          onChange={e =>
+          onChange={(e) =>
             onLightingChange?.({
               ...currentSettings?.lighting,
               ambient: parseFloat(e.target.value),
@@ -48,7 +55,7 @@ export function LightingPanel({ currentSettings, onLightingChange }: LightingPan
           max="3"
           step="0.1"
           value={currentSettings?.lighting?.directional || 1.2}
-          onChange={e =>
+          onChange={(e) =>
             onLightingChange?.({
               ...currentSettings?.lighting,
               directional: parseFloat(e.target.value),
@@ -72,7 +79,7 @@ export function LightingPanel({ currentSettings, onLightingChange }: LightingPan
           max="2"
           step="0.1"
           value={currentSettings?.lighting?.point || 0.5}
-          onChange={e =>
+          onChange={(e) =>
             onLightingChange?.({
               ...currentSettings?.lighting,
               point: parseFloat(e.target.value),

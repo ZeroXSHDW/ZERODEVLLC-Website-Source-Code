@@ -1,9 +1,9 @@
 "use client";
 
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Activity, Cpu, Zap, Eye, BarChart3, X } from 'lucide-react';
-import { usePerformanceMonitor } from '@/lib/hooks/usePerformanceMonitor';
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Activity, Cpu, Zap, Eye, BarChart3, X } from "lucide-react";
+import { usePerformanceMonitor } from "@/lib/hooks/usePerformanceMonitor";
 
 interface PerformanceMonitorProps {
   isOpen: boolean;
@@ -11,19 +11,23 @@ interface PerformanceMonitorProps {
   className?: string;
 }
 
-export function PerformanceMonitor({ isOpen, onClose, className }: PerformanceMonitorProps) {
+export function PerformanceMonitor({
+  isOpen,
+  onClose,
+  className,
+}: PerformanceMonitorProps) {
   const { metrics } = usePerformanceMonitor(isOpen);
 
   const getFpsColor = (fps: number) => {
-    if (fps >= 60) return 'text-green-400';
-    if (fps >= 30) return 'text-yellow-400';
-    return 'text-red-400';
+    if (fps >= 60) return "text-green-400";
+    if (fps >= 30) return "text-yellow-400";
+    return "text-red-400";
   };
 
   const getFrameTimeColor = (frameTime: number) => {
-    if (frameTime <= 16.67) return 'text-green-400'; // 60 FPS
-    if (frameTime <= 33.33) return 'text-yellow-400'; // 30 FPS
-    return 'text-red-400';
+    if (frameTime <= 16.67) return "text-green-400"; // 60 FPS
+    if (frameTime <= 33.33) return "text-yellow-400"; // 30 FPS
+    return "text-red-400";
   };
 
   const formatNumber = (num: number) => {
@@ -50,13 +54,15 @@ export function PerformanceMonitor({ isOpen, onClose, className }: PerformanceMo
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className={`fixed top-4 right-4 bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded-lg shadow-2xl z-50 min-w-[280px] ${className || ''}`}
+            className={`fixed top-4 right-4 bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded-lg shadow-2xl z-50 min-w-[280px] ${className || ""}`}
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-gray-700">
               <div className="flex items-center gap-2">
                 <Activity className="w-5 h-5 text-blue-400" />
-                <h3 className="text-white font-semibold">Performance Monitor</h3>
+                <h3 className="text-white font-semibold">
+                  Performance Monitor
+                </h3>
               </div>
               <button
                 onClick={onClose}
@@ -76,11 +82,17 @@ export function PerformanceMonitor({ isOpen, onClose, className }: PerformanceMo
                     <Zap className="w-4 h-4 text-blue-400" />
                     <span className="text-gray-300 text-sm">FPS</span>
                   </div>
-                  <div className={`text-2xl font-bold ${getFpsColor(metrics.fps)}`}>
+                  <div
+                    className={`text-2xl font-bold ${getFpsColor(metrics.fps)}`}
+                  >
                     {metrics.fps}
                   </div>
                   <div className="text-xs text-gray-500 mt-1">
-                    {metrics.fps >= 60 ? 'Excellent' : metrics.fps >= 30 ? 'Good' : 'Poor'}
+                    {metrics.fps >= 60
+                      ? "Excellent"
+                      : metrics.fps >= 30
+                        ? "Good"
+                        : "Poor"}
                   </div>
                 </div>
 
@@ -89,7 +101,9 @@ export function PerformanceMonitor({ isOpen, onClose, className }: PerformanceMo
                     <Cpu className="w-4 h-4 text-green-400" />
                     <span className="text-gray-300 text-sm">Frame Time</span>
                   </div>
-                  <div className={`text-2xl font-bold ${getFrameTimeColor(metrics.frameTime)}`}>
+                  <div
+                    className={`text-2xl font-bold ${getFrameTimeColor(metrics.frameTime)}`}
+                  >
                     {metrics.frameTime}ms
                   </div>
                   <div className="text-xs text-gray-500 mt-1">
@@ -154,7 +168,9 @@ export function PerformanceMonitor({ isOpen, onClose, className }: PerformanceMo
 
               {/* Performance Tips */}
               <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-3">
-                <h5 className="text-blue-400 font-medium text-sm mb-2">Performance Tips</h5>
+                <h5 className="text-blue-400 font-medium text-sm mb-2">
+                  Performance Tips
+                </h5>
                 <ul className="text-xs text-blue-300 space-y-1">
                   {metrics.fps < 30 && (
                     <li>• Enable performance mode to reduce quality</li>
@@ -165,9 +181,7 @@ export function PerformanceMonitor({ isOpen, onClose, className }: PerformanceMo
                   {metrics.memoryUsage && metrics.memoryUsage > 100 && (
                     <li>• High memory usage detected</li>
                   )}
-                  {metrics.fps >= 60 && (
-                    <li>• Performance is excellent! 🎉</li>
-                  )}
+                  {metrics.fps >= 60 && <li>• Performance is excellent! 🎉</li>}
                 </ul>
               </div>
             </div>

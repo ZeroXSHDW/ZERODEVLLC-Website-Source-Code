@@ -3,15 +3,21 @@
  * Reuses geometries, materials, and textures to reduce memory allocation
  */
 
-import * as THREE from 'three';
-import { log } from './logger';
+import * as THREE from "three";
+import { log } from "./logger";
 
 interface PoolConfig {
   maxSize: number;
   ttl: number; // Time to live in milliseconds
 }
 
-class ResourcePool<T extends THREE.Object3D | THREE.BufferGeometry | THREE.Material | THREE.Texture> {
+class ResourcePool<
+  T extends
+    | THREE.Object3D
+    | THREE.BufferGeometry
+    | THREE.Material
+    | THREE.Texture,
+> {
   private pool: T[] = [];
   private inUse: Set<T> = new Set();
   private config: PoolConfig;
@@ -26,10 +32,10 @@ class ResourcePool<T extends THREE.Object3D | THREE.BufferGeometry | THREE.Mater
    */
   acquire(createFn: () => T): T {
     // Try to reuse an object from the pool
-    const available = this.pool.find(obj => !this.inUse.has(obj));
-    
+    const available = this.pool.find((obj) => !this.inUse.has(obj));
+
     if (available) {
-      this.pool = this.pool.filter(obj => obj !== available);
+      this.pool = this.pool.filter((obj) => obj !== available);
       this.inUse.add(available);
       this.timestamps.set(available, Date.now());
       return available;
@@ -83,17 +89,17 @@ class ResourcePool<T extends THREE.Object3D | THREE.BufferGeometry | THREE.Mater
     const now = Date.now();
     const toRemove: T[] = [];
 
-    this.pool.forEach(obj => {
+    this.pool.forEach((obj) => {
       const timestamp = this.timestamps.get(obj);
       if (timestamp && now - timestamp > this.config.ttl) {
         toRemove.push(obj);
       }
     });
 
-    toRemove.forEach(obj => {
-      this.pool = this.pool.filter(o => o !== obj);
+    toRemove.forEach((obj) => {
+      this.pool = this.pool.filter((o) => o !== obj);
       this.timestamps.delete(obj);
-      
+
       // Dispose object
       if (obj instanceof THREE.BufferGeometry) {
         obj.dispose();
@@ -113,7 +119,7 @@ class ResourcePool<T extends THREE.Object3D | THREE.BufferGeometry | THREE.Mater
    * Clear the entire pool
    */
   clear(): void {
-    this.pool.forEach(obj => {
+    this.pool.forEach((obj) => {
       if (obj instanceof THREE.BufferGeometry) {
         obj.dispose();
       } else if (obj instanceof THREE.Material) {
@@ -157,11 +163,10 @@ export const texturePool = new ResourcePool<THREE.Texture>({
 });
 
 // Periodic cleanup
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   setInterval(() => {
     geometryPool.cleanup();
     materialPool.cleanup();
     texturePool.cleanup();
   }, 60000); // Clean up every minute
 }
-

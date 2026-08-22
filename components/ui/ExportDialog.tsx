@@ -1,10 +1,14 @@
 "use client";
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Download, Copy, Image, FileText, Settings } from 'lucide-react';
-import { captureScreenshot, downloadScreenshot, copyScreenshotToClipboard } from '@/lib/utils/screenshot';
-import { log } from '@/lib/utils/logger';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, Download, Copy, Image, FileText, Settings } from "lucide-react";
+import {
+  captureScreenshot,
+  downloadScreenshot,
+  copyScreenshotToClipboard,
+} from "@/lib/utils/screenshot";
+import { log } from "@/lib/utils/logger";
 
 interface ExportDialogProps {
   isOpen: boolean;
@@ -21,31 +25,79 @@ interface ExportPreset {
 }
 
 const EXPORT_PRESETS: ExportPreset[] = [
-  { name: 'Thumbnail', width: 256, height: 256, description: 'Small preview image' },
-  { name: 'Social Media', width: 1200, height: 630, description: 'Facebook/LinkedIn optimized' },
-  { name: 'HD Display', width: 1920, height: 1080, description: 'Full HD resolution' },
-  { name: '4K', width: 3840, height: 2160, description: 'Ultra high resolution' },
-  { name: 'Custom', width: 0, height: 0, description: 'Specify custom dimensions' },
+  {
+    name: "Thumbnail",
+    width: 256,
+    height: 256,
+    description: "Small preview image",
+  },
+  {
+    name: "Social Media",
+    width: 1200,
+    height: 630,
+    description: "Facebook/LinkedIn optimized",
+  },
+  {
+    name: "HD Display",
+    width: 1920,
+    height: 1080,
+    description: "Full HD resolution",
+  },
+  {
+    name: "4K",
+    width: 3840,
+    height: 2160,
+    description: "Ultra high resolution",
+  },
+  {
+    name: "Custom",
+    width: 0,
+    height: 0,
+    description: "Specify custom dimensions",
+  },
 ];
 
 const FORMAT_OPTIONS = [
-  { value: 'png', label: 'PNG', description: 'Lossless, supports transparency' },
-  { value: 'jpeg', label: 'JPEG', description: 'Smaller file size, no transparency' },
-  { value: 'webp', label: 'WebP', description: 'Modern format, best compression' },
+  {
+    value: "png",
+    label: "PNG",
+    description: "Lossless, supports transparency",
+  },
+  {
+    value: "jpeg",
+    label: "JPEG",
+    description: "Smaller file size, no transparency",
+  },
+  {
+    value: "webp",
+    label: "WebP",
+    description: "Modern format, best compression",
+  },
 ] as const;
 
-export function ExportDialog({ isOpen, onClose, canvas, modelName = '3d-scene' }: ExportDialogProps) {
-  const [selectedPreset, setSelectedPreset] = useState<ExportPreset>(EXPORT_PRESETS[2]); // HD Display default
-  const [selectedFormat, setSelectedFormat] = useState<'png' | 'jpeg' | 'webp'>('png');
+export function ExportDialog({
+  isOpen,
+  onClose,
+  canvas,
+  modelName = "3d-scene",
+}: ExportDialogProps) {
+  const [selectedPreset, setSelectedPreset] = useState<ExportPreset>(
+    EXPORT_PRESETS[2],
+  ); // HD Display default
+  const [selectedFormat, setSelectedFormat] = useState<"png" | "jpeg" | "webp">(
+    "png",
+  );
   const [quality, setQuality] = useState(95);
   const [customWidth, setCustomWidth] = useState(1920);
   const [customHeight, setCustomHeight] = useState(1080);
   const [isExporting, setIsExporting] = useState(false);
 
-  const currentWidth = selectedPreset.name === 'Custom' ? customWidth : selectedPreset.width;
-  const currentHeight = selectedPreset.name === 'Custom' ? customHeight : selectedPreset.height;
+  const currentWidth =
+    selectedPreset.name === "Custom" ? customWidth : selectedPreset.width;
+  const currentHeight =
+    selectedPreset.name === "Custom" ? customHeight : selectedPreset.height;
 
-  const handleExport = async (action: 'download' | 'copy') => {
+  const handleExport = async (action: "download" | "copy") => {
     if (!canvas) return;
 
     setIsExporting(true);
@@ -58,20 +110,20 @@ export function ExportDialog({ isOpen, onClose, canvas, modelName = '3d-scene' }
       });
 
       if (!dataUrl) {
-        throw new Error('Failed to capture screenshot');
+        throw new Error("Failed to capture screenshot");
       }
 
-      const filename = `${modelName}-${selectedPreset.name.toLowerCase().replace(' ', '-')}-${currentWidth}x${currentHeight}.${selectedFormat}`;
+      const filename = `${modelName}-${selectedPreset.name.toLowerCase().replace(" ", "-")}-${currentWidth}x${currentHeight}.${selectedFormat}`;
 
-      if (action === 'download') {
+      if (action === "download") {
         downloadScreenshot(dataUrl, filename);
-      } else if (action === 'copy') {
+      } else if (action === "copy") {
         await copyScreenshotToClipboard(dataUrl);
       }
 
       onClose();
     } catch (error) {
-      log.error('Export failed:', error);
+      log.error("Export failed:", error);
       // You could show a toast here
     } finally {
       setIsExporting(false);
@@ -84,13 +136,13 @@ export function ExportDialog({ isOpen, onClose, canvas, modelName = '3d-scene' }
     let bytesPerPixel = 4; // RGBA
 
     switch (selectedFormat) {
-      case 'jpeg':
+      case "jpeg":
         bytesPerPixel = 3 * (quality / 100); // RGB with quality factor
         break;
-      case 'webp':
+      case "webp":
         bytesPerPixel = 2.5 * (quality / 100); // WebP compression
         break;
-      case 'png':
+      case "png":
       default:
         bytesPerPixel = 4; // PNG is lossless
         break;
@@ -143,19 +195,19 @@ export function ExportDialog({ isOpen, onClose, canvas, modelName = '3d-scene' }
             <div className="p-4 space-y-4 max-h-[60vh] overflow-y-auto">
               {/* Preset Selection */}
               <div>
-                  <h4 className="text-white font-medium mb-3 flex items-center gap-2">
-                    {/* eslint-disable-next-line jsx-a11y/alt-text */}
-                    <Image className="w-4 h-4" aria-hidden="true" />
-                    Resolution Preset
-                  </h4>
+                <h4 className="text-white font-medium mb-3 flex items-center gap-2">
+                  {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                  <Image className="w-4 h-4" aria-hidden="true" />
+                  Resolution Preset
+                </h4>
                 <div className="grid grid-cols-1 gap-2">
                   {EXPORT_PRESETS.map((preset) => (
                     <label
                       key={preset.name}
                       className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${
                         selectedPreset.name === preset.name
-                          ? 'border-blue-500 bg-blue-500/10'
-                          : 'border-gray-700 hover:border-gray-600'
+                          ? "border-blue-500 bg-blue-500/10"
+                          : "border-gray-700 hover:border-gray-600"
                       }`}
                     >
                       <input
@@ -167,11 +219,17 @@ export function ExportDialog({ isOpen, onClose, canvas, modelName = '3d-scene' }
                         className="text-blue-500"
                       />
                       <div className="flex-1">
-                        <div className="text-white font-medium">{preset.name}</div>
-                        <div className="text-gray-400 text-sm">
-                          {preset.width > 0 ? `${preset.width}×${preset.height}` : 'Custom dimensions'}
+                        <div className="text-white font-medium">
+                          {preset.name}
                         </div>
-                        <div className="text-gray-500 text-xs">{preset.description}</div>
+                        <div className="text-gray-400 text-sm">
+                          {preset.width > 0
+                            ? `${preset.width}×${preset.height}`
+                            : "Custom dimensions"}
+                        </div>
+                        <div className="text-gray-500 text-xs">
+                          {preset.description}
+                        </div>
                       </div>
                     </label>
                   ))}
@@ -179,32 +237,44 @@ export function ExportDialog({ isOpen, onClose, canvas, modelName = '3d-scene' }
               </div>
 
               {/* Custom Dimensions */}
-              {selectedPreset.name === 'Custom' && (
+              {selectedPreset.name === "Custom" && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
+                  animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   className="space-y-3 p-3 bg-gray-800/50 rounded-lg"
                 >
                   <h5 className="text-white font-medium">Custom Dimensions</h5>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-sm text-gray-400 mb-1">Width</label>
+                      <label className="block text-sm text-gray-400 mb-1">
+                        Width
+                      </label>
                       <input
                         type="number"
                         value={customWidth}
-                        onChange={(e) => setCustomWidth(Math.max(64, parseInt(e.target.value) || 1920))}
+                        onChange={(e) =>
+                          setCustomWidth(
+                            Math.max(64, parseInt(e.target.value) || 1920),
+                          )
+                        }
                         className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white"
                         min="64"
                         max="8192"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm text-gray-400 mb-1">Height</label>
+                      <label className="block text-sm text-gray-400 mb-1">
+                        Height
+                      </label>
                       <input
                         type="number"
                         value={customHeight}
-                        onChange={(e) => setCustomHeight(Math.max(64, parseInt(e.target.value) || 1080))}
+                        onChange={(e) =>
+                          setCustomHeight(
+                            Math.max(64, parseInt(e.target.value) || 1080),
+                          )
+                        }
                         className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white"
                         min="64"
                         max="8192"
@@ -226,8 +296,8 @@ export function ExportDialog({ isOpen, onClose, canvas, modelName = '3d-scene' }
                       key={format.value}
                       className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${
                         selectedFormat === format.value
-                          ? 'border-blue-500 bg-blue-500/10'
-                          : 'border-gray-700 hover:border-gray-600'
+                          ? "border-blue-500 bg-blue-500/10"
+                          : "border-gray-700 hover:border-gray-600"
                       }`}
                     >
                       <input
@@ -235,12 +305,20 @@ export function ExportDialog({ isOpen, onClose, canvas, modelName = '3d-scene' }
                         name="format"
                         value={format.value}
                         checked={selectedFormat === format.value}
-                        onChange={(e) => setSelectedFormat(e.target.value as typeof selectedFormat)}
+                        onChange={(e) =>
+                          setSelectedFormat(
+                            e.target.value as typeof selectedFormat,
+                          )
+                        }
                         className="text-blue-500"
                       />
                       <div className="flex-1">
-                        <div className="text-white font-medium">{format.label}</div>
-                        <div className="text-gray-400 text-sm">{format.description}</div>
+                        <div className="text-white font-medium">
+                          {format.label}
+                        </div>
+                        <div className="text-gray-400 text-sm">
+                          {format.description}
+                        </div>
                       </div>
                     </label>
                   ))}
@@ -248,7 +326,7 @@ export function ExportDialog({ isOpen, onClose, canvas, modelName = '3d-scene' }
               </div>
 
               {/* Quality Settings */}
-              {(selectedFormat === 'jpeg' || selectedFormat === 'webp') && (
+              {(selectedFormat === "jpeg" || selectedFormat === "webp") && (
                 <div>
                   <h4 className="text-white font-medium mb-3 flex items-center gap-2">
                     <Settings className="w-4 h-4" />
@@ -277,12 +355,27 @@ export function ExportDialog({ isOpen, onClose, canvas, modelName = '3d-scene' }
               <div className="bg-gray-800 rounded-lg p-3">
                 <h5 className="text-white font-medium mb-2">Export Summary</h5>
                 <div className="text-sm space-y-1 text-gray-300">
-                  <div>Resolution: <span className="text-white">{currentWidth}×{currentHeight}</span></div>
-                  <div>Format: <span className="text-white">{selectedFormat.toUpperCase()}</span></div>
-                  {(selectedFormat === 'jpeg' || selectedFormat === 'webp') && (
-                    <div>Quality: <span className="text-white">{quality}%</span></div>
+                  <div>
+                    Resolution:{" "}
+                    <span className="text-white">
+                      {currentWidth}×{currentHeight}
+                    </span>
+                  </div>
+                  <div>
+                    Format:{" "}
+                    <span className="text-white">
+                      {selectedFormat.toUpperCase()}
+                    </span>
+                  </div>
+                  {(selectedFormat === "jpeg" || selectedFormat === "webp") && (
+                    <div>
+                      Quality: <span className="text-white">{quality}%</span>
+                    </div>
                   )}
-                  <div>Estimated size: <span className="text-white">{estimatedFileSize()}</span></div>
+                  <div>
+                    Estimated size:{" "}
+                    <span className="text-white">{estimatedFileSize()}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -290,21 +383,21 @@ export function ExportDialog({ isOpen, onClose, canvas, modelName = '3d-scene' }
             {/* Actions */}
             <div className="flex gap-3 p-4 border-t border-gray-700">
               <button
-                onClick={() => handleExport('download')}
+                onClick={() => handleExport("download")}
                 disabled={isExporting || !canvas}
                 className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-colors"
               >
                 <Download className="w-4 h-4" />
-                {isExporting ? 'Exporting...' : 'Download'}
+                {isExporting ? "Exporting..." : "Download"}
               </button>
 
               <button
-                onClick={() => handleExport('copy')}
+                onClick={() => handleExport("copy")}
                 disabled={isExporting || !canvas}
                 className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 disabled:bg-gray-800 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-colors"
               >
                 <Copy className="w-4 h-4" />
-                {isExporting ? 'Copying...' : 'Copy'}
+                {isExporting ? "Copying..." : "Copy"}
               </button>
             </div>
           </motion.div>

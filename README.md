@@ -14,7 +14,7 @@ ZeroDevLLC corporate site and interactive 3D model viewer, built with Next.js, R
 
 ## Tech Stack
 
-- **Framework**: [Next.js 15](https://nextjs.org/)
+- **Framework**: [Next.js 16](https://nextjs.org/)
 - **3D Engine**: [Three.js](https://threejs.org/)
 - **React 3D Bridge**: [React Three Fiber](https://docs.pmnd.rs/react-three-fiber)
 - **UI Components**: [Radix UI](https://www.radix-ui.com/), [Lucide React](https://lucide.dev/)
@@ -25,24 +25,28 @@ ZeroDevLLC corporate site and interactive 3D model viewer, built with Next.js, R
 
 ### Prerequisites
 
-- Node.js 18.x or later
+- Node.js 20.9 or later
 - npm or yarn
 
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/ZeroXSHDW/ZERODEVLLC-Website-Source-Code.git
    cd ZERODEVLLC-Website-Source-Code
    ```
 
 2. Install dependencies (prefer lockfile install):
+
    ```bash
    npm ci
    ```
+
    Or `npm install` if you are intentionally updating dependencies.
 
 3. Run the development server:
+
    ```bash
    npm run dev
    ```
@@ -51,12 +55,26 @@ ZeroDevLLC corporate site and interactive 3D model viewer, built with Next.js, R
 
 ### Useful scripts
 
-| Script | Purpose |
-|--------|---------|
-| `npm run type-check` | TypeScript (`tsc --noEmit`) — used in CI |
-| `npm test` | Jest unit/component tests |
-| `npm run lint` | Next.js ESLint (requires a local ESLint config) |
-| `npm run build` | Production build |
+| Script               | Purpose                                              |
+| -------------------- | ---------------------------------------------------- |
+| `npm run type-check` | TypeScript (`tsc --noEmit`) — used in CI             |
+| `npm test`           | Jest unit/component tests                            |
+| `npm run lint`       | ESLint with the committed Next.js flat configuration |
+| `npm run build`      | Production build                                     |
+
+The pull-request gate runs type checking, ESLint, Prettier format validation,
+the high-severity dependency audit, Jest, and a production build. Run the same
+quality sequence locally with:
+
+```bash
+npm ci
+npm run type-check
+npm run lint
+npm run format:check
+npm audit --audit-level=high
+npm test -- --ci
+npm run build
+```
 
 ## Project Structure
 

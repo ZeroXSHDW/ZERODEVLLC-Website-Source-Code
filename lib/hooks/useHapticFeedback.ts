@@ -1,19 +1,23 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
 interface HapticOptions {
   pattern?: number[];
   duration?: number;
-  intensity?: 'light' | 'medium' | 'heavy';
+  intensity?: "light" | "medium" | "heavy";
 }
 
 export function useHapticFeedback() {
-  const isSupported = typeof navigator !== 'undefined' && 'vibrate' in navigator;
+  const isSupported =
+    typeof navigator !== "undefined" && "vibrate" in navigator;
 
-  const vibrate = useCallback((pattern: number | number[]) => {
-    if (isSupported) {
-      navigator.vibrate(pattern);
-    }
-  }, [isSupported]);
+  const vibrate = useCallback(
+    (pattern: number | number[]) => {
+      if (isSupported) {
+        navigator.vibrate(pattern);
+      }
+    },
+    [isSupported],
+  );
 
   const lightTap = useCallback(() => {
     vibrate(10);
@@ -35,13 +39,16 @@ export function useHapticFeedback() {
     vibrate([50, 50, 50, 50, 50]);
   }, [vibrate]);
 
-  const custom = useCallback((options: HapticOptions) => {
-    if (options.pattern) {
-      vibrate(options.pattern);
-    } else if (options.duration) {
-      vibrate(options.duration);
-    }
-  }, [vibrate]);
+  const custom = useCallback(
+    (options: HapticOptions) => {
+      if (options.pattern) {
+        vibrate(options.pattern);
+      } else if (options.duration) {
+        vibrate(options.duration);
+      }
+    },
+    [vibrate],
+  );
 
   return {
     isSupported,

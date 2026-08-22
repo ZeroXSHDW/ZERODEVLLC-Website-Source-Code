@@ -1,4 +1,4 @@
-import { Camera, Download } from 'lucide-react';
+import { Camera, Download } from "lucide-react";
 
 interface ExportPanelProps {
   onScreenshot?: () => void;
@@ -20,7 +20,9 @@ export function ExportPanel({ onScreenshot }: ExportPanelProps) {
             </div>
             <div className="text-left">
               <p className="text-sm font-medium text-white">Take Screenshot</p>
-              <p className="text-xs text-gray-500">Capture current view as PNG</p>
+              <p className="text-xs text-gray-500">
+                Capture current view as PNG
+              </p>
             </div>
           </div>
         </button>

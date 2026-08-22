@@ -3,7 +3,7 @@
  * Used for lazy loading and visibility-based optimizations
  */
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 interface UseIntersectionObserverOptions {
   threshold?: number | number[];
@@ -16,12 +16,12 @@ interface UseIntersectionObserverOptions {
  * Hook to observe element visibility using Intersection Observer
  */
 export function useIntersectionObserver<T extends HTMLElement = HTMLDivElement>(
-  options: UseIntersectionObserverOptions = {}
+  options: UseIntersectionObserverOptions = {},
 ): [React.RefObject<T>, boolean] {
   const {
     threshold = 0,
     root = null,
-    rootMargin = '0px',
+    rootMargin = "0px",
     enabled = true,
   } = options;
 
@@ -43,7 +43,7 @@ export function useIntersectionObserver<T extends HTMLElement = HTMLDivElement>(
         threshold,
         root,
         rootMargin,
-      }
+      },
     );
 
     // Start observing
@@ -52,7 +52,7 @@ export function useIntersectionObserver<T extends HTMLElement = HTMLDivElement>(
     // Cleanup - capture ref values to avoid stale closure
     const observer = observerRef.current;
     const element = elementRef.current;
-    
+
     return () => {
       if (observer && element) {
         observer.unobserve(element);
@@ -69,7 +69,7 @@ export function useIntersectionObserver<T extends HTMLElement = HTMLDivElement>(
  */
 export function useIdleCallback(
   callback: () => void,
-  options: { timeout?: number; enabled?: boolean } = {}
+  options: { timeout?: number; enabled?: boolean } = {},
 ): void {
   const { timeout = 5000, enabled = true } = options;
   const callbackRef = useRef(callback);
@@ -79,14 +79,14 @@ export function useIdleCallback(
   }, [callback]);
 
   useEffect(() => {
-    if (!enabled || typeof window === 'undefined') return;
+    if (!enabled || typeof window === "undefined") return;
 
     const executeCallback = () => {
       callbackRef.current();
     };
 
     // Use requestIdleCallback if available, otherwise use setTimeout
-    if ('requestIdleCallback' in window) {
+    if ("requestIdleCallback" in window) {
       const id = window.requestIdleCallback(executeCallback, { timeout });
       return () => window.cancelIdleCallback(id);
     } else {
@@ -96,4 +96,3 @@ export function useIdleCallback(
     }
   }, [enabled, timeout]);
 }
-

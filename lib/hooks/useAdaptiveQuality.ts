@@ -3,10 +3,10 @@
  * Automatically adjusts rendering quality based on FPS and frame time
  */
 
-import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import type { ViewerSettings } from '@/lib/types/3d';
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
+import type { ViewerSettings } from "@/lib/types/3d";
 
-export type QualityLevel = 'high' | 'medium' | 'low';
+export type QualityLevel = "high" | "medium" | "low";
 
 interface AdaptiveQualityState {
   quality: QualityLevel;
@@ -39,13 +39,13 @@ const DEFAULT_OPTIONS: Required<UseAdaptiveQualityOptions> = {
 export function useAdaptiveQuality(
   currentFPS: number,
   currentFrameTime: number,
-  options: UseAdaptiveQualityOptions = {}
+  options: UseAdaptiveQualityOptions = {},
 ) {
   // Memoize options to prevent dependency issues
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   const opts = useMemo(() => ({ ...DEFAULT_OPTIONS, ...options }), [options]);
   const [state, setState] = useState<AdaptiveQualityState>({
-    quality: 'high',
+    quality: "high",
     fps: currentFPS,
     frameTime: currentFrameTime,
     adjustmentReason: null,
@@ -80,17 +80,17 @@ export function useAdaptiveQuality(
       let reason: string | null = null;
 
       // Performance is poor - reduce quality
-      if (fps < opts.lowFPSThreshold && quality !== 'low') {
-        if (quality === 'high') {
-          newQuality = 'medium';
+      if (fps < opts.lowFPSThreshold && quality !== "low") {
+        if (quality === "high") {
+          newQuality = "medium";
           reason = `FPS dropped to ${fps.toFixed(1)} (below ${opts.lowFPSThreshold})`;
-        } else if (quality === 'medium') {
-          newQuality = 'low';
+        } else if (quality === "medium") {
+          newQuality = "low";
           reason = `FPS dropped to ${fps.toFixed(1)} (below ${opts.lowFPSThreshold})`;
         }
       }
       // Performance is good - increase quality
-      else if (fps >= opts.highFPSThreshold && quality !== 'high') {
+      else if (fps >= opts.highFPSThreshold && quality !== "high") {
         // Only increase if we've been stable for a while
         qualityHistoryRef.current.push(quality);
         if (qualityHistoryRef.current.length > 10) {
@@ -100,11 +100,11 @@ export function useAdaptiveQuality(
         // Check if we've been stable at current quality
         const isStable = qualityHistoryRef.current.every((q) => q === quality);
         if (isStable && qualityHistoryRef.current.length >= 5) {
-          if (quality === 'low') {
-            newQuality = 'medium';
+          if (quality === "low") {
+            newQuality = "medium";
             reason = `FPS stable at ${fps.toFixed(1)} (above ${opts.highFPSThreshold})`;
-          } else if (quality === 'medium') {
-            newQuality = 'high';
+          } else if (quality === "medium") {
+            newQuality = "high";
             reason = `FPS stable at ${fps.toFixed(1)} (above ${opts.highFPSThreshold})`;
           }
         }
@@ -137,7 +137,7 @@ export function useAdaptiveQuality(
       opts.onQualityChange(quality);
       lastAdjustmentRef.current = Date.now();
     },
-    [opts]
+    [opts],
   );
 
   /**
@@ -146,15 +146,15 @@ export function useAdaptiveQuality(
   const getViewerSettings = useCallback(
     (baseSettings: ViewerSettings): ViewerSettings => {
       const qualitySettings: Partial<ViewerSettings> = {
-        performanceMode: state.quality === 'low',
+        performanceMode: state.quality === "low",
         lod: {
           enabled: true,
-          quality: state.quality === 'high' ? 'auto' : state.quality,
+          quality: state.quality === "high" ? "auto" : state.quality,
         },
         postProcessing: {
           toneMapping: {
-            enabled: state.quality !== 'low',
-            exposure: state.quality === 'high' ? 1.0 : 0.9,
+            enabled: state.quality !== "low",
+            exposure: state.quality === "high" ? 1.0 : 0.9,
           },
         },
       };
@@ -164,7 +164,7 @@ export function useAdaptiveQuality(
         ...qualitySettings,
       };
     },
-    [state.quality]
+    [state.quality],
   );
 
   return {

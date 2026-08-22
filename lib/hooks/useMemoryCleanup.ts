@@ -2,9 +2,9 @@
  * Hook for automatic memory cleanup of Three.js resources
  */
 
-import { useEffect, useRef } from 'react';
-import * as THREE from 'three';
-import { memoryManager } from '@/lib/utils/memoryManager';
+import { useEffect, useRef } from "react";
+import * as THREE from "three";
+import { memoryManager } from "@/lib/utils/memoryManager";
 
 interface UseMemoryCleanupOptions {
   enabled?: boolean;
@@ -34,7 +34,7 @@ export function useMemoryCleanup(options: UseMemoryCleanupOptions = {}) {
 
     // Capture ref value to avoid stale closure warning
     const disposedObjects = disposedObjectsRef.current;
-    
+
     return () => {
       // Dispose all tracked objects
       const objectsToDispose = Array.from(disposedObjects);
@@ -103,4 +103,3 @@ export function useMemoryCleanup(options: UseMemoryCleanupOptions = {}) {
     getMemoryStats: () => memoryManager.getMemoryStats(renderer),
   };
 }
-

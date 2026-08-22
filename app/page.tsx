@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { ErrorBoundary } from '@/components/ErrorBoundary';
-import GLBViewer from '@/components/ui/glb-viewer';
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import GLBViewer from "@/components/ui/glb-viewer";
 
 export default function Home() {
   return (

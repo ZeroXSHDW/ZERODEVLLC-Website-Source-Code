@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from "three";
 
 interface InstancedGeometry {
   geometry: THREE.BufferGeometry;
@@ -22,11 +22,14 @@ export class GeometryOptimizer {
    * Analyzes a scene and optimizes geometries by detecting repeated objects
    * and applying instancing where beneficial
    */
-  static optimizeScene(scene: THREE.Group, options: {
-    enableInstancing?: boolean;
-    minInstances?: number;
-    enableFrustumCulling?: boolean;
-  } = {}): OptimizationResult {
+  static optimizeScene(
+    scene: THREE.Group,
+    options: {
+      enableInstancing?: boolean;
+      minInstances?: number;
+      enableFrustumCulling?: boolean;
+    } = {},
+  ): OptimizationResult {
     const {
       enableInstancing = true,
       minInstances = 3,
@@ -50,7 +53,8 @@ export class GeometryOptimizer {
         if (geometry.index) {
           result.originalTriangleCount += geometry.index.count / 3;
         } else {
-          result.originalTriangleCount += geometry.attributes.position.count / 3;
+          result.originalTriangleCount +=
+            geometry.attributes.position.count / 3;
         }
       }
     });
@@ -64,7 +68,7 @@ export class GeometryOptimizer {
     // Group meshes by geometry and material similarity
     const geometryGroups = new Map<string, THREE.Mesh[]>();
 
-    meshes.forEach(mesh => {
+    meshes.forEach((mesh) => {
       const key = this.generateGeometryKey(mesh);
       if (!geometryGroups.has(key)) {
         geometryGroups.set(key, []);
@@ -93,7 +97,7 @@ export class GeometryOptimizer {
       } else {
         // Keep as regular meshes
         result.regularMeshes.push(...groupMeshes);
-        groupMeshes.forEach(mesh => {
+        groupMeshes.forEach((mesh) => {
           const geometry = mesh.geometry;
           const triangleCount = geometry.index
             ? geometry.index.count / 3
@@ -105,14 +109,15 @@ export class GeometryOptimizer {
 
     // Enable frustum culling for all meshes
     if (enableFrustumCulling) {
-      result.regularMeshes.forEach(mesh => {
+      result.regularMeshes.forEach((mesh) => {
         mesh.frustumCulled = true;
       });
 
-      result.instancedGeometries.forEach(instanced => {
+      result.instancedGeometries.forEach((instanced) => {
         // InstancedMesh inherits frustumCulling from base mesh
         if (instanced.geometry.userData.baseMesh) {
-          (instanced.geometry.userData.baseMesh as THREE.Mesh).frustumCulled = true;
+          (instanced.geometry.userData.baseMesh as THREE.Mesh).frustumCulled =
+            true;
         }
       });
     }
@@ -123,7 +128,9 @@ export class GeometryOptimizer {
   /**
    * Creates an instanced geometry from a group of similar meshes
    */
-  private static createInstancedGeometry(meshes: THREE.Mesh[]): InstancedGeometry | null {
+  private static createInstancedGeometry(
+    meshes: THREE.Mesh[],
+  ): InstancedGeometry | null {
     if (meshes.length < 2) return null;
 
     const baseMesh = meshes[0];
@@ -135,16 +142,19 @@ export class GeometryOptimizer {
     // Only support instancing for single materials, not arrays
     if (Array.isArray(baseMaterial)) return null;
 
-    const allCompatible = meshes.every(mesh => {
+    const allCompatible = meshes.every((mesh) => {
       const meshMaterial = mesh.material;
       // Only support single materials for instancing
-      return !Array.isArray(meshMaterial) && this.areMaterialsCompatible(baseMaterial, meshMaterial);
+      return (
+        !Array.isArray(meshMaterial) &&
+        this.areMaterialsCompatible(baseMaterial, meshMaterial)
+      );
     });
 
     if (!allCompatible) return null;
 
     // Collect transformation matrices
-    meshes.forEach(mesh => {
+    meshes.forEach((mesh) => {
       const matrix = new THREE.Matrix4();
       matrix.copy(mesh.matrixWorld);
       matrices.push(matrix);
@@ -171,7 +181,8 @@ export class GeometryOptimizer {
     const size = bounds.getSize(new THREE.Vector3());
 
     // Material hash (simplified)
-    const materialKey = material instanceof THREE.Material ? material.uuid : 'unknown';
+    const materialKey =
+      material instanceof THREE.Material ? material.uuid : "unknown";
 
     return `${vertexCount}_${size.x.toFixed(2)}_${size.y.toFixed(2)}_${size.z.toFixed(2)}_${materialKey}`;
   }
@@ -179,17 +190,28 @@ export class GeometryOptimizer {
   /**
    * Checks if two materials are compatible for instancing
    */
-  private static areMaterialsCompatible(mat1: THREE.Material, mat2: THREE.Material): boolean {
+  private static areMaterialsCompatible(
+    mat1: THREE.Material,
+    mat2: THREE.Material,
+  ): boolean {
     if (mat1.type !== mat2.type) return false;
 
     // For basic materials, check essential properties
-    if (mat1 instanceof THREE.MeshStandardMaterial && mat2 instanceof THREE.MeshStandardMaterial) {
-      return mat1.color.equals(mat2.color) &&
-             mat1.roughness === mat2.roughness &&
-             mat1.metalness === mat2.metalness;
+    if (
+      mat1 instanceof THREE.MeshStandardMaterial &&
+      mat2 instanceof THREE.MeshStandardMaterial
+    ) {
+      return (
+        mat1.color.equals(mat2.color) &&
+        mat1.roughness === mat2.roughness &&
+        mat1.metalness === mat2.metalness
+      );
     }
 
-    if (mat1 instanceof THREE.MeshBasicMaterial && mat2 instanceof THREE.MeshBasicMaterial) {
+    if (
+      mat1 instanceof THREE.MeshBasicMaterial &&
+      mat2 instanceof THREE.MeshBasicMaterial
+    ) {
       return mat1.color.equals(mat2.color);
     }
 
@@ -202,7 +224,7 @@ export class GeometryOptimizer {
   static applyAdaptiveLOD(
     object: THREE.Object3D,
     camera: THREE.Camera,
-    lodDistances: number[] = [10, 25, 50]
+    lodDistances: number[] = [10, 25, 50],
   ): void {
     const distance = camera.position.distanceTo(object.position);
 
@@ -231,12 +253,14 @@ export class GeometryOptimizer {
   /**
    * Optimizes geometry by removing unnecessary data and compressing
    */
-  static optimizeGeometry(geometry: THREE.BufferGeometry): THREE.BufferGeometry {
+  static optimizeGeometry(
+    geometry: THREE.BufferGeometry,
+  ): THREE.BufferGeometry {
     let optimized = geometry.clone();
 
     // Remove unused attributes
-    const usedAttributes = ['position', 'normal', 'uv', 'index'];
-    Object.keys(optimized.attributes).forEach(attr => {
+    const usedAttributes = ["position", "normal", "uv", "index"];
+    Object.keys(optimized.attributes).forEach((attr) => {
       if (!usedAttributes.includes(attr)) {
         delete optimized.attributes[attr];
       }
@@ -258,7 +282,7 @@ export class GeometryOptimizer {
    * Clears the geometry cache to free memory
    */
   static clearCache(): void {
-    this.geometryCache.forEach(instancedMesh => {
+    this.geometryCache.forEach((instancedMesh) => {
       instancedMesh.dispose();
     });
     this.geometryCache.clear();

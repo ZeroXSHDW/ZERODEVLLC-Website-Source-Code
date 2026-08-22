@@ -2,7 +2,7 @@
  * Performance monitoring hook
  */
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 export interface PerformanceMetrics {
   fps: number;
@@ -36,7 +36,7 @@ export const usePerformance = (enabled: boolean = false) => {
         frameCountRef.current = 0;
         lastTimeRef.current = now;
 
-        setMetrics(prev => ({
+        setMetrics((prev) => ({
           ...prev,
           fps,
         }));
@@ -58,7 +58,7 @@ export const usePerformance = (enabled: boolean = false) => {
   const endRender = () => {
     if (enabled && renderStartRef.current > 0) {
       const renderTime = performance.now() - renderStartRef.current;
-      setMetrics(prev => ({
+      setMetrics((prev) => ({
         ...prev,
         renderTime,
         frameTime: renderTime,
@@ -68,5 +68,3 @@ export const usePerformance = (enabled: boolean = false) => {
 
   return { metrics, startRender, endRender };
 };
-
-

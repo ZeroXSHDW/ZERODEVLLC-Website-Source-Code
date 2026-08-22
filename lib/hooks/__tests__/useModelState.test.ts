@@ -1,9 +1,9 @@
-import { renderHook, act } from '@testing-library/react';
-import * as THREE from 'three';
-import { useModelState } from '../useModelState';
+import { renderHook, act } from "@testing-library/react";
+import * as THREE from "three";
+import { useModelState } from "../useModelState";
 
-describe('useModelState', () => {
-  it('should initialize with default state', () => {
+describe("useModelState", () => {
+  it("should initialize with default state", () => {
     const { result } = renderHook(() => useModelState());
 
     expect(result.current.modelState).toEqual({
@@ -21,7 +21,7 @@ describe('useModelState', () => {
     });
   });
 
-  it('should update loading progress', () => {
+  it("should update loading progress", () => {
     const { result } = renderHook(() => useModelState());
 
     act(() => {
@@ -32,7 +32,7 @@ describe('useModelState', () => {
     expect(result.current.modelState.loadStartTime).not.toBeNull();
   });
 
-  it('should set model as loaded', () => {
+  it("should set model as loaded", () => {
     const { result } = renderHook(() => useModelState());
     const scene = new THREE.Group();
     const animations: THREE.AnimationClip[] = [];
@@ -49,12 +49,12 @@ describe('useModelState', () => {
     expect(result.current.modelState.loadTime).not.toBeNull();
   });
 
-  it('should set model error', () => {
+  it("should set model error", () => {
     const { result } = renderHook(() => useModelState());
     const error = {
-      type: 'load' as const,
-      message: 'Test error',
-      originalError: new Error('Test error'),
+      type: "load" as const,
+      message: "Test error",
+      originalError: new Error("Test error"),
     };
 
     act(() => {
@@ -65,9 +65,9 @@ describe('useModelState', () => {
     expect(result.current.modelState.isLoaded).toBe(false);
   });
 
-  it('should set uploaded file URL', () => {
+  it("should set uploaded file URL", () => {
     const { result } = renderHook(() => useModelState());
-    const url = 'blob:http://localhost/test';
+    const url = "blob:http://localhost/test";
 
     act(() => {
       result.current.setUploadedFile(url);
@@ -78,11 +78,11 @@ describe('useModelState', () => {
     expect(result.current.modelState.loadingProgress).toBe(0);
   });
 
-  it('should set animations', () => {
+  it("should set animations", () => {
     const { result } = renderHook(() => useModelState());
     const animations = [
-      new THREE.AnimationClip('animation1', 1, []),
-      new THREE.AnimationClip('animation2', 1, []),
+      new THREE.AnimationClip("animation1", 1, []),
+      new THREE.AnimationClip("animation2", 1, []),
     ];
     const actions = {
       animation1: {} as THREE.AnimationAction,
@@ -95,13 +95,13 @@ describe('useModelState', () => {
 
     expect(result.current.modelState.animations).toEqual(animations);
     expect(result.current.modelState.animationActions).toEqual(actions);
-    expect(result.current.modelState.currentAnimation).toBe('animation1');
+    expect(result.current.modelState.currentAnimation).toBe("animation1");
   });
 
-  it('should reset model state', () => {
+  it("should reset model state", () => {
     const { result } = renderHook(() => useModelState());
     const scene = new THREE.Group();
-    const url = 'blob:http://localhost/test';
+    const url = "blob:http://localhost/test";
 
     act(() => {
       result.current.setModelLoaded(scene, []);
@@ -114,4 +114,3 @@ describe('useModelState', () => {
     expect(result.current.modelState.isLoaded).toBe(false);
   });
 });
-
