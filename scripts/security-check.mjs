@@ -13,7 +13,7 @@ const readOptional = async (relativePath) => {
   }
 };
 
-const [proxy, robots, sitemap, securityTxt, securityPolicy, layout, nextConfig, checkoutRoute, qualityWorkflow, dependabot] = await Promise.all([
+const [proxy, robots, sitemap, securityTxt, securityPolicy, layout, nextConfig, checkoutRoute, qualityWorkflow, dependabot, packageJson] = await Promise.all([
   read('proxy.ts'),
   read('app/robots.ts'),
   read('app/sitemap.ts'),
@@ -24,6 +24,7 @@ const [proxy, robots, sitemap, securityTxt, securityPolicy, layout, nextConfig, 
   readOptional('app/api/checkout/route.ts'),
   read('.github/workflows/quality.yml'),
   read('.github/dependabot.yml'),
+  read('package.json'),
 ]);
 
 const canonicalMatch = proxy.match(/const canonicalHost = ['"]([^'"]+)['"]/);
@@ -112,6 +113,7 @@ for (const marker of [
 for (const marker of ['schedule:', 'cron:', 'workflow_dispatch:', 'npm ci --ignore-scripts']) {
   requireText('.github/workflows/quality.yml', qualityWorkflow, marker);
 }
+requireText('package.json', packageJson, 'npm audit --audit-level=moderate');
 for (const marker of ['version: 2', 'package-ecosystem: npm', 'package-ecosystem: github-actions', 'interval: weekly', 'interval: monthly']) {
   requireText('.github/dependabot.yml', dependabot, marker);
 }
