@@ -109,7 +109,7 @@ for (const marker of [
 ]) {
   requireText('next.config.ts', nextConfig, marker);
 }
-for (const marker of ['schedule:', 'cron:', 'workflow_dispatch:']) {
+for (const marker of ['schedule:', 'cron:', 'workflow_dispatch:', 'npm ci --ignore-scripts']) {
   requireText('.github/workflows/quality.yml', qualityWorkflow, marker);
 }
 for (const marker of ['version: 2', 'package-ecosystem: npm', 'package-ecosystem: github-actions', 'interval: weekly', 'interval: monthly']) {
