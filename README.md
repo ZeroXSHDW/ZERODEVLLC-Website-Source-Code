@@ -107,3 +107,15 @@ Run `npm run quality` before review and keep the public site free of credentials
 ## Security
 
 Report vulnerabilities privately using [SECURITY.md](SECURITY.md). Do not publish deployment tokens, customer data, or private environment values.
+
+## Usage
+
+Use the documented npm scripts for local development, quality checks, and the
+production build. Keep public assets, environment configuration, and hosting
+behavior consistent with the deployed site; do not edit generated output.
+
+## Troubleshooting
+
+Start with `npm ci`, then run the typecheck, lint, audit, test, and build gates
+in order. If a hosted deployment fails before a job starts, distinguish the
+account or billing failure from a code failure and retain the local evidence.
