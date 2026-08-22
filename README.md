@@ -99,3 +99,11 @@ npm run build
 ## License
 
 MIT — see [LICENSE](LICENSE)
+
+## Contributing
+
+Run `npm run quality` before review and keep the public site free of credentials and generated output. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Security
+
+Report vulnerabilities privately using [SECURITY.md](SECURITY.md). Do not publish deployment tokens, customer data, or private environment values.
