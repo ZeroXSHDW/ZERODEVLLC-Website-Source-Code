@@ -26,10 +26,16 @@ function applySecurityHeaders(response: NextResponse) {
 }
 
 function getHost(request: NextRequest) {
-  const rawHost = request.headers.get('host') ?? request.nextUrl.hostname;
-  return rawHost.startsWith('[')
+  return request.nextUrl.hostname.toLowerCase();
+}
+
+function hasHostHeaderMismatch(request: NextRequest) {
+  const rawHost = request.headers.get('host');
+  if (!rawHost) return false;
+  const headerHost = rawHost.startsWith('[')
     ? rawHost.slice(0, rawHost.indexOf(']') + 1).toLowerCase()
     : rawHost.split(':')[0].toLowerCase();
+  return headerHost !== request.nextUrl.hostname.toLowerCase();
 }
 
 function hasExplicitPort(request: NextRequest) {
@@ -65,7 +71,8 @@ export function proxy(request: NextRequest) {
   const effectiveProto = requestProtocol === 'https'
     ? 'https'
     : forwardedProto === 'http' && requestProtocol === 'http' ? 'http' : 'http';
-  const shouldCanonicalizeHost = (!isLocal && hasExplicitPort(request))
+  const shouldCanonicalizeHost = hasHostHeaderMismatch(request)
+    || (!isLocal && hasExplicitPort(request))
     || host === 'www.' + canonicalHost
     || (!isLocal && host !== canonicalHost && host !== previewHost);
 
