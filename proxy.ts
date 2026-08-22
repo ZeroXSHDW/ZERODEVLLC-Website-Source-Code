@@ -50,15 +50,16 @@ function secureRedirect(url: URL) {
 export function proxy(request: NextRequest) {
   const host = getHost(request);
   const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '[::1]' || host === '::1';
-  const forwardedProto = (request.headers.get('x-forwarded-proto') ?? request.nextUrl.protocol.replace(':', ''))
-    .split(',')[0]
-    .trim()
-    .toLowerCase();
+  const forwardedProtoHeader = request.headers.get('x-forwarded-proto');
+  const forwardedProto = forwardedProtoHeader === null
+    ? request.nextUrl.protocol.replace(':', '').toLowerCase()
+    : forwardedProtoHeader.trim().toLowerCase();
+  const effectiveProto = forwardedProto === 'https' || forwardedProto === 'http' ? forwardedProto : 'http';
   const shouldCanonicalizeHost = (!isLocal && hasExplicitPort(request))
     || host === 'www.' + canonicalHost
     || (!isLocal && host !== canonicalHost && host !== previewHost);
 
-  if (!isLocal && (forwardedProto !== 'https' || shouldCanonicalizeHost)) {
+  if (!isLocal && (effectiveProto !== 'https' || shouldCanonicalizeHost)) {
     const url = request.nextUrl.clone();
     url.protocol = 'https:';
     if (shouldCanonicalizeHost) url.hostname = canonicalHost;
