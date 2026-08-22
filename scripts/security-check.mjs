@@ -57,6 +57,7 @@ for (const marker of [
   "style-src-attr 'none'",
   "img-src 'self' data:",
   'upgrade-insecure-requests',
+  'hasExplicitPort',
   'shouldCanonicalizeHost',
   "url.port = ''",
   'secureRedirect',

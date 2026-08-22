@@ -32,6 +32,15 @@ function getHost(request: NextRequest) {
     : rawHost.split(':')[0].toLowerCase();
 }
 
+function hasExplicitPort(request: NextRequest) {
+  const rawHost = request.headers.get('host') ?? request.nextUrl.host;
+  if (rawHost.startsWith('[')) {
+    const closingBracket = rawHost.indexOf(']');
+    return closingBracket !== -1 && rawHost.slice(closingBracket + 1).startsWith(':');
+  }
+  return rawHost.includes(':');
+}
+
 function secureRedirect(url: URL) {
   const response = applySecurityHeaders(NextResponse.redirect(url, 308));
   response.headers.set('Cache-Control', 'no-store, max-age=0');
@@ -45,7 +54,8 @@ export function proxy(request: NextRequest) {
     .split(',')[0]
     .trim()
     .toLowerCase();
-  const shouldCanonicalizeHost = host === 'www.' + canonicalHost
+  const shouldCanonicalizeHost = (!isLocal && hasExplicitPort(request))
+    || host === 'www.' + canonicalHost
     || (!isLocal && host !== canonicalHost && host !== previewHost);
 
   if (!isLocal && (forwardedProto !== 'https' || shouldCanonicalizeHost)) {
