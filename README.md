@@ -11,7 +11,8 @@ operations, and the store.
 
 - `app/` contains the App Router pages, metadata, robots policy, and sitemap.
 - `proxy.ts` enforces HTTPS, the canonical host, security headers, and preview
-  `noindex` behavior. Malformed forwarded-protocol headers fail closed.
+  `noindex` behavior. Its CSP explicitly denies frames and child browsing
+  contexts; malformed forwarded-protocol headers fail closed.
 - `scripts/security-check.mjs` verifies the security contract in CI.
 - `.openai/hosting.json` identifies the existing Sites project and must remain
   unchanged.
@@ -40,7 +41,7 @@ npm run quality
 ```
 
 This runs the security contract, TypeScript checks, ESLint, a production
-build, and `npm audit --audit-level=high`. The same gate runs in
+build, and a moderate-severity dependency audit. The same gate runs in
 `.github/workflows/quality.yml` for pushes to `main`, pull requests, and
 manual dispatch. CI has read-only repository permissions and never deploys.
 
