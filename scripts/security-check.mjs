@@ -102,6 +102,12 @@ requireText(
   securityTxt,
   `Canonical: https://${canonicalHost}/.well-known/security.txt`,
 );
+requireText('security.txt', securityTxt, 'Expires: ');
+requireText('security.txt', securityTxt, `Policy: https://${canonicalHost}/SECURITY.md`);
+const securityExpiry = securityTxt.match(/^Expires:\s*(.+)$/m)?.[1];
+if (!securityExpiry || Number.isNaN(Date.parse(securityExpiry)) || Date.parse(securityExpiry) <= Date.now()) {
+  failures.push('security.txt must have a valid future Expires value');
+}
 requireText('app/layout.tsx', layout, `https://${canonicalHost}`);
 
 if (canonicalHost === 'zerodevllc.store') {
