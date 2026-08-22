@@ -53,7 +53,14 @@ for (const marker of [
   "form-action 'self'",
   "frame-ancestors 'none'",
   "object-src 'none'",
+  "script-src-attr 'none'",
+  "style-src-attr 'none'",
+  "img-src 'self' data:",
   'upgrade-insecure-requests',
+  'shouldCanonicalizeHost',
+  "url.port = ''",
+  'secureRedirect',
+  'Cache-Control',
 ]) {
   requireText('proxy.ts', proxy, marker);
 }
@@ -71,6 +78,9 @@ for (const marker of [
   "form-action 'self'",
   "frame-ancestors 'none'",
   "object-src 'none'",
+  "script-src-attr 'none'",
+  "style-src-attr 'none'",
+  "img-src 'self' data:",
   'upgrade-insecure-requests',
   "source: '/:path*'",
 ]) {
