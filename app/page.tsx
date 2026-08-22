@@ -18,8 +18,8 @@ const surfaces = [
 ];
 
 const livePreviews = {
-  com: 'https://zerodevllc-com.michaelmorangeometri.chatgpt.site',
-  store: 'https://zerodevllc-store.michaelmorangeometri.chatgpt.site',
+  com: 'https://zerodevllc.com',
+  store: 'https://zerodevllc.store',
 };
 
 export default function Home() {
