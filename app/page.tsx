@@ -17,15 +17,21 @@ const surfaces = [
   },
 ];
 
+const livePreviews = {
+  com: 'https://zerodevllc-com.michaelmorangeometri.chatgpt.site',
+  store: 'https://zerodevllc-store.michaelmorangeometri.chatgpt.site',
+};
+
 export default function Home() {
   return (
     <main className="eu-shell">
+      <a className="skip-link" href="#surface-heading">Skip to live surfaces</a>
       <div className="eu-grid" aria-hidden="true" />
       <header className="eu-topbar">
-        <a className="eu-brand" href="https://zerodevllc.com"><span>Z/</span> ZERODEVLLC <b>.EU</b></a>
+        <a className="eu-brand" href={livePreviews.com}><span>Z/</span> ZERODEVLLC <b>.EU</b></a>
         <nav aria-label="Primary navigation">
-          <a href="https://zerodevllc.com">Corporate</a>
-          <a href="https://zerodevllc.store">Store</a>
+          <a href={livePreviews.com}>Corporate</a>
+          <a href={livePreviews.store}>Store</a>
         </nav>
         <span className="eu-status"><i /> NETWORK INDEX / ONLINE</span>
       </header>
@@ -48,7 +54,7 @@ export default function Home() {
         <div className="eu-section-head"><p className="eu-kicker">{'// OPEN CHANNELS'}</p><h2 id="surface-heading">Select a live surface</h2><span>02 AVAILABLE</span></div>
         <div className="surface-grid">
           {surfaces.map((surface) => (
-            <a className="surface-card" href={surface.href} key={surface.title}>
+            <a className="surface-card" href={surface.href} key={surface.title} aria-label={`Open ${surface.title} live surface`}>
               <div className="surface-meta"><span>{surface.label}</span><span className="surface-status"><i /> {surface.status}</span></div>
               <div className="surface-glyph" aria-hidden="true">{surface.glyph}</div>
               <h3>{surface.title}</h3>
@@ -61,10 +67,10 @@ export default function Home() {
 
       <section className="eu-bottom-band">
         <p><span>&gt;_</span> ZeroDev maintains the index. The source systems remain the authority.</p>
-        <a href="https://zerodevllc.com">Return to root index <b>↗</b></a>
+        <a href={livePreviews.com}>Return to root index <b>↗</b></a>
       </section>
 
-      <footer className="eu-footer"><span>© 2026 ZERO DEV LLC / IRELAND</span><span>NO SIGNAL WITHOUT SOURCE</span><span><a href="https://zerodevllc.com">.COM</a> / <a href="https://zerodevllc.store">.STORE</a></span></footer>
+      <footer className="eu-footer"><span>© 2026 ZERO DEV LLC / IRELAND</span><span>NO SIGNAL WITHOUT SOURCE</span><span><a href={livePreviews.com}>.COM</a> / <a href={livePreviews.store}>.STORE</a></span></footer>
     </main>
   );
 }
