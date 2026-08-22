@@ -61,7 +61,10 @@ export function proxy(request: NextRequest) {
   const forwardedProto = forwardedProtoHeader === null
     ? request.nextUrl.protocol.replace(':', '').toLowerCase()
     : forwardedProtoHeader.trim().toLowerCase();
-  const effectiveProto = forwardedProto === 'https' || forwardedProto === 'http' ? forwardedProto : 'http';
+  const requestProtocol = request.nextUrl.protocol.replace(':', '').toLowerCase();
+  const effectiveProto = requestProtocol === 'https'
+    ? 'https'
+    : forwardedProto === 'http' && requestProtocol === 'http' ? 'http' : 'http';
   const shouldCanonicalizeHost = (!isLocal && hasExplicitPort(request))
     || host === 'www.' + canonicalHost
     || (!isLocal && host !== canonicalHost && host !== previewHost);

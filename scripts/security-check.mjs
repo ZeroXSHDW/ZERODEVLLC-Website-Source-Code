@@ -59,6 +59,7 @@ for (const marker of [
   'X-DNS-Prefetch-Control',
   'X-Permitted-Cross-Domain-Policies',
   'forwardedProtoHeader',
+  'requestProtocol',
   'effectiveProto',
   'NextResponse.redirect',
   "base-uri 'self'",
