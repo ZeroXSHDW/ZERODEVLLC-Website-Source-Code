@@ -27,8 +27,8 @@ const systems = [
 ];
 
 const livePreviews = {
-  eu: 'https://zerodevllc-eu.michaelmorangeometri.chatgpt.site',
-  store: 'https://zerodevllc-store.michaelmorangeometri.chatgpt.site',
+  eu: 'https://zerodevllc.eu',
+  store: 'https://zerodevllc.store',
 };
 
 export default function Home() {
