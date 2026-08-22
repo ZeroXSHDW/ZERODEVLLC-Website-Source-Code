@@ -10,7 +10,8 @@ is `https://zerodevllc.eu`; the Sites preview host is
 - React and Next-compatible App Router pages under `app/`.
 - Vinext/Vite and the Cloudflare adapter for the Sites runtime.
 - `proxy.ts` enforces HTTPS, canonical-host redirects, security headers, and
-  `noindex` behavior on the preview host.
+  `noindex` behavior on the preview host. Malformed forwarded-protocol headers
+  fail closed to the canonical HTTPS host.
 - `.openai/hosting.json` records the existing Sites project identity. Keep it
   unchanged when working on this project.
 
