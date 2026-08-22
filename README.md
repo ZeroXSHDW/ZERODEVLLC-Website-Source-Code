@@ -55,25 +55,22 @@ ZeroDevLLC corporate site and interactive 3D model viewer, built with Next.js, R
 
 ### Useful scripts
 
-| Script               | Purpose                                              |
-| -------------------- | ---------------------------------------------------- |
-| `npm run type-check` | TypeScript (`tsc --noEmit`) — used in CI             |
-| `npm test`           | Jest unit/component tests                            |
-| `npm run lint`       | ESLint with the committed Next.js flat configuration |
-| `npm run build`      | Production build                                     |
+| Script               | Purpose                                                  |
+| -------------------- | -------------------------------------------------------- |
+| `npm run type-check` | TypeScript (`tsc --noEmit`) — used in CI                 |
+| `npm test`           | Jest unit/component tests                                |
+| `npm run lint`       | ESLint with the committed Next.js flat configuration     |
+| `npm run build`      | Production build                                         |
+| `npm run quality`    | Full type, lint, format, coverage, audit, and build gate |
 
-The pull-request gate runs type checking, ESLint, Prettier format validation,
-the high-severity dependency audit, Jest, and a production build. Run the same
-quality sequence locally with:
+The pull-request gate runs the canonical `npm run quality` command after a
+locked install. It performs type checking, ESLint, Prettier format validation,
+Jest coverage, the high-severity dependency audit, and a production build.
+Run it locally with:
 
 ```bash
 npm ci
-npm run type-check
-npm run lint
-npm run format:check
-npm audit --audit-level=high
-npm test -- --ci
-npm run build
+npm run quality
 ```
 
 ## Project Structure
