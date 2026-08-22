@@ -13,11 +13,12 @@ const readOptional = async (relativePath) => {
   }
 };
 
-const [proxy, robots, sitemap, securityTxt, layout, nextConfig, checkoutRoute] = await Promise.all([
+const [proxy, robots, sitemap, securityTxt, securityPolicy, layout, nextConfig, checkoutRoute] = await Promise.all([
   read('proxy.ts'),
   read('app/robots.ts'),
   read('app/sitemap.ts'),
   read('public/.well-known/security.txt'),
+  read('SECURITY.md'),
   read('app/layout.tsx'),
   read('next.config.ts'),
   readOptional('app/api/checkout/route.ts'),
@@ -107,6 +108,9 @@ requireText(
 );
 requireText('security.txt', securityTxt, 'Expires: ');
 requireText('security.txt', securityTxt, `Policy: https://${canonicalHost}/SECURITY.md`);
+requireText('SECURITY.md', securityPolicy, 'Report suspected vulnerabilities privately');
+requireText('SECURITY.md', securityPolicy, 'hello@zerodevllc.com');
+requireText('SECURITY.md', securityPolicy, 'Do not publish');
 const securityExpiry = securityTxt.match(/^Expires:\s*(.+)$/m)?.[1];
 if (!securityExpiry || Number.isNaN(Date.parse(securityExpiry)) || Date.parse(securityExpiry) <= Date.now()) {
   failures.push('security.txt must have a valid future Expires value');
