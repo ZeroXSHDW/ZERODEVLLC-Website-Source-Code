@@ -11,7 +11,8 @@
     "start": "vinext start",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "typecheck": "tsc --noEmit",
-    "quality": "npm run typecheck && npm run lint && npm run build"
+    "security": "node scripts/security-check.mjs",
+    "quality": "npm run security && npm run typecheck && npm run lint && npm run build"
   },
   "dependencies": {
     "next": "16.3.2",
