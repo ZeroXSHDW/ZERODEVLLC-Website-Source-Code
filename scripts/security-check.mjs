@@ -44,6 +44,7 @@ for (const marker of [
   'camera=()',
   'microphone=()',
   'geolocation=()',
+  'payment=',
   'X-Robots-Tag',
   'noindex, nofollow, noarchive',
   'host === previewHost',
@@ -82,6 +83,7 @@ for (const marker of [
   'camera=()',
   'microphone=()',
   'geolocation=()',
+  'payment=',
   'Referrer-Policy',
   'Strict-Transport-Security',
   'X-Content-Type-Options',
@@ -134,6 +136,9 @@ if (!securityExpiry || Number.isNaN(securityExpiryAt) || securityExpiryAt <= Dat
 requireText('app/layout.tsx', layout, `https://${canonicalHost}`);
 
 if (canonicalHost === 'zerodevllc.store') {
+  const stripePaymentPolicy = 'payment=(self "https://checkout.stripe.com" "https://buy.stripe.com")';
+  requireText('proxy.ts', proxy, stripePaymentPolicy);
+  requireText('next.config.ts', nextConfig, stripePaymentPolicy);
   requireText('app/robots.ts', robots, "'/success'");
   requireText('proxy.ts', proxy, 'session_id');
   requireText('proxy.ts', proxy, 'Cache-Control');
@@ -142,6 +147,9 @@ if (canonicalHost === 'zerodevllc.store') {
   requireText('app/api/checkout/route.ts', checkoutRoute, 'body.byteLength');
   requireText('app/api/checkout/route.ts', checkoutRoute, 'new TextDecoder()');
   requireText('app/api/checkout/route.ts', checkoutRoute, "'cache-control': 'no-store'");
+} else {
+  requireText('proxy.ts', proxy, 'payment=()');
+  requireText('next.config.ts', nextConfig, 'payment=()');
 }
 
 if (failures.length > 0) {
