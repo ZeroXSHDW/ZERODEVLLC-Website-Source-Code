@@ -13,8 +13,9 @@ operations, and the store.
 - `proxy.ts` enforces HTTPS, the canonical host, security headers, and
   cross-origin isolation, plus preview `noindex` behavior. Its CSP explicitly
   denies frames and child browsing contexts, while Permissions-Policy disables
-  unused device and sensor capabilities; malformed forwarded-protocol headers
-  fail closed.
+  unused device and sensor capabilities, including clipboard reads; malformed
+  forwarded-protocol headers fail closed. Each response carries the exact
+  source-controlled `strict-2026-08` security profile used by the live monitor.
 - `scripts/security-check.mjs` verifies the security contract in CI.
 - `.openai/hosting.json` identifies the existing Sites project and must remain
   unchanged.
