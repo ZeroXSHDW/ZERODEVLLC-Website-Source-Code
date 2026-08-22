@@ -5,7 +5,7 @@ const previewHost = 'zerodevllc-com.michaelmorangeometri.chatgpt.site';
 
 const securityHeaders: Record<string, string> = {
   'Content-Security-Policy':
-    "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; upgrade-insecure-requests",
+    "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' 'unsafe-inline'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; style-src-attr 'none'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; upgrade-insecure-requests",
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
@@ -32,6 +32,12 @@ function getHost(request: NextRequest) {
     : rawHost.split(':')[0].toLowerCase();
 }
 
+function secureRedirect(url: URL) {
+  const response = applySecurityHeaders(NextResponse.redirect(url, 308));
+  response.headers.set('Cache-Control', 'no-store, max-age=0');
+  return response;
+}
+
 export function proxy(request: NextRequest) {
   const host = getHost(request);
   const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '[::1]' || host === '::1';
@@ -39,18 +45,15 @@ export function proxy(request: NextRequest) {
     .split(',')[0]
     .trim()
     .toLowerCase();
+  const shouldCanonicalizeHost = host === 'www.' + canonicalHost
+    || (!isLocal && host !== canonicalHost && host !== previewHost);
 
-  if (!isLocal && forwardedProto !== 'https') {
+  if (!isLocal && (forwardedProto !== 'https' || shouldCanonicalizeHost)) {
     const url = request.nextUrl.clone();
     url.protocol = 'https:';
-    return applySecurityHeaders(NextResponse.redirect(url, 308));
-  }
-
-  if (host === `www.${canonicalHost}` || (!isLocal && host !== canonicalHost && host !== previewHost)) {
-    const url = request.nextUrl.clone();
-    url.protocol = 'https:';
-    url.hostname = canonicalHost;
-    return applySecurityHeaders(NextResponse.redirect(url, 308));
+    if (shouldCanonicalizeHost) url.hostname = canonicalHost;
+    url.port = '';
+    return secureRedirect(url);
   }
 
   const response = applySecurityHeaders(NextResponse.next());

@@ -53,7 +53,14 @@ for (const marker of [
   "form-action 'self'",
   "frame-ancestors 'none'",
   "object-src 'none'",
+  "script-src-attr 'none'",
+  "style-src-attr 'none'",
+  "img-src 'self' data:",
   'upgrade-insecure-requests',
+  'shouldCanonicalizeHost',
+  "url.port = ''",
+  'secureRedirect',
+  'Cache-Control',
 ]) {
   requireText('proxy.ts', proxy, marker);
 }
@@ -71,6 +78,9 @@ for (const marker of [
   "form-action 'self'",
   "frame-ancestors 'none'",
   "object-src 'none'",
+  "script-src-attr 'none'",
+  "style-src-attr 'none'",
+  "img-src 'self' data:",
   'upgrade-insecure-requests',
   "source: '/:path*'",
 ]) {
@@ -101,6 +111,12 @@ if (canonicalHost === 'zerodevllc.store') {
   requireText('app/api/checkout/route.ts', checkoutRoute, 'body.byteLength');
   requireText('app/api/checkout/route.ts', checkoutRoute, 'new TextDecoder()');
   requireText('app/api/checkout/route.ts', checkoutRoute, "'cache-control': 'no-store'");
+  requireText('app/api/checkout/route.ts', checkoutRoute, 'const canonicalHost');
+  requireText('app/api/checkout/route.ts', checkoutRoute, 'const localHosts');
+  requireText('app/api/checkout/route.ts', checkoutRoute, 'const allowedHosts');
+  if (checkoutRoute.includes('zerodevllc-store.michaelmorangeometri.chatgpt.site') || checkoutRoute.includes('www.zerodevllc.store')) {
+    failures.push('checkout route must not accept preview or www hosts as production origins');
+  }
 }
 
 if (failures.length > 0) {
