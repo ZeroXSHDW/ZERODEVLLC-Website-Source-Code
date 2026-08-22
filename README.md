@@ -44,6 +44,16 @@ build, and `npm audit --audit-level=high`. The same gate runs in
 `.github/workflows/quality.yml` for pushes to `main`, pull requests, and
 manual dispatch. CI has read-only repository permissions and never deploys.
 
+## Troubleshooting
+
+- If `npm ci` fails, use Node.js 22.13 or newer and rerun it from this
+  directory so the checked-in lockfile is used.
+- If `npm run quality` fails, fix the first failing stage and rerun the full
+  command; the landing page does not require runtime secrets.
+- A Vinext notice about route classification is informational when the build
+  completes successfully; it reflects static-analysis limits around dynamic
+  request APIs.
+
 ## Domains, previews, and deployment
 
 The production origin is `https://zerodevllc.com`. Preview deployments are
