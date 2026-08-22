@@ -4,14 +4,23 @@ import { fileURLToPath } from 'node:url';
 
 const projectRoot = join(fileURLToPath(new URL('.', import.meta.url)), '..');
 const read = (relativePath) => readFile(join(projectRoot, relativePath), 'utf8');
+const readOptional = async (relativePath) => {
+  try {
+    return await read(relativePath);
+  } catch (error) {
+    if (error?.code === 'ENOENT') return '';
+    throw error;
+  }
+};
 
-const [proxy, robots, sitemap, securityTxt, layout, nextConfig] = await Promise.all([
+const [proxy, robots, sitemap, securityTxt, layout, nextConfig, checkoutRoute] = await Promise.all([
   read('proxy.ts'),
   read('app/robots.ts'),
   read('app/sitemap.ts'),
   read('public/.well-known/security.txt'),
   read('app/layout.tsx'),
   read('next.config.ts'),
+  readOptional('app/api/checkout/route.ts'),
 ]);
 
 const canonicalMatch = proxy.match(/const canonicalHost = ['"]([^'"]+)['"]/);
@@ -37,8 +46,14 @@ for (const marker of [
   'Cross-Origin-Resource-Policy',
   'Origin-Agent-Cluster',
   'X-DNS-Prefetch-Control',
+  'X-Permitted-Cross-Domain-Policies',
   'forwardedProto',
   'NextResponse.redirect',
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  "object-src 'none'",
+  'upgrade-insecure-requests',
 ]) {
   requireText('proxy.ts', proxy, marker);
 }
@@ -47,6 +62,16 @@ for (const marker of [
   'Strict-Transport-Security',
   'X-Content-Type-Options',
   'X-Frame-Options',
+  'Cross-Origin-Opener-Policy',
+  'Cross-Origin-Resource-Policy',
+  'Origin-Agent-Cluster',
+  'X-DNS-Prefetch-Control',
+  'X-Permitted-Cross-Domain-Policies',
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  "object-src 'none'",
+  'upgrade-insecure-requests',
   "source: '/:path*'",
 ]) {
   requireText('next.config.ts', nextConfig, marker);
@@ -72,6 +97,10 @@ if (canonicalHost === 'zerodevllc.store') {
   requireText('proxy.ts', proxy, 'session_id');
   requireText('proxy.ts', proxy, 'Cache-Control');
   requireText('proxy.ts', proxy, 'no-referrer');
+  requireText('app/api/checkout/route.ts', checkoutRoute, 'request.arrayBuffer()');
+  requireText('app/api/checkout/route.ts', checkoutRoute, 'body.byteLength');
+  requireText('app/api/checkout/route.ts', checkoutRoute, 'new TextDecoder()');
+  requireText('app/api/checkout/route.ts', checkoutRoute, "'cache-control': 'no-store'");
 }
 
 if (failures.length > 0) {
