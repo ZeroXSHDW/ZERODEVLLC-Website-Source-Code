@@ -56,3 +56,22 @@ See [SECURITY.md](SECURITY.md). Report vulnerabilities privately and never commi
 ## License
 
 No license is declared for this private hosted project. Reuse requires written permission from the owner.
+
+## Purpose
+
+This is the public ZeroDev LLC landing page and service-discovery surface.
+
+## Features
+
+- Responsive public navigation, service summaries, canonical-domain controls,
+  and preview crawler protection.
+
+## Prerequisites
+
+Use Node.js 22.13+ and npm. No local runtime secret is required for the
+landing page.
+
+## Usage
+
+Run `npm run dev` for local development and use `npm run quality` for the
+release gate. Production changes are saved through the approved Sites flow.
