@@ -1,4 +1,5 @@
 Contact: mailto:hello@zerodevllc.com
 Expires: 2027-08-22T00:00:00.000Z
 Canonical: https://zerodevllc.eu/.well-known/security.txt
+Policy: https://zerodevllc.eu/SECURITY.md
 Preferred-Languages: en
