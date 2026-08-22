@@ -32,6 +32,8 @@ if (!canonicalMatch || !previewMatch) {
 
 const canonicalHost = canonicalMatch[1];
 const failures = [];
+const SECURITY_EXPIRY_MIN_MS = 30 * 24 * 60 * 60 * 1000;
+const SECURITY_EXPIRY_MAX_MS = 366 * 24 * 60 * 60 * 1000;
 const requireText = (label, text, marker) => {
   if (!text.includes(marker)) failures.push(`${label} is missing: ${marker}`);
 };
@@ -112,8 +114,13 @@ requireText('SECURITY.md', securityPolicy, 'Report suspected vulnerabilities pri
 requireText('SECURITY.md', securityPolicy, 'hello@zerodevllc.com');
 requireText('SECURITY.md', securityPolicy, 'Do not publish');
 const securityExpiry = securityTxt.match(/^Expires:\s*(.+)$/m)?.[1];
-if (!securityExpiry || Number.isNaN(Date.parse(securityExpiry)) || Date.parse(securityExpiry) <= Date.now()) {
+const securityExpiryAt = securityExpiry ? Date.parse(securityExpiry) : Number.NaN;
+if (!securityExpiry || Number.isNaN(securityExpiryAt) || securityExpiryAt <= Date.now()) {
   failures.push('security.txt must have a valid future Expires value');
+} else if (securityExpiryAt <= Date.now() + SECURITY_EXPIRY_MIN_MS) {
+  failures.push('security.txt Expires value must have at least 30 days of runway');
+} else if (securityExpiryAt > Date.now() + SECURITY_EXPIRY_MAX_MS) {
+  failures.push('security.txt Expires value must not be more than one year ahead');
 }
 requireText('app/layout.tsx', layout, `https://${canonicalHost}`);
 
