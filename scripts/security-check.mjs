@@ -42,6 +42,10 @@ for (const marker of [
   requireText('proxy.ts', proxy, marker);
 }
 
+if (proxy.includes('_next/image') || proxy.includes('favicon.ico')) {
+  failures.push('proxy matcher must not bypass image or favicon routes');
+}
+
 requireText('app/robots.ts', robots, `sitemap: 'https://${canonicalHost}/sitemap.xml'`);
 requireText('app/robots.ts', robots, "'/api/'");
 requireText('app/sitemap.ts', sitemap, `https://${canonicalHost}/`);
