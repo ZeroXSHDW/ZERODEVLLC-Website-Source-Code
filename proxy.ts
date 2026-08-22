@@ -5,7 +5,7 @@ const previewHost = 'zerodevllc-com.michaelmorangeometri.chatgpt.site';
 
 const securityHeaders: Record<string, string> = {
   'Content-Security-Policy':
-    "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' 'unsafe-inline'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; style-src-attr 'none'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; upgrade-insecure-requests",
+    "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' 'unsafe-inline'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; style-src-attr 'none'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; worker-src 'none'; manifest-src 'none'; media-src 'none'; upgrade-insecure-requests",
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
