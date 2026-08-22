@@ -13,7 +13,7 @@ const readOptional = async (relativePath) => {
   }
 };
 
-const [proxy, robots, sitemap, securityTxt, securityPolicy, layout, nextConfig, checkoutRoute] = await Promise.all([
+const [proxy, robots, sitemap, securityTxt, securityPolicy, layout, nextConfig, checkoutRoute, qualityWorkflow, dependabot] = await Promise.all([
   read('proxy.ts'),
   read('app/robots.ts'),
   read('app/sitemap.ts'),
@@ -22,6 +22,8 @@ const [proxy, robots, sitemap, securityTxt, securityPolicy, layout, nextConfig, 
   read('app/layout.tsx'),
   read('next.config.ts'),
   readOptional('app/api/checkout/route.ts'),
+  read('.github/workflows/quality.yml'),
+  read('.github/dependabot.yml'),
 ]);
 
 const canonicalMatch = proxy.match(/const canonicalHost = ['"]([^'"]+)['"]/);
@@ -106,6 +108,12 @@ for (const marker of [
   "source: '/:path*'",
 ]) {
   requireText('next.config.ts', nextConfig, marker);
+}
+for (const marker of ['schedule:', 'cron:', 'workflow_dispatch:']) {
+  requireText('.github/workflows/quality.yml', qualityWorkflow, marker);
+}
+for (const marker of ['version: 2', 'package-ecosystem: npm', 'package-ecosystem: github-actions', 'interval: weekly', 'interval: monthly']) {
+  requireText('.github/dependabot.yml', dependabot, marker);
 }
 
 if (proxy.includes('_next/image') || proxy.includes('favicon.ico')) {
