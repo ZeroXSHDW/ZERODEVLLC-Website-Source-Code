@@ -14,6 +14,8 @@ const securityHeaders: Record<string, string> = {
   'X-Permitted-Cross-Domain-Policies': 'none',
   'Cross-Origin-Opener-Policy': 'same-origin',
   'Cross-Origin-Resource-Policy': 'same-origin',
+  'Origin-Agent-Cluster': '?1',
+  'X-DNS-Prefetch-Control': 'off',
 };
 
 function applySecurityHeaders(response: NextResponse) {
