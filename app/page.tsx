@@ -21,16 +21,22 @@ const systems = [
     code: '03',
     name: 'SOFTWARE / SERVICES',
     description: 'Deployable tools, architecture sprints, and private build support.',
-    href: 'https://zerodevllc.store',
+    href: 'https://zerodevllc-store.michaelmorangeometri.chatgpt.site',
     tag: 'STORE // READY',
   },
 ];
+
+const livePreviews = {
+  eu: 'https://zerodevllc-eu.michaelmorangeometri.chatgpt.site',
+  store: 'https://zerodevllc-store.michaelmorangeometri.chatgpt.site',
+};
 
 export default function Home() {
   const [uplinked, setUplinked] = useState(false);
 
   return (
     <main className="com-shell">
+      <a className="skip-link" href="#systems">Skip to systems</a>
       <div className="noise" aria-hidden="true" />
       <div className="scanlines" aria-hidden="true" />
 
@@ -42,7 +48,7 @@ export default function Home() {
         <nav className="nav" aria-label="Primary navigation">
           <a href="#systems">Systems</a>
           <a href="#signal">Signal</a>
-          <a href="https://zerodevllc.store">Store</a>
+          <a href={livePreviews.store}>Store</a>
         </nav>
         <span className="status-chip"><span className="status-dot" /> UPLINK READY</span>
       </header>
@@ -115,7 +121,7 @@ export default function Home() {
       <footer className="footer">
         <span>© 2026 ZERO DEV LLC</span>
         <span className="footer-center">MAKE USEFUL THINGS. KEEP THE SIGNAL CLEAN.</span>
-        <span><a href="https://zerodevllc.eu">EU HUB</a> / <a href="https://zerodevllc.store">STORE</a></span>
+        <span><a href={livePreviews.eu}>EU HUB</a> / <a href={livePreviews.store}>STORE</a></span>
       </footer>
     </main>
   );
