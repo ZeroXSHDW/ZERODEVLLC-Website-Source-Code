@@ -14,6 +14,7 @@ const securityHeaders = [
   { key: 'X-Permitted-Cross-Domain-Policies', value: 'none' },
   { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
   { key: 'Cross-Origin-Resource-Policy', value: 'same-origin' },
+  { key: 'Cross-Origin-Embedder-Policy', value: 'require-corp' },
   { key: 'Origin-Agent-Cluster', value: '?1' },
   { key: 'X-DNS-Prefetch-Control', value: 'off' },
 ];
