@@ -37,9 +37,9 @@ const requireText = (label, text, marker) => {
 
 for (const marker of [
   'Content-Security-Policy',
-  'Strict-Transport-Security',
   'Permissions-Policy',
   'Referrer-Policy',
+  'Strict-Transport-Security',
   'X-Content-Type-Options',
   'X-Frame-Options',
   'Cross-Origin-Opener-Policy',
@@ -67,7 +67,10 @@ for (const marker of [
   requireText('proxy.ts', proxy, marker);
 }
 for (const marker of [
+  'poweredByHeader: false',
   'Content-Security-Policy',
+  'Permissions-Policy',
+  'Referrer-Policy',
   'Strict-Transport-Security',
   'X-Content-Type-Options',
   'X-Frame-Options',
