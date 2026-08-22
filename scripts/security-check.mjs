@@ -61,6 +61,8 @@ for (const marker of [
   'Origin-Agent-Cluster',
   'X-DNS-Prefetch-Control',
   'X-Permitted-Cross-Domain-Policies',
+  'nextUrl.hostname',
+  'hasHostHeaderMismatch',
   'forwardedProtoHeader',
   'requestProtocol',
   'effectiveProto',
