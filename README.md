@@ -10,9 +10,10 @@ systems.
 ## Project shape
 
 - `app/` contains the App Router pages, metadata, robots policy, and sitemap.
-- `proxy.ts` enforces HTTPS, the canonical host, security headers, and preview
-  `noindex` behavior. Its CSP explicitly denies frames and child browsing
-  contexts; malformed forwarded-protocol headers fail closed.
+- `proxy.ts` enforces HTTPS, the canonical host, security headers, and
+  cross-origin isolation, plus preview `noindex` behavior. Its CSP explicitly
+  denies frames and child browsing contexts; malformed forwarded-protocol
+  headers fail closed.
 - `scripts/security-check.mjs` verifies the security contract in CI.
 - `.openai/hosting.json` identifies the existing Sites project and must remain
   unchanged.
