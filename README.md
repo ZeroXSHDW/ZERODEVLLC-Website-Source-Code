@@ -25,7 +25,9 @@ Cloudflare adapter. The landing page has no required runtime secret.
 
 ## Local development
 
-Requirements: Node.js 22.13 or newer and npm.
+Requirements: the exact Node.js version in [`.node-version`](.node-version)
+(currently Node.js 22.23.1) and npm; the `engines` entry remains the minimum
+supported release.
 
 ```bash
 npm ci
@@ -54,8 +56,8 @@ positive millisecond value only when a trusted environment needs another bound.
 
 ## Troubleshooting
 
-- If `npm ci` fails, use Node.js 22.13 or newer and rerun it from this
-  directory so the checked-in lockfile is used.
+- If `npm ci` fails, select the version in `.node-version` and rerun it from
+  this directory so the checked-in lockfile is used.
 - If `npm run quality` fails, fix the first failing stage and rerun the full
   command; the landing page does not require runtime secrets.
 - A Vinext notice about route classification is informational when the build
