@@ -47,6 +47,20 @@ describe("corporate edge host enforcement", () => {
     );
   });
 
+  it("does not trust a client-supplied forwarded protocol on HTTPS", () => {
+    const response = proxy(
+      new NextRequest("https://zerodevllc.com/", {
+        headers: {
+          host: "zerodevllc.com",
+          "x-forwarded-proto": "http",
+        },
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get("location")).toBeNull();
+  });
+
   it("adds a nonce-backed CSP and host release fingerprint to canonical requests", () => {
     const response = proxy(
       new NextRequest("https://zerodevllc.store/", {

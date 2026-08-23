@@ -91,12 +91,7 @@ function requestHost(request: NextRequest) {
 }
 
 function shouldUpgradeToHttps(request: NextRequest) {
-  const forwardedProto = request.headers
-    .get("x-forwarded-proto")
-    ?.split(",", 1)[0]
-    ?.trim()
-    .toLowerCase();
-  return request.nextUrl.protocol !== "https:" || forwardedProto === "http";
+  return request.nextUrl.protocol !== "https:";
 }
 
 function canonicalRedirect(
