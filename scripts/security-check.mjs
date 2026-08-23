@@ -7,6 +7,10 @@ const nextConfig = await readFile(join(projectRoot, "next.config.js"), "utf8");
 const proxy = await readFile(join(projectRoot, "proxy.ts"), "utf8");
 const layout = await readFile(join(projectRoot, "app/layout.tsx"), "utf8");
 const serviceWorker = await readFile(join(projectRoot, "public/sw.js"), "utf8");
+const serviceWorkerManager = await readFile(
+  join(projectRoot, "lib/serviceWorker.ts"),
+  "utf8",
+);
 const serviceWorkerCache = await readFile(
   join(projectRoot, "lib/cache/serviceWorkerCache.ts"),
   "utf8",
@@ -111,6 +115,18 @@ if (
   serviceWorker.includes('self.addEventListener("push"')
 ) {
   failures.push("public/sw.js must not install unused background handlers");
+}
+for (const marker of [
+  'if (!("serviceWorker" in navigator) || this.registration) return;',
+  'getRegistration("/")',
+  'updateViaCache: "none"',
+  "setConfig(config)",
+  "useRef<ServiceWorkerManager | null>(null)",
+]) {
+  if (!serviceWorkerManager.includes(marker))
+    failures.push(
+      `lib/serviceWorker.ts is missing stable registration control: ${marker}`,
+    );
 }
 for (const marker of [
   'const CACHE_PREFIX = "zerodevllc-sw-"',
