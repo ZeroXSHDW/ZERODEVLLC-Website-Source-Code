@@ -13,7 +13,7 @@ const readOptional = async (relativePath) => {
   }
 };
 
-const [proxy, robots, sitemap, securityTxt, securityPolicy, publicSecurityPolicy, layout, nextConfig, checkoutRoute, page, qualityWorkflow, dependabot, packageJson] = await Promise.all([
+const [proxy, robots, sitemap, securityTxt, securityPolicy, publicSecurityPolicy, layout, nextConfig, checkoutRoute, page, qualityWorkflow, dependabot, packageJson, secretHygiene] = await Promise.all([
   read('proxy.ts'),
   read('app/robots.ts'),
   read('app/sitemap.ts'),
@@ -27,6 +27,7 @@ const [proxy, robots, sitemap, securityTxt, securityPolicy, publicSecurityPolicy
   read('.github/workflows/quality.yml'),
   read('.github/dependabot.yml'),
   read('package.json'),
+  read('scripts/secret-hygiene.mjs'),
 ]);
 
 const canonicalMatch = proxy.match(/const canonicalHost = ['"]([^'"]+)['"]/);
@@ -166,6 +167,10 @@ for (const marker of ['schedule:', 'cron:', 'workflow_dispatch:', 'npm ci --igno
   requireText('.github/workflows/quality.yml', qualityWorkflow, marker);
 }
 requireText('package.json', packageJson, 'npm audit --audit-level=moderate');
+requireText('package.json', packageJson, 'scripts/secret-hygiene.mjs');
+for (const marker of ['git', 'ls-files', 'textExtensions', 'textBasenames', 'path.basename', 'private key', 'GitHub token', 'Stripe secret', 'OpenAI key', 'AWS access key', 'NPM token', 'Slack token', 'bearer credential']) {
+  requireText('scripts/secret-hygiene.mjs', secretHygiene, marker);
+}
 for (const marker of ['version: 2', 'package-ecosystem: npm', 'package-ecosystem: github-actions', 'interval: weekly', 'interval: monthly']) {
   requireText('.github/dependabot.yml', dependabot, marker);
 }
