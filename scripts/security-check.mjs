@@ -115,6 +115,11 @@ for (const marker of [
   "ZERO_DEV_RELEASE",
   "hostFamily",
   "new RegExp(`^zerodevllc-${hostFamily}-v\\\\d+$`)",
+  "canonicalMetadataResponse",
+  "SECURITY_EXPIRY_MS",
+  "Canonical: ${securityTxtUrl}",
+  "Disallow: /success",
+  "must-revalidate",
   "X-ZeroDev-Release",
 ]) {
   if (!proxy.includes(marker))

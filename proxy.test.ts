@@ -110,4 +110,37 @@ describe("corporate edge host enforcement", () => {
       else process.env.ZERO_DEV_RELEASE = previousRelease;
     }
   });
+
+  it("serves host-specific security metadata for each canonical domain", async () => {
+    for (const hostname of [
+      "zerodevllc.com",
+      "zerodevllc.eu",
+      "zerodevllc.store",
+    ]) {
+      const securityResponse = proxy(
+        new NextRequest(`https://${hostname}/.well-known/security.txt`, {
+          headers: { host: hostname },
+        }),
+      );
+      const securityBody = await securityResponse.text();
+      expect(securityResponse.status).toBe(200);
+      expect(securityBody).toContain(
+        `Canonical: https://${hostname}/.well-known/security.txt`,
+      );
+      expect(securityBody).toContain(`Policy: https://${hostname}/SECURITY.md`);
+
+      const robotsResponse = proxy(
+        new NextRequest(`https://${hostname}/robots.txt`, {
+          headers: { host: hostname },
+        }),
+      );
+      const robotsBody = await robotsResponse.text();
+      expect(robotsBody).toContain(`Sitemap: https://${hostname}/sitemap.xml`);
+      if (hostname === "zerodevllc.store") {
+        expect(robotsBody).toContain("Disallow: /success");
+      } else {
+        expect(robotsBody).not.toContain("Disallow: /success");
+      }
+    }
+  });
 });

@@ -15,6 +15,7 @@ const DEFAULT_RELEASE_FINGERPRINTS = Object.freeze({
   "zerodevllc.store": "zerodevllc-store-v55",
 });
 const SECURITY_PROFILE = "strict-2026-08";
+const SECURITY_EXPIRY_MS = 180 * 24 * 60 * 60 * 1000;
 
 function contentSecurityPolicy(nonce?: string) {
   const nonceSource = nonce ? ` 'nonce-${nonce}'` : "";
@@ -118,6 +119,61 @@ function canonicalRedirect(
   });
 }
 
+function canonicalMetadataResponse(
+  request: NextRequest,
+  canonicalHost: string,
+) {
+  if (request.method !== "GET" && request.method !== "HEAD") return null;
+
+  const path = request.nextUrl.pathname;
+  const sitemapUrl = `https://${canonicalHost}/sitemap.xml`;
+  const securityTxtUrl = `https://${canonicalHost}/.well-known/security.txt`;
+  const securityPolicyUrl = `https://${canonicalHost}/SECURITY.md`;
+  const metadata =
+    path === "/.well-known/security.txt"
+      ? {
+          body:
+            [
+              "Contact: mailto:hello@zerodevllc.com",
+              `Expires: ${new Date(Date.now() + SECURITY_EXPIRY_MS).toISOString()}`,
+              `Canonical: ${securityTxtUrl}`,
+              `Policy: ${securityPolicyUrl}`,
+              "Preferred-Languages: en",
+            ].join("\n") + "\n",
+          contentType: "text/plain; charset=utf-8",
+        }
+      : path === "/robots.txt"
+        ? {
+            body:
+              [
+                "User-agent: *",
+                "Allow: /",
+                "Disallow: /api/",
+                ...(canonicalHost === "zerodevllc.store"
+                  ? ["Disallow: /success"]
+                  : []),
+                `Sitemap: ${sitemapUrl}`,
+              ].join("\n") + "\n",
+            contentType: "text/plain; charset=utf-8",
+          }
+        : path === "/sitemap.xml"
+          ? {
+              body: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://${canonicalHost}/</loc></url></urlset>\n`,
+              contentType: "application/xml; charset=utf-8",
+            }
+          : null;
+  if (!metadata) return null;
+
+  return new NextResponse(metadata.body, {
+    status: 200,
+    headers: {
+      ...securityHeaders(canonicalHost),
+      "Cache-Control": "public, max-age=300, must-revalidate",
+      "Content-Type": metadata.contentType,
+    },
+  });
+}
+
 export function proxy(request: NextRequest) {
   const hostname = requestHost(request);
   if (!hostname) {
@@ -151,6 +207,11 @@ export function proxy(request: NextRequest) {
     (shouldUpgradeToHttps(request) || hostname !== canonicalHost)
   ) {
     return canonicalRedirect(request, hostname, canonicalHost);
+  }
+
+  if (!isLocal && canonicalHost) {
+    const metadataResponse = canonicalMetadataResponse(request, canonicalHost);
+    if (metadataResponse) return metadataResponse;
   }
 
   const nonce = createNonce();
