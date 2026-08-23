@@ -28,7 +28,6 @@ ZeroDevLLC corporate site and interactive 3D model viewer, built with Next.js, R
 - The exact Node.js version in [`.node-version`](.node-version) (currently
   Node.js 22.23.1); the `engines` entry remains the minimum supported release
 - npm or yarn
-- npm or yarn
 
 ### Installation
 
@@ -67,9 +66,15 @@ ZeroDevLLC corporate site and interactive 3D model viewer, built with Next.js, R
 
 The pull-request gate runs the canonical `npm run quality` command after a
 locked `npm ci --ignore-scripts` install. It performs type checking, ESLint,
-Prettier format validation, Jest coverage with a global 9.5% statements,
-branches, and lines floor plus an 11% functions floor, a moderate-or-higher
-dependency audit, a tracked-file secret-hygiene scan, and a production build.
+Prettier format validation, Jest coverage with global floors of 20% statements,
+15% branches, 20% functions, and 20% lines, a moderate-or-higher dependency
+audit, a tracked-file secret-hygiene scan, and a production build. The current
+offline suite has 109 passing tests and measures 24.23% statements, 19.57%
+branches, 22.57% functions, and 24.91% lines. The coverage suite intentionally
+exercises the core error, cache, performance, resource-pool, geometry,
+frustum, texture, and bundle-loading contracts; browser-only WebGL/UI and
+real-device paths remain separately validated at the integration/release
+boundary.
 The dependency audit is bounded to five minutes by default; set
 `NPM_AUDIT_TIMEOUT_MS` to tune the limit. A timeout returns status 124 so a
 network or registry stall cannot hang the release gate indefinitely.
