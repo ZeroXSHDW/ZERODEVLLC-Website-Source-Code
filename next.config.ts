@@ -18,7 +18,7 @@ const securityHeaders = [
   { key: 'Origin-Agent-Cluster', value: '?1' },
   { key: 'X-DNS-Prefetch-Control', value: 'off' },
   { key: 'X-ZeroDev-Security-Profile', value: 'strict-2026-08' },
-  { key: 'X-ZeroDev-Release', value: 'zerodevllc-eu-v38' },
+  { key: 'X-ZeroDev-Release', value: 'zerodevllc-eu-v39' },
 ];
 
 const nextConfig: NextConfig = {

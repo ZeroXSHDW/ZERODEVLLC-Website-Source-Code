@@ -13,7 +13,7 @@ const readOptional = async (relativePath) => {
   }
 };
 
-const [proxy, robots, sitemap, securityTxt, securityPolicy, layout, nextConfig, checkoutRoute, qualityWorkflow, dependabot, packageJson] = await Promise.all([
+const [proxy, robots, sitemap, securityTxt, securityPolicy, layout, nextConfig, checkoutRoute, page, qualityWorkflow, dependabot, packageJson] = await Promise.all([
   read('proxy.ts'),
   read('app/robots.ts'),
   read('app/sitemap.ts'),
@@ -22,6 +22,7 @@ const [proxy, robots, sitemap, securityTxt, securityPolicy, layout, nextConfig, 
   read('app/layout.tsx'),
   read('next.config.ts'),
   readOptional('app/api/checkout/route.ts'),
+  read('app/page.tsx'),
   read('.github/workflows/quality.yml'),
   read('.github/dependabot.yml'),
   read('package.json'),
@@ -40,8 +41,14 @@ const SECURITY_EXPIRY_MAX_MS = 366 * 24 * 60 * 60 * 1000;
 const requireText = (label, text, marker) => {
   if (!text.includes(marker)) failures.push(`${label} is missing: ${marker}`);
 };
-requireText('proxy.ts', proxy, 'zerodevllc-eu-v38');
-requireText('next.config.ts', nextConfig, 'zerodevllc-eu-v38');
+requireText('proxy.ts', proxy, 'zerodevllc-eu-v39');
+requireText('next.config.ts', nextConfig, 'zerodevllc-eu-v39');
+requireText('app/page.tsx', page, 'const canonicalDomains');
+requireText('app/page.tsx', page, 'https://zerodevllc.com');
+requireText('app/page.tsx', page, 'https://zerodevllc.store');
+for (const previewHost of ['zerodevllc-com.michaelmorangeometri.chatgpt.site', 'zerodevllc-store.michaelmorangeometri.chatgpt.site', 'zerodevllc-eu.michaelmorangeometri.chatgpt.site']) {
+  if (page.includes(previewHost)) failures.push(`app/page.tsx must not use the ${previewHost} preview hostname for canonical navigation`);
+}
 
 for (const marker of [
   'Content-Security-Policy',

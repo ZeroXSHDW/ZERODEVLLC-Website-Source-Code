@@ -1,3 +1,8 @@
+const canonicalDomains = Object.freeze({
+  com: 'https://zerodevllc.com',
+  store: 'https://zerodevllc.store',
+});
+
 const surfaces = [
   {
     label: '01 / SIGNAL FUSION',
@@ -17,21 +22,16 @@ const surfaces = [
   },
 ];
 
-const livePreviews = {
-  com: 'https://zerodevllc.com',
-  store: 'https://zerodevllc.store',
-};
-
 export default function Home() {
   return (
     <main className="eu-shell">
       <a className="skip-link" href="#surface-heading">Skip to live surfaces</a>
       <div className="eu-grid" aria-hidden="true" />
       <header className="eu-topbar">
-        <a className="eu-brand" href={livePreviews.com}><span>Z/</span> ZERODEVLLC <b>.EU</b></a>
+        <a className="eu-brand" href={canonicalDomains.com}><span>Z/</span> ZERODEVLLC <b>.EU</b></a>
         <nav aria-label="Primary navigation">
-          <a href={livePreviews.com}>Corporate</a>
-          <a href={livePreviews.store}>Store</a>
+          <a href={canonicalDomains.com}>Corporate</a>
+          <a href={canonicalDomains.store}>Store</a>
         </nav>
         <span className="eu-status"><i /> NETWORK INDEX / ONLINE</span>
       </header>
@@ -67,10 +67,10 @@ export default function Home() {
 
       <section className="eu-bottom-band">
         <p><span>&gt;_</span> ZeroDev maintains the index. The source systems remain the authority.</p>
-        <a href={livePreviews.com}>Return to root index <b>↗</b></a>
+        <a href={canonicalDomains.com}>Return to root index <b>↗</b></a>
       </section>
 
-      <footer className="eu-footer"><span>© 2026 ZERO DEV LLC / IRELAND</span><span>NO SIGNAL WITHOUT SOURCE</span><span><a href={livePreviews.com}>.COM</a> / <a href={livePreviews.store}>.STORE</a></span></footer>
+      <footer className="eu-footer"><span>© 2026 ZERO DEV LLC / IRELAND</span><span>NO SIGNAL WITHOUT SOURCE</span><span><a href={canonicalDomains.com}>.COM</a> / <a href={canonicalDomains.store}>.STORE</a></span></footer>
     </main>
   );
 }
