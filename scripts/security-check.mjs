@@ -89,8 +89,11 @@ for (const marker of [
       `proxy.ts is missing nonce-backed CSP enforcement: ${marker}`,
     );
 }
-if (nextConfig.includes("script-src 'self' 'unsafe-inline'")) {
-  failures.push("next.config.js must not allow unsafe inline scripts");
+if (
+  nextConfig.includes("'unsafe-inline'") ||
+  proxy.includes("'unsafe-inline'")
+) {
+  failures.push("corporate CSP must not allow unsafe inline scripts or styles");
 }
 if (!layout.includes('export const dynamic = "force-dynamic"')) {
   failures.push(

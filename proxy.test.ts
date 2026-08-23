@@ -72,6 +72,9 @@ describe("corporate edge host enforcement", () => {
     expect(response.headers.get("content-security-policy")).toMatch(
       /'nonce-[A-Za-z0-9_-]+'/,
     );
+    expect(response.headers.get("content-security-policy")).not.toContain(
+      "'unsafe-inline'",
+    );
     expect(response.headers.get("x-zerodev-security-profile")).toBe(
       "strict-2026-08",
     );

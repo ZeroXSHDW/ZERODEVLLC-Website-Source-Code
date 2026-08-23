@@ -18,7 +18,7 @@ const SECURITY_PROFILE = "strict-2026-08";
 
 function contentSecurityPolicy(nonce?: string) {
   const nonceSource = nonce ? ` 'nonce-${nonce}'` : "";
-  return `default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; frame-src 'none'; child-src 'none'; object-src 'none'; script-src 'self'${nonceSource}; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; style-src-attr 'none'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://www.gstatic.com; worker-src 'self' blob:; manifest-src 'self'; media-src 'self' blob:; upgrade-insecure-requests`;
+  return `default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; frame-src 'none'; child-src 'none'; object-src 'none'; script-src 'self'${nonceSource}; script-src-attr 'none'; style-src 'self'${nonceSource}; style-src-attr 'none'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://www.gstatic.com; worker-src 'self' blob:; manifest-src 'self'; media-src 'self' blob:; upgrade-insecure-requests`;
 }
 
 function createNonce() {
