@@ -4,6 +4,8 @@ import { fileURLToPath } from "node:url";
 
 const projectRoot = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const nextConfig = await readFile(join(projectRoot, "next.config.js"), "utf8");
+const proxy = await readFile(join(projectRoot, "proxy.ts"), "utf8");
+const layout = await readFile(join(projectRoot, "app/layout.tsx"), "utf8");
 const publicSecurityPolicy = await readFile(
   join(projectRoot, "public/SECURITY.md"),
   "utf8",
@@ -56,6 +58,29 @@ const requiredMarkers = [
 const failures = requiredMarkers
   .filter((marker) => !nextConfig.includes(marker))
   .map((marker) => `next.config.js is missing ${marker}`);
+for (const marker of [
+  "function contentSecurityPolicy",
+  "function createNonce",
+  "crypto.getRandomValues",
+  'requestHeaders.set("x-nonce"',
+  'requestHeaders.set("content-security-policy"',
+  "'nonce-${nonce}'",
+  "NextResponse.next({ request: { headers: requestHeaders } })",
+  'matcher: ["/((?!_next/static).*)"]',
+]) {
+  if (!proxy.includes(marker))
+    failures.push(
+      `proxy.ts is missing nonce-backed CSP enforcement: ${marker}`,
+    );
+}
+if (nextConfig.includes("script-src 'self' 'unsafe-inline'")) {
+  failures.push("next.config.js must not allow unsafe inline scripts");
+}
+if (!layout.includes('export const dynamic = "force-dynamic"')) {
+  failures.push(
+    "app/layout.tsx must force dynamic rendering for nonce-backed CSP",
+  );
+}
 if (nextConfig.includes("X-XSS-Protection"))
   failures.push("next.config.js must not rely on deprecated X-XSS-Protection");
 for (const [label, text, markers] of [
