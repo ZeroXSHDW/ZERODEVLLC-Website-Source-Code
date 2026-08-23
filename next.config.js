@@ -48,6 +48,10 @@ const nextConfig = {
             value: "same-origin",
           },
           {
+            key: "Cross-Origin-Embedder-Policy",
+            value: "require-corp",
+          },
+          {
             key: "Origin-Agent-Cluster",
             value: "?1",
           },

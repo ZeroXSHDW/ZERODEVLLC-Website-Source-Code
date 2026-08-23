@@ -25,6 +25,15 @@ const textExtensions = new Set([
   ".yaml",
   ".yml",
 ]);
+const textBasenames = new Set([
+  ".env",
+  ".env.example",
+  ".env.local",
+  ".env.production",
+  ".npmrc",
+  ".pypirc",
+  "dockerfile",
+]);
 const patterns = [
   { label: "private key", pattern: /-----BEGIN [A-Z ]*PRIVATE KEY-----/ },
   {
@@ -34,7 +43,17 @@ const patterns = [
     ),
   },
   { label: "Stripe secret", pattern: /\bsk_(?:live|test)_[A-Za-z0-9]{16,}\b/ },
+  {
+    label: "OpenAI key",
+    pattern: /\bsk-(?:proj|admin|org)-[A-Za-z0-9_-]{20,}\b/,
+  },
   { label: "AWS access key", pattern: /\bAKIA[0-9A-Z]{16}\b/ },
+  {
+    label: "NPM token",
+    pattern:
+      /\b(?:npm_[A-Za-z0-9]{20,}|_authToken\s*=\s*(?!\$\{)[^\s#]{20,})\b/i,
+  },
+  { label: "Slack token", pattern: /\bxox[baprs]-[A-Za-z0-9-]{20,}\b/ },
   {
     label: "bearer credential",
     pattern: /Authorization:\s*Bearer\s+[A-Za-z0-9._-]{20,}/i,
@@ -50,8 +69,8 @@ const trackedFiles = stdout
   .filter(Boolean)
   .filter(
     (file) =>
-      file !== "package-lock.json" &&
-      textExtensions.has(path.extname(file).toLowerCase()),
+      textExtensions.has(path.extname(file).toLowerCase()) ||
+      textBasenames.has(path.basename(file).toLowerCase()),
   );
 const findings = [];
 

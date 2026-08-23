@@ -48,6 +48,7 @@ const requiredMarkers = [
   "X-Permitted-Cross-Domain-Policies",
   "Cross-Origin-Opener-Policy",
   "Cross-Origin-Resource-Policy",
+  "Cross-Origin-Embedder-Policy",
   "Origin-Agent-Cluster",
   "X-DNS-Prefetch-Control",
 ];
@@ -119,10 +120,16 @@ if (!packageJson.includes("scripts/secret-hygiene.mjs"))
 for (const marker of [
   "git",
   "ls-files",
+  "textExtensions",
+  "textBasenames",
+  "path.basename",
   "private key",
   "GitHub token",
   "Stripe secret",
+  "OpenAI key",
   "AWS access key",
+  "NPM token",
+  "Slack token",
   "bearer credential",
 ]) {
   if (!secretHygiene.includes(marker))
