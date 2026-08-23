@@ -18,10 +18,11 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "patch-hygiene": "git diff --check",
     "format": "prettier --write \"app/**/*.{js,jsx,ts,tsx,json,css,md}\" \"components/**/*.{js,jsx,ts,tsx,json,css,md}\" \"config/**/*.{js,jsx,ts,tsx,json,css,md}\" \"lib/**/*.{js,jsx,ts,tsx,json,css,md}\" \"*.{js,jsx,ts,tsx,json,css,md,mjs}\" \".github/**/*.yml\"",
     "format:check": "prettier --check \"app/**/*.{js,jsx,ts,tsx,json,css,md}\" \"components/**/*.{js,jsx,ts,tsx,json,css,md}\" \"config/**/*.{js,jsx,ts,tsx,json,css,md}\" \"lib/**/*.{js,jsx,ts,tsx,json,css,md}\" \"scripts/**/*.{js,mjs}\" \"*.{js,jsx,ts,tsx,json,css,md,mjs}\" \".github/**/*.yml\"",
     "security-audit": "node scripts/security-audit.mjs",
-    "quality": "npm run security && npm run type-check && npm run lint && npm run format:check && npm run test:coverage && npm run security-audit && npm run build",
+    "quality": "npm run patch-hygiene && npm run security && npm run type-check && npm run lint && npm run format:check && npm run test:coverage && npm run security-audit && npm run build",
     "analyze": "ANALYZE=true npm run build",
     "prepare": "husky || true"
   },

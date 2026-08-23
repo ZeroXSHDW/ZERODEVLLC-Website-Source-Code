@@ -56,13 +56,14 @@ ZeroDevLLC corporate site and interactive 3D model viewer, built with Next.js, R
 
 ### Useful scripts
 
-| Script               | Purpose                                                  |
-| -------------------- | -------------------------------------------------------- |
-| `npm run type-check` | TypeScript (`tsc --noEmit`) — used in CI                 |
-| `npm test`           | Jest unit/component tests                                |
-| `npm run lint`       | ESLint with the committed Next.js flat configuration     |
-| `npm run build`      | Production build                                         |
-| `npm run quality`    | Full type, lint, format, coverage, audit, and build gate |
+| Script                  | Purpose                                                  |
+| ----------------------- | -------------------------------------------------------- |
+| `npm run type-check`    | TypeScript (`tsc --noEmit`) — used in CI                 |
+| `npm test`              | Jest unit/component tests                                |
+| `npm run lint`          | ESLint with the committed Next.js flat configuration     |
+| `npm run build`         | Production build                                         |
+| `npm run patch-hygiene` | Reject whitespace errors and conflict markers            |
+| `npm run quality`       | Full type, lint, format, coverage, audit, and build gate |
 
 The pull-request gate runs the canonical `npm run quality` command after a
 locked `npm ci --ignore-scripts` install. It performs type checking, ESLint,
@@ -78,10 +79,15 @@ boundary.
 The dependency audit is bounded to five minutes by default; set
 `NPM_AUDIT_TIMEOUT_MS` to tune the limit. A timeout returns status 124 so a
 network or registry stall cannot hang the release gate indefinitely.
+
+`npm run quality` runs patch hygiene first, and CI performs the same check
+before installing dependencies. This rejects whitespace errors and unresolved
+conflict markers early in both local and pull-request verification.
 Run it locally with:
 
 ```bash
 npm ci --ignore-scripts
+npm run patch-hygiene
 npm run quality
 ```
 
