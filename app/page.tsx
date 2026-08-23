@@ -70,7 +70,7 @@ export default function Home() {
         </a>
         <nav className="nav" aria-label="Primary navigation">
           <a href="#systems">Systems</a>
-          <a href="#defcon-map">Live map</a>
+          <a href={canonicalDomains.defcon}>Live map ↗</a>
           <a href="#approach">Approach</a>
           <a href={canonicalDomains.defcon}>DEFCON</a>
           <a href={canonicalDomains.store}>Store</a>
