@@ -163,8 +163,8 @@ export default function Home() {
           <p className="eyebrow">{'// LIVE DEFCON SURFACE'}</p>
           <h2 id="defcon-map-heading">See the signal<br /><span>in motion.</span></h2>
           <p>A first-party 3D view of the DEFCON coordination topology, surfaced here as part of the ZeroDev operating system.</p>
-          <a className="text-link" href={canonicalDomains.defcon}>Open protected DEFCON surface <span aria-hidden="true">↗</span></a>
-          <small>Current evidence and source-linked readouts remain inside the protected EU gateway.</small>
+          <a className="text-link" href={canonicalDomains.defcon}>Open live EU map <span aria-hidden="true">↗</span></a>
+          <small>Canonical live route: zerodevllc.eu/defcon. Current evidence and source-linked readouts remain inside the protected EU gateway.</small>
         </div>
         <LiveDefconMap />
       </section>

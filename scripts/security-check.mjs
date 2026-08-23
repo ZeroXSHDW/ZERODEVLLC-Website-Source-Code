@@ -64,8 +64,8 @@ const SECURITY_EXPIRY_MAX_MS = 366 * 24 * 60 * 60 * 1000;
 const requireText = (label, text, marker) => {
   if (!text.includes(marker)) failures.push(`${label} is missing: ${marker}`);
 };
-requireText("proxy.ts", proxy, "zerodevllc-com-v42");
-requireText("next.config.ts", nextConfig, "zerodevllc-com-v42");
+requireText("proxy.ts", proxy, "zerodevllc-com-v50");
+requireText("next.config.ts", nextConfig, "zerodevllc-com-v50");
 requireText("app/layout.tsx", layout, "export const dynamic = 'force-dynamic'");
 for (const source of [proxy, nextConfig]) {
   if (source.includes("'unsafe-inline'"))
@@ -77,6 +77,8 @@ requireText("app/page.tsx", page, "https://zerodevllc.eu");
 requireText("app/page.tsx", page, "https://zerodevllc.store");
 requireText("app/page.tsx", page, "Open the DEFCON Signal Fusion EU gateway");
 requireText("app/page.tsx", page, "EU gateway / protected");
+requireText("proxy.ts", proxy, "const liveMapDestination = 'https://zerodevllc.eu/defcon'");
+requireText("proxy.ts", proxy, "isLiveMapPath");
 if (page.includes("defcon-signal-fusion.michaelmorangeometri.chatgpt.site")) {
   failures.push(
     "app/page.tsx must route the DEFCON card through https://zerodevllc.eu/defcon",

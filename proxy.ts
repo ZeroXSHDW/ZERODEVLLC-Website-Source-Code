@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const canonicalHost = 'zerodevllc.com';
 const previewHost = 'zerodevllc-com.michaelmorangeometri.chatgpt.site';
+const liveMapDestination = 'https://zerodevllc.eu/defcon';
 
 const securityHeaders: Record<string, string> = {
   'Content-Security-Policy':
@@ -18,7 +19,7 @@ const securityHeaders: Record<string, string> = {
   'Origin-Agent-Cluster': '?1',
   'X-DNS-Prefetch-Control': 'off',
   'X-ZeroDev-Security-Profile': 'strict-2026-08',
-  'X-ZeroDev-Release': 'zerodevllc-com-v42',
+  'X-ZeroDev-Release': 'zerodevllc-com-v50',
 };
 
 function contentSecurityPolicy(nonce?: string) {
@@ -89,6 +90,13 @@ export function proxy(request: NextRequest) {
   const effectiveProto = requestProtocol === 'https'
     ? 'https'
     : forwardedProto === 'http' && requestProtocol === 'http' ? 'http' : 'http';
+  const isLiveMapPath = request.nextUrl.pathname === '/defcon' || request.nextUrl.pathname === '/live-map';
+  const isCanonicalPublicHost = host === canonicalHost || host === 'www.' + canonicalHost;
+  if (!isLocal && isLiveMapPath && isCanonicalPublicHost) {
+    const url = new URL(liveMapDestination);
+    url.search = request.nextUrl.search;
+    return secureRedirect(url);
+  }
   const shouldCanonicalizeHost = hasHostHeaderMismatch(request)
     || (!isLocal && hasExplicitPort(request))
     || host === 'www.' + canonicalHost

@@ -82,7 +82,7 @@ export function LiveDefconMap() {
           <p className="eyebrow">{'// DEFCON SIGNAL FUSION'}</p>
           <h3>Live network map</h3>
         </div>
-        <span className="map-live-badge"><i /> LIVE GATEWAY</span>
+        <a className="map-live-badge" href="https://zerodevllc.eu/defcon" aria-label="Open the live DEFCON EU gateway"><i /> EU GATEWAY / LIVE MAP ↗</a>
       </div>
 
       <div className={`defcon-map-stage${paused ? ' is-paused' : ''}`} aria-label="Three-dimensional preview of the DEFCON coordination network">
