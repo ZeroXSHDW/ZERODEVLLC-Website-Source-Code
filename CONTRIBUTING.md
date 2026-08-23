@@ -4,6 +4,10 @@
 
 Read the repository README and inspect the current branch before editing. Keep changes focused, preserve user work, and do not commit secrets, generated output, host-specific paths, credentials, device identifiers, or unrelated formatting churn.
 
+Use the exact Node.js version in `.node-version` (currently Node.js 22.23.1)
+before installing dependencies or running the quality gate. A version manager
+such as `mise`, `nvm`, or `asdf` can load the file automatically.
+
 ## Verification
 
 Run the strongest documented local gate before requesting review:

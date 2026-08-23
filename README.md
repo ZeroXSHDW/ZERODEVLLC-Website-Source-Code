@@ -25,7 +25,9 @@ ZeroDevLLC corporate site and interactive 3D model viewer, built with Next.js, R
 
 ### Prerequisites
 
-- Node.js 20.9 or later
+- The exact Node.js version in [`.node-version`](.node-version) (currently
+  Node.js 22.23.1); the `engines` entry remains the minimum supported release
+- npm or yarn
 - npm or yarn
 
 ### Installation

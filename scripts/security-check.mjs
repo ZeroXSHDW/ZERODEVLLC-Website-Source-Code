@@ -72,6 +72,7 @@ const ciWorkflow = await readFile(
   join(projectRoot, ".github/workflows/ci.yml"),
   "utf8",
 );
+const nodeVersion = await readFile(join(projectRoot, ".node-version"), "utf8");
 const requiredMarkers = [
   'source: "/:path*"',
   "poweredByHeader: false",
@@ -278,9 +279,14 @@ const requiredCiMarkers = [
   "persist-credentials: false",
   "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
   "actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+  "node-version-file: .node-version",
   "npm ci --ignore-scripts",
   "npm run quality",
 ];
+if (!/^\d+\.\d+\.\d+\s*$/.test(nodeVersion))
+  failures.push(
+    ".node-version must contain one exact semantic Node.js version",
+  );
 for (const marker of requiredCiMarkers) {
   if (!ciWorkflow.includes(marker))
     failures.push(`.github/workflows/ci.yml is missing ${marker}`);
