@@ -41,6 +41,9 @@ const ciWorkflow = await readFile(
 const requiredMarkers = [
   'source: "/:path*"',
   "poweredByHeader: false",
+  "X-ZeroDev-Security-Profile",
+  "X-ZeroDev-Release",
+  "strict-2026-08",
   "Content-Security-Policy",
   "default-src 'self'",
   "base-uri 'self'",
@@ -79,7 +82,7 @@ for (const marker of [
   'requestHeaders.set("content-security-policy"',
   "'nonce-${nonce}'",
   "NextResponse.next({ request: { headers: requestHeaders } })",
-  'matcher: ["/((?!_next/static).*)"]',
+  'matcher: ["/:path*"]',
 ]) {
   if (!proxy.includes(marker))
     failures.push(
@@ -93,6 +96,24 @@ if (!layout.includes('export const dynamic = "force-dynamic"')) {
   failures.push(
     "app/layout.tsx must force dynamic rendering for nonce-backed CSP",
   );
+}
+for (const marker of [
+  "CANONICAL_HOSTS",
+  "zerodevllc.com",
+  "www.zerodevllc.com",
+  "zerodevllc.eu",
+  "www.zerodevllc.eu",
+  "zerodevllc.store",
+  "www.zerodevllc.store",
+  "Request host is not allowed.",
+  "Host is not configured for ZeroDevLLC.",
+  "NextResponse.redirect",
+  "status: 308",
+  "ZERO_DEV_RELEASE",
+  "X-ZeroDev-Release",
+]) {
+  if (!proxy.includes(marker))
+    failures.push(`proxy.ts is missing canonical host enforcement: ${marker}`);
 }
 if (nextConfig.includes("X-XSS-Protection"))
   failures.push("next.config.js must not rely on deprecated X-XSS-Protection");

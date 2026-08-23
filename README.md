@@ -107,6 +107,12 @@ Run `npm run quality` before review and keep the public site free of credentials
 
 Report vulnerabilities privately using [SECURITY.md](SECURITY.md). Do not publish deployment tokens, customer data, or private environment values.
 
+The edge proxy accepts only the configured `zerodevllc.com`, `zerodevllc.eu`, and
+`zerodevllc.store` host families. It redirects HTTP and `www` aliases to the
+HTTPS apex host, rejects unknown Host headers, and emits the shared strict
+security profile. Set `ZERO_DEV_RELEASE` to the exact release fingerprint for
+each production deployment so stale artifacts cannot present as current.
+
 ## Usage
 
 Use the documented npm scripts for local development, quality checks, and the

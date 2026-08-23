@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+const securityProfile = "strict-2026-08";
+const releaseFingerprint = process.env.ZERO_DEV_RELEASE || "zerodevllc-com-v42";
+
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
@@ -58,6 +61,14 @@ const nextConfig = {
           {
             key: "X-DNS-Prefetch-Control",
             value: "off",
+          },
+          {
+            key: "X-ZeroDev-Security-Profile",
+            value: securityProfile,
+          },
+          {
+            key: "X-ZeroDev-Release",
+            value: releaseFingerprint,
           },
         ],
       },

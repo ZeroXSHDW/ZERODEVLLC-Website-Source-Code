@@ -1,4 +1,35 @@
 import "@testing-library/jest-dom";
+import { TextDecoder, TextEncoder } from "node:util";
+import {
+  ReadableStream,
+  TransformStream,
+  WritableStream,
+} from "node:stream/web";
+
+// NextRequest/NextResponse need Fetch primitives that jsdom does not expose.
+if (typeof globalThis.TextEncoder === "undefined") {
+  globalThis.TextEncoder = TextEncoder;
+}
+if (typeof globalThis.TextDecoder === "undefined") {
+  globalThis.TextDecoder = TextDecoder;
+}
+for (const [name, implementation] of Object.entries({
+  ReadableStream,
+  TransformStream,
+  WritableStream,
+})) {
+  if (typeof globalThis[name] === "undefined") {
+    globalThis[name] = implementation;
+  }
+}
+if (typeof globalThis.Request === "undefined") {
+  const edgeFetch = require("next/dist/compiled/@edge-runtime/primitives/fetch");
+  for (const name of ["Request", "Response", "Headers", "fetch"]) {
+    if (typeof globalThis[name] === "undefined" && edgeFetch[name]) {
+      globalThis[name] = edgeFetch[name];
+    }
+  }
+}
 
 // Blob URL APIs used by model upload / reset paths (jsdom does not implement these)
 if (typeof URL.createObjectURL !== "function") {
