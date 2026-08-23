@@ -2,6 +2,11 @@
 
 import { useState } from 'react';
 
+const canonicalDomains = Object.freeze({
+  eu: 'https://zerodevllc.eu',
+  store: 'https://zerodevllc.store',
+});
+
 const systems = [
   {
     code: '01',
@@ -21,15 +26,10 @@ const systems = [
     code: '03',
     name: 'SOFTWARE / SERVICES',
     description: 'Deployable tools, architecture sprints, and private build support.',
-    href: 'https://zerodevllc-store.michaelmorangeometri.chatgpt.site',
+    href: canonicalDomains.store,
     tag: 'STORE // READY',
   },
 ];
-
-const livePreviews = {
-  eu: 'https://zerodevllc.eu',
-  store: 'https://zerodevllc.store',
-};
 
 export default function Home() {
   const [uplinked, setUplinked] = useState(false);
@@ -48,7 +48,7 @@ export default function Home() {
         <nav className="nav" aria-label="Primary navigation">
           <a href="#systems">Systems</a>
           <a href="#signal">Signal</a>
-          <a href={livePreviews.store}>Store</a>
+          <a href={canonicalDomains.store}>Store</a>
         </nav>
         <span className="status-chip"><span className="status-dot" /> UPLINK READY</span>
       </header>
@@ -121,7 +121,7 @@ export default function Home() {
       <footer className="footer">
         <span>© 2026 ZERO DEV LLC</span>
         <span className="footer-center">MAKE USEFUL THINGS. KEEP THE SIGNAL CLEAN.</span>
-        <span><a href={livePreviews.eu}>EU HUB</a> / <a href={livePreviews.store}>STORE</a></span>
+        <span><a href={canonicalDomains.eu}>EU HUB</a> / <a href={canonicalDomains.store}>STORE</a></span>
       </footer>
     </main>
   );

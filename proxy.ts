@@ -18,7 +18,7 @@ const securityHeaders: Record<string, string> = {
   'Origin-Agent-Cluster': '?1',
   'X-DNS-Prefetch-Control': 'off',
   'X-ZeroDev-Security-Profile': 'strict-2026-08',
-  'X-ZeroDev-Release': 'zerodevllc-com-v38',
+  'X-ZeroDev-Release': 'zerodevllc-com-v39',
 };
 
 function applySecurityHeaders(response: NextResponse) {
