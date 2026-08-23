@@ -40,6 +40,8 @@ const SECURITY_EXPIRY_MAX_MS = 366 * 24 * 60 * 60 * 1000;
 const requireText = (label, text, marker) => {
   if (!text.includes(marker)) failures.push(`${label} is missing: ${marker}`);
 };
+requireText('proxy.ts', proxy, 'zerodevllc-eu-v37');
+requireText('next.config.ts', nextConfig, 'zerodevllc-eu-v37');
 
 for (const marker of [
   'Content-Security-Policy',
@@ -75,6 +77,7 @@ for (const marker of [
   'X-DNS-Prefetch-Control',
   'X-Permitted-Cross-Domain-Policies',
   'X-ZeroDev-Security-Profile',
+  'X-ZeroDev-Release',
   'nextUrl.hostname',
   'hasHostHeaderMismatch',
   'forwardedProtoHeader',
@@ -133,6 +136,7 @@ for (const marker of [
   'X-DNS-Prefetch-Control',
   'X-Permitted-Cross-Domain-Policies',
   'X-ZeroDev-Security-Profile',
+  'X-ZeroDev-Release',
   "base-uri 'self'",
   "form-action 'self'",
   "frame-ancestors 'none'",
