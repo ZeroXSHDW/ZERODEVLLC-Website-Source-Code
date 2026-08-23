@@ -40,7 +40,7 @@ ZeroDevLLC corporate site and interactive 3D model viewer, built with Next.js, R
 2. Install dependencies (prefer lockfile install):
 
    ```bash
-   npm ci
+   npm ci --ignore-scripts
    ```
 
    Or `npm install` if you are intentionally updating dependencies.
@@ -64,12 +64,13 @@ ZeroDevLLC corporate site and interactive 3D model viewer, built with Next.js, R
 | `npm run quality`    | Full type, lint, format, coverage, audit, and build gate |
 
 The pull-request gate runs the canonical `npm run quality` command after a
-locked install. It performs type checking, ESLint, Prettier format validation,
-Jest coverage, the high-severity dependency audit, and a production build.
+locked `npm ci --ignore-scripts` install. It performs type checking, ESLint,
+Prettier format validation, Jest coverage, a moderate-or-higher dependency
+audit, and a production build.
 Run it locally with:
 
 ```bash
-npm ci
+npm ci --ignore-scripts
 npm run quality
 ```
 
@@ -113,6 +114,6 @@ behavior consistent with the deployed site; do not edit generated output.
 
 ## Troubleshooting
 
-Start with `npm ci`, then run the typecheck, lint, audit, test, and build gates
+Start with `npm ci --ignore-scripts`, then run the typecheck, lint, audit, test, and build gates
 in order. If a hosted deployment fails before a job starts, distinguish the
 account or billing failure from a code failure and retain the local evidence.
