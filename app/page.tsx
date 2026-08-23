@@ -1,5 +1,7 @@
 'use client';
 
+import { LiveDefconMap } from './live-defcon-map';
+
 const canonicalDomains = Object.freeze({
   defcon: 'https://zerodevllc.eu/defcon',
   eu: 'https://zerodevllc.eu',
@@ -68,6 +70,7 @@ export default function Home() {
         </a>
         <nav className="nav" aria-label="Primary navigation">
           <a href="#systems">Systems</a>
+          <a href="#defcon-map">Live map</a>
           <a href="#approach">Approach</a>
           <a href={canonicalDomains.defcon}>DEFCON</a>
           <a href={canonicalDomains.store}>Store</a>
@@ -153,6 +156,17 @@ export default function Home() {
             </a>
           ))}
         </div>
+      </section>
+
+      <section className="map-section" id="defcon-map" aria-labelledby="defcon-map-heading">
+        <div className="map-section-copy">
+          <p className="eyebrow">{'// LIVE DEFCON SURFACE'}</p>
+          <h2 id="defcon-map-heading">See the signal<br /><span>in motion.</span></h2>
+          <p>A first-party 3D view of the DEFCON coordination topology, surfaced here as part of the ZeroDev operating system.</p>
+          <a className="text-link" href={canonicalDomains.defcon}>Open protected DEFCON surface <span aria-hidden="true">↗</span></a>
+          <small>Current evidence and source-linked readouts remain inside the protected EU gateway.</small>
+        </div>
+        <LiveDefconMap />
       </section>
 
       <section className="approach-section" id="approach" aria-labelledby="approach-heading">
