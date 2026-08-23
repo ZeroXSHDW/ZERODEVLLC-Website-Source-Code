@@ -3,7 +3,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'ZeroDev LLC // European Operations Index',
-  description: 'The European operations index for ZeroDev DEFCON and Threat Ops live systems.',
+  description: 'The European operations index for ZeroDev DEFCON and Threat Ops live systems, including the official DEFCON gateway at /defcon.',
   keywords: ['ZeroDev LLC', 'DEFCON', 'Threat Ops', 'threat intelligence', 'signal fusion'],
   alternates: {
     canonical: 'https://zerodevllc.eu',

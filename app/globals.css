@@ -65,12 +65,56 @@ a { color: inherit; text-decoration: none; }
 .eu-footer span:nth-child(2) { color: var(--dim); }
 .eu-footer a { transition: color .2s ease; }
 
+.defcon-entry { background: radial-gradient(circle at 82% 21%, rgba(180,255,156,.08), transparent 28rem), var(--black); }
+.defcon-hero { align-items: center; display: grid; gap: clamp(50px, 12vw, 180px); grid-template-columns: minmax(0, 1fr) minmax(280px, 380px); margin: 0 auto; max-width: 1340px; min-height: 620px; padding: 100px clamp(20px, 7vw, 110px) 90px; position: relative; }
+.defcon-hero-copy { max-width: 720px; }
+.defcon-hero h1 { font-family: Arial, Helvetica, sans-serif; font-size: clamp(58px, 8.2vw, 112px); letter-spacing: -.09em; line-height: .84; margin: 0 0 34px; text-transform: uppercase; }
+.defcon-hero h1 em { color: var(--lime); font-style: normal; }
+.defcon-intro { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 17px; line-height: 1.65; margin: 0; max-width: 570px; }
+.defcon-actions { align-items: center; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 38px; }
+.defcon-primary, .defcon-secondary { align-items: center; display: inline-flex; font-size: 9px; justify-content: center; letter-spacing: .14em; min-height: 46px; padding: 0 18px; text-transform: uppercase; transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease; }
+.defcon-primary { background: var(--green); color: var(--black); font-weight: 700; }
+.defcon-primary b, .defcon-secondary b { font-size: 14px; font-weight: 400; margin-left: 9px; }
+.defcon-primary:hover { background: var(--lime); transform: translateY(-2px); }
+.defcon-secondary { border: 1px solid var(--line); color: var(--muted); }
+.defcon-secondary:hover { border-color: var(--green); color: var(--green); }
+.defcon-access-note { color: var(--dim); font-size: 9px; letter-spacing: .08em; line-height: 1.6; margin: 29px 0 0; max-width: 520px; text-transform: uppercase; }
+.defcon-access-note span { color: var(--green); margin-right: 10px; }
+.defcon-system-card { background: linear-gradient(145deg, rgba(22,29,22,.94), rgba(8,11,9,.96)); border: 1px solid var(--line); box-shadow: 12px 12px 0 rgba(180,255,156,.04); padding: 17px; transform: rotate(1.5deg); }
+.defcon-card-head { border-bottom: 1px solid var(--line); color: var(--dim); display: flex; font-size: 8px; justify-content: space-between; letter-spacing: .12em; padding-bottom: 13px; }
+.defcon-card-head strong { color: var(--green); font-weight: 400; }
+.defcon-signal-mark { align-items: center; aspect-ratio: 1; border: 1px solid #314031; border-radius: 50%; display: flex; justify-content: center; margin: 37px auto; max-width: 235px; position: relative; background: repeating-radial-gradient(circle, transparent 0 31px, rgba(180,255,156,.12) 32px 33px), linear-gradient(90deg, transparent 49.7%, rgba(180,255,156,.12) 49.8% 50.2%, transparent 50.3%), linear-gradient(0deg, transparent 49.7%, rgba(180,255,156,.12) 49.8% 50.2%, transparent 50.3%); }
+.defcon-signal-ring { border: 1px solid rgba(180,255,156,.2); border-radius: 50%; position: absolute; }
+.ring-one { inset: 25%; }
+.ring-two { inset: 41%; }
+.defcon-signal-core { align-items: center; background: var(--green); border-radius: 50%; color: var(--black); display: flex; font-size: 17px; height: 43px; justify-content: center; position: relative; width: 43px; }
+.defcon-card-list { border-top: 1px solid var(--line); color: var(--muted); display: grid; font-size: 8px; gap: 11px; letter-spacing: .12em; padding-top: 15px; }
+.defcon-card-list span { align-items: center; display: inline-flex; gap: 8px; }
+.defcon-card-list i { background: var(--green); border-radius: 50%; box-shadow: 0 0 9px var(--green); display: inline-block; height: 5px; width: 5px; }
+.defcon-features { border-top: 1px solid var(--line); margin: 0 auto; max-width: 1340px; padding: 73px clamp(20px, 7vw, 110px) 90px; position: relative; }
+.defcon-section-head { align-items: end; display: flex; gap: 30px; justify-content: space-between; margin-bottom: 35px; }
+.defcon-section-head .eu-kicker { margin-bottom: 14px; }
+.defcon-section-head h2 { font-family: Arial, Helvetica, sans-serif; font-size: clamp(31px, 4vw, 50px); letter-spacing: -.07em; line-height: .94; margin: 0; max-width: 560px; text-transform: uppercase; }
+.defcon-section-head > span { color: var(--dim); font-size: 9px; letter-spacing: .14em; text-align: right; }
+.defcon-feature-grid { display: grid; gap: 13px; grid-template-columns: repeat(3, 1fr); }
+.defcon-feature { border: 1px solid var(--line); min-height: 205px; padding: 20px; transition: background .2s ease, border-color .2s ease, transform .2s ease; }
+.defcon-feature:hover { background: rgba(180,255,156,.045); border-color: var(--green); transform: translateY(-4px); }
+.defcon-feature p { color: var(--green); font-size: 8px; letter-spacing: .13em; margin: 0 0 48px; }
+.defcon-feature h3 { font-family: Arial, Helvetica, sans-serif; font-size: 22px; letter-spacing: -.05em; margin: 0 0 10px; text-transform: uppercase; }
+.defcon-feature span { color: var(--muted); display: block; font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5; max-width: 310px; }
+.defcon-bottom-band { margin-top: 0; }
+
 @media (max-width: 790px) {
   .eu-topbar nav { display: none; }
   .eu-hero { grid-template-columns: 1fr; padding-bottom: 75px; padding-top: 76px; }
   .eu-index-card { max-width: 350px; width: 100%; }
   .surface-grid { grid-template-columns: 1fr; }
   .eu-bottom-band { align-items: start; flex-direction: column; gap: 20px; }
+  .defcon-hero { grid-template-columns: 1fr; padding-bottom: 75px; padding-top: 76px; }
+  .defcon-system-card { max-width: 350px; width: 100%; }
+  .defcon-feature-grid { grid-template-columns: 1fr; }
+  .defcon-section-head { align-items: start; flex-direction: column; }
+  .defcon-section-head > span { text-align: left; }
 }
 @media (max-width: 520px) {
   .eu-brand { font-size: 10px; }
@@ -81,6 +125,9 @@ a { color: inherit; text-decoration: none; }
   .surface-card { min-height: 270px; }
   .eu-footer { flex-wrap: wrap; gap: 13px; line-height: 1.5; }
   .eu-footer span:nth-child(2) { order: 3; width: 100%; }
+  .defcon-hero h1 { font-size: clamp(47px, 14vw, 72px); }
+  .defcon-actions { align-items: stretch; flex-direction: column; }
+  .defcon-primary, .defcon-secondary { width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -7,9 +7,9 @@ const surfaces = [
   {
     label: '01 / SIGNAL FUSION',
     title: 'DEFCON',
-    description: 'A transparent public-signal estimator for strategic risk and global response-network coverage. The current operator node requires authorized access.',
-    status: 'PRIVATE / ACCESS REQUIRED',
-    href: 'https://defcon-signal-fusion.michaelmorangeometri.chatgpt.site',
+    description: 'The official EU entry point for a transparent public-signal estimator covering strategic risk and global response-network coverage.',
+    status: 'EU GATEWAY / ACCESS REQUIRED',
+    href: '/defcon',
     glyph: '⌁',
   },
   {
