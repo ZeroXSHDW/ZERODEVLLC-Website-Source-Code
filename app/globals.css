@@ -163,10 +163,18 @@ h2 span { color: var(--green); }
 .threat-feed-heading div { display: grid; gap: 5px; }
 .threat-feed-heading span { color: var(--green); font-size: 8px; letter-spacing: .12em; }
 .threat-feed-heading small, .threat-feed-notice, .threat-feed-empty { color: var(--dim); font-size: 8px; line-height: 1.45; }
+.threat-feed-controls { align-items: center; display: flex; gap: 9px; }
+.threat-feed-controls > span { align-items: center; display: inline-flex; gap: 5px; }
+.threat-feed-controls > span i { background: currentColor; border-radius: 50%; box-shadow: 0 0 8px currentColor; display: inline-block; height: 5px; width: 5px; }
+.threat-status-live { color: var(--green) !important; }
+.threat-status-degraded { color: var(--amber) !important; }
+.threat-status-unavailable { color: #ff827b !important; }
+.threat-status-connecting { color: var(--dim) !important; }
 .threat-feed-heading button { background: transparent; border: 1px solid var(--line); color: var(--muted); cursor: pointer; font-size: 8px; letter-spacing: .1em; padding: 8px 9px; }
 .threat-feed-heading button:hover { border-color: var(--green); color: var(--green); }
 .threat-feed-heading button:disabled { cursor: wait; opacity: .55; }
 .threat-feed-notice { margin: 12px 0; max-width: 570px; }
+.threat-feed-warning { color: var(--amber); font-size: 8px; line-height: 1.45; margin: -4px 0 10px; }
 .threat-event-list { display: grid; gap: 6px; }
 .threat-event { align-items: center; background: rgba(156,255,184,.025); border: 1px solid rgba(156,255,184,.1); display: grid; gap: 10px; grid-template-columns: 7px minmax(0, 1fr) auto; padding: 9px 10px; transition: background .2s ease, border-color .2s ease; }
 .threat-event:hover { background: rgba(156,255,184,.08); border-color: var(--line-strong); }

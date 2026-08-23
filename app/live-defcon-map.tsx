@@ -40,6 +40,11 @@ function formatUtc(timestamp: number) {
   }).format(timestamp);
 }
 
+function formatFeedTime(value: string | undefined) {
+  const timestamp = value ? Date.parse(value) : Number.NaN;
+  return Number.isFinite(timestamp) ? `${formatUtc(timestamp)}Z` : '--:--:--';
+}
+
 export function LiveDefconMap() {
   const [now, setNow] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
@@ -85,7 +90,7 @@ export function LiveDefconMap() {
         <a className="map-live-badge" href="https://zerodevllc.eu/defcon" aria-label="Open the live DEFCON EU gateway"><i /> EU GATEWAY / LIVE MAP ↗</a>
       </div>
 
-      <div className={`defcon-map-stage${paused ? ' is-paused' : ''}`} aria-label="Three-dimensional preview of the DEFCON coordination network">
+      <div className={`defcon-map-stage${paused ? ' is-paused' : ''}`} role="img" aria-label="Three-dimensional preview of the DEFCON coordination network">
         <div className="map-orbit map-orbit-one" aria-hidden="true" />
         <div className="map-orbit map-orbit-two" aria-hidden="true" />
         <div className="map-globe" aria-hidden="true">
@@ -128,13 +133,17 @@ export function LiveDefconMap() {
         <div className="threat-feed-heading">
           <div>
             <span>LIVE PUBLIC THREAT SIGNALS</span>
-            <small>{feed ? `${feed.events.length} source-linked events` : 'Connecting to public sources…'}</small>
+            <small>{feed ? `${feed.events.length} source-linked events · checked ${formatFeedTime(feed.observedAt)}` : 'Connecting to public sources…'}</small>
           </div>
-          <button type="button" onClick={() => void refreshFeed()} disabled={isRefreshing}>
-            {isRefreshing ? 'CHECKING…' : 'REFRESH'}
-          </button>
+          <div className="threat-feed-controls">
+            <span className={`threat-feed-status threat-status-${feed?.status ?? 'connecting'}`}><i /> {feed?.status === 'live' ? 'LIVE' : feed?.status === 'degraded' ? 'DEGRADED' : feed?.status === 'unavailable' ? 'UNAVAILABLE' : 'CONNECTING'}</span>
+            <button type="button" onClick={() => void refreshFeed()} disabled={isRefreshing}>
+              {isRefreshing ? 'CHECKING…' : 'REFRESH'}
+            </button>
+          </div>
         </div>
         <p className="threat-feed-notice">Public-source indicators only. Known exploitation or advisory activity is not confirmation of an attack against ZeroDev.</p>
+        {feed?.errors.length ? <p className="threat-feed-warning">Partial source outage: {feed.errors.join(' · ')}</p> : null}
         <div className="threat-event-list">
           {feed?.events.slice(0, 4).map((event) => (
             <a className="threat-event" href={event.url} key={event.id} target="_blank" rel="noreferrer">

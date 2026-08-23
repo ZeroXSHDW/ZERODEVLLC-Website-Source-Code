@@ -32,6 +32,11 @@ function decodeXml(value: string) {
     .replace(/&gt;/gi, '>')
     .replace(/&quot;/gi, '"')
     .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&#(\d+);/g, (_, code) => {
+      const point = Number(code);
+      return Number.isSafeInteger(point) && point > 0 ? String.fromCodePoint(point) : ' ';
+    })
     .replace(/\s+/g, ' ')
     .trim();
 }
