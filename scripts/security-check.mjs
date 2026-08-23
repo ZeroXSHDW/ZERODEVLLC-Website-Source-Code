@@ -13,7 +13,7 @@ const readOptional = async (relativePath) => {
   }
 };
 
-const [proxy, robots, sitemap, securityTxt, securityPolicy, publicSecurityPolicy, layout, nextConfig, checkoutRoute, page, qualityWorkflow, dependabot, packageJson, secretHygiene] = await Promise.all([
+const [proxy, robots, sitemap, securityTxt, securityPolicy, publicSecurityPolicy, layout, nextConfig, checkoutRoute, page, qualityWorkflow, dependabot, packageJson, securityAudit, secretHygiene] = await Promise.all([
   read('proxy.ts'),
   read('app/robots.ts'),
   read('app/sitemap.ts'),
@@ -27,6 +27,7 @@ const [proxy, robots, sitemap, securityTxt, securityPolicy, publicSecurityPolicy
   read('.github/workflows/quality.yml'),
   read('.github/dependabot.yml'),
   read('package.json'),
+  read('scripts/security-audit.mjs'),
   read('scripts/secret-hygiene.mjs'),
 ]);
 
@@ -173,7 +174,9 @@ for (const marker of [
 for (const marker of ['schedule:', 'cron:', 'workflow_dispatch:', 'npm ci --ignore-scripts', 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1', 'actions/setup-node@820762786026740c76f36085b0efc47a31fe5020']) {
   requireText('.github/workflows/quality.yml', qualityWorkflow, marker);
 }
-requireText('package.json', packageJson, 'npm audit --audit-level=moderate');
+requireText('package.json', packageJson, 'node scripts/security-audit.mjs');
+requireText('security-audit.mjs', securityAudit, 'NPM_AUDIT_TIMEOUT_MS');
+requireText('security-audit.mjs', securityAudit, 'timedOut ? 124');
 requireText('package.json', packageJson, 'scripts/secret-hygiene.mjs');
 for (const marker of ['git', 'ls-files', 'textExtensions', 'textBasenames', 'path.basename', 'private key', 'GitHub token', 'Stripe secret', 'OpenAI key', 'AWS access key', 'NPM token', 'Slack token', 'bearer credential']) {
   requireText('scripts/secret-hygiene.mjs', secretHygiene, marker);

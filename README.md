@@ -44,9 +44,13 @@ npm run quality
 ```
 
 This runs the security contract, TypeScript checks, ESLint, a production
-build, and a moderate-severity dependency audit. The same gate runs in
+build, and a bounded moderate-severity dependency audit. The same gate runs in
 `.github/workflows/quality.yml` for pushes to `main`, pull requests, and
 manual dispatch. CI has read-only repository permissions and never deploys.
+
+The audit is bounded to five minutes by default and returns status 124 if the
+advisory service cannot complete. Set `NPM_AUDIT_TIMEOUT_MS` to a different
+positive millisecond value only when a trusted environment needs another bound.
 
 ## Troubleshooting
 
