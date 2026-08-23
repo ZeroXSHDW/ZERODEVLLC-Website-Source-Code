@@ -6,6 +6,15 @@ const projectRoot = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const nextConfig = await readFile(join(projectRoot, "next.config.js"), "utf8");
 const proxy = await readFile(join(projectRoot, "proxy.ts"), "utf8");
 const layout = await readFile(join(projectRoot, "app/layout.tsx"), "utf8");
+const serviceWorker = await readFile(join(projectRoot, "public/sw.js"), "utf8");
+const serviceWorkerCache = await readFile(
+  join(projectRoot, "lib/cache/serviceWorkerCache.ts"),
+  "utf8",
+);
+const errorRecovery = await readFile(
+  join(projectRoot, "lib/utils/errorRecovery.ts"),
+  "utf8",
+);
 const publicSecurityPolicy = await readFile(
   join(projectRoot, "public/SECURITY.md"),
   "utf8",
@@ -83,6 +92,55 @@ if (!layout.includes('export const dynamic = "force-dynamic"')) {
 }
 if (nextConfig.includes("X-XSS-Protection"))
   failures.push("next.config.js must not rely on deprecated X-XSS-Protection");
+for (const marker of [
+  'const CACHE_PREFIX = "zerodevllc-sw-"',
+  "url.origin === self.location.origin",
+  'url.pathname.startsWith("/api/")',
+  'request.mode === "navigate"',
+  'response.type !== "basic"',
+  'response.headers.has("set-cookie")',
+  'url.search === ""',
+  "async function deleteOwnedCaches",
+  "event.ports[0]",
+]) {
+  if (!serviceWorker.includes(marker))
+    failures.push(`public/sw.js is missing cache isolation control: ${marker}`);
+}
+if (
+  serviceWorker.includes('self.addEventListener("sync"') ||
+  serviceWorker.includes('self.addEventListener("push"')
+) {
+  failures.push("public/sw.js must not install unused background handlers");
+}
+for (const marker of [
+  'const CACHE_PREFIX = "zerodevllc-sw-"',
+  'getRegistration("/")',
+  "Refusing to open an unmanaged cache",
+  'credentials: "omit"',
+  "Offline request queue is disabled",
+  "Array.from(OWNED_CACHE_NAMES)",
+]) {
+  if (!serviceWorkerCache.includes(marker))
+    failures.push(
+      `lib/cache/serviceWorkerCache.ts is missing cache isolation control: ${marker}`,
+    );
+}
+if (serviceWorkerCache.includes("localStorage.setItem"))
+  failures.push(
+    "lib/cache/serviceWorkerCache.ts must not persist arbitrary request data",
+  );
+for (const marker of [
+  'const SERVICE_WORKER_CACHE_PREFIX = "zerodevllc-sw-"',
+  "name.startsWith(SERVICE_WORKER_CACHE_PREFIX)",
+  "localStorage.removeItem(key)",
+]) {
+  if (!errorRecovery.includes(marker))
+    failures.push(
+      `lib/utils/errorRecovery.ts is missing scoped cleanup: ${marker}`,
+    );
+}
+if (errorRecovery.includes("localStorage.clear()"))
+  failures.push("error recovery must not wipe unrelated local storage");
 for (const [label, text, markers] of [
   [
     "public/SECURITY.md",

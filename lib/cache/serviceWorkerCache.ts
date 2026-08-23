@@ -1,17 +1,64 @@
-// Service Worker for advanced caching strategies
-// This provides offline capabilities and faster loading
+// Client-side helpers for the public asset/model service-worker cache.
+// Sensitive, authenticated, API, and arbitrary-origin requests are never
+// persisted here.
 
 import { log } from "@/lib/utils/logger";
 
-const STATIC_CACHE = "3d-viewer-static-v1";
-const MODEL_CACHE = "3d-viewer-models-v1";
+const CACHE_PREFIX = "zerodevllc-sw-";
+const STATIC_CACHE = `${CACHE_PREFIX}static-v2`;
+const MODEL_CACHE = `${CACHE_PREFIX}models-v2`;
+const OWNED_CACHE_NAMES = new Set([STATIC_CACHE, MODEL_CACHE]);
 
 const STATIC_ASSETS = [
-  "/",
   "/manifest.json",
   "/icon-192x192.png",
-  "/icon-512x512.png",
+  "/icon-192x192.svg",
+  "/robots.txt",
 ];
+
+const MODEL_PATH = /\.(glb|gltf)$/i;
+
+function getSameOriginUrl(value: string): URL | null {
+  if (typeof window === "undefined") return null;
+
+  try {
+    const url = new URL(value, window.location.origin);
+    if (
+      url.origin !== window.location.origin ||
+      !["http:", "https:"].includes(url.protocol)
+    ) {
+      return null;
+    }
+    return url;
+  } catch {
+    return null;
+  }
+}
+
+function isPublicModelUrl(value: string): boolean {
+  const url = getSameOriginUrl(value);
+  return Boolean(
+    url && MODEL_PATH.test(url.pathname) && !url.search && !url.hash,
+  );
+}
+
+function isCacheableModelResponse(response: Response): boolean {
+  if (
+    !response.ok ||
+    response.type !== "basic" ||
+    response.redirected ||
+    response.headers.has("set-cookie")
+  ) {
+    return false;
+  }
+
+  const cacheControl = response.headers.get("cache-control") || "";
+  const contentType = response.headers.get("content-type") || "";
+  return (
+    !/\bno-store\b/i.test(cacheControl) &&
+    /model\/gltf|application\/octet-stream|application\/json/i.test(contentType)
+  );
+}
 
 interface CacheEntry {
   url: string;
@@ -22,6 +69,7 @@ interface CacheEntry {
 
 export class ServiceWorkerCache {
   private static instance: ServiceWorkerCache;
+  private registration: ServiceWorkerRegistration | null = null;
   private cache: Map<string, CacheEntry> = new Map();
 
   static getInstance(): ServiceWorkerCache {
@@ -33,35 +81,38 @@ export class ServiceWorkerCache {
 
   // Register service worker
   async register(): Promise<void> {
-    if ("serviceWorker" in navigator) {
-      try {
-        const registration = await navigator.serviceWorker.register("/sw.js");
-        log.debug("Service Worker registered:", registration.scope);
+    if (!("serviceWorker" in navigator) || this.registration) return;
 
-        // Handle updates
-        registration.addEventListener("updatefound", () => {
-          const newWorker = registration.installing;
-          if (newWorker) {
-            newWorker.addEventListener("statechange", () => {
-              if (
-                newWorker.state === "installed" &&
-                navigator.serviceWorker.controller
-              ) {
-                // New version available
-                this.notifyUserOfUpdate();
-              }
-            });
-          }
-        });
+    try {
+      const registration =
+        (await navigator.serviceWorker.getRegistration("/")) ||
+        (await navigator.serviceWorker.register("/sw.js", { scope: "/" }));
+      this.registration = registration;
+      log.debug("Service Worker registered:", registration.scope);
 
-        // Handle messages from service worker
-        navigator.serviceWorker.addEventListener(
-          "message",
-          this.handleMessage.bind(this),
-        );
-      } catch (error) {
-        log.error("Service Worker registration failed:", error);
-      }
+      // Handle updates
+      registration.addEventListener("updatefound", () => {
+        const newWorker = registration.installing;
+        if (newWorker) {
+          newWorker.addEventListener("statechange", () => {
+            if (
+              newWorker.state === "installed" &&
+              navigator.serviceWorker.controller
+            ) {
+              // New version available
+              this.notifyUserOfUpdate();
+            }
+          });
+        }
+      });
+
+      // Handle messages from service worker
+      navigator.serviceWorker.addEventListener(
+        "message",
+        this.handleMessage.bind(this),
+      );
+    } catch (error) {
+      log.error("Service Worker registration failed:", error);
     }
   }
 
@@ -76,43 +127,36 @@ export class ServiceWorkerCache {
   }
 
   private handleMessage(event: MessageEvent): void {
-    const { type, data } = event.data;
+    const message = event.data;
+    if (!message || typeof message !== "object") return;
+
+    const { type, data } = message as {
+      type?: string;
+      data?: { url?: unknown };
+    };
 
     switch (type) {
       case "CACHE_HIT":
-        log.debug("Cache hit for:", data.url);
+        if (typeof data?.url === "string") log.debug("Cache hit");
         break;
       case "CACHE_MISS":
-        log.debug("Cache miss for:", data.url);
+        if (typeof data?.url === "string") log.debug("Cache miss");
         break;
-      case "BACKGROUND_SYNC":
-        this.handleBackgroundSync(data);
-        break;
-    }
-  }
-
-  private async handleBackgroundSync(data: {
-    url: string;
-    options: RequestInit;
-  }): Promise<void> {
-    // Retry failed requests
-    try {
-      await fetch(data.url, data.options);
-      log.info("Background sync successful for:", data.url);
-    } catch (error) {
-      log.error("Background sync failed:", error);
     }
   }
 
   // Cache management
   async openCache(name: string): Promise<Cache> {
+    if (!OWNED_CACHE_NAMES.has(name)) {
+      throw new Error("Refusing to open an unmanaged cache");
+    }
     return await caches.open(name);
   }
 
   async cacheStaticAssets(): Promise<void> {
     try {
       const cache = await this.openCache(STATIC_CACHE);
-      await cache.addAll(STATIC_ASSETS);
+      await Promise.allSettled(STATIC_ASSETS.map((asset) => cache.add(asset)));
       log.debug("Static assets cached");
     } catch (error) {
       log.error("Failed to cache static assets:", error);
@@ -120,9 +164,14 @@ export class ServiceWorkerCache {
   }
 
   async cacheModel(url: string, response: Response): Promise<void> {
+    if (!isPublicModelUrl(url) || !isCacheableModelResponse(response)) {
+      log.warn("Refused to cache a non-public model response");
+      return;
+    }
+
     try {
       const cache = await this.openCache(MODEL_CACHE);
-      await cache.put(url, response);
+      await cache.put(url, response.clone());
 
       // Track cache entry
       const entry: CacheEntry = {
@@ -140,6 +189,8 @@ export class ServiceWorkerCache {
   }
 
   async getCachedModel(url: string): Promise<Response | null> {
+    if (!isPublicModelUrl(url)) return null;
+
     try {
       const cache = await this.openCache(MODEL_CACHE);
       const response = await cache.match(url);
@@ -152,12 +203,15 @@ export class ServiceWorkerCache {
 
   // Intelligent caching based on usage patterns
   async prefetchResources(urls: string[]): Promise<void> {
-    const cachePromises = urls.map(async (url) => {
+    const cachePromises = urls.filter(isPublicModelUrl).map(async (url) => {
       try {
-        const response = await fetch(url);
-        if (response.ok) {
+        const response = await fetch(url, {
+          cache: "no-store",
+          credentials: "omit",
+        });
+        if (isCacheableModelResponse(response)) {
           const cache = await this.openCache(MODEL_CACHE);
-          await cache.put(url, response);
+          await cache.put(url, response.clone());
         }
       } catch (error) {
         log.warn("Failed to prefetch:", url, error);
@@ -170,11 +224,10 @@ export class ServiceWorkerCache {
   // Cache cleanup based on LRU and size limits
   async cleanupCache(maxSize: number = 100 * 1024 * 1024): Promise<void> {
     try {
-      const cacheNames = await caches.keys();
       let totalSize = 0;
 
-      for (const cacheName of cacheNames) {
-        const cache = await caches.open(cacheName);
+      for (const cacheName of OWNED_CACHE_NAMES) {
+        const cache = await this.openCache(cacheName);
         const keys = await cache.keys();
 
         // Sort by access time (would need to track this)
@@ -206,23 +259,14 @@ export class ServiceWorkerCache {
     }
   }
 
-  // Background sync for offline requests
+  // Offline request queues are intentionally disabled. Persisting arbitrary
+  // RequestInit objects can expose authorization headers or request bodies.
   async queueRequest(url: string, options: RequestInit): Promise<void> {
-    if ("serviceWorker" in navigator) {
-      try {
-        const registration = await navigator.serviceWorker.ready;
-        if ("sync" in registration) {
-          await (registration as any).sync.register("background-sync");
-          // Store request data for background sync
-          localStorage.setItem(
-            `queued-request-${Date.now()}`,
-            JSON.stringify({ url, options }),
-          );
-        }
-      } catch (error) {
-        log.error("Background sync registration failed:", error);
-      }
-    }
+    void url;
+    void options;
+    log.warn(
+      "Offline request queue is disabled; request data is never persisted in browser storage",
+    );
   }
 
   // Check online status and handle accordingly
@@ -245,10 +289,8 @@ export class ServiceWorkerCache {
     };
 
     try {
-      const cacheNames = await caches.keys();
-
-      for (const cacheName of cacheNames) {
-        const cache = await caches.open(cacheName);
+      for (const cacheName of OWNED_CACHE_NAMES) {
+        const cache = await this.openCache(cacheName);
         const keys = await cache.keys();
 
         if (cacheName.includes("static")) {
@@ -271,7 +313,7 @@ export class ServiceWorkerCache {
   // Clear all caches
   async clearAllCaches(): Promise<void> {
     try {
-      const cacheNames = await caches.keys();
+      const cacheNames = Array.from(OWNED_CACHE_NAMES);
       await Promise.all(
         cacheNames.map((cacheName) => caches.delete(cacheName)),
       );
@@ -285,7 +327,9 @@ export class ServiceWorkerCache {
 
 // Service Worker message utilities
 
-export const sendMessageToSW = async (message: any): Promise<void> => {
+export const sendMessageToSW = async (
+  message: Record<string, unknown>,
+): Promise<void> => {
   if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
     navigator.serviceWorker.controller.postMessage(message);
   }
