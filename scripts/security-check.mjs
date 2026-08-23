@@ -13,12 +13,13 @@ const readOptional = async (relativePath) => {
   }
 };
 
-const [proxy, robots, sitemap, securityTxt, securityPolicy, layout, nextConfig, checkoutRoute, page, qualityWorkflow, dependabot, packageJson] = await Promise.all([
+const [proxy, robots, sitemap, securityTxt, securityPolicy, publicSecurityPolicy, layout, nextConfig, checkoutRoute, page, qualityWorkflow, dependabot, packageJson] = await Promise.all([
   read('proxy.ts'),
   read('app/robots.ts'),
   read('app/sitemap.ts'),
   read('public/.well-known/security.txt'),
   read('SECURITY.md'),
+  read('public/SECURITY.md'),
   read('app/layout.tsx'),
   read('next.config.ts'),
   readOptional('app/api/checkout/route.ts'),
@@ -41,8 +42,8 @@ const SECURITY_EXPIRY_MAX_MS = 366 * 24 * 60 * 60 * 1000;
 const requireText = (label, text, marker) => {
   if (!text.includes(marker)) failures.push(`${label} is missing: ${marker}`);
 };
-requireText('proxy.ts', proxy, 'zerodevllc-com-v39');
-requireText('next.config.ts', nextConfig, 'zerodevllc-com-v39');
+requireText('proxy.ts', proxy, 'zerodevllc-com-v40');
+requireText('next.config.ts', nextConfig, 'zerodevllc-com-v40');
 requireText('app/page.tsx', page, 'const canonicalDomains');
 requireText('app/page.tsx', page, 'https://zerodevllc.eu');
 requireText('app/page.tsx', page, 'https://zerodevllc.store');
@@ -187,6 +188,9 @@ requireText('security.txt', securityTxt, `Policy: https://${canonicalHost}/SECUR
 requireText('SECURITY.md', securityPolicy, 'Report suspected vulnerabilities privately');
 requireText('SECURITY.md', securityPolicy, 'hello@zerodevllc.com');
 requireText('SECURITY.md', securityPolicy, 'Do not publish');
+requireText('public/SECURITY.md', publicSecurityPolicy, 'Report suspected vulnerabilities privately');
+requireText('public/SECURITY.md', publicSecurityPolicy, 'hello@zerodevllc.com');
+requireText('public/SECURITY.md', publicSecurityPolicy, 'Do not publish');
 const securityExpiry = securityTxt.match(/^Expires:\s*(.+)$/m)?.[1];
 const securityExpiryAt = securityExpiry ? Date.parse(securityExpiry) : Number.NaN;
 if (!securityExpiry || Number.isNaN(securityExpiryAt) || securityExpiryAt <= Date.now()) {
