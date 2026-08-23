@@ -54,6 +54,8 @@ requireText('app/page.tsx', page, 'const canonicalDomains');
 requireText('app/page.tsx', page, "defcon: 'https://zerodevllc.eu/defcon'");
 requireText('app/page.tsx', page, 'https://zerodevllc.eu');
 requireText('app/page.tsx', page, 'https://zerodevllc.store');
+requireText('app/page.tsx', page, 'Open the DEFCON Signal Fusion EU gateway');
+requireText('app/page.tsx', page, 'EU gateway / protected');
 if (page.includes('defcon-signal-fusion.michaelmorangeometri.chatgpt.site')) {
   failures.push('app/page.tsx must route the DEFCON card through https://zerodevllc.eu/defcon');
 }

@@ -48,6 +48,7 @@ export default function Home() {
         </a>
         <nav className="nav" aria-label="Primary navigation">
           <a href="#systems">Systems</a>
+          <a href={canonicalDomains.defcon}>DEFCON</a>
           <a href="#signal">Signal</a>
           <a href={canonicalDomains.store}>Store</a>
         </nav>
@@ -89,7 +90,7 @@ export default function Home() {
             <p><span className="prompt">root@zerodev</span>:~$ ./check --systems</p>
             <p className="terminal-muted">scanning registered surfaces...</p>
             <p><span className="terminal-ok">[OK]</span> threat_ops <span className="terminal-muted">read-only / live</span></p>
-            <p><span className="terminal-ok">[OK]</span> defcon_fusion <span className="terminal-muted">signal / live</span></p>
+            <p><span className="terminal-ok">[OK]</span> defcon_fusion <span className="terminal-muted">EU gateway / protected</span></p>
             <p><span className="terminal-warn">[--]</span> store_checkout <span className="terminal-muted">awaiting keys</span></p>
             <p className="terminal-spacer"> </p>
             <p><span className="prompt">root@zerodev</span>:~$ <span className="cursor" aria-hidden="true" /></p>
@@ -108,7 +109,12 @@ export default function Home() {
         </div>
         <div className="system-grid">
           {systems.map((system) => (
-            <a className="system-card" href={system.href} key={system.code}>
+            <a
+              className="system-card"
+              href={system.href}
+              key={system.code}
+              aria-label={system.code === '02' ? 'Open the DEFCON Signal Fusion EU gateway' : `Open ${system.name} surface`}
+            >
               <div className="card-topline"><span>{system.code} / 03</span><span className="card-tag">{system.tag}</span></div>
               <div className="card-icon" aria-hidden="true">{system.code === '01' ? '◉' : system.code === '02' ? '⌁' : '⊞'}</div>
               <h3>{system.name}</h3>
@@ -122,7 +128,7 @@ export default function Home() {
       <footer className="footer">
         <span>© 2026 ZERO DEV LLC</span>
         <span className="footer-center">MAKE USEFUL THINGS. KEEP THE SIGNAL CLEAN.</span>
-        <span><a href={canonicalDomains.eu}>EU HUB</a> / <a href={canonicalDomains.store}>STORE</a></span>
+        <span><a href={canonicalDomains.defcon}>DEFCON</a> / <a href={canonicalDomains.eu}>EU HUB</a> / <a href={canonicalDomains.store}>STORE</a></span>
       </footer>
     </main>
   );
