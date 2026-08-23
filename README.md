@@ -65,8 +65,9 @@ ZeroDevLLC corporate site and interactive 3D model viewer, built with Next.js, R
 
 The pull-request gate runs the canonical `npm run quality` command after a
 locked `npm ci --ignore-scripts` install. It performs type checking, ESLint,
-Prettier format validation, Jest coverage, a moderate-or-higher dependency
-audit, a tracked-file secret-hygiene scan, and a production build.
+Prettier format validation, Jest coverage with a global 9.5% statements,
+branches, and lines floor plus an 11% functions floor, a moderate-or-higher
+dependency audit, a tracked-file secret-hygiene scan, and a production build.
 Run it locally with:
 
 ```bash
