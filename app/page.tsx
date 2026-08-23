@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 const canonicalDomains = Object.freeze({
+  defcon: 'https://zerodevllc.eu/defcon',
   eu: 'https://zerodevllc.eu',
   store: 'https://zerodevllc.store',
 });
@@ -18,9 +19,9 @@ const systems = [
   {
     code: '02',
     name: 'DEFCON FUSION',
-    description: 'A transparent public-signal estimator for strategic risk coverage.',
-    href: 'https://defcon-signal-fusion.michaelmorangeometri.chatgpt.site',
-    tag: 'LIVE // SIGNAL',
+    description: 'The official EU gateway to a transparent public-signal estimator for strategic risk coverage.',
+    href: canonicalDomains.defcon,
+    tag: 'EU GATEWAY // SIGNAL',
   },
   {
     code: '03',

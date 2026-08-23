@@ -51,8 +51,12 @@ for (const source of [proxy, nextConfig]) {
   if (source.includes("'unsafe-inline'")) failures.push('CSP must not allow unsafe inline scripts or styles');
 }
 requireText('app/page.tsx', page, 'const canonicalDomains');
+requireText('app/page.tsx', page, "defcon: 'https://zerodevllc.eu/defcon'");
 requireText('app/page.tsx', page, 'https://zerodevllc.eu');
 requireText('app/page.tsx', page, 'https://zerodevllc.store');
+if (page.includes('defcon-signal-fusion.michaelmorangeometri.chatgpt.site')) {
+  failures.push('app/page.tsx must route the DEFCON card through https://zerodevllc.eu/defcon');
+}
 if (page.includes('zerodevllc-store.michaelmorangeometri.chatgpt.site')) {
   failures.push('app/page.tsx must route the store card through https://zerodevllc.store');
 }
