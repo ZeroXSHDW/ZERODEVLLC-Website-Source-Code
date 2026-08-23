@@ -14,6 +14,10 @@ const securityTxt = await readFile(
 );
 const robots = await readFile(join(projectRoot, "public/robots.txt"), "utf8");
 const sitemap = await readFile(join(projectRoot, "public/sitemap.xml"), "utf8");
+const ciWorkflow = await readFile(
+  join(projectRoot, ".github/workflows/ci.yml"),
+  "utf8",
+);
 const requiredMarkers = [
   'source: "/:path*"',
   "poweredByHeader: false",
@@ -87,6 +91,20 @@ for (const [label, text, markers] of [
   for (const marker of markers) {
     if (!text.includes(marker)) failures.push(`${label} is missing ${marker}`);
   }
+}
+const requiredCiMarkers = [
+  "permissions:",
+  "contents: read",
+  "timeout-minutes: 30",
+  "persist-credentials: false",
+  "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+  "actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+  "npm ci --ignore-scripts",
+  "npm run quality",
+];
+for (const marker of requiredCiMarkers) {
+  if (!ciWorkflow.includes(marker))
+    failures.push(`.github/workflows/ci.yml is missing ${marker}`);
 }
 const securityExpiry = securityTxt.match(/^Expires:\s*(.+)$/m)?.[1];
 const securityExpiryAt = securityExpiry
