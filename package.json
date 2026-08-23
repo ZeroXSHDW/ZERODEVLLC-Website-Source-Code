@@ -10,7 +10,7 @@
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern coverage --max-warnings=0",
-    "security": "node scripts/security-check.mjs",
+    "security": "node scripts/security-check.mjs && node scripts/secret-hygiene.mjs",
     "lint:fix": "eslint . --fix",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf .next out",

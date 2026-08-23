@@ -14,6 +14,11 @@ const securityTxt = await readFile(
 );
 const robots = await readFile(join(projectRoot, "public/robots.txt"), "utf8");
 const sitemap = await readFile(join(projectRoot, "public/sitemap.xml"), "utf8");
+const packageJson = await readFile(join(projectRoot, "package.json"), "utf8");
+const secretHygiene = await readFile(
+  join(projectRoot, "scripts/secret-hygiene.mjs"),
+  "utf8",
+);
 const ciWorkflow = await readFile(
   join(projectRoot, ".github/workflows/ci.yml"),
   "utf8",
@@ -105,6 +110,22 @@ const requiredCiMarkers = [
 for (const marker of requiredCiMarkers) {
   if (!ciWorkflow.includes(marker))
     failures.push(`.github/workflows/ci.yml is missing ${marker}`);
+}
+if (!packageJson.includes("scripts/secret-hygiene.mjs"))
+  failures.push(
+    "package.json security script must run scripts/secret-hygiene.mjs",
+  );
+for (const marker of [
+  "git",
+  "ls-files",
+  "private key",
+  "GitHub token",
+  "Stripe secret",
+  "AWS access key",
+  "bearer credential",
+]) {
+  if (!secretHygiene.includes(marker))
+    failures.push(`scripts/secret-hygiene.mjs is missing ${marker}`);
 }
 const securityExpiry = securityTxt.match(/^Expires:\s*(.+)$/m)?.[1];
 const securityExpiryAt = securityExpiry
