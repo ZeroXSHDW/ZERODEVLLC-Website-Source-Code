@@ -60,6 +60,10 @@ const securityTxt = await readFile(
 const robots = await readFile(join(projectRoot, "public/robots.txt"), "utf8");
 const sitemap = await readFile(join(projectRoot, "public/sitemap.xml"), "utf8");
 const packageJson = await readFile(join(projectRoot, "package.json"), "utf8");
+const securityAudit = await readFile(
+  join(projectRoot, "scripts/security-audit.mjs"),
+  "utf8",
+);
 const secretHygiene = await readFile(
   join(projectRoot, "scripts/secret-hygiene.mjs"),
   "utf8",
@@ -285,6 +289,18 @@ if (!packageJson.includes("scripts/secret-hygiene.mjs"))
   failures.push(
     "package.json security script must run scripts/secret-hygiene.mjs",
   );
+if (!packageJson.includes("node scripts/security-audit.mjs"))
+  failures.push(
+    "package.json must run the bounded scripts/security-audit.mjs wrapper",
+  );
+for (const marker of [
+  "NPM_AUDIT_TIMEOUT_MS",
+  "timedOut ? 124",
+  "process.kill(-child.pid",
+]) {
+  if (!securityAudit.includes(marker))
+    failures.push(`scripts/security-audit.mjs is missing ${marker}`);
+}
 for (const marker of [
   "git",
   "ls-files",

@@ -68,6 +68,9 @@ locked `npm ci --ignore-scripts` install. It performs type checking, ESLint,
 Prettier format validation, Jest coverage with a global 9.5% statements,
 branches, and lines floor plus an 11% functions floor, a moderate-or-higher
 dependency audit, a tracked-file secret-hygiene scan, and a production build.
+The dependency audit is bounded to five minutes by default; set
+`NPM_AUDIT_TIMEOUT_MS` to tune the limit. A timeout returns status 124 so a
+network or registry stall cannot hang the release gate indefinitely.
 Run it locally with:
 
 ```bash
@@ -121,6 +124,6 @@ behavior consistent with the deployed site; do not edit generated output.
 
 ## Troubleshooting
 
-Start with `npm ci --ignore-scripts`, then run the typecheck, lint, audit, test, and build gates
-in order. If a hosted deployment fails before a job starts, distinguish the
+Start with `npm ci --ignore-scripts`, then run the typecheck, lint, bounded audit,
+test, and build gates in order. If a hosted deployment fails before a job starts, distinguish the
 account or billing failure from a code failure and retain the local evidence.
