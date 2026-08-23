@@ -40,8 +40,8 @@ const SECURITY_EXPIRY_MAX_MS = 366 * 24 * 60 * 60 * 1000;
 const requireText = (label, text, marker) => {
   if (!text.includes(marker)) failures.push(`${label} is missing: ${marker}`);
 };
-requireText('proxy.ts', proxy, 'zerodevllc-eu-v37');
-requireText('next.config.ts', nextConfig, 'zerodevllc-eu-v37');
+requireText('proxy.ts', proxy, 'zerodevllc-eu-v38');
+requireText('next.config.ts', nextConfig, 'zerodevllc-eu-v38');
 
 for (const marker of [
   'Content-Security-Policy',
