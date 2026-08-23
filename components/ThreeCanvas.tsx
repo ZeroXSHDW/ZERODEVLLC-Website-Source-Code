@@ -124,7 +124,7 @@ export function ThreeCanvas({
       // Performance optimizations
       frameloop={performanceMode ? "demand" : "always"}
       dpr={dpr}
-      style={{ background: "#000000" }}
+      className="three-canvas"
     >
       <XRSupport mode={xrMode}>
         <AdaptivePerformance

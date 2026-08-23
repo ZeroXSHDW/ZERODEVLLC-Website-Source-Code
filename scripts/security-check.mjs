@@ -1,8 +1,38 @@
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const projectRoot = join(fileURLToPath(new URL(".", import.meta.url)), "..");
+
+async function collectReactSourceFiles(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const files = [];
+
+  for (const entry of entries) {
+    const path = join(directory, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...(await collectReactSourceFiles(path)));
+    } else if (/\.(?:tsx|jsx)$/.test(entry.name)) {
+      files.push(path);
+    }
+  }
+
+  return files;
+}
+
+const reactSourceFiles = (
+  await Promise.all(
+    ["app", "components", "lib"].map((directory) =>
+      collectReactSourceFiles(join(projectRoot, directory)),
+    ),
+  )
+).flat();
+const reactSourceContents = await Promise.all(
+  reactSourceFiles.map(async (path) => ({
+    path,
+    source: await readFile(path, "utf8"),
+  })),
+);
 const nextConfig = await readFile(join(projectRoot, "next.config.js"), "utf8");
 const proxy = await readFile(join(projectRoot, "proxy.ts"), "utf8");
 const layout = await readFile(join(projectRoot, "app/layout.tsx"), "utf8");
@@ -74,6 +104,14 @@ const requiredMarkers = [
 const failures = requiredMarkers
   .filter((marker) => !nextConfig.includes(marker))
   .map((marker) => `next.config.js is missing ${marker}`);
+const inlineStyleFiles = reactSourceContents
+  .filter(({ source }) => /\bstyle\s*=/.test(source))
+  .map(({ path }) => path.replace(`${projectRoot}/`, ""));
+if (inlineStyleFiles.length) {
+  failures.push(
+    `React source must not emit inline style attributes: ${inlineStyleFiles.join(", ")}`,
+  );
+}
 for (const marker of [
   "function contentSecurityPolicy",
   "function createNonce",

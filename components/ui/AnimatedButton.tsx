@@ -13,29 +13,24 @@ interface AnimatedButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
 
 const buttonVariants = {
   primary: {
-    background: "linear-gradient(135deg, #3b82f6, #1d4ed8)",
-    hoverBackground: "linear-gradient(135deg, #2563eb, #1e40af)",
     shadow: "0 4px 15px rgba(59, 130, 246, 0.4)",
-    hoverShadow: "0 6px 20px rgba(59, 130, 246, 0.6)",
   },
   secondary: {
-    background: "linear-gradient(135deg, #6b7280, #374151)",
-    hoverBackground: "linear-gradient(135deg, #4b5563, #1f2937)",
     shadow: "0 4px 15px rgba(107, 114, 128, 0.3)",
-    hoverShadow: "0 6px 20px rgba(107, 114, 128, 0.5)",
   },
   danger: {
-    background: "linear-gradient(135deg, #ef4444, #dc2626)",
-    hoverBackground: "linear-gradient(135deg, #dc2626, #b91c1c)",
     shadow: "0 4px 15px rgba(239, 68, 68, 0.4)",
-    hoverShadow: "0 6px 20px rgba(239, 68, 68, 0.6)",
   },
   ghost: {
-    background: "rgba(255, 255, 255, 0.05)",
-    hoverBackground: "rgba(255, 255, 255, 0.1)",
     shadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
-    hoverShadow: "0 4px 15px rgba(0, 0, 0, 0.3)",
   },
+};
+
+const variantClasses = {
+  primary: "animated-button-primary",
+  secondary: "animated-button-secondary",
+  danger: "animated-button-danger",
+  ghost: "animated-button-ghost",
 };
 
 const sizeClasses = {
@@ -86,11 +81,7 @@ export const AnimatedButton = forwardRef<
       >
         <button
           ref={ref}
-          className={`relative overflow-hidden rounded-lg font-medium text-white transition-all duration-200 ease-out disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-white/20 ${sizeClasses[size]} ${className}`}
-          style={{
-            background: variantStyles.background,
-            boxShadow: variantStyles.shadow,
-          }}
+          className={`relative overflow-hidden rounded-lg font-medium text-white transition-all duration-200 ease-out disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-white/20 ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
           disabled={disabled || isLoading}
           {...props}
         >
