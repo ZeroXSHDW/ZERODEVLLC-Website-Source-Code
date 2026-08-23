@@ -28,7 +28,7 @@
     "@loadable/component": "^5.16.7",
     "@react-three/drei": "^9.122.0",
     "@react-three/fiber": "^8.18.0",
-    "@react-three/postprocessing": "^2.19.1",
+    "@react-three/postprocessing": "^3.0.5",
     "@react-three/xr": "^5.7.1",
     "@types/loadable__component": "^5.13.10",
     "@use-gesture/react": "^10.3.1",
@@ -72,7 +72,7 @@
     "three": "^0.182.0",
     "@react-three/fiber": "^8.18.0",
     "@react-three/drei": "^9.122.0",
-    "@react-three/postprocessing": "^2.19.1",
+    "@react-three/postprocessing": "^3.0.5",
     "@react-three/xr": "^5.7.1"
   }
 }
