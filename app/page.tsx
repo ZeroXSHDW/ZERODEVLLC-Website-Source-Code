@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 const canonicalDomains = Object.freeze({
   defcon: 'https://zerodevllc.eu/defcon',
   eu: 'https://zerodevllc.eu',
@@ -15,6 +13,8 @@ const systems = [
     description: 'Read-only telemetry, route watch, and signal-led incident context.',
     href: 'https://zeroxshdw.michaelmorangeometri.chatgpt.site',
     tag: 'LIVE // MONITOR',
+    icon: '◉',
+    detail: 'Network telemetry / incident context',
   },
   {
     code: '02',
@@ -22,6 +22,8 @@ const systems = [
     description: 'The official EU gateway to a transparent public-signal estimator for strategic risk coverage.',
     href: canonicalDomains.defcon,
     tag: 'EU GATEWAY // SIGNAL',
+    icon: '⌁',
+    detail: 'Public signals / source-linked evidence',
   },
   {
     code: '03',
@@ -29,12 +31,30 @@ const systems = [
     description: 'Deployable tools, architecture sprints, and private build support.',
     href: canonicalDomains.store,
     tag: 'STORE // READY',
+    icon: '⊞',
+    detail: 'Build support / fixed-scope delivery',
+  },
+];
+
+const principles = [
+  {
+    number: '01',
+    title: 'Source first',
+    description: 'Keep the evidence, status, and next action close to the output so important decisions stay inspectable.',
+  },
+  {
+    number: '02',
+    title: 'Edge ready',
+    description: 'Build browser-native surfaces that are responsive, resilient, and useful where the work actually happens.',
+  },
+  {
+    number: '03',
+    title: 'Decision shaped',
+    description: 'Every interface should make the next move clearer: inspect, verify, export, or deploy.',
   },
 ];
 
 export default function Home() {
-  const [uplinked, setUplinked] = useState(false);
-
   return (
     <main className="com-shell">
       <a className="skip-link" href="#systems">Skip to systems</a>
@@ -48,30 +68,32 @@ export default function Home() {
         </a>
         <nav className="nav" aria-label="Primary navigation">
           <a href="#systems">Systems</a>
+          <a href="#approach">Approach</a>
           <a href={canonicalDomains.defcon}>DEFCON</a>
-          <a href="#signal">Signal</a>
           <a href={canonicalDomains.store}>Store</a>
         </nav>
-        <span className="status-chip"><span className="status-dot" /> UPLINK READY</span>
+        <a className="status-chip" href={canonicalDomains.defcon} aria-label="Open the DEFCON Signal Fusion EU gateway">
+          <span className="status-dot" /> UPLINK READY <span className="status-arrow" aria-hidden="true">↗</span>
+        </a>
       </header>
 
       <div id="top" className="hero-grid">
-        <section className="hero-copy">
+        <section className="hero-copy" aria-labelledby="hero-heading">
           <p className="eyebrow"><span className="eyebrow-caret">&gt;_</span> NODE 00 / IRELAND / 2026</p>
-          <h1>
-            Build for the edge.
-            <span>Operate beyond defaults.</span>
+          <h1 id="hero-heading">
+            Signal in.
+            <span>Systems out.</span>
           </h1>
           <p className="hero-lede">
-            ZeroDev builds the software layer between a sharp idea and a live system —
-            from threat intelligence surfaces to resilient, high-signal interfaces.
+            ZeroDev builds the software layer between a sharp idea and a live system — from threat intelligence surfaces to resilient, high-signal interfaces.
           </p>
           <div className="hero-actions">
-            <button className="button button-primary" type="button" onClick={() => setUplinked(true)}>
-              {uplinked ? 'UPLINK ESTABLISHED' : 'INITIALIZE UPLINK'}
-              <span aria-hidden="true">↗</span>
-            </button>
-            <a className="button button-ghost" href="#systems">Inspect systems <span aria-hidden="true">↓</span></a>
+            <a className="button button-primary" href={canonicalDomains.defcon}>
+              Explore DEFCON gateway <span aria-hidden="true">↗</span>
+            </a>
+            <a className="button button-ghost" href="#systems">
+              Inspect systems <span aria-hidden="true">↓</span>
+            </a>
           </div>
           <div className="hero-meta" id="signal">
             <span><i className="signal-bars" aria-hidden="true"><b /><b /><b /><b /></i> SIGNAL: NOMINAL</span>
@@ -91,7 +113,7 @@ export default function Home() {
             <p className="terminal-muted">scanning registered surfaces...</p>
             <p><span className="terminal-ok">[OK]</span> threat_ops <span className="terminal-muted">read-only / live</span></p>
             <p><span className="terminal-ok">[OK]</span> defcon_fusion <span className="terminal-muted">EU gateway / protected</span></p>
-            <p><span className="terminal-warn">[--]</span> store_checkout <span className="terminal-muted">awaiting keys</span></p>
+            <p><span className="terminal-ok">[OK]</span> store_checkout <span className="terminal-muted">services / ready</span></p>
             <p className="terminal-spacer"> </p>
             <p><span className="prompt">root@zerodev</span>:~$ <span className="cursor" aria-hidden="true" /></p>
           </div>
@@ -99,11 +121,18 @@ export default function Home() {
         </aside>
       </div>
 
-      <section className="system-section" id="systems">
+      <section className="signal-ribbon" aria-label="ZeroDev operating summary">
+        <div><strong>03</strong><span>registered surfaces</span></div>
+        <div><strong>01</strong><span>EU signal gateway</span></div>
+        <div><strong>24/7</strong><span>designed for live systems</span></div>
+        <div><strong>0</strong><span>claims of official DEFCON status</span></div>
+      </section>
+
+      <section className="system-section" id="systems" aria-labelledby="systems-heading">
         <div className="section-heading">
           <div>
             <p className="eyebrow">{'// REGISTERED SURFACES'}</p>
-            <h2>One network.<br /><span>Three operating modes.</span></h2>
+            <h2 id="systems-heading">One network.<br /><span>Three operating modes.</span></h2>
           </div>
           <p className="section-note">Select a surface to open the live system. Every interface is built to make the next decision clearer.</p>
         </div>
@@ -116,17 +145,50 @@ export default function Home() {
               aria-label={system.code === '02' ? 'Open the DEFCON Signal Fusion EU gateway' : `Open ${system.name} surface`}
             >
               <div className="card-topline"><span>{system.code} / 03</span><span className="card-tag">{system.tag}</span></div>
-              <div className="card-icon" aria-hidden="true">{system.code === '01' ? '◉' : system.code === '02' ? '⌁' : '⊞'}</div>
+              <div className="card-icon" aria-hidden="true">{system.icon}</div>
               <h3>{system.name}</h3>
               <p>{system.description}</p>
+              <span className="card-detail">{system.detail}</span>
               <span className="card-link">OPEN SURFACE <span aria-hidden="true">↗</span></span>
             </a>
           ))}
         </div>
       </section>
 
+      <section className="approach-section" id="approach" aria-labelledby="approach-heading">
+        <div className="approach-copy">
+          <p className="eyebrow">{'// OPERATING APPROACH'}</p>
+          <h2 id="approach-heading">Make the signal<br /><span>worth acting on.</span></h2>
+          <p>Useful software is not just a surface. It is a tighter loop between evidence, interpretation, and action.</p>
+          <a className="text-link" href="mailto:hello@zerodevllc.com">Start a build conversation <span aria-hidden="true">↗</span></a>
+        </div>
+        <div className="principles-grid">
+          {principles.map((principle) => (
+            <article className="principle-card" key={principle.number}>
+              <span className="principle-number">{principle.number}</span>
+              <h3>{principle.title}</h3>
+              <p>{principle.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="contact-section" aria-labelledby="contact-heading">
+        <div>
+          <p className="eyebrow">{'// NEXT MOVE'}</p>
+          <h2 id="contact-heading">Build something<br /><span>useful at the edge.</span></h2>
+        </div>
+        <div className="contact-actions">
+          <p>Have a system that needs to become clearer, faster, or more resilient? Bring the problem. We will find the useful shape.</p>
+          <div className="hero-actions">
+            <a className="button button-primary" href="mailto:hello@zerodevllc.com">Contact ZeroDev <span aria-hidden="true">↗</span></a>
+            <a className="button button-ghost" href={canonicalDomains.store}>View software &amp; services <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </section>
+
       <footer className="footer">
-        <span>© 2026 ZERO DEV LLC</span>
+        <span>© 2026 ZERO DEV LLC / IRELAND</span>
         <span className="footer-center">MAKE USEFUL THINGS. KEEP THE SIGNAL CLEAN.</span>
         <span><a href={canonicalDomains.defcon}>DEFCON</a> / <a href={canonicalDomains.eu}>EU HUB</a> / <a href={canonicalDomains.store}>STORE</a></span>
       </footer>
