@@ -43,8 +43,12 @@ const SECURITY_EXPIRY_MAX_MS = 366 * 24 * 60 * 60 * 1000;
 const requireText = (label, text, marker) => {
   if (!text.includes(marker)) failures.push(`${label} is missing: ${marker}`);
 };
-requireText('proxy.ts', proxy, 'zerodevllc-eu-v42');
-requireText('next.config.ts', nextConfig, 'zerodevllc-eu-v42');
+requireText('proxy.ts', proxy, 'zerodevllc-eu-v43');
+requireText('next.config.ts', nextConfig, 'zerodevllc-eu-v43');
+requireText('app/layout.tsx', layout, "export const dynamic = 'force-dynamic'");
+for (const source of [proxy, nextConfig]) {
+  if (source.includes("'unsafe-inline'")) failures.push('CSP must not allow unsafe inline scripts or styles');
+}
 requireText('app/page.tsx', page, 'const canonicalDomains');
 requireText('app/page.tsx', page, 'https://zerodevllc.com');
 requireText('app/page.tsx', page, 'https://zerodevllc.store');
@@ -111,6 +115,9 @@ for (const marker of [
   "url.port = ''",
   'secureRedirect',
   'Cache-Control',
+  'contentSecurityPolicy',
+  'createNonce',
+  'x-nonce',
 ]) {
   requireText('proxy.ts', proxy, marker);
 }

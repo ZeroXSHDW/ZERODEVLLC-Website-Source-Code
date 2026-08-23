@@ -5,7 +5,7 @@ const previewHost = 'zerodevllc-eu.michaelmorangeometri.chatgpt.site';
 
 const securityHeaders: Record<string, string> = {
   'Content-Security-Policy':
-    "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; frame-src 'none'; child-src 'none'; object-src 'none'; script-src 'self' 'unsafe-inline'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; style-src-attr 'none'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; worker-src 'none'; manifest-src 'none'; media-src 'none'; upgrade-insecure-requests",
+    "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; frame-src 'none'; child-src 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; style-src-attr 'none'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; worker-src 'none'; manifest-src 'none'; media-src 'none'; upgrade-insecure-requests",
   'Permissions-Policy': 'accelerometer=(), autoplay=(), camera=(), clipboard-read=(), clipboard-write=(), display-capture=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), usb=()',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
@@ -18,13 +18,28 @@ const securityHeaders: Record<string, string> = {
   'Origin-Agent-Cluster': '?1',
   'X-DNS-Prefetch-Control': 'off',
   'X-ZeroDev-Security-Profile': 'strict-2026-08',
-  'X-ZeroDev-Release': 'zerodevllc-eu-v42',
+  'X-ZeroDev-Release': 'zerodevllc-eu-v43',
 };
 
-function applySecurityHeaders(response: NextResponse) {
+function contentSecurityPolicy(nonce?: string) {
+  const nonceSource = nonce ? ` 'nonce-${nonce}'` : '';
+  return `default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; frame-src 'none'; child-src 'none'; object-src 'none'; script-src 'self'${nonceSource}; script-src-attr 'none'; style-src 'self'${nonceSource}; style-src-attr 'none'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; worker-src 'none'; manifest-src 'none'; media-src 'none'; upgrade-insecure-requests`;
+}
+
+function createNonce() {
+  const bytes = new Uint8Array(18);
+  crypto.getRandomValues(bytes);
+  return btoa(String.fromCharCode(...bytes))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/g, '');
+}
+
+function applySecurityHeaders(response: NextResponse, csp = contentSecurityPolicy()) {
   for (const [name, value] of Object.entries(securityHeaders)) {
     response.headers.set(name, value);
   }
+  response.headers.set('Content-Security-Policy', csp);
   return response;
 }
 
@@ -87,7 +102,12 @@ export function proxy(request: NextRequest) {
     return secureRedirect(url);
   }
 
-  const response = applySecurityHeaders(NextResponse.next());
+  const nonce = createNonce();
+  const csp = contentSecurityPolicy(nonce);
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set('x-nonce', nonce);
+  requestHeaders.set('content-security-policy', csp);
+  const response = applySecurityHeaders(NextResponse.next({ request: { headers: requestHeaders } }), csp);
   response.headers.set('Link', `<https://${canonicalHost}${request.nextUrl.pathname}>; rel="canonical"`);
 
   if (host === previewHost) {
