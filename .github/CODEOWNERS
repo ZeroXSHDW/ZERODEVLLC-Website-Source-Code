@@ -1,0 +1,4 @@
+# Keep application, dependency, workflow, and deployment changes under the
+# ZeroXSHDW owner account. Branch protection can enforce this review policy
+# when the repository plan supports protected branches.
+* @ZeroXSHDW
