@@ -82,4 +82,32 @@ describe("corporate edge host enforcement", () => {
       /^zerodevllc-store-v\d+$/,
     );
   });
+
+  it("does not reuse a release fingerprint across domain families", () => {
+    const previousRelease = process.env.ZERO_DEV_RELEASE;
+    process.env.ZERO_DEV_RELEASE = "zerodevllc-com-v999";
+
+    try {
+      const storeResponse = proxy(
+        new NextRequest("https://zerodevllc.store/", {
+          headers: { host: "zerodevllc.store" },
+        }),
+      );
+      expect(storeResponse.headers.get("x-zerodev-release")).toMatch(
+        /^zerodevllc-store-v\d+$/,
+      );
+
+      const comResponse = proxy(
+        new NextRequest("https://zerodevllc.com/", {
+          headers: { host: "zerodevllc.com" },
+        }),
+      );
+      expect(comResponse.headers.get("x-zerodev-release")).toBe(
+        "zerodevllc-com-v999",
+      );
+    } finally {
+      if (previousRelease === undefined) delete process.env.ZERO_DEV_RELEASE;
+      else process.env.ZERO_DEV_RELEASE = previousRelease;
+    }
+  });
 });

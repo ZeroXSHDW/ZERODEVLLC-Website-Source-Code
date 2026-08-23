@@ -51,11 +51,16 @@ function hostHeaderHostname(value: string) {
 function releaseFingerprint(hostname: string) {
   const configured =
     typeof process !== "undefined" ? process.env.ZERO_DEV_RELEASE?.trim() : "";
-  if (configured && /^zerodevllc-[a-z0-9-]+-v\d+$/.test(configured)) {
-    return configured;
-  }
   const canonicalHost =
     CANONICAL_HOSTS[hostname as keyof typeof CANONICAL_HOSTS];
+  const hostFamily = canonicalHost?.replace("zerodevllc.", "");
+  if (
+    configured &&
+    hostFamily &&
+    new RegExp(`^zerodevllc-${hostFamily}-v\\d+$`).test(configured)
+  ) {
+    return configured;
+  }
   return (
     DEFAULT_RELEASE_FINGERPRINTS[
       canonicalHost as keyof typeof DEFAULT_RELEASE_FINGERPRINTS

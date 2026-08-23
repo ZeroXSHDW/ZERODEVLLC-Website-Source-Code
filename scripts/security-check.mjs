@@ -113,6 +113,8 @@ for (const marker of [
   "NextResponse.redirect",
   "status: 308",
   "ZERO_DEV_RELEASE",
+  "hostFamily",
+  "new RegExp(`^zerodevllc-${hostFamily}-v\\\\d+$`)",
   "X-ZeroDev-Release",
 ]) {
   if (!proxy.includes(marker))
