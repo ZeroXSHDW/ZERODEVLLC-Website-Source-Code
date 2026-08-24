@@ -21,7 +21,6 @@ ZeroDevLLC corporate site and interactive 3D model viewer, built with Next.js, R
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
 
-
 ## Architecture and runtime boundaries
 
 The public experience is split into deliberately narrow runtime surfaces:
