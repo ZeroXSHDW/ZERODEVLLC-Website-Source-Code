@@ -37,3 +37,16 @@ test("quality documentation and configuration share one coverage contract", asyn
   assert.match(readme, /npm run patch-hygiene/);
   assert.match(workflow, /name: Check patch hygiene[\s\S]*run: git diff --check/);
 });
+
+
+test("README documents the runtime security boundaries", async () => {
+  const readme = await readFile(new URL("../README.md", import.meta.url), "utf8");
+
+  for (const heading of ["## Architecture and runtime boundaries", "## Project Structure", "## Security", "## Troubleshooting"]) {
+    assert.match(readme, new RegExp(heading.replace(/[.*+?^{}()|[\]\\]/g, "\\$&")));
+  }
+  assert.match(readme, /nonce-backed CSP/);
+  assert.match(readme, /same-origin public static and model assets/);
+  assert.match(readme, /rejects API, HTML, credentialed/);
+  assert.match(readme, /browser-only WebGL\/UI/);
+});
