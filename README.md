@@ -21,6 +21,26 @@ ZeroDevLLC corporate site and interactive 3D model viewer, built with Next.js, R
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
 
+
+## Architecture and runtime boundaries
+
+The public experience is split into deliberately narrow runtime surfaces:
+
+- `app/` and the route components own the Next.js pages and request-time
+  metadata; they do not treat browser state as a trusted security boundary.
+- `components/3d/` and the browser-facing hooks own WebGL model loading,
+  interaction, adaptive quality, and export. GPU/browser behavior remains an
+  integration concern even when the Node quality gate passes.
+- The edge `proxy` accepts only the approved ZeroDev host families, redirects
+  HTTP and `www` aliases to the HTTPS apex, rejects unknown Host headers, and
+  attaches the shared nonce-backed CSP and security headers.
+- The service worker and cache helpers persist only same-origin public static and
+  model assets. They reject API, HTML, credentialed, and unmanaged-cache
+  traffic; no offline queue is used for private or request data.
+- `lib/` contains reusable browser/server helpers, while tracked-file secret
+  hygiene, dependency auditing, type checking, linting, coverage, and the
+  production build are release gates rather than deployment substitutes.
+
 ## Getting Started
 
 ### Prerequisites
