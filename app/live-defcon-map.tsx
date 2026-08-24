@@ -1,6 +1,8 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+
+export type ThreatFeedStatus = 'live' | 'degraded' | 'unavailable' | 'connecting';
 
 type PublicThreatEvent = {
   id: string;
@@ -18,6 +20,11 @@ type ThreatFeed = {
   observedAt: string;
   events: PublicThreatEvent[];
   errors: string[];
+  stale?: boolean;
+};
+
+type LiveDefconMapProps = {
+  onStatusChange?: (status: ThreatFeedStatus) => void;
 };
 
 const mapNodes = [
@@ -45,24 +52,67 @@ function formatFeedTime(value: string | undefined) {
   return Number.isFinite(timestamp) ? `${formatUtc(timestamp)}Z` : '--:--:--';
 }
 
-export function LiveDefconMap() {
+function isThreatEvent(value: unknown): value is PublicThreatEvent {
+  if (!value || typeof value !== 'object') return false;
+  const event = value as Partial<PublicThreatEvent>;
+  return typeof event.id === 'string'
+    && typeof event.title === 'string'
+    && typeof event.detail === 'string'
+    && typeof event.source === 'string'
+    && typeof event.observedAt === 'string'
+    && typeof event.severity === 'number'
+    && typeof event.url === 'string'
+    && ['known-exploited', 'advisory', 'ics-advisory'].includes(event.kind ?? '');
+}
+
+function parseThreatFeed(value: unknown): ThreatFeed {
+  if (!value || typeof value !== 'object') throw new Error('invalid threat feed');
+  const feed = value as Partial<ThreatFeed>;
+  if (!['live', 'degraded', 'unavailable'].includes(feed.status ?? '')) throw new Error('invalid threat feed status');
+  return {
+    status: feed.status as ThreatFeed['status'],
+    observedAt: typeof feed.observedAt === 'string' ? feed.observedAt : new Date().toISOString(),
+    events: Array.isArray(feed.events) ? feed.events.filter(isThreatEvent) : [],
+    errors: Array.isArray(feed.errors) ? feed.errors.filter((error): error is string => typeof error === 'string') : [],
+    stale: feed.stale === true,
+  };
+}
+
+export function LiveDefconMap({ onStatusChange }: LiveDefconMapProps) {
   const [now, setNow] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
   const [feed, setFeed] = useState<ThreatFeed | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const refreshInFlight = useRef(false);
 
-  const refreshFeed = useCallback(async () => {
+  const refreshFeed = useCallback(async (force = false) => {
+    if (refreshInFlight.current) return;
+    refreshInFlight.current = true;
     setIsRefreshing(true);
     try {
-      const response = await fetch('/api/attacks', { cache: 'no-store' });
+      const endpoint = force ? `/api/attacks?refresh=${Date.now()}` : '/api/attacks';
+      const response = await fetch(endpoint, {
+        cache: force ? 'no-store' : 'default',
+        headers: { accept: 'application/json' },
+      });
       if (!response.ok) throw new Error('feed unavailable');
-      setFeed(await response.json() as ThreatFeed);
+      setFeed({ ...parseThreatFeed(await response.json()), stale: false });
     } catch {
-      setFeed((current) => current ?? { status: 'unavailable', observedAt: new Date().toISOString(), events: [], errors: ['Live public threat feed unavailable'] });
+      setFeed((current) => {
+        const errors = [...new Set([...(current?.errors ?? []), 'Live public threat feed unavailable'])];
+        return current
+          ? { ...current, status: current.events.length > 0 ? 'degraded' : 'unavailable', stale: true, errors }
+          : { status: 'unavailable', observedAt: new Date().toISOString(), events: [], errors, stale: true };
+      });
     } finally {
       setIsRefreshing(false);
+      refreshInFlight.current = false;
     }
   }, []);
+
+  useEffect(() => {
+    onStatusChange?.(feed?.status ?? 'connecting');
+  }, [feed?.status, onStatusChange]);
 
   useEffect(() => {
     const update = () => setNow(Date.now());
@@ -129,15 +179,15 @@ export function LiveDefconMap() {
         </button>
       </div>
 
-      <div className="threat-feed" aria-live="polite">
+      <div className="threat-feed" aria-busy={isRefreshing}>
         <div className="threat-feed-heading">
           <div>
             <span>LIVE PUBLIC THREAT SIGNALS</span>
-            <small>{feed ? `${feed.events.length} source-linked events · checked ${formatFeedTime(feed.observedAt)}` : 'Connecting to public sources…'}</small>
+            <small>{feed ? `${feed.events.length} source-linked events · checked ${formatFeedTime(feed.observedAt)}${feed.stale ? ' · stale cache' : ''}` : 'Connecting to public sources…'}</small>
           </div>
           <div className="threat-feed-controls">
-            <span className={`threat-feed-status threat-status-${feed?.status ?? 'connecting'}`}><i /> {feed?.status === 'live' ? 'LIVE' : feed?.status === 'degraded' ? 'DEGRADED' : feed?.status === 'unavailable' ? 'UNAVAILABLE' : 'CONNECTING'}</span>
-            <button type="button" onClick={() => void refreshFeed()} disabled={isRefreshing}>
+            <span className={`threat-feed-status threat-status-${feed?.status ?? 'connecting'}`} role="status" aria-live="polite"><i /> {feed?.status === 'live' ? 'LIVE' : feed?.status === 'degraded' ? 'DEGRADED' : feed?.status === 'unavailable' ? 'UNAVAILABLE' : 'CONNECTING'}</span>
+            <button type="button" onClick={() => void refreshFeed(true)} disabled={isRefreshing} aria-label="Refresh public threat signals">
               {isRefreshing ? 'CHECKING…' : 'REFRESH'}
             </button>
           </div>
@@ -146,7 +196,7 @@ export function LiveDefconMap() {
         {feed?.errors.length ? <p className="threat-feed-warning">Partial source outage: {feed.errors.join(' · ')}</p> : null}
         <div className="threat-event-list">
           {feed?.events.slice(0, 4).map((event) => (
-            <a className="threat-event" href={event.url} key={event.id} target="_blank" rel="noreferrer">
+            <a className="threat-event" href={event.url} key={event.id} target="_blank" rel="noopener noreferrer" aria-label={`${event.title} from ${event.source}; open source advisory`}>
               <span className={`threat-severity severity-${event.severity >= 75 ? 'high' : event.severity >= 60 ? 'watch' : 'info'}`} />
               <span className="threat-event-copy"><strong>{event.title}</strong><small>{event.source} · {event.kind === 'known-exploited' ? 'KNOWN EXPLOITED' : event.kind === 'ics-advisory' ? 'ICS ADVISORY' : 'ADVISORY'}</small></span>
               <span className="threat-event-arrow" aria-hidden="true">↗</span>

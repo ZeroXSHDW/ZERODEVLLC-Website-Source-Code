@@ -6,6 +6,7 @@ const FEED_URLS = {
 
 const MAX_FEED_BYTES = 3 * 1024 * 1024;
 const MAX_EVENTS = 12;
+const CACHE_CONTROL = 'public, max-age=30, s-maxage=60, stale-while-revalidate=300';
 const CISA_HOSTS = new Set(['cisa.gov', 'www.cisa.gov']);
 
 type PublicThreatEvent = {
@@ -18,6 +19,18 @@ type PublicThreatEvent = {
   severity: number;
   url: string;
 };
+
+type FeedPayload = {
+  status: 'live' | 'degraded' | 'unavailable';
+  observedAt: string;
+  refreshAfterSeconds: number;
+  events: PublicThreatEvent[];
+  sources: string[];
+  errors: string[];
+  stale?: boolean;
+};
+
+let memoryCache: { payload: FeedPayload; freshUntil: number; staleUntil: number } | null = null;
 
 function text(value: unknown, fallback = '') {
   return typeof value === 'string' && value.trim() ? value.trim() : fallback;
@@ -126,8 +139,23 @@ function parseKevEvents(json: string, now: string): PublicThreatEvent[] {
     });
 }
 
-export async function GET() {
-  const now = new Date().toISOString();
+function jsonResponse(payload: FeedPayload, cacheControl = CACHE_CONTROL) {
+  return Response.json(payload, {
+    headers: {
+      'Cache-Control': cacheControl,
+      'X-Content-Type-Options': 'nosniff',
+    },
+  });
+}
+
+export async function GET(request: Request) {
+  const requestTime = Date.now();
+  const forceRefresh = new URL(request.url).searchParams.has('refresh');
+  if (!forceRefresh && memoryCache && requestTime < memoryCache.freshUntil) {
+    return jsonResponse(memoryCache.payload);
+  }
+
+  const now = new Date(requestTime).toISOString();
   const results = await Promise.allSettled([
     fetchText(FEED_URLS.kev),
     fetchText(FEED_URLS.advisories),
@@ -144,15 +172,36 @@ export async function GET() {
   if (ics.status === 'fulfilled') events.push(...parseRssEvents(ics.value, 'ics-advisory', 'CISA ICS advisories', now));
   else errors.push('CISA ICS advisories');
 
-  const ordered = events
+  const ordered = [...new Map(events.map((event) => [event.id, event] as const)).values()]
     .sort((a, b) => Date.parse(b.observedAt) - Date.parse(a.observedAt))
     .slice(0, MAX_EVENTS);
-  return Response.json({
+  const payload: FeedPayload = {
     status: errors.length === 0 ? 'live' : ordered.length > 0 ? 'degraded' : 'unavailable',
     observedAt: now,
     refreshAfterSeconds: 60,
     events: ordered,
     sources: ['CISA Known Exploited Vulnerabilities', 'CISA Cybersecurity Advisories', 'CISA ICS Advisories'],
     errors,
-  }, { headers: { 'Cache-Control': 'no-store, max-age=0' } });
+  };
+
+  if (payload.status !== 'unavailable') {
+    memoryCache = {
+      payload,
+      freshUntil: requestTime + 60_000,
+      staleUntil: requestTime + 300_000,
+    };
+    return jsonResponse(payload);
+  }
+
+  if (memoryCache && requestTime < memoryCache.staleUntil) {
+    return jsonResponse({
+      ...memoryCache.payload,
+      status: 'degraded',
+      observedAt: now,
+      stale: true,
+      errors: [...new Set([...errors, 'Showing the last known public signals'])],
+    });
+  }
+
+  return jsonResponse(payload, 'no-store, max-age=0');
 }

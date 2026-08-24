@@ -24,6 +24,7 @@ const [
   layout,
   nextConfig,
   checkoutRoute,
+  attacksRoute,
   page,
   qualityWorkflow,
   dependabot,
@@ -40,6 +41,7 @@ const [
   read("app/layout.tsx"),
   read("next.config.ts"),
   readOptional("app/api/checkout/route.ts"),
+  read("app/api/attacks/route.ts"),
   read("app/page.tsx"),
   read(".github/workflows/quality.yml"),
   read(".github/dependabot.yml"),
@@ -67,6 +69,12 @@ const requireText = (label, text, marker) => {
 requireText("proxy.ts", proxy, "zerodevllc-com-v50");
 requireText("next.config.ts", nextConfig, "zerodevllc-com-v50");
 requireText("app/layout.tsx", layout, "export const dynamic = 'force-dynamic'");
+requireText("app/layout.tsx", layout, "metadataBase: new URL('https://zerodevllc.com')");
+requireText("app/layout.tsx", layout, "summary_large_image");
+requireText("app/layout.tsx", layout, "url: '/og.png'");
+requireText("app/api/attacks/route.ts", attacksRoute, "stale-while-revalidate=300");
+requireText("app/api/attacks/route.ts", attacksRoute, "safeCisaUrl");
+requireText("app/api/attacks/route.ts", attacksRoute, "memoryCache");
 for (const source of [proxy, nextConfig]) {
   if (source.includes("'unsafe-inline'"))
     failures.push("CSP must not allow unsafe inline scripts or styles");
@@ -76,7 +84,7 @@ requireText("app/page.tsx", page, "defcon: 'https://zerodevllc.eu/defcon'");
 requireText("app/page.tsx", page, "https://zerodevllc.eu");
 requireText("app/page.tsx", page, "https://zerodevllc.store");
 requireText("app/page.tsx", page, "Open the DEFCON Signal Fusion EU gateway");
-requireText("app/page.tsx", page, "EU gateway / protected");
+requireText("app/page.tsx", page, "EU gateway / external");
 requireText("proxy.ts", proxy, "const liveMapDestination = 'https://zerodevllc.eu/defcon'");
 requireText("proxy.ts", proxy, "isLiveMapPath");
 if (page.includes("defcon-signal-fusion.michaelmorangeometri.chatgpt.site")) {

@@ -1,11 +1,13 @@
 'use client';
 
-import { LiveDefconMap } from './live-defcon-map';
+import { useEffect, useState } from 'react';
+import { LiveDefconMap, type ThreatFeedStatus } from './live-defcon-map';
 
 const canonicalDomains = Object.freeze({
   defcon: 'https://zerodevllc.eu/defcon',
   eu: 'https://zerodevllc.eu',
   store: 'https://zerodevllc.store',
+  threatOps: 'https://zeroxshdw.michaelmorangeometri.chatgpt.site',
 });
 
 const systems = [
@@ -13,7 +15,7 @@ const systems = [
     code: '01',
     name: 'THREAT OPS',
     description: 'Read-only telemetry, route watch, and signal-led incident context.',
-    href: 'https://zeroxshdw.michaelmorangeometri.chatgpt.site',
+    href: canonicalDomains.threatOps,
     tag: 'LIVE // MONITOR',
     icon: '◉',
     detail: 'Network telemetry / incident context',
@@ -57,6 +59,26 @@ const principles = [
 ];
 
 export default function Home() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [feedStatus, setFeedStatus] = useState<ThreatFeedStatus>('connecting');
+  const statusCopy = feedStatus === 'live'
+    ? { chip: 'UPLINK LIVE', signal: 'SIGNAL: LIVE', terminal: 'live / source-linked' }
+    : feedStatus === 'degraded'
+      ? { chip: 'UPLINK DEGRADED', signal: 'SIGNAL: DEGRADED', terminal: 'degraded / partial sources' }
+      : feedStatus === 'unavailable'
+        ? { chip: 'UPLINK OFFLINE', signal: 'SIGNAL: OFFLINE', terminal: 'offline / retrying' }
+        : { chip: 'UPLINK CHECKING', signal: 'SIGNAL: CHECKING', terminal: 'checking / awaiting sources' };
+  const closeMobileMenu = () => setMobileMenuOpen(false);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return undefined;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [mobileMenuOpen]);
+
   return (
     <main className="com-shell">
       <a className="skip-link" href="#systems">Skip to systems</a>
@@ -68,15 +90,27 @@ export default function Home() {
           <span className="brand-mark">Z/</span>
           <span>ZERODEVLLC<span className="brand-dim">.COM</span></span>
         </a>
-        <nav className="nav" aria-label="Primary navigation">
-          <a href="#systems">Systems</a>
-          <a href={canonicalDomains.defcon}>Live map ↗</a>
-          <a href="#approach">Approach</a>
-          <a href={canonicalDomains.defcon}>DEFCON</a>
-          <a href={canonicalDomains.store}>Store</a>
+        <nav className={`nav${mobileMenuOpen ? ' is-open' : ''}`} id="primary-navigation" aria-label="Primary navigation">
+          <a href="#systems" onClick={closeMobileMenu}>Systems</a>
+          <a href={canonicalDomains.defcon} onClick={closeMobileMenu}>Live map ↗</a>
+          <a href="#approach" onClick={closeMobileMenu}>Approach</a>
+          <a href={canonicalDomains.defcon} onClick={closeMobileMenu}>DEFCON</a>
+          <a href={canonicalDomains.store} onClick={closeMobileMenu}>Store</a>
         </nav>
-        <a className="status-chip" href={canonicalDomains.defcon} aria-label="Open the DEFCON Signal Fusion EU gateway">
-          <span className="status-dot" /> UPLINK READY <span className="status-arrow" aria-hidden="true">↗</span>
+        <button
+          className="mobile-menu-toggle"
+          type="button"
+          aria-expanded={mobileMenuOpen}
+          aria-controls="primary-navigation"
+          aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          onClick={() => setMobileMenuOpen((open) => !open)}
+        >
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+        </button>
+        <a className={`status-chip status-${feedStatus}`} href={canonicalDomains.defcon} aria-label={`Open the DEFCON Signal Fusion EU gateway. Feed status: ${statusCopy.chip.toLowerCase()}`}>
+          <span className="status-dot" aria-hidden="true" /> <span className="status-label">{statusCopy.chip}</span> <span className="status-arrow" aria-hidden="true">↗</span>
         </a>
       </header>
 
@@ -99,7 +133,7 @@ export default function Home() {
             </a>
           </div>
           <div className="hero-meta" id="signal">
-            <span><i className="signal-bars" aria-hidden="true"><b /><b /><b /><b /></i> SIGNAL: NOMINAL</span>
+            <span className={`signal-readout signal-${feedStatus}`} role="status" aria-live="polite"><i className="signal-bars" aria-hidden="true"><b /><b /><b /><b /></i> {statusCopy.signal}</span>
             <span>LAT 53.3498° N</span>
             <span>LON 6.2603° W</span>
           </div>
@@ -114,9 +148,9 @@ export default function Home() {
           <div className="terminal-body">
             <p><span className="prompt">root@zerodev</span>:~$ ./check --systems</p>
             <p className="terminal-muted">scanning registered surfaces...</p>
-            <p><span className="terminal-ok">[OK]</span> threat_ops <span className="terminal-muted">read-only / live</span></p>
-            <p><span className="terminal-ok">[OK]</span> defcon_fusion <span className="terminal-muted">EU gateway / protected</span></p>
-            <p><span className="terminal-ok">[OK]</span> store_checkout <span className="terminal-muted">services / ready</span></p>
+            <p><span className={`terminal-state terminal-state-${feedStatus}`}>[{feedStatus === 'live' ? 'OK' : feedStatus === 'degraded' ? '!!' : feedStatus === 'unavailable' ? '!!' : '..'}]</span> signal_status <span className="terminal-muted">{statusCopy.terminal}</span></p>
+            <p><span className="terminal-ok">[LINK]</span> defcon_fusion <span className="terminal-muted">EU gateway / external</span></p>
+            <p><span className="terminal-ok">[LINK]</span> store_checkout <span className="terminal-muted">services / external</span></p>
             <p className="terminal-spacer"> </p>
             <p><span className="prompt">root@zerodev</span>:~$ <span className="cursor" aria-hidden="true" /></p>
           </div>
@@ -166,7 +200,7 @@ export default function Home() {
           <a className="text-link" href={canonicalDomains.defcon}>Open live EU map <span aria-hidden="true">↗</span></a>
           <small>Canonical live route: zerodevllc.eu/defcon. Current evidence and source-linked readouts remain inside the protected EU gateway.</small>
         </div>
-        <LiveDefconMap />
+        <LiveDefconMap onStatusChange={setFeedStatus} />
       </section>
 
       <section className="approach-section" id="approach" aria-labelledby="approach-heading">

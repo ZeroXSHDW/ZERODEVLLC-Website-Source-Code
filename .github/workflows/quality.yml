@@ -2,7 +2,7 @@ name: Quality
 
 on:
   push:
-    branches: [main]
+    branches: [main, live-site]
   pull_request:
   workflow_dispatch:
   schedule:

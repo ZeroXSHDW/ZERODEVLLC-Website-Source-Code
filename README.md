@@ -71,6 +71,14 @@ marked `noindex` and must not be treated as production. Save or deploy only
 the exact commit that passed review. Do not commit `.next`, `.vinext`,
 `.wrangler`, `dist`, `out`, credentials, customer data, or generated output.
 
+## Source of truth
+
+This checkout is the canonical source for the live `zerodevllc.com` landing
+page and its public threat-feed route. The legacy `main` branch of the public
+GitHub repository contains an older 3D viewer and must not be merged into this
+site. Keep the current landing page on its own `live-site` branch or repository
+and require `npm run quality` before any production release.
+
 ## Contributing and security
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the review contract and
