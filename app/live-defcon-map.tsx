@@ -1,8 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-
-export type ThreatFeedStatus = 'live' | 'degraded' | 'unavailable' | 'connecting';
+import { useHomeStatus } from './home-status';
 
 type PublicThreatEvent = {
   id: string;
@@ -21,10 +20,6 @@ type ThreatFeed = {
   events: PublicThreatEvent[];
   errors: string[];
   stale?: boolean;
-};
-
-type LiveDefconMapProps = {
-  onStatusChange?: (status: ThreatFeedStatus) => void;
 };
 
 const mapNodes = [
@@ -78,12 +73,13 @@ function parseThreatFeed(value: unknown): ThreatFeed {
   };
 }
 
-export function LiveDefconMap({ onStatusChange }: LiveDefconMapProps) {
+export function LiveDefconMap() {
   const [now, setNow] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
   const [feed, setFeed] = useState<ThreatFeed | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const refreshInFlight = useRef(false);
+  const { setStatus } = useHomeStatus();
 
   const refreshFeed = useCallback(async (force = false) => {
     if (refreshInFlight.current) return;
@@ -111,8 +107,8 @@ export function LiveDefconMap({ onStatusChange }: LiveDefconMapProps) {
   }, []);
 
   useEffect(() => {
-    onStatusChange?.(feed?.status ?? 'connecting');
-  }, [feed?.status, onStatusChange]);
+    setStatus(feed?.status ?? 'connecting');
+  }, [feed?.status, setStatus]);
 
   useEffect(() => {
     const update = () => setNow(Date.now());
