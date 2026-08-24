@@ -32,6 +32,8 @@ Recommended flow:
 4. Deliver through a least-privilege GitHub invitation or a short-lived Cloudflare R2 signed URL.
 5. Re-check entitlement when downloading, expire links quickly, and revoke access on refund/dispute/expiry.
 
+The homepage links paid access to the existing `https://zerodevllc.store` storefront. Keep the actual Checkout Session, webhook verification, and delivery worker there or behind server-side hosting; the public EU homepage should only carry the user-facing link and safe status copy.
+
 Do not place `STRIPE_SECRET_KEY`, webhook secrets, private GitHub tokens, private repository URLs, or customer data in this public repository.
 
 ## Domain

@@ -149,6 +149,7 @@ const PROJECTS: Project[] = [
 ];
 
 const FILTERS = ['All systems', 'Public proof', 'Private access', 'Research'];
+const STORE_URL = 'https://zerodevllc.store';
 
 function normalizeDefcon(payload: unknown): Omit<DefconState, 'source'> | null {
   if (!payload || typeof payload !== 'object') return null;
@@ -313,8 +314,8 @@ export default function Home() {
           ))}
         </nav>
 
-        <a className="topbar-cta" href="#access">
-          Request private access <span aria-hidden="true">↗</span>
+        <a className="topbar-cta" href={STORE_URL} target="_blank" rel="noreferrer">
+          Open software store <span aria-hidden="true">↗</span>
         </a>
       </header>
 
@@ -469,7 +470,7 @@ export default function Home() {
 
       <section className="access-section" id="access">
         <div className="access-panel">
-          <div className="access-copy"><p className="section-kicker">/ 03 — PRIVATE DELIVERY</p><h2>Purchase the outcome. Receive the right boundary.</h2><p>Stripe can handle checkout; a server-side webhook should handle entitlement. From there, choose the least-privilege delivery path: a private GitHub invitation for source access, or a short-lived signed artifact for product access.</p><a className="button button-primary" href="mailto:access@zerodevllc.eu?subject=Private%20software%20access">Start a private access request <span aria-hidden="true">↗</span></a></div>
+          <div className="access-copy"><p className="section-kicker">/ 03 — PRIVATE DELIVERY</p><h2>Purchase the outcome. Receive the right boundary.</h2><p>Stripe can handle checkout; a server-side webhook should handle entitlement. From there, choose the least-privilege delivery path: a private GitHub invitation for source access, or a short-lived signed artifact for product access.</p><a className="button button-primary" href={STORE_URL} target="_blank" rel="noreferrer">Open private software store <span aria-hidden="true">↗</span></a><a className="access-contact" href="mailto:access@zerodevllc.eu?subject=Private%20software%20access">Need a bespoke entitlement? Start a private request <span aria-hidden="true">↗</span></a></div>
           <div className="delivery-flow" aria-label="Private software delivery flow"><div className="flow-line" /><div className="flow-step"><span>01</span><strong>Checkout</strong><small>Stripe hosted payment</small></div><div className="flow-step"><span>02</span><strong>Verify</strong><small>Signed webhook event</small></div><div className="flow-step"><span>03</span><strong>Entitle</strong><small>Product + expiry recorded</small></div><div className="flow-step"><span>04</span><strong>Deliver</strong><small>GitHub invite or R2 link</small></div></div>
         </div>
       </section>
