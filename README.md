@@ -1,73 +1,43 @@
-# ZeroDev LLC — European operations index
+# ZERODEVLLC.EU
 
-The public European operations surface for ZeroDev LLC. It provides regional
-context and links to the canonical DEFCON Signal Fusion and Threat Ops
-systems.
+Public evidence layer for independent security engineering, defensive research, and carefully gated software.
 
-- Production: <https://zerodevllc.eu>
-- Sites preview: <https://zerodevllc-eu.michaelmorangeometri.chatgpt.site>
-
-## Project shape
-
-- `app/` contains the App Router pages, metadata, robots policy, and sitemap.
-- `proxy.ts` enforces HTTPS, the canonical host, security headers, and
-  cross-origin isolation, plus preview `noindex` behavior. Its CSP explicitly
-  denies frames and child browsing contexts, while Permissions-Policy disables
-  unused device and sensor capabilities, including clipboard access; malformed
-  forwarded-protocol headers fail closed. Each response carries the exact
-  source-controlled `strict-2026-08` security profile used by the live monitor.
-- `scripts/security-check.mjs` verifies the security contract in CI.
-- `.openai/hosting.json` identifies the existing Sites project and must remain
-  unchanged.
-
-The application uses React, Next-compatible routing, Vinext/Vite, and the
-Cloudflare adapter. It has no required local runtime secret.
-
-## Local development
-
-Requirements: Node.js 22.13 or newer and npm.
+## Run locally
 
 ```bash
-npm ci
+npm install
 npm run dev
 ```
 
-Use the local URL printed by Vinext. Keep runtime values in ignored `.env*`
-files or Sites settings; do not commit them.
+The homepage intentionally starts with safe synthetic telemetry. Configure the optional public adapter URLs below only when the response is sanitized and contains no sensitive target data.
 
-## Verification
+## Optional feed adapters
 
-Run the release gate before review:
+Copy `.env.example` to `.env.local` and set:
 
-```bash
-npm run quality
-```
+- `NEXT_PUBLIC_DEFCON_FEED_URL` — JSON endpoint returning `{ "level": 5, "label": "NOMINAL", "description": "...", "updatedAt": "..." }`.
+- `NEXT_PUBLIC_RECON_FEED_URL` — JSON endpoint returning `{ "events": [{ "id": "...", "time": "...", "kind": "PROBE", "target": "sanitized-surface", "detail": "...", "severity": "low" }] }`.
 
-This runs the security contract, TypeScript checks, ESLint, a production
-build, and a moderate-severity dependency audit. The same gate runs in
-`.github/workflows/quality.yml` for pushes to `main`, pull requests, and
-manual dispatch. CI has read-only repository permissions and never deploys.
+These are browser-visible URLs. They must not require a secret key and must only return deliberately public, sanitized data. For real feeds, place the provider credentials and filtering logic in a server-side or Cloudflare Worker adapter, then expose only the safe response shape.
 
-## Troubleshooting
+## GitHub and private delivery model
 
-- If `npm ci` fails, use Node.js 22.13 or newer and rerun it from this
-  directory so the checked-in lockfile is used.
-- If `npm run quality` fails, fix the first failing stage and rerun the full
-  command; this site has no required runtime secrets.
-- A Vinext notice about route classification is informational when the build
-  completes successfully; it reflects static-analysis limits around dynamic
-  request APIs.
+Use a public repository for the homepage and public project descriptions. Keep production source, private targets, customer data, and licensed software in private repositories or a private artifact store.
 
-## Domains, previews, and deployment
+Recommended flow:
 
-The production origin is `https://zerodevllc.eu`. Preview deployments are
-marked `noindex` and must not be treated as production. Save or deploy only
-the exact commit that passed review. Do not commit `.next`, `.vinext`,
-`.wrangler`, `dist`, `out`, credentials, customer data, or generated output.
+1. Send the visitor to a Stripe-hosted Checkout Session.
+2. Verify the webhook signature server-side; never trust a browser redirect as proof of payment.
+3. Create an entitlement record containing product, customer reference, expiry, and revocation state.
+4. Deliver through a least-privilege GitHub invitation or a short-lived Cloudflare R2 signed URL.
+5. Re-check entitlement when downloading, expire links quickly, and revoke access on refund/dispute/expiry.
 
-## Contributing and security
+Do not place `STRIPE_SECRET_KEY`, webhook secrets, private GitHub tokens, private repository URLs, or customer data in this public repository.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the review contract and
-[SECURITY.md](SECURITY.md) for private vulnerability reporting. The project
-is private and has no declared open-source license; reuse requires written
-permission from the owner.
+## Domain
+
+The intended public hostname is `ZERODEVLLC.EU`. Point the domain to the chosen hosting provider and keep the public homepage separate from private software delivery services. The homepage should remain safe to publish even if the private distribution system is temporarily offline.
+
+## Project links
+
+The public project cards point to the currently published `ZeroXSHDW` repositories for the audit, network bridge, and NVD converter examples. Private projects intentionally show `Request access` and do not expose private repository URLs. Add a new public URL directly to the project data only after the repository and its README are ready for public review.
