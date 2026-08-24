@@ -6,6 +6,7 @@ operations, and the store.
 
 - Production: <https://zerodevllc.com>
 - Sites preview: <https://zerodevllc-com.michaelmorangeometri.chatgpt.site>
+- Public source: <https://github.com/ZeroXSHDW/ZERODEVLLC-Website-Source-Code/tree/live-site>
 
 ## Project shape
 
@@ -47,8 +48,9 @@ npm run quality
 
 This runs the security contract, TypeScript checks, ESLint, a production
 build, and a bounded moderate-severity dependency audit. The same gate runs in
-`.github/workflows/quality.yml` for pushes to `main`, pull requests, and
-manual dispatch. CI has read-only repository permissions and never deploys.
+`.github/workflows/quality.yml` for pushes to `main` and `live-site`, pull
+requests, and manual dispatch. CI has read-only repository permissions and
+never deploys.
 
 The audit is bounded to five minutes by default and returns status 124 if the
 advisory service cannot complete. Set `NPM_AUDIT_TIMEOUT_MS` to a different
@@ -82,6 +84,6 @@ and require `npm run quality` before any production release.
 ## Contributing and security
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the review contract and
-[SECURITY.md](SECURITY.md) for private vulnerability reporting. The project
-is private and has no declared open-source license; reuse requires written
-permission from the owner.
+[SECURITY.md](SECURITY.md) for private vulnerability reporting. The repository
+is public and has no declared open-source license; public visibility does not
+grant reuse rights, and reuse requires written permission from the owner.
