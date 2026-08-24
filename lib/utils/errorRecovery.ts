@@ -6,6 +6,8 @@
 import { log } from "./logger";
 import type { ModelError } from "@/lib/types/3d";
 
+const SERVICE_WORKER_CACHE_PREFIX = "zerodevllc-sw-";
+
 export interface RecoveryStrategy {
   canRecover: (error: ModelError) => boolean;
   recover: (error: ModelError) => Promise<void>;
@@ -116,11 +118,21 @@ export const memoryRecoveryStrategy: RecoveryStrategy = {
     // Clear all caches
     if ("caches" in window) {
       const cacheNames = await caches.keys();
-      await Promise.all(cacheNames.map((name) => caches.delete(name)));
+      await Promise.all(
+        cacheNames
+          .filter((name) => name.startsWith(SERVICE_WORKER_CACHE_PREFIX))
+          .map((name) => caches.delete(name)),
+      );
     }
 
-    // Clear localStorage
-    localStorage.clear();
+    // Remove only legacy offline-request entries. Other application storage
+    // may contain user preferences and must not be wiped during recovery.
+    for (let index = localStorage.length - 1; index >= 0; index -= 1) {
+      const key = localStorage.key(index);
+      if (key?.startsWith("queued-request-")) {
+        localStorage.removeItem(key);
+      }
+    }
 
     // Force garbage collection if available
     if (

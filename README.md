@@ -21,11 +21,31 @@ ZeroDevLLC corporate site and interactive 3D model viewer, built with Next.js, R
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
 
+## Architecture and runtime boundaries
+
+The public experience is split into deliberately narrow runtime surfaces:
+
+- `app/` and the route components own the Next.js pages and request-time
+  metadata; they do not treat browser state as a trusted security boundary.
+- `components/3d/` and the browser-facing hooks own WebGL model loading,
+  interaction, adaptive quality, and export. GPU/browser behavior remains an
+  integration concern even when the Node quality gate passes.
+- The edge `proxy` accepts only the approved ZeroDev host families, redirects
+  HTTP and `www` aliases to the HTTPS apex, rejects unknown Host headers, and
+  attaches the shared nonce-backed CSP and security headers.
+- The service worker and cache helpers persist only same-origin public static and
+  model assets. They reject API, HTML, credentialed, and unmanaged-cache
+  traffic; no offline queue is used for private or request data.
+- `lib/` contains reusable browser/server helpers, while tracked-file secret
+  hygiene, dependency auditing, type checking, linting, coverage, and the
+  production build are release gates rather than deployment substitutes.
+
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 20.9 or later
+- The exact Node.js version in [`.node-version`](.node-version) (currently
+  Node.js 22.23.1); the `engines` entry remains the minimum supported release
 - npm or yarn
 
 ### Installation
@@ -55,22 +75,38 @@ ZeroDevLLC corporate site and interactive 3D model viewer, built with Next.js, R
 
 ### Useful scripts
 
-| Script               | Purpose                                                  |
-| -------------------- | -------------------------------------------------------- |
-| `npm run type-check` | TypeScript (`tsc --noEmit`) — used in CI                 |
-| `npm test`           | Jest unit/component tests                                |
-| `npm run lint`       | ESLint with the committed Next.js flat configuration     |
-| `npm run build`      | Production build                                         |
-| `npm run quality`    | Full type, lint, format, coverage, audit, and build gate |
+| Script                  | Purpose                                                  |
+| ----------------------- | -------------------------------------------------------- |
+| `npm run type-check`    | TypeScript (`tsc --noEmit`) — used in CI                 |
+| `npm test`              | Jest unit/component tests                                |
+| `npm run lint`          | ESLint with the committed Next.js flat configuration     |
+| `npm run build`         | Production build                                         |
+| `npm run patch-hygiene` | Reject whitespace errors and conflict markers            |
+| `npm run quality`       | Full type, lint, format, coverage, audit, and build gate |
 
 The pull-request gate runs the canonical `npm run quality` command after a
 locked `npm ci --ignore-scripts` install. It performs type checking, ESLint,
-Prettier format validation, Jest coverage, a moderate-or-higher dependency
-audit, and a production build.
+Prettier format validation, Jest coverage with global floors of 20% statements,
+15% branches, 20% functions, and 20% lines, a moderate-or-higher dependency
+audit, a tracked-file secret-hygiene scan, and a production build. The current
+offline suite has 109 passing tests and measures 24.23% statements, 19.57%
+branches, 22.57% functions, and 24.91% lines. The coverage suite intentionally
+exercises the core error, cache, performance, resource-pool, geometry,
+frustum, texture, and bundle-loading contracts; browser-only WebGL/UI and
+real-device paths remain separately validated at the integration/release
+boundary.
+The dependency audit is bounded to five minutes by default; set
+`NPM_AUDIT_TIMEOUT_MS` to tune the limit. A timeout returns status 124 so a
+network or registry stall cannot hang the release gate indefinitely.
+
+`npm run quality` runs patch hygiene first, and CI performs the same check
+before installing dependencies. This rejects whitespace errors and unresolved
+conflict markers early in both local and pull-request verification.
 Run it locally with:
 
 ```bash
 npm ci --ignore-scripts
+npm run patch-hygiene
 npm run quality
 ```
 
@@ -106,6 +142,12 @@ Run `npm run quality` before review and keep the public site free of credentials
 
 Report vulnerabilities privately using [SECURITY.md](SECURITY.md). Do not publish deployment tokens, customer data, or private environment values.
 
+The edge proxy accepts only the configured `zerodevllc.com`, `zerodevllc.eu`, and
+`zerodevllc.store` host families. It redirects HTTP and `www` aliases to the
+HTTPS apex host, rejects unknown Host headers, and emits the shared strict
+security profile. Set `ZERO_DEV_RELEASE` to the exact release fingerprint for
+each production deployment so stale artifacts cannot present as current.
+
 ## Usage
 
 Use the documented npm scripts for local development, quality checks, and the
@@ -114,6 +156,6 @@ behavior consistent with the deployed site; do not edit generated output.
 
 ## Troubleshooting
 
-Start with `npm ci --ignore-scripts`, then run the typecheck, lint, audit, test, and build gates
-in order. If a hosted deployment fails before a job starts, distinguish the
+Start with `npm ci --ignore-scripts`, then run the typecheck, lint, bounded audit,
+test, and build gates in order. If a hosted deployment fails before a job starts, distinguish the
 account or billing failure from a code failure and retain the local evidence.

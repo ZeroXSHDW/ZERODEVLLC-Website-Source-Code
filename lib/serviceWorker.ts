@@ -1,5 +1,5 @@
 // Service Worker registration utilities
-import { useMemo } from "react";
+import { useCallback, useRef } from "react";
 
 export interface ServiceWorkerConfig {
   onUpdate?: (registration: ServiceWorkerRegistration) => void;
@@ -15,16 +15,20 @@ export class ServiceWorkerManager {
     this.config = config;
   }
 
+  setConfig(config: ServiceWorkerConfig): void {
+    this.config = config;
+  }
+
   async register(): Promise<void> {
-    if (!("serviceWorker" in navigator)) {
-      console.warn("Service workers are not supported in this browser");
-      return;
-    }
+    if (!("serviceWorker" in navigator) || this.registration) return;
 
     try {
-      const registration = await navigator.serviceWorker.register("/sw.js", {
-        scope: "/",
-      });
+      const registration =
+        (await navigator.serviceWorker.getRegistration("/")) ||
+        (await navigator.serviceWorker.register("/sw.js", {
+          scope: "/",
+          updateViaCache: "none",
+        }));
 
       this.registration = registration;
 
@@ -135,27 +139,33 @@ export class ServiceWorkerManager {
 
 // React hook for service worker management
 export function useServiceWorker(config: ServiceWorkerConfig = {}) {
-  const manager = useMemo(() => new ServiceWorkerManager(config), [config]);
+  const managerRef = useRef<ServiceWorkerManager | null>(null);
+  if (!managerRef.current) {
+    managerRef.current = new ServiceWorkerManager(config);
+  } else {
+    managerRef.current.setConfig(config);
+  }
+  const manager = managerRef.current;
 
-  const register = async () => {
+  const register = useCallback(async () => {
     await manager.register();
-  };
+  }, [manager]);
 
-  const unregister = async () => {
+  const unregister = useCallback(async () => {
     await manager.unregister();
-  };
+  }, [manager]);
 
-  const update = async () => {
+  const update = useCallback(async () => {
     await manager.update();
-  };
+  }, [manager]);
 
-  const getVersion = async () => {
+  const getVersion = useCallback(async () => {
     return await manager.getVersion();
-  };
+  }, [manager]);
 
-  const clearCache = async () => {
+  const clearCache = useCallback(async () => {
     return await manager.clearCache();
-  };
+  }, [manager]);
 
   return {
     register,

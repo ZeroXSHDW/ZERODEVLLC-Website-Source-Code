@@ -80,26 +80,11 @@ export function XRControls({ mode, onModeChange }: XRControlsProps) {
       {/* VR Button */}
       {isSupported.vr && (
         <div
-          style={{
-            position: "fixed",
-            bottom: "20px",
-            right: mode === "vr" ? "120px" : "20px",
-            zIndex: 1000,
-          }}
+          className={`xr-control-shell ${mode === "vr" ? "xr-control-shell-vr-active" : "xr-control-shell-vr"}`}
         >
           <button
             onClick={handleVRClick}
-            style={{
-              background: mode === "vr" ? "#ef4444" : "#10b981",
-              border: "none",
-              borderRadius: "8px",
-              padding: "12px 20px",
-              color: "white",
-              fontSize: "14px",
-              fontWeight: "bold",
-              cursor: "pointer",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-            }}
+            className={`xr-control-button xr-control-button-vr ${mode === "vr" ? "xr-control-button-active" : ""}`}
           >
             {mode === "vr" ? "Exit VR" : "Enter VR"}
           </button>
@@ -109,26 +94,11 @@ export function XRControls({ mode, onModeChange }: XRControlsProps) {
       {/* AR Button */}
       {isSupported.ar && (
         <div
-          style={{
-            position: "fixed",
-            bottom: "20px",
-            right: isSupported.vr ? "240px" : "120px",
-            zIndex: 1000,
-          }}
+          className={`xr-control-shell ${isSupported.vr ? "xr-control-shell-ar-with-vr" : "xr-control-shell-ar"}`}
         >
           <button
             onClick={handleARClick}
-            style={{
-              background: mode === "ar" ? "#ef4444" : "#3b82f6",
-              border: "none",
-              borderRadius: "8px",
-              padding: "12px 20px",
-              color: "white",
-              fontSize: "14px",
-              fontWeight: "bold",
-              cursor: "pointer",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-            }}
+            className={`xr-control-button xr-control-button-ar ${mode === "ar" ? "xr-control-button-active" : ""}`}
           >
             {mode === "ar" ? "Exit AR" : "Enter AR"}
           </button>

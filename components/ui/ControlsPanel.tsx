@@ -81,15 +81,10 @@ export function ControlsPanel({
           animate={{ x: 0, opacity: 1, scale: 1 }}
           exit={{ x: 300, opacity: 0, scale: 0.95 }}
           transition={{ type: "spring", damping: 25, stiffness: 200 }}
-          className="fixed right-4 top-1/2 -translate-y-1/2 z-50 bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden h-[600px] flex flex-col"
           role="dialog"
           aria-modal="true"
           aria-labelledby="controls-title"
-          style={{
-            boxShadow:
-              "0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1)",
-            width: "320px",
-          }}
+          className="fixed right-4 top-1/2 -translate-y-1/2 z-50 bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden h-[600px] flex flex-col controls-panel"
         >
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-white/10 bg-white/5">

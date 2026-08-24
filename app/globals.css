@@ -9,6 +9,150 @@
   }
 }
 
+@layer components {
+  .animated-button-primary {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+  }
+
+  .animated-button-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+  }
+
+  .animated-button-secondary {
+    background: linear-gradient(135deg, #6b7280, #374151);
+    box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
+  }
+
+  .animated-button-secondary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #4b5563, #1f2937);
+    box-shadow: 0 6px 20px rgba(107, 114, 128, 0.5);
+  }
+
+  .animated-button-danger {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+  }
+
+  .animated-button-danger:hover:not(:disabled) {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
+  }
+
+  .animated-button-ghost {
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .animated-button-ghost:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .xr-control-shell {
+    position: fixed;
+    bottom: 20px;
+    z-index: 1000;
+  }
+
+  .xr-control-shell-vr {
+    right: 20px;
+  }
+
+  .xr-control-shell-vr-active,
+  .xr-control-shell-ar {
+    right: 120px;
+  }
+
+  .xr-control-shell-ar-with-vr {
+    right: 240px;
+  }
+
+  .xr-control-button {
+    border: 0;
+    border-radius: 8px;
+    padding: 12px 20px;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .xr-control-button-vr {
+    background: #10b981;
+  }
+
+  .xr-control-button-ar {
+    background: #3b82f6;
+  }
+
+  .xr-control-button-active {
+    background: #ef4444;
+  }
+
+  .three-canvas {
+    background: #000000;
+  }
+
+  .controls-panel {
+    width: 320px;
+    box-shadow:
+      0 25px 50px -12px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+
+  .hierarchy-indent-0 {
+    padding-left: 8px;
+  }
+  .hierarchy-indent-1 {
+    padding-left: 24px;
+  }
+  .hierarchy-indent-2 {
+    padding-left: 40px;
+  }
+  .hierarchy-indent-3 {
+    padding-left: 56px;
+  }
+  .hierarchy-indent-4 {
+    padding-left: 72px;
+  }
+  .hierarchy-indent-5 {
+    padding-left: 88px;
+  }
+  .hierarchy-indent-6 {
+    padding-left: 104px;
+  }
+  .hierarchy-indent-7 {
+    padding-left: 120px;
+  }
+  .hierarchy-indent-8 {
+    padding-left: 136px;
+  }
+  .hierarchy-indent-9 {
+    padding-left: 152px;
+  }
+  .hierarchy-indent-10 {
+    padding-left: 168px;
+  }
+  .hierarchy-indent-11 {
+    padding-left: 184px;
+  }
+  .hierarchy-indent-12 {
+    padding-left: 200px;
+  }
+  .hierarchy-indent-13 {
+    padding-left: 216px;
+  }
+  .hierarchy-indent-14 {
+    padding-left: 232px;
+  }
+  .hierarchy-indent-15 {
+    padding-left: 248px;
+  }
+}
+
 @layer utilities {
   .matrix-glow {
     text-shadow:

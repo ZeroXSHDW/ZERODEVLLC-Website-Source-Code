@@ -36,6 +36,10 @@ export const viewport: Viewport = {
   themeColor: "#000000",
 };
 
+// A per-request CSP nonce must be injected into the streamed App Router shell;
+// static prerendering would emit inline Flight scripts without that nonce.
+export const dynamic = "force-dynamic";
+
 export default function RootLayout({
   children,
 }: {

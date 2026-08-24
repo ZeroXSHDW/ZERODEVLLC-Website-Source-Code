@@ -15,6 +15,18 @@ import {
 import { useMemo, useState } from "react";
 import * as THREE from "three";
 
+const hierarchyIndentClasses = Array.from(
+  { length: 16 },
+  (_, index) => `hierarchy-indent-${index}`,
+);
+
+function getHierarchyIndentClass(level: number): string {
+  const normalizedLevel = Number.isFinite(level)
+    ? Math.max(0, Math.min(15, Math.floor(level)))
+    : 0;
+  return hierarchyIndentClasses[normalizedLevel];
+}
+
 interface ModelInfoProps {
   isOpen: boolean;
   onClose: () => void;
@@ -554,8 +566,7 @@ export function ModelInfo({
                     {modelStats.hierarchy.slice(0, 50).map((item, index) => (
                       <div
                         key={index}
-                        className="flex items-center gap-2 text-xs py-1 px-2 rounded hover:bg-gray-700"
-                        style={{ paddingLeft: `${item.level * 16 + 8}px` }}
+                        className={`flex items-center gap-2 text-xs py-1 px-2 rounded hover:bg-gray-700 ${getHierarchyIndentClass(item.level)}`}
                       >
                         <div
                           className={`w-2 h-2 rounded-full ${

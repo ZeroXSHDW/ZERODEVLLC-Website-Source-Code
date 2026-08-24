@@ -1,188 +1,246 @@
-// Service Worker for caching and offline functionality
+// ZeroDevLLC service worker.
+//
+// This worker deliberately caches only public, same-origin assets and model
+// files. HTML, API responses, cross-origin requests, and credential-bearing
+// responses must always stay on the network so stale or private data cannot be
+// replayed from Cache Storage.
 
-const CACHE_NAME = 'glb-viewer-v1.0.0';
-const STATIC_CACHE = 'glb-viewer-static-v1.0.0';
-const DYNAMIC_CACHE = 'glb-viewer-dynamic-v1.0.0';
+const CACHE_PREFIX = "zerodevllc-sw-";
+const VERSION = "v2";
+const STATIC_CACHE = `${CACHE_PREFIX}static-${VERSION}`;
+const MODEL_CACHE = `${CACHE_PREFIX}models-${VERSION}`;
+const CACHE_NAME = `${CACHE_PREFIX}${VERSION}`;
+const OWNED_CACHE_NAMES = new Set([STATIC_CACHE, MODEL_CACHE]);
 
-// Files to cache immediately
-const STATIC_ASSETS = [
-  '/',
-  '/manifest.json',
-  '/favicon.ico',
-  '/robots.txt',
-  // Cache essential chunks and assets
-  '/_next/static/css/',
-  '/_next/static/js/',
+const PRECACHE_ASSETS = [
+  "/manifest.json",
+  "/robots.txt",
+  "/icon-192x192.png",
+  "/icon-192x192.svg",
 ];
 
-// Install event - cache static assets
-self.addEventListener('install', (event) => {
-  console.log('[SW] Installing service worker');
-  event.waitUntil(
-    caches.open(STATIC_CACHE).then((cache) => {
-      console.log('[SW] Caching static assets');
-      return cache.addAll(STATIC_ASSETS);
-    })
+const MODEL_PATH = /\.(glb|gltf)$/i;
+const STATIC_PATH = /\.(css|eot|gif|jpeg|jpg|js|png|svg|ttf|webp|woff|woff2)$/i;
+
+function isSameOriginRequest(request) {
+  const url = new URL(request.url);
+  return url.origin === self.location.origin;
+}
+
+function isPublicRequest(request, url) {
+  if (request.method !== "GET" || !isSameOriginRequest(request)) {
+    return false;
+  }
+
+  // Never let authenticated or partial responses enter a shared cache.
+  if (
+    request.headers.has("authorization") ||
+    request.headers.has("range") ||
+    request.mode === "navigate"
+  ) {
+    return false;
+  }
+
+  // API and worker responses are intentionally network-only.
+  if (
+    url.pathname.startsWith("/api/") ||
+    url.pathname === "/sw.js" ||
+    url.pathname.startsWith("/_next/image")
+  ) {
+    return false;
+  }
+
+  return true;
+}
+
+function isCacheableResponse(response) {
+  if (
+    !response ||
+    !response.ok ||
+    response.type !== "basic" ||
+    response.redirected ||
+    response.headers.has("set-cookie")
+  ) {
+    return false;
+  }
+
+  const cacheControl = response.headers.get("cache-control") || "";
+  return !/\bno-store\b/i.test(cacheControl);
+}
+
+function isCacheableStaticResponse(response) {
+  if (!isCacheableResponse(response)) return false;
+
+  const contentType = response.headers.get("content-type") || "";
+  return !/text\/html|application\/json/i.test(contentType);
+}
+
+function isCacheableModelResponse(response) {
+  if (!isCacheableResponse(response)) return false;
+
+  const contentType = response.headers.get("content-type") || "";
+  return /model\/gltf|application\/octet-stream|application\/json/i.test(
+    contentType,
   );
-  self.skipWaiting();
+}
+
+function isModelRequest(request, url) {
+  return (
+    isPublicRequest(request, url) &&
+    MODEL_PATH.test(url.pathname) &&
+    url.search === ""
+  );
+}
+
+function isStaticRequest(request, url) {
+  return (
+    isPublicRequest(request, url) &&
+    (url.pathname.startsWith("/_next/static/") ||
+      STATIC_PATH.test(url.pathname))
+  );
+}
+
+async function cachePrecacheAssets() {
+  const cache = await caches.open(STATIC_CACHE);
+
+  await Promise.all(
+    PRECACHE_ASSETS.map(async (asset) => {
+      try {
+        const request = new Request(asset, { cache: "no-store" });
+        const response = await fetch(request);
+        if (isCacheableResponse(response)) {
+          await cache.put(request, response.clone());
+        }
+      } catch (_error) {
+        // An optional public asset must not prevent a new worker from
+        // installing. It will be fetched normally when needed.
+      }
+    }),
+  );
+}
+
+async function deleteOwnedCaches(includeCurrent = true) {
+  const cacheNames = await caches.keys();
+  await Promise.all(
+    cacheNames
+      .filter(
+        (cacheName) =>
+          cacheName.startsWith(CACHE_PREFIX) &&
+          (includeCurrent || !OWNED_CACHE_NAMES.has(cacheName)),
+      )
+      .map((cacheName) => caches.delete(cacheName)),
+  );
+}
+
+async function getCacheStats() {
+  const stats = { staticCache: 0, modelCache: 0, total: 0 };
+
+  for (const cacheName of OWNED_CACHE_NAMES) {
+    const cache = await caches.open(cacheName);
+    const count = (await cache.keys()).length;
+    if (cacheName === STATIC_CACHE) stats.staticCache = count;
+    if (cacheName === MODEL_CACHE) stats.modelCache = count;
+    stats.total += count;
+  }
+
+  return stats;
+}
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(cachePrecacheAssets().then(() => self.skipWaiting()));
 });
 
-// Activate event - clean up old caches
-self.addEventListener('activate', (event) => {
-  console.log('[SW] Activating service worker');
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE) {
-            console.log('[SW] Deleting old cache:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
-  self.clients.claim();
+self.addEventListener("activate", (event) => {
+  event.waitUntil(deleteOwnedCaches(false).then(() => self.clients.claim()));
 });
 
-// Fetch event - serve from cache or network
-self.addEventListener('fetch', (event) => {
+self.addEventListener("fetch", (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Skip non-GET requests
-  if (request.method !== 'GET') return;
-
-  // Handle API requests differently
-  if (url.pathname.startsWith('/api/')) {
+  // Non-GET, cross-origin, API, document, and unknown requests remain
+  // untouched and use the browser's normal network behavior.
+  if (isModelRequest(request, url)) {
     event.respondWith(
-      caches.open(DYNAMIC_CACHE).then((cache) => {
-        return fetch(request)
-          .then((response) => {
-            // Cache successful responses
-            if (response.status === 200) {
-              cache.put(request, response.clone());
-            }
-            return response;
-          })
-          .catch(() => {
-            // Return cached version if available
-            return cache.match(request);
-          });
-      })
-    );
-    return;
-  }
-
-  // Handle model files (.glb, .gltf) - cache them for offline use
-  if (url.pathname.match(/\.(glb|gltf)$/i)) {
-    event.respondWith(
-      caches.open(DYNAMIC_CACHE).then((cache) => {
-        return cache.match(request).then((cachedResponse) => {
-          if (cachedResponse) {
-            // Return cached version immediately, but also fetch fresh version
-            fetch(request).then((response) => {
-              if (response.status === 200) {
-                cache.put(request, response.clone());
-              }
-            }).catch(() => {
-              // Ignore fetch errors for cached models
-            });
-            return cachedResponse;
+      (async () => {
+        const cache = await caches.open(MODEL_CACHE);
+        try {
+          const response = await fetch(request);
+          if (isCacheableModelResponse(response)) {
+            await cache.put(request, response.clone());
           }
-
-          return fetch(request).then((response) => {
-            if (response.status === 200) {
-              cache.put(request, response.clone());
-            }
-            return response;
-          });
-        });
-      })
+          return response;
+        } catch (_error) {
+          return (await cache.match(request)) || Response.error();
+        }
+      })(),
     );
     return;
   }
 
-  // Handle static assets - cache first strategy
-  if (
-    url.pathname.match(/\.(js|css|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/i) ||
-    url.pathname.startsWith('/_next/')
-  ) {
+  if (isStaticRequest(request, url)) {
     event.respondWith(
-      caches.match(request).then((cachedResponse) => {
-        if (cachedResponse) {
-          return cachedResponse;
-        }
+      (async () => {
+        const cache = await caches.open(STATIC_CACHE);
+        const cachedResponse = await cache.match(request);
+        if (cachedResponse) return cachedResponse;
 
-        return caches.open(STATIC_CACHE).then((cache) => {
-          return fetch(request).then((response) => {
-            // Cache successful responses
-            if (response.status === 200) {
-              cache.put(request, response.clone());
-            }
-            return response;
-          });
-        });
-      })
+        try {
+          const response = await fetch(request);
+          if (isCacheableStaticResponse(response)) {
+            await cache.put(request, response.clone());
+          }
+          return response;
+        } catch (_error) {
+          return Response.error();
+        }
+      })(),
+    );
+  }
+});
+
+self.addEventListener("message", (event) => {
+  const type =
+    event.data && typeof event.data === "object" ? event.data.type : null;
+  const reply = (payload) => {
+    if (event.ports && event.ports[0]) {
+      event.ports[0].postMessage(payload);
+    }
+  };
+
+  if (type === "SKIP_WAITING") {
+    self.skipWaiting();
+    return;
+  }
+
+  if (type === "GET_VERSION") {
+    reply({ version: CACHE_NAME });
+    return;
+  }
+
+  if (type === "GET_CACHE_STATS") {
+    event.waitUntil(
+      getCacheStats()
+        .then((stats) => reply({ success: true, stats }))
+        .catch(() => reply({ success: false, stats: null })),
     );
     return;
   }
 
-  // Default: network first for HTML pages
-  event.respondWith(
-    fetch(request)
-      .then((response) => {
-        // Cache successful HTML responses
-        if (response.status === 200 && request.destination === 'document') {
-          const responseClone = response.clone();
-          caches.open(DYNAMIC_CACHE).then((cache) => {
-            cache.put(request, responseClone);
-          });
-        }
-        return response;
-      })
-      .catch(() => {
-        // Return cached version if available
-        return caches.match(request);
-      })
-  );
-});
+  if (type === "CLEANUP_CACHE") {
+    event.waitUntil(
+      deleteOwnedCaches(false)
+        .then(() => reply({ success: true }))
+        .catch(() => reply({ success: false })),
+    );
+    return;
+  }
 
-// Background sync for offline actions (if implemented later)
-self.addEventListener('sync', (event) => {
-  console.log('[SW] Background sync:', event.tag);
-  // Handle background sync events here
-});
-
-// Push notifications (if implemented later)
-self.addEventListener('push', (event) => {
-  console.log('[SW] Push received:', event);
-  // Handle push notifications here
-});
-
-// Message handling for communication with the main thread
-self.addEventListener('message', (event) => {
-  const { type, data } = event.data || {};
-
-  switch (type) {
-    case 'SKIP_WAITING':
-      self.skipWaiting();
-      break;
-    case 'GET_VERSION':
-      event.ports[0].postMessage({ version: CACHE_NAME });
-      break;
-    case 'CLEAR_CACHE':
-      caches.keys().then((cacheNames) => {
-        return Promise.all(
-          cacheNames.map((cacheName) => caches.delete(cacheName))
-        );
-      }).then(() => {
-        event.ports[0].postMessage({ success: true });
-      }).catch((error) => {
-        event.ports[0].postMessage({ success: false, error });
-      });
-      break;
-    default:
-      console.log('[SW] Unknown message type:', type);
+  if (type === "CLEAR_CACHE") {
+    event.waitUntil(
+      deleteOwnedCaches(true)
+        .then(() => reply({ success: true }))
+        .catch(() => reply({ success: false })),
+    );
   }
 });

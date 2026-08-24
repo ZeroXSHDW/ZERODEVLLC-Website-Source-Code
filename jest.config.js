@@ -22,6 +22,14 @@ const customJestConfig = {
     "!**/*.d.ts",
     "!**/node_modules/**",
   ],
+  coverageThreshold: {
+    global: {
+      statements: 20,
+      branches: 15,
+      functions: 20,
+      lines: 20,
+    },
+  },
   testMatch: [
     "<rootDir>/**/__tests__/**/*.{js,jsx,ts,tsx}",
     "<rootDir>/**/*.{test,spec}.{js,jsx,ts,tsx}",
