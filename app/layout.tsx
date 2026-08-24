@@ -12,8 +12,11 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'ZERODEVLLC.EU — Security engineering, made legible',
+  metadataBase: new URL('https://zerodevllc.eu'),
   description:
     'The public evidence layer for independent security engineering, defensive research, and carefully gated software.',
   openGraph: {

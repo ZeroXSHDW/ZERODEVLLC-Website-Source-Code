@@ -149,7 +149,12 @@ const PROJECTS: Project[] = [
 ];
 
 const FILTERS = ['All systems', 'Public proof', 'Private access', 'Research'];
-const STORE_URL = 'https://zerodevllc.store';
+const canonicalDomains = Object.freeze({
+  com: 'https://zerodevllc.com',
+  eu: 'https://zerodevllc.eu',
+  store: 'https://zerodevllc.store',
+});
+const STORE_URL = canonicalDomains.store;
 
 function normalizeDefcon(payload: unknown): Omit<DefconState, 'source'> | null {
   if (!payload || typeof payload !== 'object') return null;
@@ -477,7 +482,7 @@ export default function Home() {
 
       <footer className="site-footer">
         <div className="footer-top"><a className="wordmark" href="#mission"><span className="wordmark-mark">Z</span><span>ZERO<span className="wordmark-soft">DEVLLC</span><small>.EU</small></span></a><p>Evidence-led software for a more legible security practice.</p><a className="footer-mail" href="mailto:hello@zerodevllc.eu">hello@zerodevllc.eu ↗</a></div>
-        <div className="footer-bottom"><span>© 2026 ZERODEVLLC.EU</span><span>Public demo data is synthetic until an adapter is configured.</span><span>Built with deliberate edges.</span></div>
+        <div className="footer-bottom"><span>© 2026 ZERODEVLLC.EU</span><span>Public demo data is synthetic until an adapter is configured.</span><a href={canonicalDomains.com}>Corporate root ↗</a></div>
       </footer>
     </main>
   );
