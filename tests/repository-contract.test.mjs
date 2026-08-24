@@ -47,6 +47,6 @@ test("README documents the runtime security boundaries", async () => {
   }
   assert.match(readme, /nonce-backed CSP/);
   assert.match(readme, /same-origin public static and\s+model assets/);
-  assert.match(readme, /rejects API,\s+HTML, credentialed/);
+  assert.match(readme, /reject API,\s+HTML, credentialed/);
   assert.match(readme, /browser-only WebGL\/UI/);
 });
