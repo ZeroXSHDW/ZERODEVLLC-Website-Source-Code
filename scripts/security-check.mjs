@@ -119,6 +119,7 @@ requireText("app/services/page.tsx", servicesPage, "Best starting point");
 requireText("app/services/page.tsx", servicesPage, "Procurement or third-party risk owner.");
 requireText("app/services/page.tsx", servicesPage, "service-${service.number}");
 requireText("app/services/page.tsx", servicesPage, "RTO/RPO discussion");
+requireText("app/services/page.tsx", servicesPage, "Start with the authorized engagement brief");
 requireText("app/methodology/page.tsx", methodologyPage, "Written authorization and named decision owner");
 requireText("app/methodology/page.tsx", methodologyPage, "does not perform unauthorized access");
 requireText("app/methodology/page.tsx", methodologyPage, "Potential treatment choices");
@@ -193,8 +194,14 @@ requireText("app/page.tsx", page, "Prepare a brief");
 requireText("app/page.tsx", page, "Find your operating context");
 requireText("app/page.tsx", page, "authorized defensive assessments");
 requireText("app/page.tsx", page, "Make the next decision");
+requireText("app/page.tsx", page, "Prepare a safe first brief");
 requireText("proxy.ts", proxy, "const liveMapDestination = 'https://zerodevllc.eu/defcon'");
 requireText("proxy.ts", proxy, "isLiveMapPath");
+if (page.includes('href="mailto:hello@zerodevllc.com"')) {
+  failures.push(
+    "app/page.tsx must route general contact CTAs through /engage; retain only explicitly private reporting channels",
+  );
+}
 if (page.includes("defcon-signal-fusion.michaelmorangeometri.chatgpt.site")) {
   failures.push(
     "app/page.tsx must route the DEFCON card through https://zerodevllc.eu/defcon",

@@ -344,7 +344,7 @@ export default function Home() {
           <p className="eyebrow">{'// OPERATING APPROACH'}</p>
           <h2 id="approach-heading">Make the signal<br /><span>worth acting on.</span></h2>
           <p>Useful software keeps evidence, state, and next action in the same frame. That is how a surface earns trust.</p>
-          <a className="text-link" href="mailto:hello@zerodevllc.com">Start a build conversation <span aria-hidden="true">↗</span></a>
+          <a className="text-link" href="/engage">Prepare a safe first brief <span aria-hidden="true">↗</span></a>
         </div>
         <div className="principles-grid">
           {principles.map((principle) => (
@@ -362,7 +362,7 @@ export default function Home() {
           <p className="eyebrow">{'// DEFENSIVE DELIVERY / REVIEWABLE OUTPUT'}</p>
           <h2 id="services-heading">From evidence<br /><span>to safer action.</span></h2>
           <p>Bring the security question, supplier decision, recovery concern, or evidence surface that needs to become clearer. The work stays authorized, bounded, source-aware, and reviewable.</p>
-          <a className="text-link" href="mailto:hello@zerodevllc.com?subject=ZeroDev%20build%20conversation">Start with the problem <span aria-hidden="true">↗</span></a>
+          <a className="text-link" href="/engage">Start with the safe brief <span aria-hidden="true">↗</span></a>
           <a className="text-link" href="/services">View security and resilience catalogue <span aria-hidden="true">↗</span></a>
         </div>
         <div className="services-detail">
@@ -397,8 +397,8 @@ export default function Home() {
         <div className="contact-actions">
           <p>Have a security, supplier, recovery, or resilience question that needs a defensible next step? Bring the high-level objective and the owner who can confirm authority.</p>
           <div className="hero-actions">
-            <a className="button button-primary" href="mailto:hello@zerodevllc.com">Contact ZeroDev <span aria-hidden="true">↗</span></a>
-            <a className="button button-ghost" href="/engage">Prepare a safe first brief <span aria-hidden="true">↗</span></a>
+            <a className="button button-primary" href="/engage">Prepare a safe first brief <span aria-hidden="true">↗</span></a>
+            <a className="button button-ghost" href="/services">Review security services <span aria-hidden="true">↗</span></a>
           </div>
         </div>
       </section>
