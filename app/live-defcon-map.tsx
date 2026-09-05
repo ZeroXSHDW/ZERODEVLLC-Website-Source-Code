@@ -17,6 +17,7 @@ type PublicThreatEvent = {
 type ThreatFeed = {
   status: 'live' | 'degraded' | 'unavailable';
   observedAt: string;
+  checkedAt: string;
   events: PublicThreatEvent[];
   errors: string[];
   stale?: boolean;
@@ -67,6 +68,7 @@ function parseThreatFeed(value: unknown): ThreatFeed {
   return {
     status: feed.status as ThreatFeed['status'],
     observedAt: typeof feed.observedAt === 'string' ? feed.observedAt : new Date().toISOString(),
+    checkedAt: typeof feed.checkedAt === 'string' ? feed.checkedAt : new Date().toISOString(),
     events: Array.isArray(feed.events) ? feed.events.filter(isThreatEvent) : [],
     errors: Array.isArray(feed.errors) ? feed.errors.filter((error): error is string => typeof error === 'string') : [],
     stale: feed.stale === true,
@@ -98,7 +100,7 @@ export function LiveDefconMap() {
         const errors = [...new Set([...(current?.errors ?? []), 'Live public threat feed unavailable'])];
         return current
           ? { ...current, status: current.events.length > 0 ? 'degraded' : 'unavailable', stale: true, errors }
-          : { status: 'unavailable', observedAt: new Date().toISOString(), events: [], errors, stale: true };
+          : { status: 'unavailable', observedAt: new Date().toISOString(), checkedAt: new Date().toISOString(), events: [], errors, stale: true };
       });
     } finally {
       setIsRefreshing(false);
@@ -136,7 +138,7 @@ export function LiveDefconMap() {
         <a className="map-live-badge" href="https://zerodevllc.eu/defcon" aria-label="Open the live DEFCON EU gateway"><i /> EU GATEWAY / LIVE MAP ↗</a>
       </div>
 
-      <div className={`defcon-map-stage${paused ? ' is-paused' : ''}`} role="img" aria-label="Three-dimensional preview of the DEFCON coordination network">
+      <div className={`defcon-map-stage${paused ? ' is-paused' : ''}`} role="img" aria-describedby="defcon-data-note" aria-label="Three-dimensional preview of the DEFCON coordination network">
         <div className="map-orbit map-orbit-one" aria-hidden="true" />
         <div className="map-orbit map-orbit-two" aria-hidden="true" />
         <div className="map-globe" aria-hidden="true">
@@ -164,7 +166,7 @@ export function LiveDefconMap() {
       <div className="defcon-map-footer">
         <div>
           <span>GATEWAY STATUS</span>
-          <strong>EU / PROTECTED</strong>
+          <strong>EU / PUBLIC GATEWAY</strong>
         </div>
         <div>
           <span>UTC CLOCK</span>
@@ -179,7 +181,7 @@ export function LiveDefconMap() {
         <div className="threat-feed-heading">
           <div>
             <span>LIVE PUBLIC THREAT SIGNALS</span>
-            <small>{feed ? `${feed.events.length} source-linked events · checked ${formatFeedTime(feed.observedAt)}${feed.stale ? ' · stale cache' : ''}` : 'Connecting to public sources…'}</small>
+            <small>{feed ? `${feed.events.length} source-linked events · observed ${formatFeedTime(feed.observedAt)} · checked ${formatFeedTime(feed.checkedAt)}${feed.stale ? ' · stale cache' : ''}` : 'Connecting to public sources…'}</small>
           </div>
           <div className="threat-feed-controls">
             <span className={`threat-feed-status threat-status-${feed?.status ?? 'connecting'}`} role="status" aria-live="polite"><i /> {feed?.status === 'live' ? 'LIVE' : feed?.status === 'degraded' ? 'DEGRADED' : feed?.status === 'unavailable' ? 'UNAVAILABLE' : 'CONNECTING'}</span>
@@ -194,7 +196,7 @@ export function LiveDefconMap() {
           {feed?.events.slice(0, 4).map((event) => (
             <a className="threat-event" href={event.url} key={event.id} target="_blank" rel="noopener noreferrer" aria-label={`${event.title} from ${event.source}; open source advisory`}>
               <span className={`threat-severity severity-${event.severity >= 75 ? 'high' : event.severity >= 60 ? 'watch' : 'info'}`} />
-              <span className="threat-event-copy"><strong>{event.title}</strong><small>{event.source} · {event.kind === 'known-exploited' ? 'KNOWN EXPLOITED' : event.kind === 'ics-advisory' ? 'ICS ADVISORY' : 'ADVISORY'}</small></span>
+              <span className="threat-event-copy"><strong>{event.title}</strong><small><b className="threat-source-badge">{event.source}</b> {event.kind === 'known-exploited' ? 'KNOWN EXPLOITED' : event.kind === 'ics-advisory' ? 'ICS ADVISORY' : 'ADVISORY'} · observed {formatFeedTime(event.observedAt)}</small></span>
               <span className="threat-event-arrow" aria-hidden="true">↗</span>
             </a>
           ))}
@@ -202,6 +204,40 @@ export function LiveDefconMap() {
           {!feed && <span className="threat-feed-empty">Waiting for the first source refresh.</span>}
         </div>
       </div>
+
+      <details className="map-data-details">
+        <summary>Read the source data</summary>
+        <p id="defcon-data-note" className="map-data-note">Text alternative to the visual topology. Node labels describe this interface; event rows link to the original public advisory or catalogue entry.</p>
+        <div className="map-data-grid">
+          <div>
+            <h4>NETWORK NODES</h4>
+            <table>
+              <caption className="sr-only">Network node labels and signal tones</caption>
+              <thead><tr><th scope="col">Node</th><th scope="col">Signal</th></tr></thead>
+              <tbody>
+                {mapNodes.map((node) => <tr key={node.name}><th scope="row">{node.name}</th><td>{node.tone.toUpperCase()}</td></tr>)}
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <h4>PUBLIC EVENTS</h4>
+            <table>
+              <caption className="sr-only">Source-linked public threat events</caption>
+              <thead><tr><th scope="col">Event</th><th scope="col">Source / observed</th></tr></thead>
+              <tbody>
+                {feed?.events.slice(0, 8).map((event) => (
+                  <tr key={`data-${event.id}`}>
+                    <th scope="row"><a href={event.url} target="_blank" rel="noopener noreferrer">{event.title} ↗</a></th>
+                    <td>{event.source}<br /><span>{formatFeedTime(event.observedAt)}</span></td>
+                  </tr>
+                ))}
+                {feed?.events.length === 0 && <tr><td colSpan={2}>No events returned in this refresh.</td></tr>}
+                {!feed && <tr><td colSpan={2}>Awaiting source refresh.</td></tr>}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
     </div>
   );
 }

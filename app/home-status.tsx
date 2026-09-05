@@ -19,7 +19,7 @@ const HomeStatusContext = createContext<HomeStatusContextValue | null>(null);
 function getStatusCopy(status: ThreatFeedStatus) {
   if (status === 'live') return { chip: 'UPLINK LIVE', signal: 'SIGNAL: LIVE', terminal: 'live / source-linked' };
   if (status === 'degraded') return { chip: 'UPLINK DEGRADED', signal: 'SIGNAL: DEGRADED', terminal: 'degraded / partial sources' };
-  if (status === 'unavailable') return { chip: 'UPLINK OFFLINE', signal: 'SIGNAL: OFFLINE', terminal: 'offline / retrying' };
+  if (status === 'unavailable') return { chip: 'UPLINK UNAVAILABLE', signal: 'SIGNAL: UNAVAILABLE', terminal: 'unavailable / retrying' };
   return { chip: 'UPLINK CHECKING', signal: 'SIGNAL: CHECKING', terminal: 'checking / awaiting sources' };
 }
 

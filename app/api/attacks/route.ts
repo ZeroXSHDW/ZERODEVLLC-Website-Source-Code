@@ -23,6 +23,7 @@ type PublicThreatEvent = {
 type FeedPayload = {
   status: 'live' | 'degraded' | 'unavailable';
   observedAt: string;
+  checkedAt: string;
   refreshAfterSeconds: number;
   events: PublicThreatEvent[];
   sources: string[];
@@ -178,6 +179,7 @@ export async function GET(request: Request) {
   const payload: FeedPayload = {
     status: errors.length === 0 ? 'live' : ordered.length > 0 ? 'degraded' : 'unavailable',
     observedAt: now,
+    checkedAt: now,
     refreshAfterSeconds: 60,
     events: ordered,
     sources: ['CISA Known Exploited Vulnerabilities', 'CISA Cybersecurity Advisories', 'CISA ICS Advisories'],
@@ -198,6 +200,7 @@ export async function GET(request: Request) {
       ...memoryCache.payload,
       status: 'degraded',
       observedAt: now,
+      checkedAt: now,
       stale: true,
       errors: [...new Set([...errors, 'Showing the last known public signals'])],
     });

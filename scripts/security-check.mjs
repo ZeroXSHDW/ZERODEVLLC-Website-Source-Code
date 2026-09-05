@@ -97,6 +97,11 @@ if (page.includes("zerodevllc-store.michaelmorangeometri.chatgpt.site")) {
     "app/page.tsx must route the store card through https://zerodevllc.store",
   );
 }
+if (page.includes("zeroxshdw.michaelmorangeometri.chatgpt.site")) {
+  failures.push(
+    "app/page.tsx must not expose the historical Threat Ops hostname until its source and provider route are reconciled",
+  );
+}
 
 for (const marker of [
   "Content-Security-Policy",
