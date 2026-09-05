@@ -118,6 +118,8 @@ requireText("app/frameworks/page.tsx", frameworksPage, "NCSC Cyber Assessment Fr
 requireText("app/frameworks/page.tsx", frameworksPage, "Readiness support is not");
 requireText("app/engage/page.tsx", engagePage, "Do not send secrets");
 requireText("app/engage/page.tsx", engagePage, "decision owner");
+requireText("app/engage/page.tsx", engagePage, "INFORMATION HANDLING GUIDANCE");
+requireText("app/engage/page.tsx", engagePage, "classified-information handling policy");
 requireText("app/deliverables/page.tsx", deliverablesPage, "TEMPLATE SHAPE / NOT CLIENT EVIDENCE");
 requireText("app/deliverables/page.tsx", deliverablesPage, "Received is not");
 requireText("app/deliverables/page.tsx", deliverablesPage, "private incident evidence");

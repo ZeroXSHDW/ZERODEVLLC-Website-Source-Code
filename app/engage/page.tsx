@@ -39,6 +39,13 @@ const firstResponse = [
   'Return a proportionate next step, including a no-fit answer when the work is not appropriate.',
 ] as const;
 
+const handlingMatrix = [
+  ['High-level brief', 'Objective, sector, decision owner, outcome, and timeframe', 'Appropriate for an initial email when kept abstract and free of sensitive detail', 'Confirm the decision, authority, and scope'],
+  ['Sanitized or redacted example', 'Abstracted architecture, control summary, or redacted finding shape', 'Share only after the recipient, purpose, redaction, and retention boundary are agreed', 'Confirm evidence path and handling owner'],
+  ['Sensitive government or defense material', 'Controlled, contractual, classified, export-controlled, or otherwise restricted information', 'Do not send through ordinary email, public pages, or this public site', 'Establish an owner-approved exchange and handling process'],
+  ['Credentials, secrets, or live targets', 'Passwords, tokens, private keys, exploit payloads, or live target details', 'Never include in the initial brief or ordinary email', 'Use a separate authorized technical handoff only if necessary'],
+] as const;
+
 export default function EngagePage() {
   return (
     <main className={styles.page}>
@@ -77,6 +84,37 @@ export default function EngagePage() {
           </div>
           <div className={styles.checkList}>
             {intakeItems.map((item, index) => <div key={item}><span>{String(index + 1).padStart(2, '0')}</span><p>{item}</p></div>)}
+          </div>
+        </section>
+
+        <section className={styles.outputSection} aria-labelledby="handling-heading">
+          <div className={styles.sectionIntro}>
+            <p className={styles.eyebrow}>{'// INFORMATION HANDLING GUIDANCE'}</p>
+            <h2 id="handling-heading">Match the evidence<br /><span>to the channel.</span></h2>
+            <p>Use the least sensitive information needed to decide whether an engagement is appropriate. This is public engagement guidance, not a classification policy or a substitute for the applicable contract and authority.</p>
+          </div>
+          <div className={styles.actionTableWrap}>
+            <table className={styles.actionTable}>
+              <caption className={styles.tableCaption}>Illustrative handling guidance — not a classified-information handling policy.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Information lane</th>
+                  <th scope="col">Examples</th>
+                  <th scope="col">First-contact rule</th>
+                  <th scope="col">Next gate</th>
+                </tr>
+              </thead>
+              <tbody>
+                {handlingMatrix.map(([lane, examples, rule, gate]) => (
+                  <tr key={lane}>
+                    <td>{lane}</td>
+                    <td>{examples}</td>
+                    <td>{rule}</td>
+                    <td>{gate}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </section>
 
