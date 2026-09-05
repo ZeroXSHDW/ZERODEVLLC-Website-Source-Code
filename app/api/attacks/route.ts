@@ -7,6 +7,7 @@ const FEED_URLS = {
 const MAX_FEED_BYTES = 3 * 1024 * 1024;
 const MAX_EVENTS = 12;
 const CACHE_CONTROL = 'public, max-age=30, s-maxage=60, stale-while-revalidate=300';
+const FORCE_REFRESH_COOLDOWN_MS = 15_000;
 const CISA_HOSTS = new Set(['cisa.gov', 'www.cisa.gov']);
 
 type PublicThreatEvent = {
@@ -32,6 +33,7 @@ type FeedPayload = {
 };
 
 let memoryCache: { payload: FeedPayload; freshUntil: number; staleUntil: number } | null = null;
+let lastForcedRefreshAt = 0;
 
 function text(value: unknown, fallback = '') {
   return typeof value === 'string' && value.trim() ? value.trim() : fallback;
@@ -149,6 +151,29 @@ function jsonResponse(payload: FeedPayload, cacheControl = CACHE_CONTROL) {
   });
 }
 
+function cooldownPayload(now: string): FeedPayload {
+  if (memoryCache) {
+    return {
+      ...memoryCache.payload,
+      status: memoryCache.payload.status === 'unavailable' ? 'unavailable' : 'degraded',
+      checkedAt: now,
+      stale: true,
+      errors: [...new Set([...memoryCache.payload.errors, 'Refresh cooling down; showing the last known public signals'])],
+    };
+  }
+
+  return {
+    status: 'unavailable',
+    observedAt: now,
+    checkedAt: now,
+    refreshAfterSeconds: 60,
+    events: [],
+    sources: [],
+    errors: ['Refresh cooling down; try again shortly'],
+    stale: true,
+  };
+}
+
 export async function GET(request: Request) {
   const requestTime = Date.now();
   const forceRefresh = new URL(request.url).searchParams.has('refresh');
@@ -157,6 +182,11 @@ export async function GET(request: Request) {
   }
 
   const now = new Date(requestTime).toISOString();
+  if (forceRefresh && requestTime - lastForcedRefreshAt < FORCE_REFRESH_COOLDOWN_MS) {
+    return jsonResponse(cooldownPayload(now), memoryCache ? CACHE_CONTROL : 'no-store, max-age=0');
+  }
+  if (forceRefresh) lastForcedRefreshAt = requestTime;
+
   const results = await Promise.allSettled([
     fetchText(FEED_URLS.kev),
     fetchText(FEED_URLS.advisories),

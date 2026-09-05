@@ -131,7 +131,7 @@ export function LiveDefconMap() {
         headers: { accept: 'application/json' },
       });
       if (!response.ok) throw new Error('feed unavailable');
-      setFeed({ ...parseThreatFeed(await response.json()), stale: false });
+      setFeed(parseThreatFeed(await response.json()));
     } catch {
       setFeed((current) => {
         const errors = [...new Set([...(current?.errors ?? []), 'Live public threat feed unavailable'])];
