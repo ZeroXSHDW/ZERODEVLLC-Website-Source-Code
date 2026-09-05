@@ -39,6 +39,14 @@ const evidenceStates = [
   'Rechecked — a changed control, recovery capability, or open question is reviewed again.',
 ] as const;
 
+const briefPreviewRows = [
+  ['Decision question', 'Can a critical public-facing service proceed to the next approved change window?', 'Synthetic question / not a client decision'],
+  ['Agreed boundary', 'Illustrative external application surface; no live target, customer record, credential, or production export is included.', 'Template scope / no live assessment'],
+  ['Evidence state', 'A reported access-control assumption is awaiting scope confirmation and permitted verification.', 'Observed / pending verification'],
+  ['Treatment path', 'Named service owner confirms the control, records the risk choice, and agrees a retest or review condition.', 'Recommended action / owner required'],
+  ['Closeout condition', 'Record what changed, what was rechecked, what remains open, and the next review trigger.', 'Rechecked / closure evidence required'],
+] as const;
+
 export default function DeliverablesPage() {
   return (
     <main className={styles.page}>
@@ -78,6 +86,35 @@ export default function DeliverablesPage() {
                 <p className={styles.cardBoundary}><strong>Boundary:</strong> {boundary}</p>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section className={styles.outputSection} aria-labelledby="preview-heading">
+          <div className={styles.sectionIntro}>
+            <p className={styles.eyebrow}>{'// SYNTHETIC REVIEW PREVIEW'}</p>
+            <h2 id="preview-heading">See the review<br /><span>before the handoff.</span></h2>
+            <p>A useful deliverable makes the decision, boundary, evidence state, owner, treatment, and closeout condition visible together. This example is intentionally synthetic and contains no client, provider, target, or production evidence.</p>
+          </div>
+          <div className={styles.actionTableWrap}>
+            <table className={styles.actionTable}>
+              <caption className={styles.tableCaption}>Synthetic executive risk brief preview — not client evidence, a live finding, or a security guarantee.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Brief field</th>
+                  <th scope="col">Illustrative entry</th>
+                  <th scope="col">Evidence state / boundary</th>
+                </tr>
+              </thead>
+              <tbody>
+                {briefPreviewRows.map(([field, entry, state]) => (
+                  <tr key={field}>
+                    <td>{field}</td>
+                    <td>{entry}</td>
+                    <td>{state}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </section>
 
