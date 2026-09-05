@@ -109,6 +109,8 @@ requireText("app/services/page.tsx", servicesPage, "Defense-supplier assurance")
 requireText("app/services/page.tsx", servicesPage, "Capability decision matrix");
 requireText("app/services/page.tsx", servicesPage, "Minimum entry gate");
 requireText("app/services/page.tsx", servicesPage, "Written authority, in-scope assets");
+requireText("app/services/page.tsx", servicesPage, "Best starting point");
+requireText("app/services/page.tsx", servicesPage, "Procurement or third-party risk owner.");
 requireText("app/services/page.tsx", servicesPage, "RTO/RPO discussion");
 requireText("app/methodology/page.tsx", methodologyPage, "Written authorization and named decision owner");
 requireText("app/methodology/page.tsx", methodologyPage, "does not perform unauthorized access");

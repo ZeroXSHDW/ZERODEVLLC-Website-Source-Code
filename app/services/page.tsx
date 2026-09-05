@@ -21,6 +21,7 @@ const services = [
     summary: 'Test agreed attack surfaces under written authority, bounded rules of engagement, and safety controls.',
     activities: ['External and internal surfaces', 'Web, API, cloud, identity, and segmentation review', 'Remediation validation and retesting'],
     output: 'Scope, evidence, findings, risk context, and a remediation path.',
+    audience: 'Security or service owner with written authority.',
     tone: 'cyan',
   },
   {
@@ -29,6 +30,7 @@ const services = [
     summary: 'Turn scanner output and technical observations into a prioritized, evidence-backed risk view.',
     activities: ['Asset and exposure context', 'Manual verification where appropriate', 'Severity, exploitability, and business-impact analysis'],
     output: 'Validated findings register with owners, priorities, and next checks.',
+    audience: 'Security or engineering owner with asset context.',
     tone: 'amber',
   },
   {
@@ -37,6 +39,7 @@ const services = [
     summary: 'Connect assets, threats, controls, decisions, exceptions, and residual risk in one usable operating view.',
     activities: ['Risk identification and treatment planning', 'Control ownership and evidence mapping', 'Executive and board-ready reporting'],
     output: 'A decision-ready risk register and measurable treatment roadmap.',
+    audience: 'Risk, executive, or service owner setting treatment.',
     tone: 'green',
   },
   {
@@ -45,6 +48,7 @@ const services = [
     summary: 'Assess architecture, delivery practices, dependencies, resilience, and technical risk before an important decision.',
     activities: ['Architecture and control review', 'Secure development and supply-chain review', 'Open questions, assumptions, and red flags'],
     output: 'Technical brief, evidence requests, risk summary, and decision support.',
+    audience: 'Decision owner and technical lead before a material decision.',
     tone: 'violet',
   },
   {
@@ -53,6 +57,7 @@ const services = [
     summary: 'Evaluate whether a supplier’s security, continuity, access, incident, and evidence posture fits the relationship.',
     activities: ['Questionnaire and evidence review', 'Data-flow, subprocessor, and access analysis', 'Concentration, exit, and fourth-party risk'],
     output: 'A proportionate supplier-risk view with open evidence gaps.',
+    audience: 'Procurement or third-party risk owner.',
     tone: 'cyan',
   },
   {
@@ -61,6 +66,7 @@ const services = [
     summary: 'Map applicable requirements to current evidence, owners, gaps, and an implementation sequence.',
     activities: ['Framework and control-family mapping', 'Evidence preparation and gap analysis', 'Exception and remediation tracking'],
     output: 'Readiness plan—not a certification, accreditation, or legal opinion.',
+    audience: 'Assurance, compliance, or control owner.',
     tone: 'amber',
   },
   {
@@ -69,6 +75,7 @@ const services = [
     summary: 'Make critical services, dependencies, recovery priorities, and continuity assumptions testable.',
     activities: ['Business impact and dependency mapping', 'RTO/RPO and recovery strategy review', 'Restore testing, tabletop exercises, and lessons learned'],
     output: 'A practical resilience roadmap tied to tested recovery outcomes.',
+    audience: 'Continuity or service owner responsible for recovery.',
     tone: 'green',
   },
   {
@@ -77,6 +84,7 @@ const services = [
     summary: 'Prepare people, decisions, evidence, communications, and technical response paths before pressure arrives.',
     activities: ['Roles, escalation, and evidence boundaries', 'Tabletop and purple-team exercise design', 'Post-exercise actions and control improvements'],
     output: 'An exercise record, lessons learned, and owned improvement backlog.',
+    audience: 'Incident, risk, or executive owner convening an exercise.',
     tone: 'red',
   },
 ] as const;
@@ -151,6 +159,7 @@ export default function ServicesPage() {
                 <div className={styles.cardTopline}><span>{service.number} / 08</span><span>ENGAGEMENT AREA</span></div>
                 <h3>{service.title}</h3>
                 <p>{service.summary}</p>
+                <p className={styles.audience}><strong>Best starting point:</strong> {service.audience}</p>
                 <ul>{service.activities.map((activity) => <li key={activity}>{activity}</li>)}</ul>
                 <p className={styles.output}><strong>Typical output:</strong> {service.output}</p>
               </article>

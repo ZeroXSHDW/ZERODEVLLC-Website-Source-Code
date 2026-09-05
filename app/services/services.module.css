@@ -42,6 +42,8 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .cardTopline { color: var(--dim); display: flex; font-size: 8px; justify-content: space-between; letter-spacing: .12em; margin-bottom: 48px; }
 .serviceCard h3 { color: var(--card-signal, var(--green)); font-size: 22px; line-height: 1.05; margin-bottom: 13px; }
 .serviceCard > p { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.55; }
+.serviceCard .audience { color: var(--dim); font-size: 11px; margin-bottom: 18px; }
+.serviceCard .audience strong { color: var(--ink); font-weight: 500; }
 .serviceCard ul { color: var(--dim); display: grid; font-size: 9px; gap: 8px; line-height: 1.45; list-style: none; margin: auto 0 18px; padding: 0; }
 .serviceCard li { border-left: 1px solid var(--card-signal, var(--green)); padding-left: 10px; }
 .serviceCard li::first-letter { color: var(--card-signal, var(--green)); }
