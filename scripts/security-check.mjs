@@ -156,6 +156,9 @@ requireText("app/page.tsx", page, "DEFENSIVE CYBER / RESILIENCE");
 requireText("app/page.tsx", page, "Protect the mission.");
 requireText("app/page.tsx", page, "Authorized penetration testing and vulnerability assessment");
 requireText("app/page.tsx", page, "Disaster recovery, BCP, and incident readiness");
+requireText("app/page.tsx", page, "DEFENSIVE DELIVERY / REVIEWABLE OUTPUT");
+requireText("app/page.tsx", page, "authorized defensive assessments");
+requireText("app/page.tsx", page, "Make the next decision");
 requireText("proxy.ts", proxy, "const liveMapDestination = 'https://zerodevllc.eu/defcon'");
 requireText("proxy.ts", proxy, "isLiveMapPath");
 if (page.includes("defcon-signal-fusion.michaelmorangeometri.chatgpt.site")) {

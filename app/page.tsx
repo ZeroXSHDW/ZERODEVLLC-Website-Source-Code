@@ -318,9 +318,9 @@ export default function Home() {
 
       <section className="services-section" id="services" aria-labelledby="services-heading">
         <div className="services-intro">
-          <p className="eyebrow">{'// DELIVERY SURFACE'}</p>
-          <h2 id="services-heading">From sharp problem<br /><span>to useful system.</span></h2>
-          <p>Bring the route that is unclear, the evidence that is hard to inspect, or the internal tool that has outgrown its first version. The work stays bounded, source-aware, and reviewable.</p>
+          <p className="eyebrow">{'// DEFENSIVE DELIVERY / REVIEWABLE OUTPUT'}</p>
+          <h2 id="services-heading">From evidence<br /><span>to safer action.</span></h2>
+          <p>Bring the security question, supplier decision, recovery concern, or evidence surface that needs to become clearer. The work stays authorized, bounded, source-aware, and reviewable.</p>
           <a className="text-link" href="mailto:hello@zerodevllc.com?subject=ZeroDev%20build%20conversation">Start with the problem <span aria-hidden="true">↗</span></a>
         </div>
         <div className="services-detail">
@@ -333,9 +333,9 @@ export default function Home() {
           </div>
           <aside className="services-boundary">
             <span className="eyebrow">{'// GOOD FIT / KEEP PRIVATE'}</span>
-            <p>Good fit: public-signal interfaces, evidence viewers, architecture sprints, fixed-scope web surfaces, and release-readiness work.</p>
-            <p><strong>Typical deliverables:</strong> a reviewable interface, source map, state and methodology copy, architecture notes, responsive and accessibility checks, and release handoff evidence.</p>
-            <p><strong>Out of scope by default:</strong> authentication, payment activation, customer-data exports, public incident claims, or provider/deployment changes without owner approval.</p>
+            <p>Good fit: authorized defensive assessments, vulnerability and cyber-risk reviews, technical and vendor due diligence, compliance readiness, recovery and BCP, incident exercises, and evidence-led web surfaces that make those decisions usable.</p>
+            <p><strong>Typical deliverables:</strong> a scoped authority record, verified findings or supplier-risk view, control and evidence map, resilience exercise record, remediation and retest path, and reviewable release handoff evidence.</p>
+            <p><strong>Out of scope by default:</strong> unauthorized access, live-target activity without written authority, certification or clearance claims, payment activation, customer-data exports, or provider/deployment changes without owner approval.</p>
             <p>Do not send credentials, customer records, payment details, private incident evidence, or secrets through ordinary email. Start with a high-level problem statement and we can establish a safer handoff path.</p>
           </aside>
         </div>
@@ -344,10 +344,10 @@ export default function Home() {
       <section className="contact-section" aria-labelledby="contact-heading">
         <div>
           <p className="eyebrow">{'// NEXT MOVE'}</p>
-          <h2 id="contact-heading">Build something<br /><span>useful at the edge.</span></h2>
+          <h2 id="contact-heading">Make the next decision<br /><span>safer to act on.</span></h2>
         </div>
         <div className="contact-actions">
-          <p>Have a system that needs to become clearer, faster, or more resilient? Bring the hard edge case. We will find the useful shape.</p>
+          <p>Have a security, supplier, recovery, or resilience question that needs a defensible next step? Bring the high-level objective and the owner who can confirm authority.</p>
           <div className="hero-actions">
             <a className="button button-primary" href="mailto:hello@zerodevllc.com">Contact ZeroDev <span aria-hidden="true">↗</span></a>
             <a className="button button-ghost" href={canonicalDomains.store}>View software &amp; services <span aria-hidden="true">↗</span></a>
