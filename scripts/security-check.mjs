@@ -107,6 +107,8 @@ requireText("app/services/page.tsx", servicesPage, "Readiness is not certificati
 requireText("app/services/page.tsx", servicesPage, "Public-sector procurement");
 requireText("app/services/page.tsx", servicesPage, "Defense-supplier assurance");
 requireText("app/services/page.tsx", servicesPage, "Capability decision matrix");
+requireText("app/services/page.tsx", servicesPage, "Minimum entry gate");
+requireText("app/services/page.tsx", servicesPage, "Written authority, in-scope assets");
 requireText("app/services/page.tsx", servicesPage, "RTO/RPO discussion");
 requireText("app/methodology/page.tsx", methodologyPage, "Written authorization and named decision owner");
 requireText("app/methodology/page.tsx", methodologyPage, "does not perform unauthorized access");
