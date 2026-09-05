@@ -33,6 +33,7 @@ const [
   sectorsPage,
   remediationPage,
   notFoundPage,
+  siteHeader,
   checkoutRoute,
   attacksRoute,
   page,
@@ -60,6 +61,7 @@ const [
   read("app/sectors/page.tsx"),
   read("app/remediation/page.tsx"),
   read("app/not-found.tsx"),
+  read("app/site-header.tsx"),
   readOptional("app/api/checkout/route.ts"),
   read("app/api/attacks/route.ts"),
   read("app/page.tsx"),
@@ -160,6 +162,10 @@ requireText("app/remediation/page.tsx", remediationPage, "twitter:");
 requireText("app/not-found.tsx", notFoundPage, "ROUTE NOT FOUND");
 requireText("app/not-found.tsx", notFoundPage, "Safe recovery.");
 requireText("app/not-found.tsx", notFoundPage, "robots: { index: false, follow: true }");
+requireText("app/site-header.tsx", siteHeader, "headerMenuToggle");
+requireText("app/site-header.tsx", siteHeader, "aria-expanded");
+requireText("app/site-header.tsx", siteHeader, "aria-current");
+requireText("app/site-header.tsx", siteHeader, "requestAnimationFrame");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/privacy");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/services");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/methodology");

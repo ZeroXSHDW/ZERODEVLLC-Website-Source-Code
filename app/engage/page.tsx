@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import SiteHeader from '../site-header';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
@@ -76,19 +77,17 @@ export default function EngagePage() {
   return (
     <main className={styles.page}>
       <a className={styles.skipLink} href="#engage-content">Skip to engagement content</a>
-      <header className={styles.header}>
-        <Link className={styles.brand} href="/" aria-label="ZeroDev LLC home">
-          <span className={styles.brandMark}>Z/</span>
-          <span>ZERODEVLLC<span className={styles.brandDim}>.COM</span></span>
-        </Link>
-        <nav className={styles.headerNav} aria-label="Engagement navigation">
-          <Link href="/services">Services</Link>
-          <Link href="/methodology">Methodology</Link>
-          <Link href="/frameworks">Frameworks</Link>
-          <Link href="/engage" aria-current="page">Engage</Link>
-          <Link href="/privacy">Privacy</Link>
-        </nav>
-      </header>
+      <SiteHeader
+        ariaLabel="Engagement navigation"
+        current="/engage"
+        navigation={[
+          { href: '/services', label: 'Services' },
+          { href: '/methodology', label: 'Methodology' },
+          { href: '/frameworks', label: 'Frameworks' },
+          { href: '/engage', label: 'Engage' },
+          { href: '/privacy', label: 'Privacy' },
+        ]}
+      />
 
       <div className={styles.layout} id="engage-content">
         <section className={styles.hero} aria-labelledby="engage-heading">

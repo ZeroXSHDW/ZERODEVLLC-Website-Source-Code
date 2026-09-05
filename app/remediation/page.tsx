@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import SiteHeader from '../site-header';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
@@ -58,20 +59,18 @@ export default function RemediationPage() {
   return (
     <main className={styles.page}>
       <a className={styles.skipLink} href="#remediation-content">Skip to remediation content</a>
-      <header className={styles.header}>
-        <Link className={styles.brand} href="/" aria-label="ZeroDev LLC home">
-          <span className={styles.brandMark}>Z/</span>
-          <span>ZERODEVLLC<span className={styles.brandDim}>.COM</span></span>
-        </Link>
-        <nav className={styles.headerNav} aria-label="Remediation navigation">
-          <Link href="/services">Services</Link>
-          <Link href="/methodology">Methodology</Link>
-          <Link href="/deliverables">Deliverables</Link>
-          <Link href="/remediation" aria-current="page">Remediation</Link>
-          <Link href="/engage">Engage</Link>
-          <Link href="/privacy">Privacy</Link>
-        </nav>
-      </header>
+      <SiteHeader
+        ariaLabel="Remediation navigation"
+        current="/remediation"
+        navigation={[
+          { href: '/services', label: 'Services' },
+          { href: '/methodology', label: 'Methodology' },
+          { href: '/deliverables', label: 'Deliverables' },
+          { href: '/remediation', label: 'Remediation' },
+          { href: '/engage', label: 'Engage' },
+          { href: '/privacy', label: 'Privacy' },
+        ]}
+      />
 
       <div className={styles.layout} id="remediation-content">
         <section className={styles.hero} aria-labelledby="remediation-heading">

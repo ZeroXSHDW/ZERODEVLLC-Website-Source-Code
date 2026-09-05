@@ -16,6 +16,8 @@
 .brandMark { align-items: center; border: 1px solid var(--green); color: var(--green); display: inline-flex; font-size: 13px; height: 29px; justify-content: center; width: 34px; }
 .brandDim { color: var(--dim); }
 .headerNav { display: flex; gap: 24px; }
+.headerMenuToggle { align-items: center; background: transparent; border: 1px solid var(--line); color: var(--green); cursor: pointer; display: none; gap: 4px; justify-content: center; min-height: 42px; padding: 8px 10px; }
+.headerMenuToggle span { background: currentColor; display: block; height: 1px; width: 18px; }
 .headerNav a[aria-current='page'] { color: var(--ink); }
 .headerNav a:hover, .headerNav a:focus-visible, .primaryLink:hover, .primaryLink:focus-visible { color: var(--green-bright); }
 
@@ -122,8 +124,10 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 
 @media (max-width: 640px) {
   .page { padding-left: 16px; padding-right: 16px; }
-  .header { align-items: flex-start; flex-wrap: wrap; gap: 12px; min-height: 64px; padding: 12px 0; }
-  .headerNav { flex: 1 1 100%; flex-wrap: wrap; gap: 8px 14px; justify-content: flex-start; }
+  .header { align-items: center; display: grid; gap: 12px; grid-template-columns: minmax(0, 1fr) auto; min-height: 64px; padding: 12px 0; }
+  .headerMenuToggle { display: inline-flex; justify-self: end; }
+  .headerNav { display: none; gap: 8px 14px; grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .headerNavOpen { display: grid; }
   .headerNav a { font-size: 8px; }
   .hero { padding: 78px 0 80px; }
   .serviceSection, .lifecycleSection, .methodSection, .frameworkSection, .outputSection, .boundarySection, .twoColumn { padding: 80px 0; }

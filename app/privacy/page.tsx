@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import SiteHeader from '../site-header';
 import styles from './privacy.module.css';
 
 export const metadata: Metadata = {
@@ -31,13 +32,17 @@ export default function PrivacyPage() {
   return (
     <main className={styles.page}>
       <a className={styles.skipLink} href="#privacy-content">Skip to privacy content</a>
-      <header className={styles.header}>
-        <Link className={styles.brand} href="/" aria-label="ZeroDev LLC home">
-          <span className={styles.brandMark}>Z/</span>
-          <span>ZERODEVLLC<span className={styles.brandDim}>.COM</span></span>
-        </Link>
-        <Link className={styles.backLink} href="/">Return to the index <span aria-hidden="true">↗</span></Link>
-      </header>
+      <SiteHeader
+        ariaLabel="Privacy navigation"
+        current="/privacy"
+        navigation={[
+          { href: '/services', label: 'Services' },
+          { href: '/methodology', label: 'Methodology' },
+          { href: '/frameworks', label: 'Frameworks' },
+          { href: '/engage', label: 'Engage' },
+          { href: '/privacy', label: 'Privacy' },
+        ]}
+      />
 
       <div className={styles.layout} id="privacy-content">
         <section className={styles.intro} aria-labelledby="privacy-heading">

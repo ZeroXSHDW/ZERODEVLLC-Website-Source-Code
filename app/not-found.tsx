@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import SiteHeader from './site-header';
 import styles from './services/services.module.css';
 
 export const metadata: Metadata = {
@@ -12,18 +13,15 @@ export default function NotFound() {
   return (
     <main className={styles.page}>
       <a className={styles.skipLink} href="#not-found-content">Skip to route status</a>
-      <header className={styles.header}>
-        <Link className={styles.brand} href="/" aria-label="ZeroDev LLC home">
-          <span className={styles.brandMark}>Z/</span>
-          <span>ZERODEVLLC<span className={styles.brandDim}>.COM</span></span>
-        </Link>
-        <nav className={styles.headerNav} aria-label="Route recovery navigation">
-          <Link href="/services">Services</Link>
-          <Link href="/engage">Engage</Link>
-          <Link href="/methodology">Methodology</Link>
-          <Link href="/privacy">Privacy</Link>
-        </nav>
-      </header>
+      <SiteHeader
+        ariaLabel="Route recovery navigation"
+        navigation={[
+          { href: '/services', label: 'Services' },
+          { href: '/engage', label: 'Engage' },
+          { href: '/methodology', label: 'Methodology' },
+          { href: '/privacy', label: 'Privacy' },
+        ]}
+      />
 
       <div className={styles.layout} id="not-found-content">
         <section className={styles.hero} aria-labelledby="not-found-heading">
