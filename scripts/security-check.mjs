@@ -98,6 +98,8 @@ requireText("app/services/page.tsx", servicesPage, "Readiness is not certificati
 requireText("app/methodology/page.tsx", methodologyPage, "Written authorization and named decision owner");
 requireText("app/methodology/page.tsx", methodologyPage, "does not perform unauthorized access");
 requireText("app/frameworks/page.tsx", frameworksPage, "NIST CSF 2.0");
+requireText("app/frameworks/page.tsx", frameworksPage, "NIST SP 800-171 Rev. 3");
+requireText("app/frameworks/page.tsx", frameworksPage, "NCSC Cyber Assessment Framework 4.0");
 requireText("app/frameworks/page.tsx", frameworksPage, "Readiness support is not");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/privacy");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/services");
