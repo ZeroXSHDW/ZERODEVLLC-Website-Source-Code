@@ -118,7 +118,7 @@ export default function EngagePage() {
 
         <section className={styles.cta} aria-labelledby="engage-cta-heading">
           <div><p className={styles.eyebrow}>{'// NEXT MOVE'}</p><h2 id="engage-cta-heading">Make the first<br /><span>message useful.</span></h2></div>
-          <div><p>Send only a high-level objective, the service question, the intended audience, and the person who can confirm authority. No sensitive evidence is required to start.</p><p><a className={styles.primaryLink} href="mailto:hello@zerodevllc.com?subject=ZeroDevLLC%20engagement%20brief">Start the conversation <span aria-hidden="true">↗</span></a><br /><Link className={styles.primaryLink} href="/services">Review all services <span aria-hidden="true">↗</span></Link></p></div>
+          <div><p>Send only a high-level objective, the service question, the intended audience, and the person who can confirm authority. No sensitive evidence is required to start.</p><p><a className={styles.primaryLink} href="mailto:hello@zerodevllc.com?subject=ZeroDevLLC%20engagement%20brief">Start the conversation <span aria-hidden="true">↗</span></a><br /><Link className={styles.primaryLink} href="/services">Review all services <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/deliverables">Review deliverable shapes <span aria-hidden="true">↗</span></Link></p></div>
         </section>
       </div>
     </main>

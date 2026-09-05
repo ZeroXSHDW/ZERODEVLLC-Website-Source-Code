@@ -97,6 +97,7 @@ export default function MethodologyPage() {
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// EVIDENCE OUTPUTS'}</p>
             <h2 id="outputs-heading">Make the result<br /><span>usable.</span></h2>
+            <p><Link className={styles.primaryLink} href="/deliverables">See representative deliverable shapes <span aria-hidden="true">↗</span></Link></p>
           </div>
           <div className={styles.outputGrid}>
             <article className={styles.outputCard}><h3>Executive view</h3><p>Decision, risk, owner, treatment choices, residual risk, and the next review date.</p></article>

@@ -79,6 +79,11 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .outputCard, .frameworkCard { border: 1px solid var(--line); padding: 21px; }
 .outputCard h3, .frameworkCard h3 { color: var(--green); font-size: 19px; margin-bottom: 10px; }
 .outputCard p, .frameworkCard p { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.55; margin: 0; }
+.outputCard .artifactAudience { color: var(--green); font-size: 10px; letter-spacing: .08em; margin-bottom: 18px; text-transform: uppercase; }
+.fieldList { color: var(--muted); display: grid; font-family: Arial, Helvetica, sans-serif; font-size: 12px; gap: 8px; line-height: 1.45; list-style: none; margin: 0; padding: 0; }
+.fieldList li { border-left: 1px solid var(--green); padding-left: 10px; }
+.outputCard .cardBoundary { border-top: 1px solid var(--line); color: var(--dim); font-size: 11px; margin-top: 20px; padding-top: 13px; }
+.outputCard .cardBoundary strong { color: var(--ink); font-weight: 500; }
 .frameworkTag { color: var(--cyan); display: block; font-size: 8px; letter-spacing: .12em; margin-bottom: 38px; }
 .frameworkCard h3 { color: var(--ink); font-size: 18px; }
 .frameworkCard .cardBoundary { border-top: 1px solid var(--line); color: var(--dim); font-size: 11px; margin-top: 18px; padding-top: 13px; }
@@ -93,8 +98,8 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 
 @media (max-width: 640px) {
   .page { padding-left: 16px; padding-right: 16px; }
-  .header { min-height: 64px; }
-  .headerNav { gap: 12px; }
+  .header { align-items: flex-start; flex-wrap: wrap; gap: 12px; min-height: 64px; padding: 12px 0; }
+  .headerNav { flex: 1 1 100%; flex-wrap: wrap; gap: 8px 14px; justify-content: flex-start; }
   .headerNav a { font-size: 8px; }
   .hero { padding: 78px 0 80px; }
   .serviceSection, .lifecycleSection, .methodSection, .frameworkSection, .outputSection, .boundarySection, .twoColumn { padding: 80px 0; }

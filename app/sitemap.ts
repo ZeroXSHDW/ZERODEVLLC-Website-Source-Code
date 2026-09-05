@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: 'https://zerodevllc.com/methodology' },
     { url: 'https://zerodevllc.com/frameworks' },
     { url: 'https://zerodevllc.com/engage' },
+    { url: 'https://zerodevllc.com/deliverables' },
     { url: 'https://zerodevllc.com/privacy' },
   ];
 }

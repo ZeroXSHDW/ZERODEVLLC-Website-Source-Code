@@ -29,6 +29,7 @@ const [
   methodologyPage,
   frameworksPage,
   engagePage,
+  deliverablesPage,
   checkoutRoute,
   attacksRoute,
   page,
@@ -52,6 +53,7 @@ const [
   read("app/methodology/page.tsx"),
   read("app/frameworks/page.tsx"),
   read("app/engage/page.tsx"),
+  read("app/deliverables/page.tsx"),
   readOptional("app/api/checkout/route.ts"),
   read("app/api/attacks/route.ts"),
   read("app/page.tsx"),
@@ -108,11 +110,15 @@ requireText("app/frameworks/page.tsx", frameworksPage, "NCSC Cyber Assessment Fr
 requireText("app/frameworks/page.tsx", frameworksPage, "Readiness support is not");
 requireText("app/engage/page.tsx", engagePage, "Do not send secrets");
 requireText("app/engage/page.tsx", engagePage, "decision owner");
+requireText("app/deliverables/page.tsx", deliverablesPage, "TEMPLATE SHAPE / NOT CLIENT EVIDENCE");
+requireText("app/deliverables/page.tsx", deliverablesPage, "Received is not");
+requireText("app/deliverables/page.tsx", deliverablesPage, "private incident evidence");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/privacy");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/services");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/methodology");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/frameworks");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/engage");
+requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/deliverables");
 for (const source of [proxy, nextConfig]) {
   if (source.includes("'unsafe-inline'"))
     failures.push("CSP must not allow unsafe inline scripts or styles");
