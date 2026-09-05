@@ -128,7 +128,7 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
   .headerMenuToggle { display: inline-flex; justify-self: end; }
   .headerNav { display: none; gap: 8px 14px; grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .headerNavOpen { display: grid; }
-  .headerNav a { font-size: 8px; }
+  .headerNav a { align-items: center; display: flex; font-size: 8px; min-height: 42px; }
   .hero { padding: 78px 0 80px; }
   .serviceSection, .lifecycleSection, .methodSection, .frameworkSection, .outputSection, .boundarySection, .twoColumn { padding: 80px 0; }
   .serviceGrid, .outputGrid, .frameworkGrid { grid-template-columns: 1fr; }
