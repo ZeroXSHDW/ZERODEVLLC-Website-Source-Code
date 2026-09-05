@@ -48,6 +48,7 @@ export default function MethodologyPage() {
         <nav className={styles.headerNav} aria-label="Methodology navigation">
           <Link href="/services">Services</Link>
           <Link href="/frameworks">Frameworks</Link>
+          <Link href="/engage">Engage</Link>
           <Link href="/privacy">Privacy</Link>
         </nav>
       </header>

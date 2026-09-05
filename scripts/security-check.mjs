@@ -28,6 +28,7 @@ const [
   servicesPage,
   methodologyPage,
   frameworksPage,
+  engagePage,
   checkoutRoute,
   attacksRoute,
   page,
@@ -50,6 +51,7 @@ const [
   read("app/services/page.tsx"),
   read("app/methodology/page.tsx"),
   read("app/frameworks/page.tsx"),
+  read("app/engage/page.tsx"),
   readOptional("app/api/checkout/route.ts"),
   read("app/api/attacks/route.ts"),
   read("app/page.tsx"),
@@ -101,10 +103,13 @@ requireText("app/frameworks/page.tsx", frameworksPage, "NIST CSF 2.0");
 requireText("app/frameworks/page.tsx", frameworksPage, "NIST SP 800-171 Rev. 3");
 requireText("app/frameworks/page.tsx", frameworksPage, "NCSC Cyber Assessment Framework 4.0");
 requireText("app/frameworks/page.tsx", frameworksPage, "Readiness support is not");
+requireText("app/engage/page.tsx", engagePage, "Do not send secrets");
+requireText("app/engage/page.tsx", engagePage, "decision owner");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/privacy");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/services");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/methodology");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/frameworks");
+requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/engage");
 for (const source of [proxy, nextConfig]) {
   if (source.includes("'unsafe-inline'"))
     failures.push("CSP must not allow unsafe inline scripts or styles");

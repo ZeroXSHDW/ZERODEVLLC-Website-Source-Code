@@ -116,6 +116,7 @@ export default function ServicesPage() {
             <p>ZeroDev helps organizations turn technical evidence into safer decisions, stronger controls, and more recoverable operations.</p>
             <p className={styles.heroBoundary}><strong>Authorized work only.</strong> Every assessment begins with scope, authority, safety boundaries, and an agreed evidence path.</p>
             <a className={styles.primaryLink} href="mailto:hello@zerodevllc.com?subject=Authorized%20cyber%20assessment%20conversation">Start an authorized conversation <span aria-hidden="true">↗</span></a>
+            <p><Link className={styles.primaryLink} href="/engage">Prepare a safe first brief <span aria-hidden="true">↗</span></Link></p>
           </div>
         </section>
 
@@ -174,7 +175,7 @@ export default function ServicesPage() {
           </div>
           <div>
             <p>Start with a high-level objective. Do not send credentials, secrets, customer records, payment details, or private incident evidence through ordinary email.</p>
-            <a className={styles.primaryLink} href="mailto:hello@zerodevllc.com?subject=ZeroDevLLC%20defensive%20cyber%20services">Contact ZeroDevLLC <span aria-hidden="true">↗</span></a>
+            <Link className={styles.primaryLink} href="/engage">Prepare the engagement brief <span aria-hidden="true">↗</span></Link>
           </div>
         </section>
       </div>
