@@ -30,6 +30,7 @@ const [
   frameworksPage,
   engagePage,
   deliverablesPage,
+  assurancePage,
   sectorsPage,
   remediationPage,
   notFoundPage,
@@ -61,6 +62,7 @@ const [
   read("app/frameworks/page.tsx"),
   read("app/engage/page.tsx"),
   read("app/deliverables/page.tsx"),
+  read("app/assurance/page.tsx"),
   read("app/sectors/page.tsx"),
   read("app/remediation/page.tsx"),
   read("app/not-found.tsx"),
@@ -152,6 +154,12 @@ requireText("app/deliverables/page.tsx", deliverablesPage, "TEMPLATE SHAPE / NOT
 requireText("app/deliverables/page.tsx", deliverablesPage, "Received is not");
 requireText("app/deliverables/page.tsx", deliverablesPage, "private incident evidence");
 requireText("app/deliverables/page.tsx", deliverablesPage, "twitter:");
+requireText("app/assurance/page.tsx", assurancePage, "Authority and scope");
+requireText("app/assurance/page.tsx", assurancePage, "Evidence discipline");
+requireText("app/assurance/page.tsx", assurancePage, "Data minimization");
+requireText("app/assurance/page.tsx", assurancePage, "Never through this site or ordinary email");
+requireText("app/assurance/page.tsx", assurancePage, "Readiness support is not certification");
+requireText("app/assurance/page.tsx", assurancePage, "twitter:");
 requireText("app/sectors/page.tsx", sectorsPage, "Public-sector and government programs");
 requireText("app/sectors/page.tsx", sectorsPage, "Defense suppliers and primes");
 requireText("app/sectors/page.tsx", sectorsPage, "Audience map only");
@@ -192,6 +200,7 @@ requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/methodology");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/frameworks");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/engage");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/deliverables");
+requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/assurance");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/sectors");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/remediation");
 for (const source of [proxy, nextConfig]) {

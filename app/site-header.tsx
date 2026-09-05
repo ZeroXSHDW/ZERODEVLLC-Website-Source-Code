@@ -14,6 +14,7 @@ export const secondaryNavigation = [
   { href: '/engage', label: 'Engage' },
   { href: '/sectors', label: 'Sector fit' },
   { href: '/deliverables', label: 'Deliverables' },
+  { href: '/assurance', label: 'Assurance' },
   { href: '/methodology', label: 'Methodology' },
   { href: '/frameworks', label: 'Frameworks' },
   { href: '/remediation', label: 'Remediation' },

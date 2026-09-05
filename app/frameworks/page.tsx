@@ -104,7 +104,7 @@ export default function FrameworksPage() {
 
         <section className={styles.cta} aria-labelledby="frameworks-cta-heading">
           <div><p className={styles.eyebrow}>{'// NEXT MOVE'}</p><h2 id="frameworks-cta-heading">Choose the<br /><span>decision to support.</span></h2></div>
-          <div><p>Start with the requirement, the system, or the risk decision. Do not send secrets or sensitive evidence through ordinary email.</p><Link className={styles.primaryLink} href="/services">Review services <span aria-hidden="true">↗</span></Link></div>
+          <div><p>Start with the requirement, the system, or the risk decision. Do not send secrets or sensitive evidence through ordinary email.</p><Link className={styles.primaryLink} href="/assurance">Review assurance boundaries <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/services">Review services <span aria-hidden="true">↗</span></Link></div>
         </section>
       </div>
     </main>

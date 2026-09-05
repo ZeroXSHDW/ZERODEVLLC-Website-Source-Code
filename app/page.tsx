@@ -256,6 +256,7 @@ export default function Home() {
           <div className="mission-links">
             <a className="text-link" href="/services">Review security and resilience services <span aria-hidden="true">↗</span></a>
             <a className="text-link" href="/sectors">Find your operating context <span aria-hidden="true">↗</span></a>
+            <a className="text-link" href="/assurance">Review the assurance approach <span aria-hidden="true">↗</span></a>
           </div>
         </div>
         <div className="mission-lanes">
