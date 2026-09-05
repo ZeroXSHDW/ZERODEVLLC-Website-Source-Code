@@ -129,6 +129,12 @@ const deliveryPhases = [
   ['05', 'Handover', 'Leave behind a reviewable candidate, clear limitations, and an explicit list of owner-gated next actions.'],
 ] as const;
 
+const missionLanes = [
+  ['01', 'ASSESS', 'Authorized penetration testing and vulnerability assessment', 'Understand exposure and validate what the evidence actually shows.'],
+  ['02', 'ASSURE', 'Risk management, due diligence, and compliance readiness', 'Give owners and procurement a defensible treatment and evidence path.'],
+  ['03', 'RECOVER', 'Disaster recovery, BCP, and incident readiness', 'Keep critical services moving through tested decisions and known dependencies.'],
+] as const;
+
 const navigation = [
   { href: '#systems', label: 'Systems' },
   { href: '#evidence', label: 'Evidence' },
@@ -201,6 +207,25 @@ export default function Home() {
         <div><strong>01</strong><span>EU signal gateway</span></div>
         <div><strong>RO</strong><span>read-only public signals</span></div>
         <div><strong>0</strong><span>invented security claims</span></div>
+      </section>
+
+      <section className="mission-brief" aria-labelledby="mission-heading">
+        <div className="mission-brief-intro">
+          <p className="eyebrow">{'// DEFENSIVE CYBER / RESILIENCE'}</p>
+          <h2 id="mission-heading">Protect the mission.<br /><span>Keep the service moving.</span></h2>
+          <p>ZeroDev helps public-sector programs, defense suppliers, essential services, and regulated-technology teams turn authorized security evidence into safer decisions, stronger controls, and tested recovery.</p>
+          <p className="mission-boundary"><strong>Authority and evidence first.</strong> Scope, written authority, information handling, limitations, and owner decisions remain explicit before technical activity begins.</p>
+          <a className="text-link" href="/services">Review security and resilience services <span aria-hidden="true">↗</span></a>
+        </div>
+        <div className="mission-lanes">
+          {missionLanes.map(([number, title, description, outcome]) => (
+            <article className="mission-lane" key={number}>
+              <span>{number}</span>
+              <h3>{title}</h3>
+              <div><p>{description}</p><small>{outcome}</small></div>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="system-section" id="systems" aria-labelledby="systems-heading">
