@@ -36,6 +36,15 @@ const controls = [
   'Explicit limitations, assumptions, and residual risk',
 ];
 
+const riskFactors = [
+  'Mission consequence — effect on a critical service, safety objective, obligation, or decision',
+  'Exposure — reachability, dependency, affected population, and operating conditions',
+  'Exploitability — effort, access, capability, prerequisites, and plausible attack path',
+  'Control strength — prevention, detection, response, recovery, and compensating measures',
+  'Evidence confidence — source quality, recency, verification method, and unresolved uncertainty',
+  'Urgency — change window, threat context, contractual date, or decision that makes timing material',
+] as const;
+
 export default function MethodologyPage() {
   return (
     <main className={styles.page}>
@@ -90,6 +99,18 @@ export default function MethodologyPage() {
           </div>
           <div className={styles.checkList}>
             {controls.map((control, index) => <div key={control}><span>{String(index + 1).padStart(2, '0')}</span><p>{control}</p></div>)}
+          </div>
+        </section>
+
+        <section className={styles.twoColumn} aria-labelledby="risk-heading">
+          <div>
+            <p className={styles.eyebrow}>{'// RISK INTERPRETATION'}</p>
+            <h2 id="risk-heading">Risk is<br /><span>contextual.</span></h2>
+            <p className={styles.bodyCopy}>A finding becomes useful when its consequence, exposure, exploitability, control strength, evidence confidence, and urgency are visible to the people who own the decision.</p>
+            <p className={styles.bodyCopy}>Potential treatment choices include remediate, mitigate, transfer, avoid, accept with a named owner and time boundary, or monitor and retest. A rating supports prioritization; it does not replace contract, legal, safety, classification, or owner judgment.</p>
+          </div>
+          <div className={styles.checkList}>
+            {riskFactors.map((factor, index) => <div key={factor}><span>{String(index + 1).padStart(2, '0')}</span><p>{factor}</p></div>)}
           </div>
         </section>
 

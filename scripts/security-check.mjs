@@ -106,6 +106,8 @@ requireText("app/services/page.tsx", servicesPage, "Public-sector procurement");
 requireText("app/services/page.tsx", servicesPage, "Defense-supplier assurance");
 requireText("app/methodology/page.tsx", methodologyPage, "Written authorization and named decision owner");
 requireText("app/methodology/page.tsx", methodologyPage, "does not perform unauthorized access");
+requireText("app/methodology/page.tsx", methodologyPage, "Potential treatment choices");
+requireText("app/methodology/page.tsx", methodologyPage, "Evidence confidence");
 requireText("app/frameworks/page.tsx", frameworksPage, "NIST CSF 2.0");
 requireText("app/frameworks/page.tsx", frameworksPage, "NIST SP 800-171 Rev. 3");
 requireText("app/frameworks/page.tsx", frameworksPage, "NCSC Cyber Assessment Framework 4.0");
