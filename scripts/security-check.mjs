@@ -82,6 +82,7 @@ requireText("proxy.ts", proxy, "zerodevllc-com-v50");
 requireText("next.config.ts", nextConfig, "zerodevllc-com-v50");
 requireText("app/layout.tsx", layout, "export const dynamic = 'force-dynamic'");
 requireText("app/layout.tsx", layout, "metadataBase: new URL('https://zerodevllc.com')");
+requireText("app/layout.tsx", layout, "Authorized defensive cybersecurity");
 requireText("app/layout.tsx", layout, "summary_large_image");
 requireText("app/layout.tsx", layout, "url: '/og.png'");
 requireText("app/api/attacks/route.ts", attacksRoute, "stale-while-revalidate=300");

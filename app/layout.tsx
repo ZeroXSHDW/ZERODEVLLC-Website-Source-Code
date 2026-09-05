@@ -3,17 +3,17 @@ import './globals.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://zerodevllc.com'),
-  title: 'ZeroDev LLC // Build for the edge',
-  description: 'ZeroDev LLC builds high-signal software, threat intelligence surfaces, and resilient interfaces from Ireland, including the DEFCON Signal Fusion EU gateway.',
-  keywords: ['ZeroDev LLC', 'software engineering', 'threat intelligence', 'DEFCON', 'Ireland'],
+  title: 'ZeroDev LLC // Defensive cyber risk and resilience',
+  description: 'Authorized defensive cybersecurity, cyber-risk, technical and vendor due diligence, compliance readiness, and operational resilience services from Ireland.',
+  keywords: ['ZeroDev LLC', 'authorized penetration testing', 'vulnerability assessment', 'cyber risk management', 'technical due diligence', 'vendor due diligence', 'compliance readiness', 'disaster recovery', 'business continuity', 'incident readiness', 'DEFCON', 'Ireland'],
   applicationName: 'ZeroDev LLC',
   creator: 'ZeroDev LLC',
   alternates: {
     canonical: 'https://zerodevllc.com',
   },
   openGraph: {
-    title: 'ZeroDev LLC // Build for the edge',
-    description: 'High-signal software, threat intelligence surfaces, and the DEFCON Signal Fusion EU gateway from Ireland.',
+    title: 'ZeroDev LLC // Defensive cyber risk and resilience',
+    description: 'Authorized defensive cybersecurity, due diligence, readiness, and resilience services from Ireland.',
     url: 'https://zerodevllc.com',
     siteName: 'ZeroDev LLC',
     type: 'website',
@@ -27,8 +27,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ZeroDev LLC // Build for the edge',
-    description: 'High-signal software, threat intelligence surfaces, and the DEFCON Signal Fusion EU gateway from Ireland.',
+    title: 'ZeroDev LLC // Defensive cyber risk and resilience',
+    description: 'Authorized defensive cybersecurity, due diligence, readiness, and resilience services from Ireland.',
     images: ['/og.png'],
   },
   icons: { icon: '/favicon.svg' },
