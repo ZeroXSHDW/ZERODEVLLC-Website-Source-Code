@@ -32,6 +32,7 @@ const [
   deliverablesPage,
   sectorsPage,
   remediationPage,
+  notFoundPage,
   checkoutRoute,
   attacksRoute,
   page,
@@ -58,6 +59,7 @@ const [
   read("app/deliverables/page.tsx"),
   read("app/sectors/page.tsx"),
   read("app/remediation/page.tsx"),
+  read("app/not-found.tsx"),
   readOptional("app/api/checkout/route.ts"),
   read("app/api/attacks/route.ts"),
   read("app/page.tsx"),
@@ -100,6 +102,7 @@ requireText("app/live-defcon-map.tsx", liveDefconMap, "MAX_EVENT_URL_LENGTH");
 requireText("app/live-defcon-map.tsx", liveDefconMap, ".slice(0, MAX_EVENTS)");
 requireText("app/privacy/page.tsx", privacyPage, "https://zerodevllc.com/privacy");
 requireText("app/privacy/page.tsx", privacyPage, "Do not send credentials");
+requireText("app/privacy/page.tsx", privacyPage, "twitter:");
 requireText("app/services/page.tsx", servicesPage, "Authorized penetration testing");
 requireText("app/services/page.tsx", servicesPage, "Vendor due diligence");
 requireText("app/services/page.tsx", servicesPage, "Disaster recovery and BCP");
@@ -107,6 +110,7 @@ requireText("app/services/page.tsx", servicesPage, "Readiness is not certificati
 requireText("app/services/page.tsx", servicesPage, "Public-sector procurement");
 requireText("app/services/page.tsx", servicesPage, "Defense-supplier assurance");
 requireText("app/services/page.tsx", servicesPage, "Capability decision matrix");
+requireText("app/services/page.tsx", servicesPage, "twitter:");
 requireText("app/services/page.tsx", servicesPage, "Minimum entry gate");
 requireText("app/services/page.tsx", servicesPage, "Written authority, in-scope assets");
 requireText("app/services/page.tsx", servicesPage, "Best starting point");
@@ -117,6 +121,7 @@ requireText("app/methodology/page.tsx", methodologyPage, "Written authorization 
 requireText("app/methodology/page.tsx", methodologyPage, "does not perform unauthorized access");
 requireText("app/methodology/page.tsx", methodologyPage, "Potential treatment choices");
 requireText("app/methodology/page.tsx", methodologyPage, "Evidence confidence");
+requireText("app/methodology/page.tsx", methodologyPage, "twitter:");
 requireText("app/frameworks/page.tsx", frameworksPage, "NIST CSF 2.0");
 requireText("app/frameworks/page.tsx", frameworksPage, "NIST SP 800-30 Rev. 1");
 requireText("app/frameworks/page.tsx", frameworksPage, "NIST SP 800-61 Rev. 3");
@@ -124,15 +129,20 @@ requireText("app/frameworks/page.tsx", frameworksPage, "NIST SP 800-171 Rev. 3")
 requireText("app/frameworks/page.tsx", frameworksPage, "NCSC Cyber Assessment Framework 4.0");
 requireText("app/frameworks/page.tsx", frameworksPage, "primary publisher reference");
 requireText("app/frameworks/page.tsx", frameworksPage, "Readiness support is not");
+requireText("app/frameworks/page.tsx", frameworksPage, "twitter:");
 requireText("app/engage/page.tsx", engagePage, "Do not send secrets");
 requireText("app/engage/page.tsx", engagePage, "decision owner");
+requireText("app/engage/page.tsx", engagePage, "briefMailto");
+requireText("app/engage/page.tsx", engagePage, "Open a high-level brief template");
 requireText("app/engage/page.tsx", engagePage, "INFORMATION HANDLING GUIDANCE");
 requireText("app/engage/page.tsx", engagePage, "classified-information handling policy");
 requireText("app/engage/page.tsx", engagePage, "Review aligned services");
 requireText("app/engage/page.tsx", engagePage, "service-${serviceNumber}");
+requireText("app/engage/page.tsx", engagePage, "twitter:");
 requireText("app/deliverables/page.tsx", deliverablesPage, "TEMPLATE SHAPE / NOT CLIENT EVIDENCE");
 requireText("app/deliverables/page.tsx", deliverablesPage, "Received is not");
 requireText("app/deliverables/page.tsx", deliverablesPage, "private incident evidence");
+requireText("app/deliverables/page.tsx", deliverablesPage, "twitter:");
 requireText("app/sectors/page.tsx", sectorsPage, "Public-sector and government programs");
 requireText("app/sectors/page.tsx", sectorsPage, "Defense suppliers and primes");
 requireText("app/sectors/page.tsx", sectorsPage, "Audience map only");
@@ -140,11 +150,16 @@ requireText("app/sectors/page.tsx", sectorsPage, "Aligned service lanes");
 requireText("app/sectors/page.tsx", sectorsPage, "service-${serviceNumber}");
 requireText("app/sectors/page.tsx", sectorsPage, "First brief should cover");
 requireText("app/sectors/page.tsx", sectorsPage, "Decision date, accountable owner");
+requireText("app/sectors/page.tsx", sectorsPage, "twitter:");
 requireText("app/remediation/page.tsx", remediationPage, "Review model only");
 requireText("app/remediation/page.tsx", remediationPage, "No owner");
 requireText("app/remediation/page.tsx", remediationPage, "Closed with evidence or accepted risk");
 requireText("app/remediation/page.tsx", remediationPage, "Illustrative action matrix");
 requireText("app/remediation/page.tsx", remediationPage, "not client evidence");
+requireText("app/remediation/page.tsx", remediationPage, "twitter:");
+requireText("app/not-found.tsx", notFoundPage, "ROUTE NOT FOUND");
+requireText("app/not-found.tsx", notFoundPage, "Safe recovery.");
+requireText("app/not-found.tsx", notFoundPage, "robots: { index: false, follow: true }");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/privacy");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/services");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/methodology");
@@ -168,6 +183,8 @@ requireText("app/page.tsx", page, "Protect the mission.");
 requireText("app/page.tsx", page, "Authorized penetration testing and vulnerability assessment");
 requireText("app/page.tsx", page, "Disaster recovery, BCP, and incident readiness");
 requireText("app/page.tsx", page, "DEFENSIVE DELIVERY / REVIEWABLE OUTPUT");
+requireText("app/page.tsx", page, "Prepare a brief");
+requireText("app/page.tsx", page, "Find your operating context");
 requireText("app/page.tsx", page, "authorized defensive assessments");
 requireText("app/page.tsx", page, "Make the next decision");
 requireText("proxy.ts", proxy, "const liveMapDestination = 'https://zerodevllc.eu/defcon'");

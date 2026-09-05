@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { ThreatFeedStatus } from './feed-types';
 
@@ -36,18 +36,52 @@ export function useHomeStatus() {
 
 export function HomeHeader({ navigation, statusHref }: { navigation: readonly NavigationItem[]; statusHref: string }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigationRef = useRef<HTMLElement | null>(null);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
   const { status } = useHomeStatus();
   const copy = getStatusCopy(status);
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
   useEffect(() => {
     if (!mobileMenuOpen) return undefined;
+    const getLinks = () => Array.from(
+      navigationRef.current?.querySelectorAll<HTMLElement>('a[href]') ?? [],
+    );
+    const firstLink = getLinks()[0];
+    firstLink?.focus();
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setMobileMenuOpen(false);
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setMobileMenuOpen(false);
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      const links = getLinks();
+      if (links.length < 2) return;
+      const first = links[0];
+      const last = links[links.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener('keydown', closeOnEscape);
-    return () => window.removeEventListener('keydown', closeOnEscape);
+    return () => {
+      window.removeEventListener('keydown', closeOnEscape);
+      const previouslyFocused = previouslyFocusedRef.current;
+      if (previouslyFocused?.isConnected) previouslyFocused.focus();
+    };
   }, [mobileMenuOpen]);
+
+  const toggleMobileMenu = () => {
+    if (!mobileMenuOpen) {
+      previouslyFocusedRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    }
+    setMobileMenuOpen((open) => !open);
+  };
 
   return (
     <header className="topbar">
@@ -55,7 +89,7 @@ export function HomeHeader({ navigation, statusHref }: { navigation: readonly Na
         <span className="brand-mark">Z/</span>
         <span>ZERODEVLLC<span className="brand-dim">.COM</span></span>
       </a>
-      <nav className={`nav${mobileMenuOpen ? ' is-open' : ''}`} id="primary-navigation" aria-label="Primary navigation">
+      <nav className={`nav${mobileMenuOpen ? ' is-open' : ''}`} id="primary-navigation" ref={navigationRef} aria-label="Primary navigation">
         {navigation.map((item) => <a href={item.href} key={item.href} onClick={closeMobileMenu}>{item.label}</a>)}
       </nav>
       <button
@@ -64,7 +98,7 @@ export function HomeHeader({ navigation, statusHref }: { navigation: readonly Na
         aria-expanded={mobileMenuOpen}
         aria-controls="primary-navigation"
         aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-        onClick={() => setMobileMenuOpen((open) => !open)}
+        onClick={toggleMobileMenu}
       >
         <span aria-hidden="true" />
         <span aria-hidden="true" />

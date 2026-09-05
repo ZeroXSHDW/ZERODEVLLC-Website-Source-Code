@@ -24,7 +24,7 @@ const systems = [
     status: 'ROUTE / UNVERIFIED',
     freshness: 'Current provider link not recorded',
     limitation: 'The historical provider hostname is withheld until source and route ownership are reconciled.',
-    detailHref: '#evidence',
+    detailHref: '#approach',
     external: false,
     actionLabel: 'VIEW STATUS',
   },
@@ -122,11 +122,46 @@ const evidenceCards = [
 ];
 
 const deliveryPhases = [
-  ['01', 'Frame', 'Turn the hard edge case into a bounded outcome and a route that someone can actually use.'],
-  ['02', 'Map', 'Make source, ownership, states, privacy boundaries, and release evidence visible before the build gets noisy.'],
-  ['03', 'Build', 'Shape the interface, integration, or internal tool around the decision it needs to support.'],
-  ['04', 'Verify', 'Check responsive behavior, accessibility, security controls, source links, error paths, and handoff evidence.'],
-  ['05', 'Handover', 'Leave behind a reviewable candidate, clear limitations, and an explicit list of owner-gated next actions.'],
+  {
+    number: '01',
+    title: 'Frame',
+    description: 'Turn the hard edge case into a bounded outcome and a route that someone can actually use.',
+    output: 'A decision brief with scope, audience, and success measure.',
+    decision: 'What must become clearer, safer, or more useful?',
+    evidence: 'Authority, assumptions, exclusions, and the owner of the decision.',
+  },
+  {
+    number: '02',
+    title: 'Map',
+    description: 'Make source, ownership, states, privacy boundaries, and release evidence visible before the build gets noisy.',
+    output: 'A source map and operating model for the surface.',
+    decision: 'Which signals and dependencies are actually in scope?',
+    evidence: 'Source links, route owners, freshness rules, and known limitations.',
+  },
+  {
+    number: '03',
+    title: 'Build',
+    description: 'Shape the interface, integration, or internal tool around the decision it needs to support.',
+    output: 'A working interface or bounded system slice to review.',
+    decision: 'Can the intended audience act on the information?',
+    evidence: 'Implementation notes, states, content boundaries, and integration assumptions.',
+  },
+  {
+    number: '04',
+    title: 'Verify',
+    description: 'Check responsive behavior, accessibility, security controls, source links, error paths, and handoff evidence.',
+    output: 'A validation record with findings and remaining risks.',
+    decision: 'What is ready for review, and what still needs an owner?',
+    evidence: 'Quality checks, viewport review, security controls, errors, and unresolved gates.',
+  },
+  {
+    number: '05',
+    title: 'Handover',
+    description: 'Leave behind a reviewable candidate, clear limitations, and an explicit list of owner-gated next actions.',
+    output: 'A candidate release package and next-action register.',
+    decision: 'Who approves, operates, deploys, or stops the next step?',
+    evidence: 'Source identity, rollback reference, acceptance notes, and owner decisions.',
+  },
 ] as const;
 
 const missionLanes = [
@@ -137,8 +172,10 @@ const missionLanes = [
 
 const navigation = [
   { href: '#systems', label: 'Systems' },
+  { href: '/services', label: 'Security services' },
+  { href: '/engage', label: 'Prepare a brief' },
   { href: '#evidence', label: 'Evidence' },
-  { href: '#services', label: 'Services' },
+  { href: '#services', label: 'Delivery model' },
   { href: '#defcon-map', label: 'Live map' },
   { href: '#approach', label: 'Approach' },
 ] as const;
@@ -161,16 +198,17 @@ export default function Home() {
             <span>Systems out.</span>
           </h1>
           <p className="hero-lede">
-            ZeroDev builds the software layer between a sharp idea and a live system — from public-signal surfaces to resilient, high-signal interfaces.
+            ZeroDev builds the software layer between a sharp idea and a live system for operators, owners, and teams that need evidence and next action in the same frame.
           </p>
           <div className="hero-actions">
-            <a className="button button-primary" href={canonicalDomains.defcon}>
-              Explore DEFCON gateway <span aria-hidden="true">↗</span>
+            <a className="button button-primary" href="/services">
+              Review security services <span aria-hidden="true">↗</span>
             </a>
-            <a className="button button-ghost" href="#systems">
-              Inspect systems <span aria-hidden="true">↓</span>
+            <a className="button button-ghost" href={canonicalDomains.defcon}>
+              Open public-signal gateway <span aria-hidden="true">↗</span>
             </a>
           </div>
+          <p className="hero-action-note"><span>FIRST MOVE</span> Start with a high-level objective. Authorized work begins with scope, authority, and a named decision owner.</p>
           <div className="hero-proof" aria-label="ZeroDev trust principles">
             <span><i aria-hidden="true" /> PUBLIC-SOURCE READOUTS</span>
             <span><i aria-hidden="true" /> READ-ONLY BY DEFAULT</span>
@@ -194,7 +232,7 @@ export default function Home() {
             <p className="terminal-muted">scanning registered surfaces...</p>
             <HomeTerminalStatus />
             <p><span className="terminal-ok">[LINK]</span> defcon_fusion <span className="terminal-muted">EU gateway / external</span></p>
-            <p><span className="terminal-ok">[LINK]</span> store_checkout <span className="terminal-muted">services / external</span></p>
+            <p><span className="terminal-ok">[LINK]</span> store_catalogue <span className="terminal-muted">catalogue / contact first</span></p>
             <p className="terminal-spacer"> </p>
             <p><span className="prompt">root@zerodev</span>:~$ <span className="cursor" aria-hidden="true" /></p>
           </div>
@@ -215,7 +253,10 @@ export default function Home() {
           <h2 id="mission-heading">Protect the mission.<br /><span>Keep the service moving.</span></h2>
           <p>ZeroDev helps public-sector programs, defense suppliers, essential services, and regulated-technology teams turn authorized security evidence into safer decisions, stronger controls, and tested recovery.</p>
           <p className="mission-boundary"><strong>Authority and evidence first.</strong> Scope, written authority, information handling, limitations, and owner decisions remain explicit before technical activity begins.</p>
-          <a className="text-link" href="/services">Review security and resilience services <span aria-hidden="true">↗</span></a>
+          <div className="mission-links">
+            <a className="text-link" href="/services">Review security and resilience services <span aria-hidden="true">↗</span></a>
+            <a className="text-link" href="/sectors">Find your operating context <span aria-hidden="true">↗</span></a>
+          </div>
         </div>
         <div className="mission-lanes">
           {missionLanes.map(([number, title, description, outcome]) => (
@@ -322,12 +363,19 @@ export default function Home() {
           <h2 id="services-heading">From evidence<br /><span>to safer action.</span></h2>
           <p>Bring the security question, supplier decision, recovery concern, or evidence surface that needs to become clearer. The work stays authorized, bounded, source-aware, and reviewable.</p>
           <a className="text-link" href="mailto:hello@zerodevllc.com?subject=ZeroDev%20build%20conversation">Start with the problem <span aria-hidden="true">↗</span></a>
+          <a className="text-link" href="/services">View security and resilience catalogue <span aria-hidden="true">↗</span></a>
         </div>
         <div className="services-detail">
           <div className="delivery-phases">
-            {deliveryPhases.map(([number, title, description]) => (
-              <article className="delivery-phase" key={number}>
-                <span>{number}</span><h3>{title}</h3><p>{description}</p>
+            {deliveryPhases.map((phase) => (
+              <article className="delivery-phase" key={phase.number}>
+                <div className="delivery-phase-name"><span>{phase.number}</span><h3>{phase.title}</h3></div>
+                <p>{phase.description}</p>
+                <dl className="delivery-phase-facts">
+                  <div><dt>Client receives</dt><dd>{phase.output}</dd></div>
+                  <div><dt>Decision supported</dt><dd>{phase.decision}</dd></div>
+                  <div><dt>Evidence captured</dt><dd>{phase.evidence}</dd></div>
+                </dl>
               </article>
             ))}
           </div>
@@ -350,7 +398,7 @@ export default function Home() {
           <p>Have a security, supplier, recovery, or resilience question that needs a defensible next step? Bring the high-level objective and the owner who can confirm authority.</p>
           <div className="hero-actions">
             <a className="button button-primary" href="mailto:hello@zerodevllc.com">Contact ZeroDev <span aria-hidden="true">↗</span></a>
-            <a className="button button-ghost" href={canonicalDomains.store}>View software &amp; services <span aria-hidden="true">↗</span></a>
+            <a className="button button-ghost" href="/engage">Prepare a safe first brief <span aria-hidden="true">↗</span></a>
           </div>
         </div>
       </section>
@@ -358,7 +406,7 @@ export default function Home() {
       <footer className="footer">
         <span>© 2026 ZERO DEV LLC / IRELAND</span>
         <span className="footer-center">MAKE USEFUL THINGS. KEEP THE SIGNAL CLEAN.</span>
-        <span><a href={canonicalDomains.defcon}>DEFCON</a> / <a href={canonicalDomains.eu}>EU HUB</a> / <a href={canonicalDomains.store}>STORE</a></span>
+        <span><a href={canonicalDomains.defcon}>DEFCON</a> / <a href={canonicalDomains.eu}>EU HUB</a> / <a href={canonicalDomains.store}>STORE</a> / <a href="/privacy">PRIVACY</a></span>
       </footer>
       </main>
     </HomeStatusProvider>

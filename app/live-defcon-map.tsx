@@ -58,6 +58,10 @@ function formatFeedTime(value: string | undefined) {
   return Number.isFinite(timestamp) ? `${formatUtc(timestamp)}Z` : '--:--:--';
 }
 
+function getEventKindLabel(kind: PublicThreatEvent['kind']) {
+  return kind === 'known-exploited' ? 'known exploited' : kind === 'ics-advisory' ? 'ICS advisory' : 'advisory';
+}
+
 function boundedText(value: unknown, maxLength: number): value is string {
   return typeof value === 'string' && value.trim().length > 0 && value.length <= maxLength;
 }
@@ -224,12 +228,12 @@ export function LiveDefconMap() {
           </div>
         </div>
         <p className="threat-feed-notice">Public-source indicators only. Known exploitation or advisory activity is not confirmation of an attack against ZeroDev.</p>
-        {feed?.errors.length ? <p className="threat-feed-warning">Partial source outage: {feed.errors.join(' · ')}</p> : null}
+        {feed?.errors.length ? <p className="threat-feed-warning" role="status" aria-live="polite" aria-atomic="true">Partial source outage: {feed.errors.join(' · ')}</p> : null}
         <div className="threat-event-list">
           {feed?.events.slice(0, 4).map((event) => (
-            <a className="threat-event" href={event.url} key={event.id} target="_blank" rel="noopener noreferrer" aria-label={`${event.title} from ${event.source}; open source advisory`}>
+            <a className="threat-event" href={event.url} key={event.id} target="_blank" rel="noopener noreferrer" aria-label={`${event.title} from ${event.source}; ${getEventKindLabel(event.kind)}; observed ${formatFeedTime(event.observedAt)}; open source advisory`}>
               <span className={`threat-severity severity-${event.severity >= 75 ? 'high' : event.severity >= 60 ? 'watch' : 'info'}`} />
-              <span className="threat-event-copy"><strong>{event.title}</strong><small><b className="threat-source-badge">{event.source}</b> {event.kind === 'known-exploited' ? 'KNOWN EXPLOITED' : event.kind === 'ics-advisory' ? 'ICS ADVISORY' : 'ADVISORY'} · observed {formatFeedTime(event.observedAt)}</small></span>
+              <span className="threat-event-copy"><strong>{event.title}</strong><small><b className="threat-source-badge">{event.source}</b> {getEventKindLabel(event.kind).toUpperCase()} · observed {formatFeedTime(event.observedAt)}</small></span>
               <span className="threat-event-arrow" aria-hidden="true">↗</span>
             </a>
           ))}
