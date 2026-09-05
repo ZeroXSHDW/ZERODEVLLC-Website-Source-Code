@@ -157,3 +157,19 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
   *, *::before, *::after { transition-duration: .01ms !important; }
   .loadingPulse span { animation: none; opacity: .7; }
 }
+
+@media print {
+  .page { background: #fff; color: #111813; min-height: auto; padding: 0; }
+  .skipLink, .header, .headerMenuToggle { display: none !important; }
+  .hero, .serviceSection, .lifecycleSection, .methodSection, .frameworkSection, .outputSection, .boundarySection, .twoColumn { gap: 24pt; grid-template-columns: 1fr; padding: 20pt 0; }
+  .heroCopy, .boundaryBox, .noticeSection, .serviceCard, .outputCard, .frameworkCard, .actionTableWrap, .services-boundary { background: #fff; border-color: #7d8a80; color: #111813; }
+  .hero h1, h2, h3, .hero h1 span, h2 span, h3 span { color: #111813; }
+  .heroCopy > p, .sectionIntro > p:not(.eyebrow), .bodyCopy, .noticeSection > p:last-child, .serviceCard > p, .outputCard p, .frameworkCard p, .actionTable td, .lifecycleCard p, .step p, .services-boundary p { color: #111813; }
+  .serviceGrid, .outputGrid, .frameworkGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .actionTableWrap { overflow: visible; }
+  .actionTable { min-width: 0; }
+  .cta { background: #fff; border-color: #7d8a80; padding: 24pt 0; }
+  .loadingPulse { display: none; }
+  a { color: #111813; text-decoration: underline; }
+  .serviceCard, .outputCard, .frameworkCard, .lifecycleCard, .step, .noticeSection, .cta { break-inside: avoid; }
+}

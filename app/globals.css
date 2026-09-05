@@ -393,3 +393,43 @@ h2 span { color: var(--green); }
   .brand-mark, .status-chip, .button, .system-card, .card-mode, .defcon-map-card, .defcon-map-footer button, .threat-event { border-color: ButtonText; }
   .button-primary { background: Highlight; color: HighlightText; }
 }
+
+@media print {
+  @page { margin: 14mm; }
+  :root {
+    --ink: #111813;
+    --muted: #26332b;
+    --dim: #435248;
+    --line: #aeb9b0;
+    --line-strong: #52665a;
+    --green: #154d2b;
+    --green-bright: #154d2b;
+    --cyan: #075862;
+    --violet: #3d2d78;
+    --amber: #684a00;
+    --red: #8a211c;
+    --bg: #fff;
+    --bg-raised: #fff;
+    --panel: #fff;
+    --panel-soft: #fff;
+  }
+  html { scroll-behavior: auto; }
+  body { background: #fff !important; color: #111813 !important; font-size: 10pt; }
+  *, *::before, *::after { animation: none !important; box-shadow: none !important; text-shadow: none !important; transition: none !important; }
+  a { color: #111813 !important; text-decoration: underline; }
+  .noise, .scanlines, .topbar, .mobile-menu-toggle, .status-chip, .map-live-badge, .defcon-map-stage, .defcon-map-footer button, .threat-feed-controls, .cursor { display: none !important; }
+  .com-shell { background: #fff !important; color: #111813 !important; min-height: auto; overflow: visible; }
+  .com-shell::before { display: none; }
+  .hero-grid, .mission-brief, .system-section, .map-section, .evidence-section, .approach-section, .services-section, .contact-section { display: block; min-height: auto; padding: 20pt 0; }
+  .hero-copy, .terminal-card, .system-card, .defcon-map-card, .evidence-card, .principle-card, .delivery-phase, .services-boundary { background: #fff !important; border-color: #7d8a80 !important; color: #111813 !important; }
+  .hero-copy, .terminal-card { margin-bottom: 18pt; }
+  .terminal-card { transform: none; }
+  .system-grid, .evidence-grid, .principles-grid, .delivery-phases { display: grid; gap: 12pt; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .signal-ribbon { background: #fff; border-color: #7d8a80; color: #111813; }
+  .com-shell h1, .com-shell h2, .com-shell h3, .com-shell p, .com-shell small, .com-shell dt, .com-shell dd, .terminal-muted, .terminal-footer, .footer { color: #111813 !important; }
+  .map-data-details { display: block; }
+  .map-data-details summary { display: none; }
+  .map-data-details > :not(summary) { display: block !important; }
+  section, article, aside, table, .terminal-card, .defcon-map-card { break-inside: avoid; }
+  .footer { background: #fff; border-color: #7d8a80; }
+}

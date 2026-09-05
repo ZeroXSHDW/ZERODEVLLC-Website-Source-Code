@@ -46,6 +46,9 @@ const [
   packageJson,
   securityAudit,
   secretHygiene,
+  globalsCss,
+  servicesCss,
+  privacyCss,
 ] = await Promise.all([
   read("proxy.ts"),
   read("app/robots.ts"),
@@ -78,6 +81,9 @@ const [
   read("package.json"),
   read("scripts/security-audit.mjs"),
   read("scripts/secret-hygiene.mjs"),
+  read("app/globals.css"),
+  read("app/services/services.module.css"),
+  read("app/privacy/privacy.module.css"),
 ]);
 const nodeVersion = await read(".node-version");
 
@@ -184,6 +190,11 @@ requireText("app/error.tsx", errorPage, "reset");
 requireText("app/loading.tsx", loadingPage, "aria-busy=\"true\"");
 requireText("app/loading.tsx", loadingPage, "TRANSITION / LOADING");
 requireText("app/loading.tsx", loadingPage, "Public boundary.");
+requireText("app/globals.css", globalsCss, "@media print");
+requireText("app/globals.css", globalsCss, ".map-data-details > :not(summary)");
+requireText("app/services/services.module.css", servicesCss, "@media print");
+requireText("app/services/services.module.css", servicesCss, ".actionTableWrap { overflow: visible; }");
+requireText("app/privacy/privacy.module.css", privacyCss, "@media print");
 if (errorPage.includes("error.message") || errorPage.includes("error.stack") || errorPage.includes("error.digest")) {
   failures.push("app/error.tsx must not expose runtime error details in the public recovery surface");
 }
