@@ -82,7 +82,7 @@ export default function MethodologyPage() {
           </div>
           <div className={styles.stepList}>
             {steps.map(([number, title, description]) => (
-              <article className={styles.step} key={number}>
+              <article className={styles.step} id={`methodology-step-${number}`} key={number}>
                 <span className={styles.stepNumber}>{number}</span>
                 <h3>{title}</h3>
                 <p>{description}</p>

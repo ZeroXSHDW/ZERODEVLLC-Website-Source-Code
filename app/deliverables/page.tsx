@@ -71,7 +71,7 @@ export default function DeliverablesPage() {
           </div>
           <div className={styles.outputGrid}>
             {artifacts.map(([number, title, audience, fields, boundary]) => (
-              <article className={styles.outputCard} key={number}>
+              <article className={styles.outputCard} id={`deliverable-${number}`} key={number}>
                 <span className={styles.frameworkTag}>{number} / TEMPLATE SHAPE / NOT CLIENT EVIDENCE</span>
                 <h3>{title}</h3>
                 <p className={styles.artifactAudience}>{audience}</p>
