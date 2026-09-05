@@ -31,6 +31,7 @@ const [
   engagePage,
   deliverablesPage,
   sectorsPage,
+  remediationPage,
   checkoutRoute,
   attacksRoute,
   page,
@@ -56,6 +57,7 @@ const [
   read("app/engage/page.tsx"),
   read("app/deliverables/page.tsx"),
   read("app/sectors/page.tsx"),
+  read("app/remediation/page.tsx"),
   readOptional("app/api/checkout/route.ts"),
   read("app/api/attacks/route.ts"),
   read("app/page.tsx"),
@@ -120,6 +122,9 @@ requireText("app/deliverables/page.tsx", deliverablesPage, "private incident evi
 requireText("app/sectors/page.tsx", sectorsPage, "Public-sector and government programs");
 requireText("app/sectors/page.tsx", sectorsPage, "Defense suppliers and primes");
 requireText("app/sectors/page.tsx", sectorsPage, "Audience map only");
+requireText("app/remediation/page.tsx", remediationPage, "Review model only");
+requireText("app/remediation/page.tsx", remediationPage, "No owner");
+requireText("app/remediation/page.tsx", remediationPage, "Closed with evidence or accepted risk");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/privacy");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/services");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/methodology");
@@ -127,6 +132,7 @@ requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/frameworks");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/engage");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/deliverables");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/sectors");
+requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/remediation");
 for (const source of [proxy, nextConfig]) {
   if (source.includes("'unsafe-inline'"))
     failures.push("CSP must not allow unsafe inline scripts or styles");

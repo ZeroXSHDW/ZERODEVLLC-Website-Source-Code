@@ -130,7 +130,7 @@ export default function MethodologyPage() {
 
         <section className={styles.cta} aria-labelledby="methodology-cta-heading">
           <div><p className={styles.eyebrow}>{'// CONTINUE'}</p><h2 id="methodology-cta-heading">Choose the<br /><span>right surface.</span></h2></div>
-          <div><p>Review the service areas or the standards library before starting a conversation.</p><p><Link className={styles.primaryLink} href="/services">View services <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/frameworks">View frameworks <span aria-hidden="true">↗</span></Link></p></div>
+          <div><p>Review the service areas, standards library, or remediation lifecycle before starting a conversation.</p><p><Link className={styles.primaryLink} href="/services">View services <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/frameworks">View frameworks <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/remediation">View remediation lifecycle <span aria-hidden="true">↗</span></Link></p></div>
         </section>
       </div>
     </main>
