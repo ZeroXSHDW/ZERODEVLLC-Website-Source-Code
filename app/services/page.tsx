@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     url: 'https://zerodevllc.com/services',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Services // ZeroDev LLC',
+    description: 'Authorized defensive cybersecurity, cyber-risk, due-diligence, compliance-readiness, and resilience engagement areas.',
+    images: ['/og.png'],
+  },
 };
 
 const services = [
@@ -129,6 +135,7 @@ export default function ServicesPage() {
           <Link href="/methodology">Methodology</Link>
           <Link href="/frameworks">Frameworks</Link>
           <Link href="/sectors">Sector fit</Link>
+          <Link href="/engage">Engage</Link>
           <Link href="/privacy">Privacy</Link>
         </nav>
       </header>

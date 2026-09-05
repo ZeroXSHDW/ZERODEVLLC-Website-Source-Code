@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     url: 'https://zerodevllc.com/remediation',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Remediation and closure // ZeroDev LLC',
+    description: 'Connect findings to owners, treatment, evidence, retesting, and an explicit residual-risk decision.',
+    images: ['/og.png'],
+  },
 };
 
 const stages = [

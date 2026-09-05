@@ -13,9 +13,10 @@ export const metadata: Metadata = {
     type: 'article',
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: 'Privacy boundary // ZeroDev LLC',
     description: 'How the public ZeroDev LLC website handles visitor interactions and external public sources.',
+    images: ['/og.png'],
   },
 };
 

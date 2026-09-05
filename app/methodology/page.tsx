@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     url: 'https://zerodevllc.com/methodology',
     type: 'article',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Methodology // ZeroDev LLC',
+    description: 'A controlled, evidence-led methodology for authorized defensive cybersecurity and resilience engagements.',
+    images: ['/og.png'],
+  },
 };
 
 const steps = [

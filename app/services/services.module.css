@@ -10,7 +10,7 @@
 
 .skipLink { background: var(--green); color: #06100a; left: 16px; padding: 10px 13px; position: absolute; top: -60px; z-index: 20; }
 .skipLink:focus { top: 16px; }
-.header { align-items: center; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; margin: 0 auto; max-width: var(--max-width); min-height: 76px; }
+.header { align-items: center; backdrop-filter: blur(18px); background: rgba(5, 10, 8, .9); border-bottom: 1px solid var(--line); box-shadow: 0 10px 32px rgba(0, 0, 0, .14); display: flex; justify-content: space-between; margin: 0 auto; max-width: var(--max-width); min-height: 76px; position: sticky; top: 0; z-index: 10; }
 .brand, .headerNav a { color: var(--muted); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
 .brand { align-items: center; color: var(--ink); display: inline-flex; font-weight: 800; gap: 10px; }
 .brandMark { align-items: center; border: 1px solid var(--green); color: var(--green); display: inline-flex; font-size: 13px; height: 29px; justify-content: center; width: 34px; }
@@ -71,6 +71,8 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .checkList { border-top: 1px solid var(--line); }
 .checkList > div { align-items: baseline; border-bottom: 1px solid var(--line); display: grid; gap: 20px; grid-template-columns: 40px minmax(0, 1fr); padding: 18px 0; }
 .checkList p { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.5; margin: 0; }
+.templateNote { border-left: 1px solid var(--amber); color: var(--dim); font-family: Arial, Helvetica, sans-serif; font-size: 11px; line-height: 1.5; margin: 20px 0; padding-left: 12px; }
+.templateNote strong { color: var(--amber); font-weight: 500; }
 .noticeSection { display: block; }
 .noticeSection h2 { max-width: 850px; }
 .noticeSection > p:last-child { margin-bottom: 0; max-width: 760px; }

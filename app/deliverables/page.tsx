@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     url: 'https://zerodevllc.com/deliverables',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Deliverables and evidence // ZeroDev LLC',
+    description: 'See the evidence fields and review boundaries behind ZeroDev engagement outputs.',
+    images: ['/og.png'],
+  },
 };
 
 const artifacts = [

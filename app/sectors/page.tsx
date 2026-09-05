@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     url: 'https://zerodevllc.com/sectors',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Sector fit and decision paths // ZeroDev LLC',
+    description: 'Map a government, defense-supplier, essential-service, or regulated-technology question to the right evidence and engagement path.',
+    images: ['/og.png'],
+  },
 };
 
 const sectors = [

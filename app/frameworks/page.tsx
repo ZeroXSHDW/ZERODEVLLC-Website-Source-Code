@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     url: 'https://zerodevllc.com/frameworks',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Frameworks and standards // ZeroDev LLC',
+    description: 'A practical standards and control-family library for cyber risk, testing, resilience, supply-chain, and readiness conversations.',
+    images: ['/og.png'],
+  },
 };
 
 const frameworks = [

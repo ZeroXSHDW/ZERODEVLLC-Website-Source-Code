@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     url: 'https://zerodevllc.com/engage',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Start an engagement // ZeroDev LLC',
+    description: 'Prepare a clear, safe first brief for an authorized ZeroDev cybersecurity or resilience engagement.',
+    images: ['/og.png'],
+  },
 };
 
 const intakeItems = [
@@ -24,6 +30,26 @@ const intakeItems = [
   'The named owner who can confirm authority, scope, and evidence handling',
   'Any applicable contract, framework, data, or jurisdiction questions',
 ] as const;
+
+const briefTemplate = [
+  ['Objective', 'What decision or outcome needs to become clearer?'],
+  ['Context', 'Sector, role, and high-level system, supplier, service, or recovery concern.'],
+  ['Service question', 'Assess, assure, recover, or not yet clear.'],
+  ['Audience and timing', 'Who needs the output, and when is the decision due?'],
+  ['Authority owner', 'Who can confirm ownership, scope, and permission to proceed?'],
+  ['Applicability and boundary', 'Any contract, framework, jurisdiction, exclusion, or safety constraint to consider.'],
+] as const;
+
+const briefMailto = `mailto:hello@zerodevllc.com?subject=ZeroDevLLC%20engagement%20brief&body=${encodeURIComponent([
+  'Objective or decision:',
+  'High-level context:',
+  'Service question:',
+  'Audience and decision date:',
+  'Authority owner:',
+  'Applicability or boundary questions:',
+  '',
+  'I have not included credentials, secrets, customer records, private incident evidence, or live target details.',
+].join('\n'))}`;
 
 const lanes = [
   ['01', 'Assess', 'You need to understand exposure, weakness, risk, or technical condition.', 'Penetration testing, vulnerability assessment, technical due diligence, and cyber-risk review.', [['01', 'Authorized penetration testing'], ['02', 'Vulnerability assessment'], ['04', 'Technical due diligence'], ['03', 'Cyber risk management']]],
@@ -72,7 +98,7 @@ export default function EngagePage() {
           <div className={styles.heroCopy}>
             <p>Bring the question, the decision owner, and the outcome you need to make clearer. A high-level brief is enough to begin a useful conversation.</p>
             <p className={styles.heroBoundary}><strong>Do not send secrets.</strong> Keep credentials, tokens, customer records, private incident evidence, and live target details out of ordinary email. We can establish a safer exchange path after scope and authority are understood.</p>
-            <p><a className={styles.primaryLink} href="mailto:hello@zerodevllc.com?subject=ZeroDevLLC%20engagement%20brief">Send a high-level brief <span aria-hidden="true">↗</span></a></p>
+            <p><a className={styles.primaryLink} href={briefMailto}>Open a high-level brief template <span aria-hidden="true">↗</span></a></p>
           </div>
         </section>
 
@@ -84,6 +110,21 @@ export default function EngagePage() {
           </div>
           <div className={styles.checkList}>
             {intakeItems.map((item, index) => <div key={item}><span>{String(index + 1).padStart(2, '0')}</span><p>{item}</p></div>)}
+          </div>
+        </section>
+
+        <section className={styles.twoColumn} aria-labelledby="template-heading">
+          <div>
+            <p className={styles.eyebrow}>{'// SAFE BRIEF TEMPLATE'}</p>
+            <h2 id="template-heading">Give the first<br /><span>message a shape.</span></h2>
+            <p className={styles.bodyCopy}>Use these headings for an initial note. Leave unknown fields blank and keep sensitive evidence out until the recipient, purpose, and handling path are agreed.</p>
+          </div>
+          <div>
+            <div className={styles.checkList}>
+              {briefTemplate.map(([label, prompt], index) => <div key={label}><span>{String(index + 1).padStart(2, '0')}</span><p><strong>{label}:</strong> {prompt}</p></div>)}
+            </div>
+            <p className={styles.templateNote}><strong>Safe boundary:</strong> Do not add credentials, secrets, customer records, private incident evidence, or live target details to the template.</p>
+            <p><a className={styles.primaryLink} href={briefMailto}>Open this structure in email <span aria-hidden="true">↗</span></a></p>
           </div>
         </section>
 
@@ -157,7 +198,7 @@ export default function EngagePage() {
 
         <section className={styles.cta} aria-labelledby="engage-cta-heading">
           <div><p className={styles.eyebrow}>{'// NEXT MOVE'}</p><h2 id="engage-cta-heading">Make the first<br /><span>message useful.</span></h2></div>
-          <div><p>Send only a high-level objective, the service question, the intended audience, and the person who can confirm authority. No sensitive evidence is required to start.</p><p><a className={styles.primaryLink} href="mailto:hello@zerodevllc.com?subject=ZeroDevLLC%20engagement%20brief">Start the conversation <span aria-hidden="true">↗</span></a><br /><Link className={styles.primaryLink} href="/services">Review all services <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/deliverables">Review deliverable shapes <span aria-hidden="true">↗</span></Link></p></div>
+          <div><p>Send only a high-level objective, the service question, the intended audience, and the person who can confirm authority. No sensitive evidence is required to start.</p><p><a className={styles.primaryLink} href={briefMailto}>Start with the brief template <span aria-hidden="true">↗</span></a><br /><Link className={styles.primaryLink} href="/services">Review all services <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/deliverables">Review deliverable shapes <span aria-hidden="true">↗</span></Link></p></div>
         </section>
       </div>
     </main>
