@@ -84,6 +84,14 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .fieldList li { border-left: 1px solid var(--green); padding-left: 10px; }
 .outputCard .cardBoundary { border-top: 1px solid var(--line); color: var(--dim); font-size: 11px; margin-top: 20px; padding-top: 13px; }
 .outputCard .cardBoundary strong { color: var(--ink); font-weight: 500; }
+.actionTableWrap { border: 1px solid var(--line); overflow-x: auto; }
+.actionTable { border-collapse: collapse; min-width: 760px; width: 100%; }
+.actionTable th, .actionTable td { border-bottom: 1px solid var(--line); padding: 14px 12px; text-align: left; vertical-align: top; }
+.actionTable th { color: var(--cyan); font-size: 8px; letter-spacing: .12em; text-transform: uppercase; }
+.actionTable td { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.45; }
+.actionTable td:first-child { color: var(--ink); font-weight: 600; }
+.actionTable tr:last-child td { border-bottom: 0; }
+.tableCaption { color: var(--dim); font-family: Arial, Helvetica, sans-serif; font-size: 10px; padding: 12px; text-align: left; }
 .frameworkTag { color: var(--cyan); display: block; font-size: 8px; letter-spacing: .12em; margin-bottom: 38px; }
 .frameworkCard h3 { color: var(--ink); font-size: 18px; }
 .frameworkCard .cardBoundary { border-top: 1px solid var(--line); color: var(--dim); font-size: 11px; margin-top: 18px; padding-top: 13px; }

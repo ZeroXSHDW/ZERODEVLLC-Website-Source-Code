@@ -125,6 +125,8 @@ requireText("app/sectors/page.tsx", sectorsPage, "Audience map only");
 requireText("app/remediation/page.tsx", remediationPage, "Review model only");
 requireText("app/remediation/page.tsx", remediationPage, "No owner");
 requireText("app/remediation/page.tsx", remediationPage, "Closed with evidence or accepted risk");
+requireText("app/remediation/page.tsx", remediationPage, "Illustrative action matrix");
+requireText("app/remediation/page.tsx", remediationPage, "not client evidence");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/privacy");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/services");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/methodology");

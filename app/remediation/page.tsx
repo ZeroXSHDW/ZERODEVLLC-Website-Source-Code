@@ -41,6 +41,13 @@ const statuses = [
   ['Closed with evidence or accepted risk', 'The disposition is supported by evidence and authorized residual-risk ownership.'],
 ] as const;
 
+const actionMatrix = [
+  ['External exposure', 'Remediate or mitigate', 'Service owner', 'Hardened configuration plus agreed retest evidence', 'Material change or threat update'],
+  ['Supplier assurance gap', 'Mitigate or accept', 'Supplier owner + risk owner', 'Current supplier evidence, contract action, or recorded acceptance', 'Renewal, major change, or new supplier evidence'],
+  ['Recovery dependency untested', 'Exercise and validate', 'Continuity or service owner', 'Restore/test result, exercise record, and unresolved gaps', 'Service change or scheduled review'],
+  ['Control-readiness gap', 'Plan treatment', 'Control owner', 'Updated control evidence and verification record', 'Requirement, scope, or framework change'],
+] as const;
+
 export default function RemediationPage() {
   return (
     <main className={styles.page}>
@@ -97,6 +104,39 @@ export default function RemediationPage() {
           </div>
           <div className={styles.checkList}>
             {fields.map((field, index) => <div key={field}><span>{String(index + 1).padStart(2, '0')}</span><p>{field}</p></div>)}
+          </div>
+        </section>
+
+        <section className={styles.outputSection} aria-labelledby="matrix-heading">
+          <div className={styles.sectionIntro}>
+            <p className={styles.eyebrow}>{'// ILLUSTRATIVE ACTION MATRIX'}</p>
+            <h2 id="matrix-heading">Turn risk into<br /><span>the next move.</span></h2>
+            <p>Use a decision signal to make treatment, accountability, closure evidence, and the next review trigger explicit.</p>
+          </div>
+          <div className={styles.actionTableWrap}>
+            <table className={styles.actionTable}>
+              <caption className={styles.tableCaption}>Illustrative action matrix — not client evidence.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Decision signal</th>
+                  <th scope="col">Possible treatment</th>
+                  <th scope="col">Accountable owner</th>
+                  <th scope="col">Closure evidence</th>
+                  <th scope="col">Review trigger</th>
+                </tr>
+              </thead>
+              <tbody>
+                {actionMatrix.map(([signal, treatment, owner, evidence, trigger]) => (
+                  <tr key={signal}>
+                    <td>{signal}</td>
+                    <td>{treatment}</td>
+                    <td>{owner}</td>
+                    <td>{evidence}</td>
+                    <td>{trigger}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </section>
 
