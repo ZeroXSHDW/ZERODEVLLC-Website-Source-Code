@@ -109,6 +109,7 @@ export default function ServicesPage() {
         <nav className={styles.headerNav} aria-label="Services navigation">
           <Link href="/methodology">Methodology</Link>
           <Link href="/frameworks">Frameworks</Link>
+          <Link href="/sectors">Sector fit</Link>
           <Link href="/privacy">Privacy</Link>
         </nav>
       </header>
