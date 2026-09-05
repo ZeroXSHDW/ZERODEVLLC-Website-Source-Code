@@ -98,6 +98,8 @@ requireText("app/services/page.tsx", servicesPage, "Authorized penetration testi
 requireText("app/services/page.tsx", servicesPage, "Vendor due diligence");
 requireText("app/services/page.tsx", servicesPage, "Disaster recovery and BCP");
 requireText("app/services/page.tsx", servicesPage, "Readiness is not certification");
+requireText("app/services/page.tsx", servicesPage, "Public-sector procurement");
+requireText("app/services/page.tsx", servicesPage, "Defense-supplier assurance");
 requireText("app/methodology/page.tsx", methodologyPage, "Written authorization and named decision owner");
 requireText("app/methodology/page.tsx", methodologyPage, "does not perform unauthorized access");
 requireText("app/frameworks/page.tsx", frameworksPage, "NIST CSF 2.0");

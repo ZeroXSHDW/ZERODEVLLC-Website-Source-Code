@@ -90,6 +90,13 @@ const lifecycle = [
   ['06', 'Recheck', 'Retest, exercise, or review the changed control and record what remains unresolved.'],
 ] as const;
 
+const fitContexts = [
+  ['Public-sector procurement', 'When a technical decision also needs visible authority, evidence handling, ownership, limitations, and a report that procurement and risk teams can use.'],
+  ['Defense-supplier assurance', 'When prime, subcontractor, or fourth-party relationships make controlled information, dependency, resilience, and exit questions part of the decision.'],
+  ['Essential-service resilience', 'When a critical or public-facing service must understand continuity priorities, recovery assumptions, incident decisions, and exercise evidence.'],
+  ['Regulated technology risk', 'When an architecture, product, or provider needs a proportionate view of controls, supply-chain exposure, readiness gaps, and residual risk.'],
+] as const;
+
 export default function ServicesPage() {
   return (
     <main className={styles.page}>
@@ -134,6 +141,23 @@ export default function ServicesPage() {
                 <p>{service.summary}</p>
                 <ul>{service.activities.map((activity) => <li key={activity}>{activity}</li>)}</ul>
                 <p className={styles.output}><strong>Typical output:</strong> {service.output}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className={styles.outputSection} aria-labelledby="fit-heading">
+          <div className={styles.sectionIntro}>
+            <p className={styles.eyebrow}>{'// GOOD-FIT CONTEXTS'}</p>
+            <h2 id="fit-heading">Built for decisions<br /><span>with consequences.</span></h2>
+            <p>This is an audience map, not a client list. Qualification confirms whether the objective, authority, evidence, and operating context are appropriate before any engagement is accepted.</p>
+          </div>
+          <div className={styles.outputGrid}>
+            {fitContexts.map(([title, description], index) => (
+              <article className={styles.outputCard} key={title}>
+                <span className={styles.frameworkTag}>{String(index + 1).padStart(2, '0')} / FIT CONTEXT</span>
+                <h3>{title}</h3>
+                <p>{description}</p>
               </article>
             ))}
           </div>

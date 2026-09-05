@@ -99,10 +99,10 @@ export default function MethodologyPage() {
             <h2 id="outputs-heading">Make the result<br /><span>usable.</span></h2>
           </div>
           <div className={styles.outputGrid}>
-            <article className={styles.outputCard}><h3>Executive view</h3><p>What matters, why it matters, who owns the decision, and what should happen next.</p></article>
-            <article className={styles.outputCard}><h3>Technical view</h3><p>Scope, evidence, reproduction context where appropriate, severity, limitations, and remediation detail.</p></article>
-            <article className={styles.outputCard}><h3>Assurance view</h3><p>Framework mapping, evidence gaps, control owners, exceptions, and the next review or test date.</p></article>
-            <article className={styles.outputCard}><h3>Resilience view</h3><p>Critical services, dependencies, recovery assumptions, exercise outcomes, and unresolved residual risk.</p></article>
+            <article className={styles.outputCard}><h3>Executive view</h3><p>Decision, risk, owner, treatment choices, residual risk, and the next review date.</p></article>
+            <article className={styles.outputCard}><h3>Technical view</h3><p>Scope, evidence, observation-versus-finding distinction, severity, limitations, and remediation detail.</p></article>
+            <article className={styles.outputCard}><h3>Assurance view</h3><p>Requirement, control, owner, evidence, gap, exception, status, and the next review or test date.</p></article>
+            <article className={styles.outputCard}><h3>Resilience view</h3><p>Critical service, dependencies, RTO/RPO assumptions, exercise result, recovery gap, and next validation.</p></article>
           </div>
         </section>
 
