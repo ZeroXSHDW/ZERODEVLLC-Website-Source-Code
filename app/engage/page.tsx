@@ -85,6 +85,7 @@ export default function EngagePage() {
           <Link href="/services">Services</Link>
           <Link href="/methodology">Methodology</Link>
           <Link href="/frameworks">Frameworks</Link>
+          <Link href="/engage" aria-current="page">Engage</Link>
           <Link href="/privacy">Privacy</Link>
         </nav>
       </header>

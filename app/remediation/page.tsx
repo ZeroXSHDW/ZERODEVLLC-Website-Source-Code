@@ -67,6 +67,7 @@ export default function RemediationPage() {
           <Link href="/services">Services</Link>
           <Link href="/methodology">Methodology</Link>
           <Link href="/deliverables">Deliverables</Link>
+          <Link href="/remediation" aria-current="page">Remediation</Link>
           <Link href="/engage">Engage</Link>
           <Link href="/privacy">Privacy</Link>
         </nav>

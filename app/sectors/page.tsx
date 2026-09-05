@@ -46,6 +46,7 @@ export default function SectorsPage() {
         </Link>
         <nav className={styles.headerNav} aria-label="Sector fit navigation">
           <Link href="/services">Services</Link>
+          <Link href="/sectors" aria-current="page">Sector fit</Link>
           <Link href="/methodology">Methodology</Link>
           <Link href="/frameworks">Frameworks</Link>
           <Link href="/engage">Engage</Link>

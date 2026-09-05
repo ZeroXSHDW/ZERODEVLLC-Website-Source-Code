@@ -132,6 +132,7 @@ export default function ServicesPage() {
           <span>ZERODEVLLC<span className={styles.brandDim}>.COM</span></span>
         </Link>
         <nav className={styles.headerNav} aria-label="Services navigation">
+          <Link href="/services" aria-current="page">Services</Link>
           <Link href="/methodology">Methodology</Link>
           <Link href="/frameworks">Frameworks</Link>
           <Link href="/sectors">Sector fit</Link>

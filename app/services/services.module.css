@@ -16,6 +16,7 @@
 .brandMark { align-items: center; border: 1px solid var(--green); color: var(--green); display: inline-flex; font-size: 13px; height: 29px; justify-content: center; width: 34px; }
 .brandDim { color: var(--dim); }
 .headerNav { display: flex; gap: 24px; }
+.headerNav a[aria-current='page'] { color: var(--ink); }
 .headerNav a:hover, .headerNav a:focus-visible, .primaryLink:hover, .primaryLink:focus-visible { color: var(--green-bright); }
 
 .layout { margin: 0 auto; max-width: var(--max-width); }

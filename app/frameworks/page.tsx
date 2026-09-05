@@ -55,6 +55,7 @@ export default function FrameworksPage() {
         <nav className={styles.headerNav} aria-label="Framework navigation">
           <Link href="/services">Services</Link>
           <Link href="/methodology">Methodology</Link>
+          <Link href="/frameworks" aria-current="page">Frameworks</Link>
           <Link href="/engage">Engage</Link>
           <Link href="/privacy">Privacy</Link>
         </nav>

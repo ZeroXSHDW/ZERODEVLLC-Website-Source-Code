@@ -49,6 +49,7 @@ export default function DeliverablesPage() {
         </Link>
         <nav className={styles.headerNav} aria-label="Deliverables navigation">
           <Link href="/services">Services</Link>
+          <Link href="/deliverables" aria-current="page">Deliverables</Link>
           <Link href="/methodology">Methodology</Link>
           <Link href="/frameworks">Frameworks</Link>
           <Link href="/engage">Engage</Link>
