@@ -138,6 +138,8 @@ requireText("app/sectors/page.tsx", sectorsPage, "Defense suppliers and primes")
 requireText("app/sectors/page.tsx", sectorsPage, "Audience map only");
 requireText("app/sectors/page.tsx", sectorsPage, "Aligned service lanes");
 requireText("app/sectors/page.tsx", sectorsPage, "service-${serviceNumber}");
+requireText("app/sectors/page.tsx", sectorsPage, "First brief should cover");
+requireText("app/sectors/page.tsx", sectorsPage, "Decision date, accountable owner");
 requireText("app/remediation/page.tsx", remediationPage, "Review model only");
 requireText("app/remediation/page.tsx", remediationPage, "No owner");
 requireText("app/remediation/page.tsx", remediationPage, "Closed with evidence or accepted risk");
