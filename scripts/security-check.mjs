@@ -33,7 +33,10 @@ const [
   sectorsPage,
   remediationPage,
   notFoundPage,
+  errorPage,
+  loadingPage,
   siteHeader,
+  homeStatus,
   checkoutRoute,
   attacksRoute,
   page,
@@ -61,7 +64,10 @@ const [
   read("app/sectors/page.tsx"),
   read("app/remediation/page.tsx"),
   read("app/not-found.tsx"),
+  read("app/error.tsx"),
+  read("app/loading.tsx"),
   read("app/site-header.tsx"),
+  read("app/home-status.tsx"),
   readOptional("app/api/checkout/route.ts"),
   read("app/api/attacks/route.ts"),
   read("app/page.tsx"),
@@ -163,10 +169,23 @@ requireText("app/remediation/page.tsx", remediationPage, "twitter:");
 requireText("app/not-found.tsx", notFoundPage, "ROUTE NOT FOUND");
 requireText("app/not-found.tsx", notFoundPage, "Safe recovery.");
 requireText("app/not-found.tsx", notFoundPage, "robots: { index: false, follow: true }");
+requireText("app/error.tsx", errorPage, "SURFACE DEGRADED");
+requireText("app/error.tsx", errorPage, "No diagnostic details");
+requireText("app/error.tsx", errorPage, "Do not send credentials");
+requireText("app/error.tsx", errorPage, "reset");
+requireText("app/loading.tsx", loadingPage, "aria-busy=\"true\"");
+requireText("app/loading.tsx", loadingPage, "TRANSITION / LOADING");
+requireText("app/loading.tsx", loadingPage, "Public boundary.");
+if (errorPage.includes("error.message") || errorPage.includes("error.stack") || errorPage.includes("error.digest")) {
+  failures.push("app/error.tsx must not expose runtime error details in the public recovery surface");
+}
 requireText("app/site-header.tsx", siteHeader, "headerMenuToggle");
 requireText("app/site-header.tsx", siteHeader, "aria-expanded");
 requireText("app/site-header.tsx", siteHeader, "aria-current");
 requireText("app/site-header.tsx", siteHeader, "requestAnimationFrame");
+requireText("app/site-header.tsx", siteHeader, "event.stopPropagation()");
+requireText("app/home-status.tsx", homeStatus, "event.stopPropagation()");
+requireText("app/home-status.tsx", homeStatus, "previouslyFocusedRef");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/privacy");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/services");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/methodology");

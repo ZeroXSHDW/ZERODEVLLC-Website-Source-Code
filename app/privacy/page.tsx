@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import SiteHeader from '../site-header';
+import SiteHeader, { secondaryNavigation } from '../site-header';
 import styles from './privacy.module.css';
 
 export const metadata: Metadata = {
@@ -35,13 +35,7 @@ export default function PrivacyPage() {
       <SiteHeader
         ariaLabel="Privacy navigation"
         current="/privacy"
-        navigation={[
-          { href: '/services', label: 'Services' },
-          { href: '/methodology', label: 'Methodology' },
-          { href: '/frameworks', label: 'Frameworks' },
-          { href: '/engage', label: 'Engage' },
-          { href: '/privacy', label: 'Privacy' },
-        ]}
+        navigation={secondaryNavigation}
       />
 
       <div className={styles.layout} id="privacy-content">

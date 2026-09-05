@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import SiteHeader from '../site-header';
+import SiteHeader, { secondaryNavigation } from '../site-header';
 import styles from './services.module.css';
 
 export const metadata: Metadata = {
@@ -130,14 +130,7 @@ export default function ServicesPage() {
       <SiteHeader
         ariaLabel="Services navigation"
         current="/services"
-        navigation={[
-          { href: '/services', label: 'Services' },
-          { href: '/methodology', label: 'Methodology' },
-          { href: '/frameworks', label: 'Frameworks' },
-          { href: '/sectors', label: 'Sector fit' },
-          { href: '/engage', label: 'Engage' },
-          { href: '/privacy', label: 'Privacy' },
-        ]}
+        navigation={secondaryNavigation}
       />
 
       <div className={styles.layout} id="services-content">

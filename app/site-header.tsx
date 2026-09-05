@@ -9,6 +9,17 @@ export type SiteHeaderItem = {
   label: string;
 };
 
+export const secondaryNavigation = [
+  { href: '/services', label: 'Services' },
+  { href: '/engage', label: 'Engage' },
+  { href: '/sectors', label: 'Sector fit' },
+  { href: '/deliverables', label: 'Deliverables' },
+  { href: '/methodology', label: 'Methodology' },
+  { href: '/frameworks', label: 'Frameworks' },
+  { href: '/remediation', label: 'Remediation' },
+  { href: '/privacy', label: 'Privacy' },
+] as const;
+
 type SiteHeaderProps = {
   navigation: readonly SiteHeaderItem[];
   current?: string;
@@ -34,6 +45,7 @@ export default function SiteHeader({ navigation, current, ariaLabel }: SiteHeade
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         event.preventDefault();
+        event.stopPropagation();
         setMenuOpen(false);
         requestAnimationFrame(() => toggleRef.current?.focus());
         return;

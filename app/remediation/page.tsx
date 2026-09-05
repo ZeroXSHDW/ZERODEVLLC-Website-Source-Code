@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import SiteHeader from '../site-header';
+import SiteHeader, { secondaryNavigation } from '../site-header';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
@@ -62,14 +62,7 @@ export default function RemediationPage() {
       <SiteHeader
         ariaLabel="Remediation navigation"
         current="/remediation"
-        navigation={[
-          { href: '/services', label: 'Services' },
-          { href: '/methodology', label: 'Methodology' },
-          { href: '/deliverables', label: 'Deliverables' },
-          { href: '/remediation', label: 'Remediation' },
-          { href: '/engage', label: 'Engage' },
-          { href: '/privacy', label: 'Privacy' },
-        ]}
+        navigation={secondaryNavigation}
       />
 
       <div className={styles.layout} id="remediation-content">

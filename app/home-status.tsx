@@ -52,6 +52,7 @@ export function HomeHeader({ navigation, statusHref }: { navigation: readonly Na
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         event.preventDefault();
+        event.stopPropagation();
         setMobileMenuOpen(false);
         return;
       }

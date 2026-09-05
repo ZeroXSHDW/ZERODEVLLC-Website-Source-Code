@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import SiteHeader from './site-header';
+import SiteHeader, { secondaryNavigation } from './site-header';
 import styles from './services/services.module.css';
 
 export const metadata: Metadata = {
@@ -15,12 +15,7 @@ export default function NotFound() {
       <a className={styles.skipLink} href="#not-found-content">Skip to route status</a>
       <SiteHeader
         ariaLabel="Route recovery navigation"
-        navigation={[
-          { href: '/services', label: 'Services' },
-          { href: '/engage', label: 'Engage' },
-          { href: '/methodology', label: 'Methodology' },
-          { href: '/privacy', label: 'Privacy' },
-        ]}
+        navigation={secondaryNavigation}
       />
 
       <div className={styles.layout} id="not-found-content">
