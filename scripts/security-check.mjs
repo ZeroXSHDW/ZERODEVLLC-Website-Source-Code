@@ -25,6 +25,9 @@ const [
   nextConfig,
   liveDefconMap,
   privacyPage,
+  servicesPage,
+  methodologyPage,
+  frameworksPage,
   checkoutRoute,
   attacksRoute,
   page,
@@ -44,6 +47,9 @@ const [
   read("next.config.ts"),
   read("app/live-defcon-map.tsx"),
   read("app/privacy/page.tsx"),
+  read("app/services/page.tsx"),
+  read("app/methodology/page.tsx"),
+  read("app/frameworks/page.tsx"),
   readOptional("app/api/checkout/route.ts"),
   read("app/api/attacks/route.ts"),
   read("app/page.tsx"),
@@ -85,7 +91,18 @@ requireText("app/live-defcon-map.tsx", liveDefconMap, "MAX_EVENT_URL_LENGTH");
 requireText("app/live-defcon-map.tsx", liveDefconMap, ".slice(0, MAX_EVENTS)");
 requireText("app/privacy/page.tsx", privacyPage, "https://zerodevllc.com/privacy");
 requireText("app/privacy/page.tsx", privacyPage, "Do not send credentials");
+requireText("app/services/page.tsx", servicesPage, "Authorized penetration testing");
+requireText("app/services/page.tsx", servicesPage, "Vendor due diligence");
+requireText("app/services/page.tsx", servicesPage, "Disaster recovery and BCP");
+requireText("app/services/page.tsx", servicesPage, "Readiness is not certification");
+requireText("app/methodology/page.tsx", methodologyPage, "Written authorization and named decision owner");
+requireText("app/methodology/page.tsx", methodologyPage, "does not perform unauthorized access");
+requireText("app/frameworks/page.tsx", frameworksPage, "NIST CSF 2.0");
+requireText("app/frameworks/page.tsx", frameworksPage, "Readiness support is not");
 requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/privacy");
+requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/services");
+requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/methodology");
+requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/frameworks");
 for (const source of [proxy, nextConfig]) {
   if (source.includes("'unsafe-inline'"))
     failures.push("CSP must not allow unsafe inline scripts or styles");

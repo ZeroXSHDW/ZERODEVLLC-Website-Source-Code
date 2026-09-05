@@ -1,0 +1,112 @@
+.page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 78% 8%, rgba(56, 173, 99, .14), transparent 34rem),
+    radial-gradient(circle at 4% 64%, rgba(62, 73, 161, .08), transparent 28rem),
+    #050a08;
+  color: var(--ink);
+  padding: 0 clamp(20px, 7vw, 120px) 80px;
+}
+
+.skipLink { background: var(--green); color: #06100a; left: 16px; padding: 10px 13px; position: absolute; top: -60px; z-index: 20; }
+.skipLink:focus { top: 16px; }
+.header { align-items: center; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; margin: 0 auto; max-width: var(--max-width); min-height: 76px; }
+.brand, .headerNav a { color: var(--muted); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+.brand { align-items: center; color: var(--ink); display: inline-flex; font-weight: 800; gap: 10px; }
+.brandMark { align-items: center; border: 1px solid var(--green); color: var(--green); display: inline-flex; font-size: 13px; height: 29px; justify-content: center; width: 34px; }
+.brandDim { color: var(--dim); }
+.headerNav { display: flex; gap: 24px; }
+.headerNav a:hover, .headerNav a:focus-visible, .primaryLink:hover, .primaryLink:focus-visible { color: var(--green-bright); }
+
+.layout { margin: 0 auto; max-width: var(--max-width); }
+.hero { align-items: end; display: grid; gap: clamp(50px, 9vw, 145px); grid-template-columns: minmax(280px, .95fr) minmax(0, 1.05fr); padding: 112px 0 100px; }
+.eyebrow { color: var(--green); font-size: 9px; letter-spacing: .2em; line-height: 1.5; margin: 0 0 25px; text-transform: uppercase; }
+.eyebrow span { color: var(--green-bright); margin-right: 7px; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { font-family: Arial, Helvetica, sans-serif; font-size: clamp(54px, 8vw, 112px); letter-spacing: -.085em; line-height: .86; margin-bottom: 0; text-transform: uppercase; }
+h1 span, h2 span { color: var(--green); }
+h2 { font-family: Arial, Helvetica, sans-serif; font-size: clamp(38px, 5vw, 68px); letter-spacing: -.07em; line-height: .92; margin-bottom: 24px; text-transform: uppercase; }
+h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-transform: uppercase; }
+.heroCopy { border-left: 1px solid var(--line); padding-left: clamp(22px, 4vw, 56px); }
+.heroCopy > p, .sectionIntro > p:not(.eyebrow), .bodyCopy, .cta > div:last-child > p, .noticeSection > p:last-child { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.6; max-width: 560px; }
+.heroBoundary { border-left: 1px solid var(--amber); color: var(--dim) !important; font-size: 12px !important; margin: 28px 0; padding-left: 14px; }
+.heroBoundary strong { color: var(--amber); font-weight: 500; }
+.primaryLink { color: var(--green); display: inline-flex; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+.primaryLink span { font-size: 14px; margin-left: 8px; }
+
+.serviceSection, .lifecycleSection, .methodSection, .frameworkSection, .outputSection { border-top: 1px solid var(--line); display: grid; gap: clamp(50px, 8vw, 120px); grid-template-columns: minmax(280px, .78fr) minmax(0, 1.22fr); padding: 112px 0; }
+.sectionIntro > p:not(.eyebrow) { margin-bottom: 28px; }
+.serviceGrid { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.serviceCard { background: rgba(12, 29, 19, .42); border: 1px solid var(--line); display: flex; flex-direction: column; min-height: 340px; padding: 22px; }
+.serviceCard:hover, .serviceCard:focus-within { border-color: var(--line-strong); box-shadow: 0 18px 40px rgba(0, 0, 0, .18); }
+.cardTopline { color: var(--dim); display: flex; font-size: 8px; justify-content: space-between; letter-spacing: .12em; margin-bottom: 48px; }
+.serviceCard h3 { color: var(--card-signal, var(--green)); font-size: 22px; line-height: 1.05; margin-bottom: 13px; }
+.serviceCard > p { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.55; }
+.serviceCard ul { color: var(--dim); display: grid; font-size: 9px; gap: 8px; line-height: 1.45; list-style: none; margin: auto 0 18px; padding: 0; }
+.serviceCard li { border-left: 1px solid var(--card-signal, var(--green)); padding-left: 10px; }
+.serviceCard li::first-letter { color: var(--card-signal, var(--green)); }
+.serviceCard .output { border-top: 1px solid var(--line); color: var(--dim); font-size: 10px; margin: 0; padding-top: 14px; }
+.serviceCard .output strong, .boundaryBox strong, .cardBoundary strong { color: var(--ink); font-weight: 500; }
+.tonecyan { --card-signal: var(--cyan); }
+.toneamber { --card-signal: var(--amber); }
+.tonegreen { --card-signal: var(--green); }
+.toneviolet { --card-signal: var(--violet); }
+.tonered { --card-signal: var(--red); }
+
+.lifecycleGrid { border-top: 1px solid var(--line); }
+.lifecycleCard { border-bottom: 1px solid var(--line); display: grid; gap: 18px; grid-template-columns: 38px minmax(105px, .45fr) minmax(0, 1fr); padding: 21px 0; }
+.lifecycleCard > span, .stepNumber, .checkList span { color: var(--green); font-size: 9px; letter-spacing: .1em; }
+.lifecycleCard h3, .step h3 { font-size: 18px; margin: 0; }
+.lifecycleCard p, .step p { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.5; margin: 0; max-width: 380px; }
+
+.boundarySection, .twoColumn, .noticeSection { align-items: start; border-top: 1px solid var(--line); display: grid; gap: clamp(50px, 8vw, 120px); grid-template-columns: minmax(280px, .78fr) minmax(0, 1.22fr); padding: 112px 0; }
+.boundaryBox, .noticeSection { border: 1px solid var(--line); padding: 24px; }
+.boundaryBox p { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.55; margin-bottom: 16px; }
+.boundaryBox p:last-child { margin-bottom: 0; }
+.bodyCopy { margin: 0; }
+.checkList { border-top: 1px solid var(--line); }
+.checkList > div { align-items: baseline; border-bottom: 1px solid var(--line); display: grid; gap: 20px; grid-template-columns: 40px minmax(0, 1fr); padding: 18px 0; }
+.checkList p { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.5; margin: 0; }
+.noticeSection { display: block; }
+.noticeSection h2 { max-width: 850px; }
+.noticeSection > p:last-child { margin-bottom: 0; max-width: 760px; }
+
+.methodSection { padding-bottom: 96px; }
+.stepList { border-top: 1px solid var(--line); }
+.step { border-bottom: 1px solid var(--line); display: grid; gap: 22px; grid-template-columns: 42px minmax(150px, .6fr) minmax(0, 1fr); padding: 26px 0; }
+.step h3 { color: var(--ink); }
+.outputGrid, .frameworkGrid { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.outputCard, .frameworkCard { border: 1px solid var(--line); padding: 21px; }
+.outputCard h3, .frameworkCard h3 { color: var(--green); font-size: 19px; margin-bottom: 10px; }
+.outputCard p, .frameworkCard p { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.55; margin: 0; }
+.frameworkTag { color: var(--cyan); display: block; font-size: 8px; letter-spacing: .12em; margin-bottom: 38px; }
+.frameworkCard h3 { color: var(--ink); font-size: 18px; }
+.frameworkCard .cardBoundary { border-top: 1px solid var(--line); color: var(--dim); font-size: 11px; margin-top: 18px; padding-top: 13px; }
+
+.cta { align-items: end; background: radial-gradient(circle at 14% 42%, rgba(178, 255, 202, .11), transparent 34%), linear-gradient(120deg, rgba(156, 255, 184, .065), rgba(156, 255, 184, .018)); border-bottom: 1px solid var(--line); border-top: 1px solid var(--line); display: grid; gap: 50px; grid-template-columns: minmax(0, 1fr) minmax(280px, .8fr); padding: 84px 0; }
+.cta > div:last-child > p { margin-bottom: 24px; }
+
+@media (max-width: 980px) {
+  .hero, .serviceSection, .lifecycleSection, .methodSection, .frameworkSection, .outputSection, .boundarySection, .twoColumn { gap: 60px; grid-template-columns: 1fr; }
+  .heroCopy { padding-left: 22px; }
+}
+
+@media (max-width: 640px) {
+  .page { padding-left: 16px; padding-right: 16px; }
+  .header { min-height: 64px; }
+  .headerNav { gap: 12px; }
+  .headerNav a { font-size: 8px; }
+  .hero { padding: 78px 0 80px; }
+  .serviceSection, .lifecycleSection, .methodSection, .frameworkSection, .outputSection, .boundarySection, .twoColumn { padding: 80px 0; }
+  .serviceGrid, .outputGrid, .frameworkGrid { grid-template-columns: 1fr; }
+  .serviceCard { min-height: 0; }
+  .serviceCard .cardTopline { margin-bottom: 34px; }
+  .lifecycleCard, .step { gap: 10px; grid-template-columns: 34px 1fr; }
+  .lifecycleCard p, .step p { grid-column: 2; }
+  .cta { align-items: start; grid-template-columns: 1fr; padding: 78px 0; }
+  h1 { font-size: clamp(48px, 15vw, 76px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; }
+}
