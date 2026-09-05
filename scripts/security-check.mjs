@@ -106,6 +106,8 @@ requireText("app/services/page.tsx", servicesPage, "Disaster recovery and BCP");
 requireText("app/services/page.tsx", servicesPage, "Readiness is not certification");
 requireText("app/services/page.tsx", servicesPage, "Public-sector procurement");
 requireText("app/services/page.tsx", servicesPage, "Defense-supplier assurance");
+requireText("app/services/page.tsx", servicesPage, "Capability decision matrix");
+requireText("app/services/page.tsx", servicesPage, "RTO/RPO discussion");
 requireText("app/methodology/page.tsx", methodologyPage, "Written authorization and named decision owner");
 requireText("app/methodology/page.tsx", methodologyPage, "does not perform unauthorized access");
 requireText("app/methodology/page.tsx", methodologyPage, "Potential treatment choices");

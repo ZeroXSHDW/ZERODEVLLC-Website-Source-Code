@@ -97,6 +97,17 @@ const fitContexts = [
   ['Regulated technology risk', 'When an architecture, product, or provider needs a proportionate view of controls, supply-chain exposure, readiness gaps, and residual risk.'],
 ] as const;
 
+const decisionMatrix = [
+  ['Authorized penetration testing', 'Can agreed attack paths be safely demonstrated under written authority?', 'Scoped test evidence, validated findings, limitations, and retest condition', 'Security and service owner'],
+  ['Vulnerability assessment', 'Which assets, configurations, or dependencies expose a material weakness?', 'Asset context, verified observations, prioritization, and treatment path', 'Security and engineering owner'],
+  ['Cyber risk management', 'Which risks require treatment, acceptance, transfer, avoidance, or monitoring?', 'Risk register, control evidence, owner, residual risk, and review trigger', 'Risk and executive owner'],
+  ['Technical due diligence', 'What technical conditions could change an important business or investment decision?', 'Architecture, delivery practice, dependency, resilience, and open-question brief', 'Decision and technical owner'],
+  ['Vendor due diligence', 'Does the supplier evidence fit the service, data, access, and exit relationship?', 'Evidence state, data flow, subprocessor, concentration, incident, and exit view', 'Procurement and third-party risk owner'],
+  ['Compliance readiness', 'What requirement applies, what evidence exists, and what remains to be addressed?', 'Control map, applicability decision, owner, gap, exception, and review date', 'Assurance and control owner'],
+  ['Disaster recovery and BCP', 'Can the critical service continue and recover under the agreed scenario?', 'Impact priorities, dependencies, RTO/RPO discussion, exercise or restore result', 'Continuity and service owner'],
+  ['Incident readiness', 'Can the organization make safe decisions, coordinate, preserve evidence, and improve after an exercise?', 'Roles, escalation, communications, exercise record, lessons, and owned actions', 'Incident and risk owner'],
+] as const;
+
 export default function ServicesPage() {
   return (
     <main className={styles.page}>
@@ -144,6 +155,37 @@ export default function ServicesPage() {
                 <p className={styles.output}><strong>Typical output:</strong> {service.output}</p>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section className={styles.outputSection} aria-labelledby="decision-matrix-heading">
+          <div className={styles.sectionIntro}>
+            <p className={styles.eyebrow}>{'// CAPABILITY DECISION MATRIX'}</p>
+            <h2 id="decision-matrix-heading">Choose the evidence<br /><span>the decision needs.</span></h2>
+            <p>These paths can overlap in one engagement, but they are not interchangeable. Start with the decision question, then agree the authority, scope, evidence, and accountable owner.</p>
+          </div>
+          <div className={styles.actionTableWrap}>
+            <table className={styles.actionTable}>
+              <caption className={styles.tableCaption}>Capability decision matrix — illustrative scope, not a service guarantee.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Engagement path</th>
+                  <th scope="col">Decision question</th>
+                  <th scope="col">Evidence lens</th>
+                  <th scope="col">Typical accountable owner</th>
+                </tr>
+              </thead>
+              <tbody>
+                {decisionMatrix.map(([path, question, evidence, owner]) => (
+                  <tr key={path}>
+                    <td>{path}</td>
+                    <td>{question}</td>
+                    <td>{evidence}</td>
+                    <td>{owner}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </section>
 
