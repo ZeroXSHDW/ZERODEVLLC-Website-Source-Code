@@ -155,7 +155,7 @@ export default function ServicesPage() {
           </div>
           <div className={styles.serviceGrid}>
             {services.map((service) => (
-              <article className={`${styles.serviceCard} ${styles[`tone${service.tone}`]}`} key={service.number}>
+              <article className={`${styles.serviceCard} ${styles[`tone${service.tone}`]}`} id={`service-${service.number}`} key={service.number}>
                 <div className={styles.cardTopline}><span>{service.number} / 08</span><span>ENGAGEMENT AREA</span></div>
                 <h3>{service.title}</h3>
                 <p>{service.summary}</p>

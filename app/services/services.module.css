@@ -38,7 +38,9 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .sectionIntro > p:not(.eyebrow) { margin-bottom: 28px; }
 .serviceGrid { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .serviceCard { background: rgba(12, 29, 19, .42); border: 1px solid var(--line); display: flex; flex-direction: column; min-height: 340px; padding: 22px; }
+.serviceCard { scroll-margin-top: 92px; }
 .serviceCard:hover, .serviceCard:focus-within { border-color: var(--line-strong); box-shadow: 0 18px 40px rgba(0, 0, 0, .18); }
+.serviceCard:target { border-color: var(--green); box-shadow: 0 0 0 1px var(--green), 0 18px 40px rgba(0, 0, 0, .18); }
 .cardTopline { color: var(--dim); display: flex; font-size: 8px; justify-content: space-between; letter-spacing: .12em; margin-bottom: 48px; }
 .serviceCard h3 { color: var(--card-signal, var(--green)); font-size: 22px; line-height: 1.05; margin-bottom: 13px; }
 .serviceCard > p { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.55; }
@@ -86,6 +88,8 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .fieldList li { border-left: 1px solid var(--green); padding-left: 10px; }
 .outputCard .cardBoundary { border-top: 1px solid var(--line); color: var(--dim); font-size: 11px; margin-top: 20px; padding-top: 13px; }
 .outputCard .cardBoundary strong { color: var(--ink); font-weight: 500; }
+.outputCard .cardBoundary a, .frameworkCard .cardBoundary a { color: var(--green); }
+.outputCard .cardBoundary a:hover, .outputCard .cardBoundary a:focus-visible, .frameworkCard .cardBoundary a:hover, .frameworkCard .cardBoundary a:focus-visible { color: var(--green-bright); }
 .actionTableWrap { border: 1px solid var(--line); overflow-x: auto; }
 .actionTable { border-collapse: collapse; min-width: 760px; width: 100%; }
 .servicesMatrix { min-width: 1040px; }

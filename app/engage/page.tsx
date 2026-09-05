@@ -26,9 +26,9 @@ const intakeItems = [
 ] as const;
 
 const lanes = [
-  ['01', 'Assess', 'You need to understand exposure, weakness, risk, or technical condition.', 'Penetration testing, vulnerability assessment, technical due diligence, and cyber-risk review.'],
-  ['02', 'Assure', 'You need evidence about controls, suppliers, readiness, or a decision boundary.', 'Vendor due diligence, compliance readiness, framework mapping, and assurance reporting.'],
-  ['03', 'Recover', 'You need to know whether critical work can continue and recover under pressure.', 'Incident readiness, disaster recovery, BCP, tabletop exercises, and recovery validation.'],
+  ['01', 'Assess', 'You need to understand exposure, weakness, risk, or technical condition.', 'Penetration testing, vulnerability assessment, technical due diligence, and cyber-risk review.', [['01', 'Authorized penetration testing'], ['02', 'Vulnerability assessment'], ['04', 'Technical due diligence'], ['03', 'Cyber risk management']]],
+  ['02', 'Assure', 'You need evidence about controls, suppliers, readiness, or a decision boundary.', 'Vendor due diligence, compliance readiness, framework mapping, and assurance reporting.', [['05', 'Vendor due diligence'], ['06', 'Compliance readiness'], ['03', 'Cyber risk management']]],
+  ['03', 'Recover', 'You need to know whether critical work can continue and recover under pressure.', 'Incident readiness, disaster recovery, BCP, tabletop exercises, and recovery validation.', [['07', 'Disaster recovery and BCP'], ['08', 'Incident readiness'], ['03', 'Cyber risk management']]],
 ] as const;
 
 const firstResponse = [
@@ -125,12 +125,13 @@ export default function EngagePage() {
             <p>If the right service is not obvious, start with the decision rather than forcing the problem into a product name.</p>
           </div>
           <div className={styles.frameworkGrid}>
-            {lanes.map(([number, title, question, services]) => (
+            {lanes.map(([number, title, question, services, serviceRefs]) => (
               <article className={styles.frameworkCard} key={number}>
                 <span className={styles.frameworkTag}>{number} / DECISION LANE</span>
                 <h3>{title}</h3>
                 <p>{question}</p>
                 <p className={styles.cardBoundary}><strong>Possible scope:</strong> {services}</p>
+                <p className={styles.cardBoundary}><strong>Review aligned services:</strong>{serviceRefs.map(([serviceNumber, serviceTitle], index) => <span key={serviceNumber}>{index > 0 ? ' / ' : ' '}<Link href={`/services#service-${serviceNumber}`}>{serviceTitle}</Link></span>)}</p>
               </article>
             ))}
           </div>
