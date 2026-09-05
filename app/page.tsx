@@ -198,14 +198,14 @@ export default function Home() {
             <span>Systems out.</span>
           </h1>
           <p className="hero-lede">
-            ZeroDev builds the software layer between a sharp idea and a live system for operators, owners, and teams that need evidence and next action in the same frame.
+            Authorized defensive cybersecurity for public-sector programs, defense suppliers, essential services, and regulated-technology teams—turning penetration testing, vulnerability, risk, due-diligence, and recovery questions into evidence and next action.
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="/services">
               Review security services <span aria-hidden="true">↗</span>
             </a>
-            <a className="button button-ghost" href={canonicalDomains.defcon}>
-              Open public-signal gateway <span aria-hidden="true">↗</span>
+            <a className="button button-ghost" href="/engage">
+              Prepare a safe first brief <span aria-hidden="true">↗</span>
             </a>
           </div>
           <p className="hero-action-note"><span>FIRST MOVE</span> Start with a high-level objective. Authorized work begins with scope, authority, and a named decision owner.</p>

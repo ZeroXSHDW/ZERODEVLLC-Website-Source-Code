@@ -215,6 +215,8 @@ requireText("app/page.tsx", page, "Open the DEFCON Signal Fusion EU gateway");
 requireText("app/page.tsx", page, "EU gateway / external");
 requireText("app/page.tsx", page, "DEFENSIVE CYBER / RESILIENCE");
 requireText("app/page.tsx", page, "Protect the mission.");
+requireText("app/page.tsx", page, "Authorized defensive cybersecurity for public-sector programs");
+requireText("app/page.tsx", page, "defense suppliers, essential services, and regulated-technology teams");
 requireText("app/page.tsx", page, "Authorized penetration testing and vulnerability assessment");
 requireText("app/page.tsx", page, "Disaster recovery, BCP, and incident readiness");
 requireText("app/page.tsx", page, "DEFENSIVE DELIVERY / REVIEWABLE OUTPUT");
