@@ -23,6 +23,8 @@ const [
   publicSecurityPolicy,
   layout,
   nextConfig,
+  liveDefconMap,
+  privacyPage,
   checkoutRoute,
   attacksRoute,
   page,
@@ -40,6 +42,8 @@ const [
   read("public/SECURITY.md"),
   read("app/layout.tsx"),
   read("next.config.ts"),
+  read("app/live-defcon-map.tsx"),
+  read("app/privacy/page.tsx"),
   readOptional("app/api/checkout/route.ts"),
   read("app/api/attacks/route.ts"),
   read("app/page.tsx"),
@@ -75,6 +79,13 @@ requireText("app/layout.tsx", layout, "url: '/og.png'");
 requireText("app/api/attacks/route.ts", attacksRoute, "stale-while-revalidate=300");
 requireText("app/api/attacks/route.ts", attacksRoute, "safeCisaUrl");
 requireText("app/api/attacks/route.ts", attacksRoute, "memoryCache");
+requireText("app/live-defcon-map.tsx", liveDefconMap, "const CISA_HOSTS");
+requireText("app/live-defcon-map.tsx", liveDefconMap, "function isSafeCisaUrl");
+requireText("app/live-defcon-map.tsx", liveDefconMap, "MAX_EVENT_URL_LENGTH");
+requireText("app/live-defcon-map.tsx", liveDefconMap, ".slice(0, MAX_EVENTS)");
+requireText("app/privacy/page.tsx", privacyPage, "https://zerodevllc.com/privacy");
+requireText("app/privacy/page.tsx", privacyPage, "Do not send credentials");
+requireText("app/sitemap.ts", sitemap, "https://zerodevllc.com/privacy");
 for (const source of [proxy, nextConfig]) {
   if (source.includes("'unsafe-inline'"))
     failures.push("CSP must not allow unsafe inline scripts or styles");

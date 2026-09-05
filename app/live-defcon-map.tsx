@@ -23,6 +23,16 @@ type ThreatFeed = {
   stale?: boolean;
 };
 
+const CISA_HOSTS = new Set(['cisa.gov', 'www.cisa.gov']);
+const MAX_EVENTS = 12;
+const MAX_EVENT_ID_LENGTH = 160;
+const MAX_EVENT_TITLE_LENGTH = 180;
+const MAX_EVENT_DETAIL_LENGTH = 320;
+const MAX_EVENT_SOURCE_LENGTH = 120;
+const MAX_EVENT_URL_LENGTH = 2_048;
+const MAX_ERRORS = 6;
+const MAX_ERROR_LENGTH = 160;
+
 const mapNodes = [
   { name: 'NORTH AMERICA', x: 24, y: 42, tone: 'cyan', depth: 16 },
   { name: 'PACIFIC WATCH', x: 12, y: 59, tone: 'violet', depth: 6 },
@@ -48,29 +58,52 @@ function formatFeedTime(value: string | undefined) {
   return Number.isFinite(timestamp) ? `${formatUtc(timestamp)}Z` : '--:--:--';
 }
 
+function boundedText(value: unknown, maxLength: number): value is string {
+  return typeof value === 'string' && value.trim().length > 0 && value.length <= maxLength;
+}
+
+function isSafeCisaUrl(value: unknown): value is string {
+  if (!boundedText(value, MAX_EVENT_URL_LENGTH)) return false;
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && !url.username && !url.password && CISA_HOSTS.has(url.hostname.toLowerCase());
+  } catch {
+    return false;
+  }
+}
+
 function isThreatEvent(value: unknown): value is PublicThreatEvent {
   if (!value || typeof value !== 'object') return false;
   const event = value as Partial<PublicThreatEvent>;
-  return typeof event.id === 'string'
-    && typeof event.title === 'string'
-    && typeof event.detail === 'string'
-    && typeof event.source === 'string'
-    && typeof event.observedAt === 'string'
+  return boundedText(event.id, MAX_EVENT_ID_LENGTH)
+    && boundedText(event.title, MAX_EVENT_TITLE_LENGTH)
+    && boundedText(event.detail, MAX_EVENT_DETAIL_LENGTH)
+    && boundedText(event.source, MAX_EVENT_SOURCE_LENGTH)
+    && boundedText(event.observedAt, 64)
+    && Number.isFinite(Date.parse(event.observedAt))
     && typeof event.severity === 'number'
-    && typeof event.url === 'string'
-    && ['known-exploited', 'advisory', 'ics-advisory'].includes(event.kind ?? '');
+    && Number.isInteger(event.severity)
+    && event.severity >= 0
+    && event.severity <= 100
+    && ['known-exploited', 'advisory', 'ics-advisory'].includes(event.kind ?? '')
+    && isSafeCisaUrl(event.url);
 }
 
 function parseThreatFeed(value: unknown): ThreatFeed {
   if (!value || typeof value !== 'object') throw new Error('invalid threat feed');
   const feed = value as Partial<ThreatFeed>;
   if (!['live', 'degraded', 'unavailable'].includes(feed.status ?? '')) throw new Error('invalid threat feed status');
+  const now = new Date().toISOString();
   return {
     status: feed.status as ThreatFeed['status'],
-    observedAt: typeof feed.observedAt === 'string' ? feed.observedAt : new Date().toISOString(),
-    checkedAt: typeof feed.checkedAt === 'string' ? feed.checkedAt : new Date().toISOString(),
-    events: Array.isArray(feed.events) ? feed.events.filter(isThreatEvent) : [],
-    errors: Array.isArray(feed.errors) ? feed.errors.filter((error): error is string => typeof error === 'string') : [],
+    observedAt: boundedText(feed.observedAt, 64) && Number.isFinite(Date.parse(feed.observedAt)) ? feed.observedAt : now,
+    checkedAt: boundedText(feed.checkedAt, 64) && Number.isFinite(Date.parse(feed.checkedAt)) ? feed.checkedAt : now,
+    events: Array.isArray(feed.events) ? feed.events.filter(isThreatEvent).slice(0, MAX_EVENTS) : [],
+    errors: Array.isArray(feed.errors)
+      ? feed.errors
+        .filter((error): error is string => boundedText(error, MAX_ERROR_LENGTH))
+        .slice(0, MAX_ERRORS)
+      : [],
     stale: feed.stale === true,
   };
 }
