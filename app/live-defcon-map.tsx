@@ -317,7 +317,7 @@ export function LiveDefconMap() {
             <small>{feed ? <>{feed.events.length} source-linked events · observed <time dateTime={feed.observedAt}>{formatFeedTime(feed.observedAt)}</time> · checked <time dateTime={feed.checkedAt}>{formatFeedTime(feed.checkedAt)}</time> · auto-refresh {feed.refreshAfterSeconds}s{feed.stale ? ' · stale cache' : ''}{refreshWaitSeconds > 0 ? ` · manual refresh in ${refreshWaitSeconds}s` : ''}</> : 'Connecting to public sources…'}</small>
           </div>
           <div className="threat-feed-controls">
-            <span className={`threat-feed-status threat-status-${feed?.status ?? 'connecting'}`} role="status" aria-live="polite"><i /> {feed?.status === 'live' ? 'LIVE' : feed?.status === 'degraded' ? 'DEGRADED' : feed?.status === 'unavailable' ? 'UNAVAILABLE' : 'CONNECTING'}</span>
+            <span className={`threat-feed-status threat-status-${feed?.status ?? 'connecting'}`} role="status" aria-live="polite" aria-atomic="true"><i /> {feed?.status === 'live' ? 'LIVE' : feed?.status === 'degraded' ? 'DEGRADED' : feed?.status === 'unavailable' ? 'UNAVAILABLE' : 'CONNECTING'}</span>
             <button type="button" onClick={() => void refreshFeed(true)} disabled={isRefreshing || refreshWaitSeconds > 0} aria-label={refreshWaitSeconds > 0 ? `Refresh public threat signals; available in ${refreshWaitSeconds} seconds` : 'Refresh public threat signals'}>
               {isRefreshing ? 'CHECKING…' : refreshWaitSeconds > 0 ? `WAIT ${refreshWaitSeconds}s` : 'REFRESH'}
             </button>
@@ -325,7 +325,7 @@ export function LiveDefconMap() {
         </div>
         <div className={`threat-feed-state threat-state-${feed?.status ?? 'connecting'}${feed?.stale ? ' threat-state-stale' : ''}`}>
           <span className="threat-feed-state-mark" aria-hidden="true" />
-          <strong role="status" aria-live="polite">{feedState.label}</strong>
+          <strong role="status" aria-live="polite" aria-atomic="true">{feedState.label}</strong>
           <span className="threat-feed-state-detail">{feedState.detail}</span>
         </div>
         <p className="threat-feed-notice">Public-source indicators only. Known exploitation or advisory activity is not confirmation of an attack against ZeroDev.</p>

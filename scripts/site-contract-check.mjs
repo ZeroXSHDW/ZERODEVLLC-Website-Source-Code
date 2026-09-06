@@ -211,7 +211,8 @@ for (const marker of [
   "label: 'STALE CACHE'",
   "threat-feed-state",
   "threat-feed-state-detail",
-  'role="status" aria-live="polite">{feedState.label}',
+  'role="status" aria-live="polite" aria-atomic="true">{feedState.label}',
+  'role="status" aria-live="polite" aria-atomic="true"><i />',
 ]) {
   requireText("app/live-defcon-map.tsx refresh contract", liveDefconMap, marker);
 }
