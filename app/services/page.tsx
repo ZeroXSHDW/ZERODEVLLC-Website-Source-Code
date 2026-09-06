@@ -130,7 +130,10 @@ const serviceBriefs = [
     title: 'Authorized penetration testing',
     decision: 'Can approved attack paths be demonstrated safely against the named boundary?',
     gate: 'Written authority, in-scope assets, rules of engagement, safety contact, and stop conditions.',
+    evidence: 'Written authority, asset inventory or target list, exclusions, permitted methods, test window, and evidence-handling contact.',
+    verification: 'Reconcile the proposed scope to the authority, confirm permitted activity and stop conditions, and separate observations from validated findings.',
     output: 'Scoped findings, evidence confidence, limitations, remediation choices, and a retest condition.',
+    nextGate: 'The authority owner accepts the scope; the service owner owns treatment, retest, and residual-risk decisions.',
     noFit: 'No written authority, unclear ownership, or live target details supplied through a public channel.',
   },
   {
@@ -138,7 +141,10 @@ const serviceBriefs = [
     title: 'Vulnerability assessment',
     decision: 'Which assets, configurations, or dependencies need priority and verified treatment?',
     gate: 'Named asset boundary, permission to assess, source or inventory context, and an evidence owner.',
+    evidence: 'Asset inventory or scanner context, source date, access permission, criticality context, and the owner who can validate observations.',
+    verification: 'Reconcile coverage and scope, manually validate material observations where permitted, and record severity, confidence, and limitations.',
     output: 'A validated findings register with prioritization, owners, treatment path, and next checks.',
+    nextGate: 'Security or engineering prioritizes treatment or records an authorized exception; changed controls are rechecked.',
     noFit: 'An unbounded scanner export with no asset owner, permission, or business-impact context.',
   },
   {
@@ -146,7 +152,10 @@ const serviceBriefs = [
     title: 'Cyber risk management',
     decision: 'Which risks require treatment, acceptance, transfer, avoidance, or monitoring?',
     gate: 'Decision owner, mission or business context, risk criteria, control evidence, and treatment authority.',
+    evidence: 'Mission or business objective, risk criteria, important services, current controls, existing decisions, and review date.',
+    verification: 'Map evidence to impact, likelihood, control state, assumptions, and treatment choices; keep evidence quality visible.',
     output: 'A decision-ready risk register, control/evidence map, treatment roadmap, and review trigger.',
+    nextGate: 'The risk or executive owner records treatment, transfer, avoidance, monitoring, or residual-risk acceptance.',
     noFit: 'A request for an objective score without context, criteria, evidence quality, or an accountable owner.',
   },
   {
@@ -154,7 +163,10 @@ const serviceBriefs = [
     title: 'Technical due diligence',
     decision: 'What technical conditions could change an important program, investment, or supplier decision?',
     gate: 'Defined decision, review boundary, permitted evidence sources, and a technical decision owner.',
+    evidence: 'Architecture and data-flow context, delivery practices, critical dependencies, resilience evidence, open questions, and decision criteria.',
+    verification: 'Use bounded document, interview, and technical-review methods; distinguish source evidence, assumptions, gaps, and confidence.',
     output: 'A technical brief covering architecture, delivery practice, dependencies, assumptions, and open questions.',
+    nextGate: 'The decision owner acknowledges conditions and limitations; legal, financial, commercial, and investment decisions remain separately owned.',
     noFit: 'A request for a legal, financial, investment, or procurement verdict beyond the agreed technical review.',
   },
   {
@@ -162,7 +174,10 @@ const serviceBriefs = [
     title: 'Vendor due diligence',
     decision: 'Does the supplier evidence fit the service, data, access, incident, and exit relationship?',
     gate: 'Supplier relationship, service/data boundary, procurement owner, evidence contact, and review purpose.',
+    evidence: 'Service and data flow, access model, subprocessors, incident route, continuity, contract context, concentration, and exit assumptions.',
+    verification: 'Check provenance, recency, applicability, coverage, exceptions, fourth parties, access, incident, continuity, and exit gaps.',
     output: 'A supplier-risk matrix with evidence states, gaps, subprocessor, concentration, fourth-party, and exit questions.',
+    nextGate: 'Procurement or third-party risk records approval, conditions, mitigation, escalation, or decline; ZeroDev does not approve the supplier.',
     noFit: 'Treating a questionnaire response as independent assurance or asking for a supplier verdict without owner judgment.',
   },
   {
@@ -170,7 +185,10 @@ const serviceBriefs = [
     title: 'Compliance readiness',
     decision: 'What requirement applies, what evidence exists, and what remains to be addressed?',
     gate: 'Applicable contract, framework, jurisdiction, control owner, evidence boundary, and assessment objective.',
+    evidence: 'Applicable requirement or contract, jurisdiction, control register, evidence owner, implementation state, and exception record.',
+    verification: 'Confirm applicability, map the requirement to evidence and control state, record limitations, and refer certification or regulatory questions appropriately.',
     output: 'A control map with applicability decisions, implementation state, gaps, exceptions, and remediation sequence.',
+    nextGate: 'The control owner records the gap, exception, remediation route, or referral to the appropriate assessor, auditor, legal adviser, or authority.',
     noFit: 'A request for certification, accreditation, clearance, legal advice, or regulator approval from a readiness review.',
   },
   {
@@ -178,7 +196,10 @@ const serviceBriefs = [
     title: 'Disaster recovery and BCP',
     decision: 'Can the critical service continue and recover under the agreed disruption scenario?',
     gate: 'Critical service, impact priorities, dependencies, recovery assumptions, RTO/RPO discussion, and exercise authority.',
+    evidence: 'Business-impact context, critical-service map, dependencies, recovery assumptions, runbooks, RTO/RPO discussion, and test authority.',
+    verification: 'Review or exercise the agreed scenario, record observed results and decisions, and keep unresolved dependency and recovery gaps visible.',
     output: 'A resilience roadmap tied to restore or exercise results, unresolved gaps, owners, and next validation.',
+    nextGate: 'The continuity or service owner accepts the exercise result, actions, residual risk, and next restore test or exercise date.',
     noFit: 'Claiming recovery capability from a document or unexercised plan without an observed result and owner decision.',
   },
   {
@@ -186,7 +207,10 @@ const serviceBriefs = [
     title: 'Incident readiness',
     decision: 'Can the organization make safe decisions, coordinate, preserve evidence, and improve after an exercise?',
     gate: 'Scenario, participants, escalation owner, evidence boundary, communications path, and exercise authorization.',
+    evidence: 'Roles, escalation contacts, scenario, communications path, evidence boundary, exercise authority, and participant list.',
+    verification: 'Run a bounded tabletop or exercise, record decisions and evidence handling, and keep exercise observations separate from a live incident.',
     output: 'An exercise record, decision points, lessons learned, owned actions, and a rehearsal or retest trigger.',
+    nextGate: 'The incident or executive owner approves lessons learned, communications actions, the improvement backlog, and the next readiness review.',
     noFit: 'A live incident or sensitive evidence transfer through this public site; use the approved incident channel and authority.',
   },
 ] as const;
@@ -262,7 +286,10 @@ export default function ServicesPage() {
                 <dl className={styles.briefingPackFacts}>
                   <div><dt>Decision</dt><dd>{brief.decision}</dd></div>
                   <div><dt>Entry gate</dt><dd>{brief.gate}</dd></div>
+                  <div><dt>Safe evidence</dt><dd>{brief.evidence}</dd></div>
+                  <div><dt>Review method</dt><dd>{brief.verification}</dd></div>
                   <div><dt>Typical output</dt><dd>{brief.output}</dd></div>
+                  <div><dt>Next gate</dt><dd>{brief.nextGate}</dd></div>
                 </dl>
                 <p className={styles.briefingPackBoundary}><strong>No-fit or owner gate:</strong> {brief.noFit}</p>
               </article>

@@ -185,6 +185,9 @@ for (const marker of [
   'id="fit-contexts"',
   'id="controlled-engagement"',
   'id="claims-limits"',
+  'Safe evidence',
+  'Review method',
+  'Next gate',
 ]) {
   requireText("app/services/page.tsx route index", servicesPage, marker);
 }
