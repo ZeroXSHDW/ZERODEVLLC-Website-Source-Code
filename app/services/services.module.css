@@ -29,6 +29,14 @@
 .headerAction { align-items: center; border: 1px solid var(--green); color: var(--green); display: inline-flex; font-size: 9px; gap: 8px; letter-spacing: .12em; margin-left: 24px; min-height: 36px; padding: 8px 10px; text-transform: uppercase; transition: background .2s ease, color .2s ease, border-color .2s ease; white-space: nowrap; }
 .headerAction span { font-size: 13px; line-height: 1; }
 .headerAction:hover, .headerAction:focus-visible { background: rgba(156, 255, 184, .1); border-color: var(--green-bright); color: var(--green-bright); }
+.surfaceBar { align-items: center; border-bottom: 1px solid var(--line); color: var(--dim); display: flex; flex-wrap: wrap; font-size: 8px; gap: 8px 20px; letter-spacing: .13em; margin: 0 auto; max-width: var(--max-width); min-height: 42px; padding: 7px 0; text-transform: uppercase; }
+.surfaceBar > span { align-items: center; display: inline-flex; gap: 7px; white-space: nowrap; }
+.surfaceBar > span::before { background: var(--line-strong); content: ''; display: inline-block; height: 5px; width: 5px; }
+.surfaceBarLive { color: var(--green); }
+.surfaceBarLive::before { background: var(--green) !important; box-shadow: 0 0 10px rgba(156, 255, 184, .55); }
+.surfaceBar a { align-items: center; color: var(--green); display: inline-flex; gap: 8px; margin-left: auto; min-height: 36px; padding: 6px 0 6px 12px; }
+.surfaceBar a span { font-size: 13px; line-height: 1; }
+.surfaceBar a:hover, .surfaceBar a:focus-visible { color: var(--green-bright); }
 
 .layout { margin: 0 auto; max-width: var(--max-width); }
 .hero { align-items: end; display: grid; gap: clamp(50px, 9vw, 145px); grid-template-columns: minmax(280px, .95fr) minmax(0, 1.05fr); padding: 112px 0 100px; }
@@ -233,6 +241,8 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
   .headerNav { display: none; gap: 8px 14px; grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .headerNavOpen { display: grid; }
   .headerNav a { align-items: center; display: flex; font-size: 8px; min-height: 42px; }
+  .surfaceBar { align-items: flex-start; gap: 8px 14px; line-height: 1.35; padding: 10px 0; }
+  .surfaceBar a { flex-basis: 100%; margin-left: 0; min-height: 36px; padding-left: 0; }
   .hero { padding: 78px 0 80px; }
   .serviceSection, .lifecycleSection, .methodSection, .frameworkSection, .outputSection, .boundarySection, .twoColumn { padding: 80px 0; }
   .pageIndex { top: 64px; }
@@ -259,6 +269,8 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
   .headerNav { display: none; gap: 8px 14px; grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .headerNavOpen { display: grid; }
   .headerNav a { align-items: center; display: flex; font-size: 8px; min-height: 42px; }
+  .surfaceBar { align-items: flex-start; gap: 8px 14px; line-height: 1.35; padding: 10px 0; }
+  .surfaceBar a { flex-basis: 100%; margin-left: 0; min-height: 36px; padding-left: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

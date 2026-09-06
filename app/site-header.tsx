@@ -85,6 +85,7 @@ export default function SiteHeader({ navigation, current, ariaLabel }: SiteHeade
   }, [menuOpen]);
 
   return (
+    <>
     <header className={styles.header} id="top" ref={headerRef}>
       <Link className={styles.brand} href="/" aria-label="ZeroDev LLC home">
         <span className={styles.brandMark}>Z/</span>
@@ -124,5 +125,13 @@ export default function SiteHeader({ navigation, current, ariaLabel }: SiteHeade
         Prepare a brief <span aria-hidden="true">→</span>
       </Link>
     </header>
+    <aside className={styles.surfaceBar} aria-label="Public surface controls">
+      <span className={styles.surfaceBarLive}>PUBLIC SURFACE</span>
+      <span>READ-ONLY BY DEFAULT</span>
+      <span>NO ACCOUNTS / NO PAYMENTS</span>
+      <span>AUTHORITY FIRST</span>
+      <Link href="/privacy">View handling boundary <span aria-hidden="true">→</span></Link>
+    </aside>
+    </>
   );
 }

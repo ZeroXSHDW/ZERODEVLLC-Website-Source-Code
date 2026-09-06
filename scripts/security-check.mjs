@@ -270,6 +270,11 @@ if (errorPage.includes("error.message") || errorPage.includes("error.stack") || 
 requireText("app/site-header.tsx", siteHeader, "headerMenuToggle");
 requireText("app/site-header.tsx", siteHeader, "aria-expanded");
 requireText("app/site-header.tsx", siteHeader, "aria-current");
+requireText("app/site-header.tsx", siteHeader, "PUBLIC SURFACE");
+requireText("app/site-header.tsx", siteHeader, "READ-ONLY BY DEFAULT");
+requireText("app/site-header.tsx", siteHeader, "NO ACCOUNTS / NO PAYMENTS");
+requireText("app/site-header.tsx", siteHeader, "AUTHORITY FIRST");
+requireText("app/site-header.tsx", siteHeader, "View handling boundary");
 requireText("app/site-header.tsx", siteHeader, "requestAnimationFrame");
 requireText("app/site-header.tsx", siteHeader, "event.stopPropagation()");
 requireText("app/home-status.tsx", homeStatus, "event.stopPropagation()");

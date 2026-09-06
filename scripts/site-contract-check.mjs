@@ -218,6 +218,9 @@ for (const marker of [
   "document.body.style.overflow = 'hidden'",
   'className={styles.headerAction}',
   'href="/engage" aria-label="Prepare a safe first brief"',
+  'className={styles.surfaceBar}',
+  'aria-label="Public surface controls"',
+  'href="/privacy">View handling boundary',
 ]) {
   requireText("app/site-header.tsx shared navigation contract", siteHeader, marker);
 }
@@ -228,6 +231,8 @@ for (const marker of [
   ".headerMenuToggleOpen span:first-child",
   ".headerMenuToggleOpen span:nth-child(2)",
   ".headerMenuToggleOpen span:last-child",
+  ".surfaceBar { align-items: center;",
+  ".surfaceBarLive::before",
 ]) {
   requireText("app/services/services.module.css shared navigation styles", servicesCss, marker);
 }
