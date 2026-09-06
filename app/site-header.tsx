@@ -72,7 +72,7 @@ export default function SiteHeader({ navigation, current, ariaLabel }: SiteHeade
   }, [menuOpen]);
 
   return (
-    <header className={styles.header}>
+    <header className={styles.header} id="top">
       <Link className={styles.brand} href="/" aria-label="ZeroDev LLC home">
         <span className={styles.brandMark}>Z/</span>
         <span>ZERODEVLLC<span className={styles.brandDim}>.COM</span></span>

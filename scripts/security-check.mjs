@@ -186,6 +186,8 @@ requireText("app/site-footer.tsx", siteFooter, "NO USER TELEMETRY / READ-ONLY BY
 requireText("app/site-footer.tsx", siteFooter, "payments, or sensitive records");
 requireText("app/site-footer.tsx", siteFooter, "SEPARATE EXTERNAL SURFACES");
 requireText("app/site-footer.tsx", siteFooter, "does not establish their provider");
+requireText("app/site-footer.tsx", siteFooter, "Back to top");
+requireText("app/site-header.tsx", siteHeader, "id=\"top\"");
 for (const [label, source] of [
   ["app/services/page.tsx", servicesPage],
   ["app/engage/page.tsx", engagePage],

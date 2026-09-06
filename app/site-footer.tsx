@@ -49,6 +49,7 @@ export default function SiteFooter() {
       <div className={styles.siteFooterBottom}>
         <span>© 2026 ZERO DEV LLC / IRELAND</span>
         <span>NO USER TELEMETRY / READ-ONLY BY DEFAULT</span>
+        <a className={styles.siteFooterTopLink} href="#top">Back to top ↑</a>
         <span><a href="mailto:hello@zerodevllc.com?subject=Private%20security%20report">Private security reporting</a> / <Link href="/privacy">Privacy</Link></span>
       </div>
     </footer>
