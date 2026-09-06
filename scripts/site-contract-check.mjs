@@ -385,6 +385,8 @@ for (const marker of [
   'Owner acceptance or stop condition',
   'ZERODEVLLC // FIRST BRIEF',
   'NOT AUTHORIZATION',
+  'className={styles.briefSheetContextRow}',
+  'className={styles.briefSheetGate}',
 ]) {
   requireRouteIndexText("app/engage/page.tsx route index", engagePage, marker);
 }
@@ -392,6 +394,8 @@ for (const marker of [
 for (const marker of [
   ".briefSheet { background:",
   ".briefSheetFields > div { border-bottom:",
+  ".briefSheetContextRow { background:",
+  ".briefSheetGate { border-left:",
   ".briefSheetBoundary { border-left:",
 ]) {
   requireText("app/services/services.module.css print brief contract", servicesCss, marker);
@@ -416,6 +420,8 @@ for (const marker of [
   ".frameworkFreshness { border-left: 1px solid var(--cyan);",
   ".frameworkRecord { display: grid;",
   ".frameworkRecord dt { color: var(--cyan);",
+  ".frameworkRecordLink { color: var(--green);",
+  ".actionTable tr:target td { background:",
 ]) {
   requireText("app/services/services.module.css framework freshness", servicesCss, marker);
 }
@@ -512,6 +518,7 @@ const additionalRouteIndexContracts = [
     'PROCUREMENT / VENDOR RISK EVIDENCE PATH',
     'styles.procurementEvidenceMap',
     'ZeroDev does not approve a supplier',
+    'id={`evidence-request-${number}`}',
   ]],
   ["app/methodology/page.tsx", methodologyPage, [
     'aria-label="Methodology page sections"',
@@ -585,6 +592,9 @@ const additionalRouteIndexContracts = [
     'Decision owner',
     'Treatment gate',
     'Retest trigger',
+    'record.evidenceHref',
+    'record.evidenceLabel',
+    'styles.frameworkRecordLink',
     'const serviceFrameworkMap = [',
   ]],
   ["app/assurance/page.tsx", assurancePage, [

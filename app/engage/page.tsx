@@ -312,6 +312,12 @@ export default async function EngagePage({ searchParams }: EngagePageProps) {
               <span className={styles.briefSheetStatus}>NOT AUTHORIZATION</span>
             </div>
             <dl className={styles.briefSheetFields}>
+              {briefContexts.map((context) => (
+                <div className={styles.briefSheetContextRow} key={context.key}>
+                  <dt>{context.label}</dt>
+                  <dd><strong>{context.title}</strong><br />{context.prompt}<span className={styles.briefSheetGate}><strong>First gate:</strong> {context.gate}</span></dd>
+                </div>
+              ))}
               {briefSheetFields.map(([label, prompt]) => <div key={label}><dt>{label}</dt><dd>[{prompt}]</dd></div>)}
             </dl>
             <p className={styles.briefSheetBoundary}><strong>Safe starting boundary:</strong> This review copy records a question and a possible next gate. It does not approve testing, accept evidence, establish certification, confirm clearance, or transfer responsibility for residual risk.</p>

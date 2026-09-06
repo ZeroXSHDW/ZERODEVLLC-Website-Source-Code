@@ -149,7 +149,7 @@ export default function DeliverablesPage() {
               </thead>
               <tbody>
                 {evidenceRequestRows.map(([number, lane, evidence, method, acceptance]) => (
-                  <tr key={lane}>
+                  <tr id={`evidence-request-${number}`} key={lane}>
                     <td><Link className={styles.evidenceRequestLink} href={`/services#service-${number}`}>{lane} <span aria-hidden="true">→</span></Link></td>
                     <td>{evidence}</td>
                     <td>{method}</td>

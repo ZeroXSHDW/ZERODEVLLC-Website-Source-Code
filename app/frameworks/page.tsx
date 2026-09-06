@@ -105,6 +105,8 @@ const serviceFrameworkMap = [
       owner: 'Authority owner and security/service owner.',
       treatment: 'Remediate, accept, or defer each validated finding; ZeroDev records options, not acceptance.',
       retest: 'Scope change, remediation completion, or agreed retest window.',
+      evidenceHref: '/deliverables#evidence-request-01',
+      evidenceLabel: 'Review authority evidence lane',
     },
     boundary: 'Testing guidance does not grant authorization or prove that a system is secure.',
   },
@@ -117,6 +119,8 @@ const serviceFrameworkMap = [
       owner: 'Security, engineering, and asset owner.',
       treatment: 'Validate, prioritize, assign, mitigate, monitor, or record an authorized exception.',
       retest: 'Coverage change, patch/configuration change, or material exposure or threat change.',
+      evidenceHref: '/deliverables#evidence-request-02',
+      evidenceLabel: 'Review asset evidence lane',
     },
     boundary: 'A scanner result or control list is not, by itself, a validated finding or risk-acceptance decision.',
   },
@@ -129,6 +133,8 @@ const serviceFrameworkMap = [
       owner: 'Risk or executive owner with control owners.',
       treatment: 'Choose treatment, transfer, avoidance, monitoring, or residual-risk acceptance through the accountable owner.',
       retest: 'Decision review date, control change, mission change, or material threat and dependency change.',
+      evidenceHref: '/deliverables#evidence-request-03',
+      evidenceLabel: 'Review risk evidence lane',
     },
     boundary: 'A reference family is not a universal score, board decision, or residual-risk acceptance.',
   },
@@ -141,6 +147,8 @@ const serviceFrameworkMap = [
       owner: 'Decision owner and technical lead.',
       treatment: 'Set conditions, request remediation, escalate an open question, or defer the decision with limitations recorded.',
       retest: 'Material architecture, product, provider, data-flow, or delivery-practice change.',
+      evidenceHref: '/deliverables#evidence-request-04',
+      evidenceLabel: 'Review technical evidence lane',
     },
     boundary: 'Reference alignment is not independent assurance and does not create a legal, financial, investment, or procurement verdict.',
   },
@@ -153,6 +161,8 @@ const serviceFrameworkMap = [
       owner: 'Procurement or third-party risk owner with the service owner.',
       treatment: 'Approve with conditions, mitigate, escalate, defer, or decline; ZeroDev does not approve the supplier.',
       retest: 'Renewal, material service or subprocessor change, incident, control expiry, or exit-plan change.',
+      evidenceHref: '/deliverables#evidence-request-05',
+      evidenceLabel: 'Review supplier evidence lane',
     },
     boundary: 'A questionnaire or reference map is not supplier assurance, a CMMC status, a regulatory determination, or a procurement decision.',
   },
@@ -165,6 +175,8 @@ const serviceFrameworkMap = [
       owner: 'Responsible program authority and system owner, with the required assessor or authority.',
       treatment: 'Record remediation, exception, assessment route, flow-down, or authority referral; do not infer status from a framework name.',
       retest: 'Contract or data-flow change, boundary change, assessment rule update, or authority direction.',
+      evidenceHref: '/deliverables#evidence-request-map',
+      evidenceLabel: 'Review the evidence request map',
     },
     boundary: 'Reference alignment is not an authorization to operate, CMMC status, clearance, contract award, critical-entity designation, or government approval.',
   },
@@ -177,6 +189,8 @@ const serviceFrameworkMap = [
       owner: 'Compliance or control owner with the appropriate assessor, legal adviser, or authority.',
       treatment: 'Record remediation, exception, referral, assessment route, or certification path without claiming the outcome.',
       retest: 'Requirement/version change, evidence expiry, scope change, audit or assessment date, or control change.',
+      evidenceHref: '/deliverables#evidence-request-06',
+      evidenceLabel: 'Review control evidence lane',
     },
     boundary: 'Readiness mapping is not certification, accreditation, clearance, CMMC status, legal advice, conformity assessment, or regulator approval.',
   },
@@ -189,6 +203,8 @@ const serviceFrameworkMap = [
       owner: 'Continuity or service owner with dependency owners.',
       treatment: 'Prioritize recoverability actions, alternate arrangements, capacity, dependency mitigation, or residual-risk review.',
       retest: 'Restore test, exercise, architecture/dependency change, or recovery-objective change.',
+      evidenceHref: '/deliverables#evidence-request-07',
+      evidenceLabel: 'Review recovery evidence lane',
     },
     boundary: 'A plan, directive, or framework does not prove recovery until the relevant capability is exercised and evidenced.',
   },
@@ -201,6 +217,8 @@ const serviceFrameworkMap = [
       owner: 'Incident or executive owner with legal, privacy, and service authorities as applicable.',
       treatment: 'Approve lessons, improve controls, escalate reporting questions, and route live-incident decisions to the authorized channel.',
       retest: 'Exercise cadence, organization or technology change, contract/reporting change, or lessons-learned review.',
+      evidenceHref: '/deliverables#evidence-request-08',
+      evidenceLabel: 'Review incident evidence lane',
     },
     boundary: 'A readiness exercise is not live incident response, attribution, a breach notification decision, or a regulator determination.',
   },
@@ -307,7 +325,7 @@ export default function FrameworksPage() {
                     <td>{applicability}</td>
                     <td>
                       <dl className={styles.frameworkRecord}>
-                        <div><dt>Evidence to confirm</dt><dd>{record.evidence}</dd></div>
+                        <div><dt>Evidence to confirm</dt><dd>{record.evidence}<br /><Link className={styles.frameworkRecordLink} href={record.evidenceHref}>{record.evidenceLabel} <span aria-hidden="true">→</span></Link></dd></div>
                         <div><dt>Decision owner</dt><dd>{record.owner}</dd></div>
                         <div><dt>Treatment gate</dt><dd>{record.treatment}</dd></div>
                         <div><dt>Retest trigger</dt><dd>{record.retest}</dd></div>
