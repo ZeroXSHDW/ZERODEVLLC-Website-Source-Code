@@ -193,7 +193,7 @@ export default function Home() {
   return (
     <HomeStatusProvider>
       <main className="com-shell">
-        <a className="skip-link" href="#systems">Skip to systems</a>
+        <a className="skip-link" href="#start">Skip to decision routes</a>
         <div className="noise" aria-hidden="true" />
         <div className="scanlines" aria-hidden="true" />
 

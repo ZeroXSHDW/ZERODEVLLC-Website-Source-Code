@@ -40,6 +40,7 @@ for (const marker of [
   requireText("app/page.tsx decisionPaths", decisionPaths, marker);
 }
 requireText("app/page.tsx", page, 'id="start"');
+requireText("app/page.tsx", page, 'href="#start">Skip to decision routes</a>');
 requireText("app/page.tsx", page, "START WITH THE DECISION");
 requireText("app/page.tsx", page, "Do not begin with a product label");
 requireText("app/page.tsx", page, "decision-card-${tone}");
