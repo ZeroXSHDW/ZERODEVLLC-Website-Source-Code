@@ -42,6 +42,16 @@ const briefTemplate = [
   ['Applicability and boundary', 'Any contract, framework, jurisdiction, exclusion, or safety constraint to consider.'],
 ] as const;
 
+const briefSheetFields = [
+  ['Decision / outcome', 'What must become clearer, safer, or more recoverable?'],
+  ['High-level context', 'Sector, role, service, supplier, system, or recovery concern — no sensitive detail.'],
+  ['Possible route', 'Assess / assure / recover / not yet clear.'],
+  ['Authority and scope owner', 'Who can confirm ownership, permission, boundaries, and stop conditions?'],
+  ['Evidence boundary', 'What can be discussed safely now, and what requires an approved handling path?'],
+  ['Audience and timing', 'Who needs the output, what decision date matters, and what constraints are known?'],
+  ['Next gate', 'The smallest safe next step, including the owner who must confirm it.'],
+] as const;
+
 const briefMailto = `mailto:hello@zerodevllc.com?subject=ZeroDevLLC%20engagement%20brief&body=${encodeURIComponent([
   'Objective or decision:',
   'High-level context:',
@@ -110,9 +120,10 @@ export default function EngagePage() {
             <li><a href="#role-prep"><span>01</span>Prepare by role</a></li>
             <li><a href="#intake"><span>02</span>Safe intake</a></li>
             <li><a href="#brief-template"><span>03</span>Brief template</a></li>
-            <li><a href="#handling"><span>04</span>Handling rules</a></li>
-            <li><a href="#decision-lanes"><span>05</span>Decision lanes</a></li>
-            <li><a href="#response"><span>06</span>What happens next</a></li>
+            <li><a href="#print-brief"><span>04</span>Print review copy</a></li>
+            <li><a href="#handling"><span>05</span>Handling rules</a></li>
+            <li><a href="#decision-lanes"><span>06</span>Decision lanes</a></li>
+            <li><a href="#response"><span>07</span>What happens next</a></li>
           </ol>
         </nav>
 
@@ -159,6 +170,26 @@ export default function EngagePage() {
             <p className={styles.templateNote}><strong>Safe boundary:</strong> Do not add credentials, secrets, customer records, private incident evidence, or live target details to the template.</p>
             <p><a className={styles.primaryLink} href={briefMailto}>Open this structure in email <span aria-hidden="true">↗</span></a></p>
           </div>
+        </section>
+
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="print-brief" aria-labelledby="print-brief-heading">
+          <div className={styles.sectionIntro}>
+            <p className={styles.eyebrow}>{'// PRINT / INTERNAL REVIEW COPY'}</p>
+            <h2 id="print-brief-heading">Make the first brief<br /><span>portable.</span></h2>
+            <p>Use this static sheet for an internal review or to prepare a high-level message in an approved channel. It is not a submission form, authorization, proposal, classification policy, or evidence-transfer route.</p>
+            <p className={styles.templateNote}><strong>Review boundary:</strong> Print or copy only the high-level prompts. Do not complete this sheet with credentials, customer records, private incident evidence, exploit payloads, or live target details.</p>
+          </div>
+          <article className={`${styles.outputCard} ${styles.briefSheet}`} aria-label="ZeroDevLLC first brief review copy">
+            <div className={styles.briefSheetHeader}>
+              <div><p className={styles.artifactAudience}>ZERODEVLLC // FIRST BRIEF</p><h3>Decision frame</h3></div>
+              <span className={styles.briefSheetStatus}>NOT AUTHORIZATION</span>
+            </div>
+            <dl className={styles.briefSheetFields}>
+              {briefSheetFields.map(([label, prompt]) => <div key={label}><dt>{label}</dt><dd>[{prompt}]</dd></div>)}
+            </dl>
+            <p className={styles.briefSheetBoundary}><strong>Safe starting boundary:</strong> This review copy records a question and a possible next gate. It does not approve testing, accept evidence, establish certification, confirm clearance, or transfer responsibility for residual risk.</p>
+            <div className={styles.briefSheetFooter}><span>STATUS / DRAFT FOR OWNER REVIEW</span><span>CHANNEL / APPROVED PATH REQUIRED</span></div>
+          </article>
         </section>
 
         <section className={`${styles.outputSection} ${styles.routeSection}`} id="handling" aria-labelledby="handling-heading">

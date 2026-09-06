@@ -233,17 +233,17 @@ export default function Home() {
           </div>
         </section>
 
-        <aside className="terminal-card" aria-label="ZeroDev network status">
+        <aside className="terminal-card" aria-label="ZeroDev public signal status">
           <div className="terminal-topline">
             <span className="terminal-lights"><i /><i /><i /></span>
             <span>zerodev://root-index</span>
-            <span className="terminal-lock">SECURE</span>
+            <span className="terminal-lock">READ ONLY</span>
           </div>
           <div className="terminal-body">
-            <p><span className="prompt">root@zerodev</span>:~$ ./check --systems</p>
+            <p><span className="prompt">root@zerodev</span>:~$ ./check --public-surface</p>
             <p className="terminal-muted">scanning registered surfaces...</p>
             <HomeTerminalStatus />
-            <p><span className="terminal-ok">[LINK]</span> defcon_fusion <span className="terminal-muted">EU gateway / external</span></p>
+            <p><span className="terminal-ok">[LINK]</span> defcon_fusion <span className="terminal-muted">EU gateway / public signals</span></p>
             <p><span className="terminal-ok">[LINK]</span> store_catalogue <span className="terminal-muted">catalogue / contact first</span></p>
             <p className="terminal-spacer"> </p>
             <p><span className="prompt">root@zerodev</span>:~$ <span className="cursor" aria-hidden="true" /></p>

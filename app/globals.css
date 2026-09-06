@@ -70,6 +70,7 @@ button { font: inherit; }
 .status-chip.status-unavailable, .signal-unavailable, .terminal-state-unavailable { color: var(--red); }
 .status-chip.status-connecting, .signal-connecting, .terminal-state-connecting { color: var(--muted); }
 .status-dot { background: currentColor; border-radius: 50%; box-shadow: 0 0 11px currentColor; height: 6px; width: 6px; }
+.status-label-short { display: none; }
 .status-arrow { color: currentColor; font-size: 14px; line-height: 0; }
 .mobile-menu-toggle { align-items: center; background: transparent; border: 1px solid var(--line); color: var(--green); cursor: pointer; display: none; flex-direction: column; gap: 4px; justify-content: center; min-height: 42px; min-width: 42px; padding: 9px; }
 .mobile-menu-toggle span { background: currentColor; display: block; height: 1px; transition: transform .2s ease, opacity .2s ease; width: 18px; }
@@ -362,6 +363,7 @@ h2 span { color: var(--green); }
   .mobile-menu-toggle { display: inline-flex; margin-left: auto; margin-right: 8px; }
   .status-chip { font-size: 8px; padding: 8px; }
   .status-label { display: none; }
+  .status-label-short { display: inline; }
   .hero-grid { gap: 70px; grid-template-columns: 1fr; min-height: auto; padding-bottom: 90px; padding-top: 82px; }
   .terminal-card { max-width: 520px; transform: none; width: 100%; }
   .mission-brief, .decision-intro { gap: 60px; grid-template-columns: 1fr; }
@@ -385,6 +387,7 @@ h2 span { color: var(--green); }
   .mobile-menu-toggle { display: inline-flex; margin-left: auto; margin-right: 8px; }
   .status-chip { font-size: 8px; padding: 8px; }
   .status-label { display: none; }
+  .status-label-short { display: inline; }
   h1 { font-size: clamp(47px, 15vw, 72px); }
   .hero-proof { align-items: flex-start; flex-direction: column; gap: 8px; }
   .hero-meta { gap: 12px; line-height: 1.6; margin-top: 52px; }

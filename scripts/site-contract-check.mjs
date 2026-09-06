@@ -5,8 +5,9 @@ import { fileURLToPath } from "node:url";
 const projectRoot = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const read = (relativePath) => readFile(join(projectRoot, relativePath), "utf8");
 
-const [page, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, assurancePage, sectorsPage] = await Promise.all([
+const [page, homeStatus, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, assurancePage, sectorsPage] = await Promise.all([
   read("app/page.tsx"),
+  read("app/home-status.tsx"),
   read("app/globals.css"),
   read("app/api/attacks/route.ts"),
   read("app/live-defcon-map.tsx"),
@@ -67,9 +68,20 @@ for (const marker of [
   ".nav.is-open { display: flex; }",
   ".mobile-menu-toggle { display: inline-flex; margin-left: auto; margin-right: 8px; }",
   ".status-label { display: none; }",
+  ".status-label-short { display: inline; }",
   "@media (max-width: 640px) {",
 ]) {
   requireText("app/globals.css responsive header", globalsCss, marker);
+}
+
+for (const marker of [
+  'aria-label="ZeroDev public signal status"',
+  'READ ONLY',
+  './check --public-surface',
+  'EU gateway / public signals',
+  'Public signal status: ${copy.chip.toLowerCase()}',
+]) {
+  requireText("app/page.tsx and app/home-status.tsx trust language", `${page}\n${homeStatus}`, marker);
 }
 
 for (const marker of [
@@ -113,12 +125,14 @@ for (const marker of [
   'href="#role-prep"',
   'href="#intake"',
   'href="#brief-template"',
+  'href="#print-brief"',
   'href="#handling"',
   'href="#decision-lanes"',
   'href="#response"',
   'id="role-prep"',
   'id="intake"',
   'id="brief-template"',
+  'id="print-brief"',
   'id="handling"',
   'id="decision-lanes"',
   'id="response"',
@@ -127,8 +141,19 @@ for (const marker of [
   'Procurement / vendor risk',
   'Continuity / service owner',
   'Executive / risk / assurance',
+  'PRINT / INTERNAL REVIEW COPY',
+  'ZERODEVLLC // FIRST BRIEF',
+  'NOT AUTHORIZATION',
 ]) {
   requireText("app/engage/page.tsx route index", engagePage, marker);
+}
+
+for (const marker of [
+  ".briefSheet { background:",
+  ".briefSheetFields > div { border-bottom:",
+  ".briefSheetBoundary { border-left:",
+]) {
+  requireText("app/services/services.module.css print brief contract", servicesCss, marker);
 }
 
 for (const marker of [

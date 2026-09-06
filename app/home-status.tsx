@@ -17,10 +17,10 @@ type HomeStatusContextValue = {
 const HomeStatusContext = createContext<HomeStatusContextValue | null>(null);
 
 function getStatusCopy(status: ThreatFeedStatus) {
-  if (status === 'live') return { chip: 'UPLINK LIVE', signal: 'SIGNAL: LIVE', terminal: 'live / source-linked' };
-  if (status === 'degraded') return { chip: 'UPLINK DEGRADED', signal: 'SIGNAL: DEGRADED', terminal: 'degraded / partial sources' };
-  if (status === 'unavailable') return { chip: 'UPLINK UNAVAILABLE', signal: 'SIGNAL: UNAVAILABLE', terminal: 'unavailable / retrying' };
-  return { chip: 'UPLINK CHECKING', signal: 'SIGNAL: CHECKING', terminal: 'checking / awaiting sources' };
+  if (status === 'live') return { chip: 'UPLINK LIVE', short: 'LIVE', signal: 'SIGNAL: LIVE', terminal: 'live / source-linked' };
+  if (status === 'degraded') return { chip: 'UPLINK DEGRADED', short: 'DEGRADED', signal: 'SIGNAL: DEGRADED', terminal: 'degraded / partial sources' };
+  if (status === 'unavailable') return { chip: 'UPLINK UNAVAILABLE', short: 'NO FEED', signal: 'SIGNAL: UNAVAILABLE', terminal: 'unavailable / retrying' };
+  return { chip: 'UPLINK CHECKING', short: 'CHECKING', signal: 'SIGNAL: CHECKING', terminal: 'checking / awaiting sources' };
 }
 
 export function HomeStatusProvider({ children }: { children: ReactNode }) {
@@ -105,8 +105,8 @@ export function HomeHeader({ navigation, statusHref }: { navigation: readonly Na
         <span aria-hidden="true" />
         <span aria-hidden="true" />
       </button>
-      <a className={`status-chip status-${status}`} href={statusHref} aria-label={`Open the DEFCON Signal Fusion EU gateway. Feed status: ${copy.chip.toLowerCase()}`}>
-        <span className="status-dot" aria-hidden="true" /> <span className="status-label">{copy.chip}</span> <span className="status-arrow" aria-hidden="true">↗</span>
+      <a className={`status-chip status-${status}`} href={statusHref} aria-label={`Open the DEFCON Signal Fusion EU gateway. Public signal status: ${copy.chip.toLowerCase()}`}>
+        <span className="status-dot" aria-hidden="true" /> <span className="status-label">{copy.chip}</span><span className="status-label-short" aria-hidden="true">{copy.short}</span> <span className="status-arrow" aria-hidden="true">↗</span>
       </a>
     </header>
   );

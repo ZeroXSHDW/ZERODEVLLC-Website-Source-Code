@@ -136,6 +136,18 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .outputCard .cardBoundary strong { color: var(--ink); font-weight: 500; }
 .outputCard .cardBoundary a, .frameworkCard .cardBoundary a { color: var(--green); }
 .outputCard .cardBoundary a:hover, .outputCard .cardBoundary a:focus-visible, .frameworkCard .cardBoundary a:hover, .frameworkCard .cardBoundary a:focus-visible { color: var(--green-bright); }
+.briefSheet { background: rgba(12, 29, 19, .38); }
+.briefSheetHeader { align-items: start; border-bottom: 1px solid var(--line); display: flex; gap: 18px; justify-content: space-between; margin-bottom: 0; padding-bottom: 18px; }
+.briefSheetHeader h3 { color: var(--ink); font-size: 24px; margin: 0; }
+.briefSheetHeader .artifactAudience { margin-bottom: 10px; }
+.briefSheetStatus { border: 1px solid var(--amber); color: var(--amber); font-size: 8px; letter-spacing: .12em; padding: 7px 8px; white-space: nowrap; }
+.briefSheetFields { margin: 0; }
+.briefSheetFields > div { border-bottom: 1px solid var(--line); display: grid; gap: 16px; grid-template-columns: minmax(118px, .42fr) minmax(0, 1fr); padding: 14px 0; }
+.briefSheetFields dt { color: var(--cyan); font-size: 8px; letter-spacing: .11em; text-transform: uppercase; }
+.briefSheetFields dd { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.45; margin: 0; }
+.briefSheetBoundary { border-left: 1px solid var(--amber); color: var(--dim); font-family: Arial, Helvetica, sans-serif; font-size: 11px; line-height: 1.5; margin: 18px 0 0; padding-left: 12px; }
+.briefSheetBoundary strong { color: var(--amber); font-weight: 500; }
+.briefSheetFooter { border-top: 1px solid var(--line); color: var(--dim); display: flex; flex-wrap: wrap; font-size: 8px; gap: 8px 18px; justify-content: space-between; letter-spacing: .1em; margin-top: 20px; padding-top: 13px; }
 .actionTableWrap { border: 1px solid var(--line); overflow-x: auto; }
 .actionTable { border-collapse: collapse; min-width: 760px; width: 100%; }
 .servicesMatrix { min-width: 1040px; }
@@ -241,6 +253,12 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
   .hero h1, h2, h3, .hero h1 span, h2 span, h3 span { color: #111813; }
   .heroCopy > p, .sectionIntro > p:not(.eyebrow), .bodyCopy, .noticeSection > p:last-child, .serviceCard > p, .outputCard p, .frameworkCard p, .briefingPackFacts dd, .briefingPackBoundary, .actionTable td, .lifecycleCard p, .step p, .services-boundary p { color: #111813; }
   .serviceGrid, .outputGrid, .frameworkGrid, .briefingPackGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .briefSheet { background: #fff; border-color: #111813; }
+  .briefSheetHeader, .briefSheetFields > div, .briefSheetFooter { border-color: #7d8a80; }
+  .briefSheetHeader h3, .briefSheetFields dd, .briefSheetBoundary, .briefSheetFooter { color: #111813; }
+  .briefSheetFields dt, .briefSheetHeader .artifactAudience { color: #111813; }
+  .briefSheetStatus { border-color: #111813; color: #111813; }
+  .briefSheetBoundary { border-color: #111813; }
   .actionTableWrap { overflow: visible; }
   .actionTable { min-width: 0; }
   .cta { background: #fff; border-color: #7d8a80; padding: 24pt 0; }
