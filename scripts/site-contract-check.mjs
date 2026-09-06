@@ -341,6 +341,13 @@ for (const marker of [
 }
 
 for (const marker of [
+  ".serviceCardActions { align-items: center; display: flex;",
+  ".serviceCardActions .primaryLink { align-items: center; font-size: 9px; min-height: 42px;",
+]) {
+  requireText("app/services/services.module.css service brief actions", servicesCss, marker);
+}
+
+for (const marker of [
   'aria-label="Services page sections"',
   'href="#engagement-areas"',
   'href="#briefing-packs"',
@@ -357,6 +364,10 @@ for (const marker of [
   'aria-labelledby={`service-heading-${service.number}`}',
   'id={`service-heading-${service.number}`}',
   'aria-label={`Review ${service.title} service briefing pack`}',
+  'const serviceBriefMailto = (serviceTitle: string)',
+  'Service lane: ${serviceTitle}',
+  'I have not included credentials, secrets, customer records, private incident evidence, or live target details.',
+  'aria-label={`Prepare a safe first brief for ${service.title}`}',
   'aria-labelledby={`brief-heading-${brief.number}`}',
   'id={`brief-heading-${brief.number}`}',
   'Safe evidence',
@@ -435,13 +446,13 @@ const additionalRouteIndexContracts = [
     '<dt>Version / edition named</dt>',
     'Source check:</strong>',
     'recheck before use',
-    'Rev. 5 / Release 5.2.0 patch noted',
+    'Rev. 5 / Release 5.2.0 published August 27, 2025',
     'Rev. 1 / updates through 2024-11-01',
-    'Rev. 3 final / May 2024',
-    'Rev. 3 / final May 2026',
+    'Rev. 3 final / published May 14, 2024',
+    'Rev. 3 final / published May 13, 2026',
     'NIST CUI publications (SP 800-171/171A Rev. 3)',
     'NIST CUI publications (SP 800-172/172A Rev. 3)',
-    'Current publisher release; recheck latest',
+    'Publisher-controlled current release; recheck latest',
     '4.0 / page reviewed 2025-08-06',
     '2019 + Amendment 1 (2024); to be revised / 2018',
     'Government and defense readiness',
