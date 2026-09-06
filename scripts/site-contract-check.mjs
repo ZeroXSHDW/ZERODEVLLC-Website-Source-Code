@@ -406,6 +406,8 @@ for (const marker of [
 for (const marker of [
   ".frameworkSource { color: var(--dim) !important;",
   ".frameworkFreshness { border-left: 1px solid var(--cyan);",
+  ".frameworkRecord { display: grid;",
+  ".frameworkRecord dt { color: var(--cyan);",
 ]) {
   requireText("app/services/services.module.css framework freshness", servicesCss, marker);
 }
@@ -561,6 +563,12 @@ const additionalRouteIndexContracts = [
     'EU Cyber Resilience Act (EU) 2024/2847',
     'EU Critical Entities Resilience Directive (EU) 2022/2557',
     'Government and defense readiness',
+    'Applicability record',
+    'Evidence to confirm',
+    'Decision owner',
+    'Treatment gate',
+    'Retest trigger',
+    'const serviceFrameworkMap = [',
   ]],
   ["app/assurance/page.tsx", assurancePage, [
     'aria-label="Assurance page sections"',

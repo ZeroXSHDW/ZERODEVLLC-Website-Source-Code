@@ -177,6 +177,10 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .outputCard .artifactAudience { color: var(--green); font-size: 10px; letter-spacing: .08em; margin-bottom: 18px; text-transform: uppercase; }
 .fieldList { color: var(--muted); display: grid; font-family: Arial, Helvetica, sans-serif; font-size: 12px; gap: 8px; line-height: 1.45; list-style: none; margin: 0; padding: 0; }
 .fieldList li { border-left: 1px solid var(--green); padding-left: 10px; }
+.frameworkRecord { display: grid; gap: 10px; margin: 0; }
+.frameworkRecord > div { border-left: 1px solid var(--cyan); padding-left: 10px; }
+.frameworkRecord dt { color: var(--cyan); font-size: 8px; letter-spacing: .1em; margin-bottom: 4px; text-transform: uppercase; }
+.frameworkRecord dd { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 11px; line-height: 1.45; margin: 0; }
 .outputCard .cardBoundary { border-top: 1px solid var(--line); color: var(--dim); font-size: 11px; margin-top: 20px; padding-top: 13px; }
 .outputCard .cardBoundary strong { color: var(--ink); font-weight: 500; }
 .outputCard .cardBoundary a, .frameworkCard .cardBoundary a { color: var(--green); }
@@ -198,7 +202,7 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .actionTable { border-collapse: collapse; min-width: 760px; width: 100%; }
 .servicesMatrix { min-width: 1040px; }
 .roeMap { min-width: 980px; }
-.frameworkMap { min-width: 1160px; }
+.frameworkMap { min-width: 1680px; }
 .evidenceRequestMap { min-width: 1240px; }
 .procurementEvidenceMap { min-width: 1420px; }
 .sowReadinessMap { min-width: 1240px; }
@@ -339,7 +343,7 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
   .hero, .serviceSection, .lifecycleSection, .methodSection, .frameworkSection, .outputSection, .boundarySection, .twoColumn { gap: 24pt; grid-template-columns: 1fr; padding: 20pt 0; }
   .heroCopy, .boundaryBox, .noticeSection, .serviceCard, .outputCard, .frameworkCard, .actionTableWrap, .services-boundary { background: #fff; border-color: #7d8a80; color: #111813; }
   .hero h1, h2, h3, .hero h1 span, h2 span, h3 span { color: #111813; }
-  .heroCopy > p, .sectionIntro > p:not(.eyebrow), .bodyCopy, .noticeSection > p:last-child, .serviceCard > p, .outputCard p, .frameworkCard p, .frameworkSource dt, .frameworkSource dd, .frameworkFreshness, .briefingPackFacts dd, .briefingPackBoundary, .actionTable td, .lifecycleCard p, .step p, .services-boundary p { color: #111813; }
+  .heroCopy > p, .sectionIntro > p:not(.eyebrow), .bodyCopy, .noticeSection > p:last-child, .serviceCard > p, .outputCard p, .frameworkCard p, .frameworkSource dt, .frameworkSource dd, .frameworkFreshness, .briefingPackFacts dd, .briefingPackBoundary, .actionTable td, .frameworkRecord dd, .lifecycleCard p, .step p, .services-boundary p { color: #111813; }
   .serviceGrid, .outputGrid, .frameworkGrid, .briefingPackGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .briefSheet { background: #fff; border-color: #111813; }
   .briefSheetHeader, .briefSheetFields > div, .briefSheetFooter { border-color: #7d8a80; }
