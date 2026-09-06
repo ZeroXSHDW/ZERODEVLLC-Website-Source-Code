@@ -122,6 +122,50 @@ function parseThreatFeed(value: unknown): ThreatFeed {
   };
 }
 
+function getFeedStateCopy(feed: ThreatFeed | null, refreshWaitSeconds: number) {
+  if (!feed) {
+    return {
+      label: 'CONNECTING',
+      detail: 'Awaiting the first public-source response.',
+    };
+  }
+
+  if (feed.stale) {
+    return {
+      label: 'STALE CACHE',
+      detail: refreshWaitSeconds > 0
+        ? `Last known events retained; manual refresh available in ${refreshWaitSeconds}s.`
+        : 'Last known events retained; the current source response is not available.',
+    };
+  }
+
+  if (feed.status === 'degraded') {
+    return {
+      label: 'PARTIAL RESPONSE',
+      detail: 'Some public sources responded; coverage may be incomplete.',
+    };
+  }
+
+  if (feed.status === 'unavailable') {
+    return {
+      label: 'NO CURRENT RESPONSE',
+      detail: 'No public source response is available; no current event claim is made.',
+    };
+  }
+
+  if (refreshWaitSeconds > 0) {
+    return {
+      label: 'LIVE / COOLDOWN',
+      detail: `Current response is live; manual refresh available in ${refreshWaitSeconds}s.`,
+    };
+  }
+
+  return {
+    label: 'LIVE / FRESH RESPONSE',
+    detail: 'All requested public-source feeds responded for this refresh.',
+  };
+}
+
 export function LiveDefconMap() {
   const [now, setNow] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
@@ -171,6 +215,7 @@ export function LiveDefconMap() {
   }, []);
 
   const refreshWaitSeconds = now === null ? 0 : Math.max(0, Math.ceil((nextManualRefreshAt - now) / 1000));
+  const feedState = getFeedStateCopy(feed, refreshWaitSeconds);
 
   useEffect(() => {
     setStatus(feed?.status ?? 'connecting');
@@ -253,6 +298,11 @@ export function LiveDefconMap() {
               {isRefreshing ? 'CHECKING…' : refreshWaitSeconds > 0 ? `WAIT ${refreshWaitSeconds}s` : 'REFRESH'}
             </button>
           </div>
+        </div>
+        <div className={`threat-feed-state threat-state-${feed?.status ?? 'connecting'}${feed?.stale ? ' threat-state-stale' : ''}`} aria-live="polite" aria-atomic="true">
+          <span className="threat-feed-state-mark" aria-hidden="true" />
+          <strong>{feedState.label}</strong>
+          <span className="threat-feed-state-detail">{feedState.detail}</span>
         </div>
         <p className="threat-feed-notice">Public-source indicators only. Known exploitation or advisory activity is not confirmation of an attack against ZeroDev.</p>
         {feed?.errors.length ? <p className="threat-feed-warning" role="status" aria-live="polite" aria-atomic="true">Partial source outage: {feed.errors.join(' · ')}</p> : null}

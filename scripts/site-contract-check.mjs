@@ -91,8 +91,21 @@ for (const marker of [
   "cache: force ? 'no-store' : 'default'",
   "disabled={isRefreshing || refreshWaitSeconds > 0}",
   "Refresh public threat signals; available in ${refreshWaitSeconds} seconds",
+  "function getFeedStateCopy(feed: ThreatFeed | null, refreshWaitSeconds: number)",
+  "label: 'LIVE / FRESH RESPONSE'",
+  "label: 'STALE CACHE'",
+  "threat-feed-state",
+  "threat-feed-state-detail",
 ]) {
   requireText("app/live-defcon-map.tsx refresh contract", liveDefconMap, marker);
+}
+
+for (const marker of [
+  ".threat-feed-state { align-items: center;",
+  ".threat-feed-state-detail { color: var(--dim);",
+  ".threat-state-stale { background:",
+]) {
+  requireText("app/globals.css threat feed state contract", globalsCss, marker);
 }
 
 for (const marker of [
