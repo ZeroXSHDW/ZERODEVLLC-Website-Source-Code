@@ -184,6 +184,19 @@ requireText("app/site-footer.tsx", siteFooter, "Footer navigation");
 requireText("app/site-footer.tsx", siteFooter, "Private security reporting");
 requireText("app/site-footer.tsx", siteFooter, "NO USER TELEMETRY / READ-ONLY BY DEFAULT");
 requireText("app/site-footer.tsx", siteFooter, "payments, or sensitive records");
+requireText("app/site-footer.tsx", siteFooter, "SEPARATE EXTERNAL SURFACES");
+requireText("app/site-footer.tsx", siteFooter, "does not establish their provider");
+for (const [label, source] of [
+  ["app/services/page.tsx", servicesPage],
+  ["app/engage/page.tsx", engagePage],
+  ["app/sectors/page.tsx", sectorsPage],
+  ["app/deliverables/page.tsx", deliverablesPage],
+  ["app/assurance/page.tsx", assurancePage],
+  ["app/methodology/page.tsx", methodologyPage],
+  ["app/frameworks/page.tsx", frameworksPage],
+  ["app/remediation/page.tsx", remediationPage],
+  ["app/privacy/page.tsx", privacyPage],
+]) requireText(label, source, "SiteFooter");
 requireText("app/sectors/page.tsx", sectorsPage, "Public-sector and government programs");
 requireText("app/sectors/page.tsx", sectorsPage, "Defense suppliers and primes");
 requireText("app/sectors/page.tsx", sectorsPage, "Audience map only");

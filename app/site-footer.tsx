@@ -13,6 +13,11 @@ const footerNavigation = [
   { href: '/privacy', label: 'Privacy boundary' },
 ] as const;
 
+const externalSurfaces = [
+  { href: 'https://zerodevllc.eu', label: 'EU / DEFCON gateway' },
+  { href: 'https://zerodevllc.store', label: 'Store / service surface' },
+] as const;
+
 export default function SiteFooter() {
   return (
     <footer className={styles.siteFooter}>
@@ -32,6 +37,15 @@ export default function SiteFooter() {
           ))}
         </nav>
       </div>
+      <section className={styles.siteFooterExternal} aria-labelledby="external-surfaces-heading">
+        <div>
+          <p className={styles.eyebrow} id="external-surfaces-heading">{'// SEPARATE EXTERNAL SURFACES'}</p>
+          <p className={styles.siteFooterExternalCopy}>The `.eu` and `.store` routes are separate public surfaces. This `.com` site does not establish their provider, source, product, payment, or checkout status.</p>
+        </div>
+        <div className={styles.siteFooterExternalLinks}>
+          {externalSurfaces.map((surface) => <a href={surface.href} key={surface.href} target="_blank" rel="noopener noreferrer">{surface.label} <span aria-hidden="true">↗</span></a>)}
+        </div>
+      </section>
       <div className={styles.siteFooterBottom}>
         <span>© 2026 ZERO DEV LLC / IRELAND</span>
         <span>NO USER TELEMETRY / READ-ONLY BY DEFAULT</span>
