@@ -106,6 +106,36 @@ const services = [
   },
 ] as const;
 
+const entryRoutes = [
+  {
+    number: '01',
+    title: 'Assess',
+    question: 'Do we know what is exposed?',
+    description: 'Start with authorized testing, vulnerability assessment, or technical due diligence when the condition of a system, supplier, or dependency needs to become clearer.',
+    anchor: '#service-01',
+    briefHref: '/engage?service=authorized-penetration-testing',
+    tone: 'cyan',
+  },
+  {
+    number: '02',
+    title: 'Assure',
+    question: 'Can we defend the decision?',
+    description: 'Start with cyber-risk management, vendor due diligence, or compliance readiness when an owner needs evidence, treatment choices, and a defensible review path.',
+    anchor: '#service-03',
+    briefHref: '/engage?service=cyber-risk-management',
+    tone: 'violet',
+  },
+  {
+    number: '03',
+    title: 'Recover',
+    question: 'Can the service keep moving?',
+    description: 'Start with disaster recovery, business continuity, or incident readiness when continuity assumptions and decisions need to be exercised before pressure arrives.',
+    anchor: '#service-07',
+    briefHref: '/engage?service=disaster-recovery-bcp',
+    tone: 'green',
+  },
+] as const;
+
 const lifecycle = [
   ['01', 'Qualify', 'Clarify the decision, the environment, the stakeholders, and what success must prove.'],
   ['02', 'Authorize', 'Confirm ownership, written authority, scope, timing, contacts, and rules of engagement.'],
@@ -253,6 +283,22 @@ export default function ServicesPage() {
           <div className={styles.heroCopy}>
             <p>ZeroDev helps public-sector programs, military and defense suppliers, essential services, and regulated technology teams turn technical evidence into safer decisions, stronger controls, and more recoverable operations.</p>
             <p className={styles.heroBoundary}><strong>Authorized work only.</strong> Every assessment begins with scope, authority, safety boundaries, and an agreed evidence path.</p>
+            <nav className={styles.entryRoutes} aria-label="Choose a service route">
+              <p className={styles.entryRoutesLabel}>{'// CHOOSE BY OUTCOME'}</p>
+              <div className={styles.entryRoutesGrid}>
+                {entryRoutes.map((route) => (
+                  <article className={`${styles.entryRoute} ${styles[`tone${route.tone}`]}`} key={route.number}>
+                    <div className={styles.entryRouteTopline}><span>{route.number} / 03</span><span>{route.title}</span></div>
+                    <h2><span>{route.question}</span></h2>
+                    <p>{route.description}</p>
+                    <div className={styles.entryRouteActions}>
+                      <a className={styles.primaryLink} href={route.anchor}>Review path <span aria-hidden="true">↓</span></a>
+                      <Link className={styles.primaryLink} href={route.briefHref}>Prepare brief <span aria-hidden="true">→</span></Link>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </nav>
             <p><Link className={styles.primaryLink} href="/engage">Start with the authorized engagement brief <span aria-hidden="true">→</span></Link><br /><a className={styles.primaryLink} href="#briefing-packs">Review service briefing packs <span aria-hidden="true">↓</span></a></p>
           </div>
         </section>

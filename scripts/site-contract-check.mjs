@@ -173,12 +173,16 @@ for (const marker of [
 requireText("app/globals.css active section navigation styles", globalsCss, ".nav a[aria-current='location']::after");
 
 for (const marker of [
+  "import { useEffect, useMemo, useState } from 'react'",
+  'const sectionsKey = JSON.stringify(sections)',
+  'const stableSections = useMemo(() => JSON.parse(sectionsKey) as RouteIndexSection[], [sectionsKey])',
   "const [activeSection, setActiveSection] = useState(sections[0]?.href ?? '')",
   "const syncHash = () =>",
   "window.addEventListener('hashchange', syncHash)",
   "window.removeEventListener('hashchange', syncHash)",
   "new IntersectionObserver",
   "rootMargin: '-150px 0px -55% 0px'",
+  '}, [stableSections])',
   "aria-current={activeSection === section.href ? 'location' : undefined}",
   "onClick={() => setActiveSection(section.href)}",
 ]) {
@@ -435,6 +439,14 @@ for (const marker of [
   "service.slug",
   'href={`/engage?service=${service.slug}`}',
   'aria-label={`Prepare a safe first brief for ${service.title}`}',
+  'const entryRoutes =',
+  'aria-label="Choose a service route"',
+  'styles.entryRoutesGrid',
+  'href={route.anchor}',
+  'href={route.briefHref}',
+  'Do we know what is exposed?',
+  'Can we defend the decision?',
+  'Can the service keep moving?',
   'const decisionRecord =',
   'aria-labelledby="decision-record-heading"',
   'id="decision-record-heading"',

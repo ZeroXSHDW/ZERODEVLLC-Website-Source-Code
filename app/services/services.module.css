@@ -51,6 +51,19 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .heroCopy > p, .sectionIntro > p:not(.eyebrow), .bodyCopy, .cta > div:last-child > p, .noticeSection > p:last-child { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.6; max-width: 560px; }
 .heroBoundary { border-left: 1px solid var(--amber); color: var(--dim) !important; font-size: 12px !important; margin: 28px 0; padding-left: 14px; }
 .heroBoundary strong { color: var(--amber); font-weight: 500; }
+.entryRoutes { background: rgba(12, 29, 19, .3); border: 1px solid var(--line); margin: 28px 0 24px; padding: 14px; }
+.entryRoutesLabel { color: var(--dim); font-size: 8px !important; letter-spacing: .16em; margin: 0 0 10px !important; text-transform: uppercase; }
+.entryRoutesGrid { display: grid; gap: 8px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.entryRoute { background: rgba(5, 10, 8, .38); border-top: 1px solid var(--card-signal, var(--green)); display: flex; flex-direction: column; min-height: 216px; padding: 13px 12px 12px; transition: background .2s ease, border-color .2s ease, transform .2s ease; }
+.entryRoute:hover, .entryRoute:focus-within { background: rgba(12, 29, 19, .72); border-color: var(--card-signal, var(--green)); transform: translateY(-2px); }
+.entryRouteTopline { color: var(--dim); display: flex; font-size: 8px; justify-content: space-between; letter-spacing: .12em; margin-bottom: 24px; text-transform: uppercase; }
+.entryRouteTopline span:last-child { color: var(--card-signal, var(--green)); }
+.entryRoute h2 { color: var(--ink); font-size: clamp(20px, 2.2vw, 30px); margin-bottom: 12px; }
+.entryRoute h2 span { color: var(--card-signal, var(--green)); }
+.entryRoute p:not(.entryRoutesLabel) { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 11px; line-height: 1.5; margin-bottom: 16px; }
+.entryRouteActions { align-items: center; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: auto; padding-top: 10px; }
+.entryRouteActions .primaryLink { font-size: 8px; min-height: 36px; }
+.entryRouteActions .primaryLink span { font-size: 12px; }
 .roleContext { background: rgba(12, 29, 19, .42); border: 1px solid var(--line-strong); margin: 24px 0 20px; padding: 16px 17px; }
 .roleContextLabel { color: var(--cyan) !important; font-size: 8px !important; letter-spacing: .14em; margin-bottom: 12px !important; text-transform: uppercase; }
 .roleContext > p:not(.roleContextLabel), .briefContextEntry > p:not(.roleContextLabel) { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.5; margin-bottom: 12px; }
@@ -287,6 +300,8 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
   .pageIndex ol { gap: 6px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .pageIndex a { align-items: flex-start; flex-direction: row; gap: 10px; min-height: 38px; padding: 10px 8px; text-align: left; }
   .serviceGrid, .outputGrid, .frameworkGrid, .briefingPackGrid { grid-template-columns: 1fr; }
+  .entryRoutesGrid { grid-template-columns: 1fr; }
+  .entryRoute { min-height: 0; }
   .serviceCard { min-height: 0; }
   .libraryControls { margin-bottom: 12px; }
   .serviceCard .cardTopline { margin-bottom: 34px; }

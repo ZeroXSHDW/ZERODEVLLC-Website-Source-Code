@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export type RouteIndexSection = {
   href: `#${string}`;
@@ -16,17 +16,19 @@ type RouteIndexProps = {
 };
 
 export default function RouteIndex({ ariaLabel, pageIndexClassName, pageIndexLabelClassName, sections }: RouteIndexProps) {
+  const sectionsKey = JSON.stringify(sections);
+  const stableSections = useMemo(() => JSON.parse(sectionsKey) as RouteIndexSection[], [sectionsKey]);
   const [activeSection, setActiveSection] = useState(sections[0]?.href ?? '');
 
   useEffect(() => {
     const syncHash = () => {
       const nextHash = window.location.hash as `#${string}`;
-      if (sections.some((section) => section.href === nextHash)) setActiveSection(nextHash);
+      if (stableSections.some((section) => section.href === nextHash)) setActiveSection(nextHash);
     };
     syncHash();
     window.addEventListener('hashchange', syncHash);
 
-    const sectionTargets = sections
+    const sectionTargets = stableSections
       .map((section) => document.getElementById(section.href.slice(1)))
       .filter((target): target is HTMLElement => Boolean(target));
 
@@ -40,7 +42,7 @@ export default function RouteIndex({ ariaLabel, pageIndexClassName, pageIndexLab
         visibility.set(`#${entry.target.id}`, entry.isIntersecting ? entry.intersectionRatio : 0);
       });
 
-      const nextSection = sections
+      const nextSection = stableSections
         .map((section) => ({ href: section.href, ratio: visibility.get(section.href) ?? 0 }))
         .sort((left, right) => right.ratio - left.ratio)
         .find((section) => section.ratio > 0);
@@ -53,7 +55,7 @@ export default function RouteIndex({ ariaLabel, pageIndexClassName, pageIndexLab
       observer.disconnect();
       window.removeEventListener('hashchange', syncHash);
     };
-  }, [sections]);
+  }, [stableSections]);
 
   return (
     <nav className={pageIndexClassName} aria-label={ariaLabel}>
