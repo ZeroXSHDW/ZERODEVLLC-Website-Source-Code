@@ -87,8 +87,8 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .serviceCard li::first-letter { color: var(--card-signal, var(--green)); }
 .serviceCard .output { border-top: 1px solid var(--line); color: var(--dim); font-size: 10px; margin: 0; padding-top: 14px; }
 .serviceCard .output strong, .boundaryBox strong, .cardBoundary strong { color: var(--ink); font-weight: 500; }
-.serviceCardAction { margin: 15px 0 0; }
-.serviceCardAction .primaryLink { font-size: 9px; }
+.serviceCardActions { align-items: center; display: flex; flex-wrap: wrap; gap: 4px 18px; margin-top: 15px; }
+.serviceCardActions .primaryLink { align-items: center; font-size: 9px; min-height: 42px; padding-block: 8px; }
 .tonecyan { --card-signal: var(--cyan); }
 .toneamber { --card-signal: var(--amber); }
 .tonegreen { --card-signal: var(--green); }

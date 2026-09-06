@@ -98,6 +98,17 @@ const services = [
   },
 ] as const;
 
+const serviceBriefMailto = (serviceTitle: string) => `mailto:hello@zerodevllc.com?subject=${encodeURIComponent(`ZeroDevLLC ${serviceTitle} high-level brief`)}&body=${encodeURIComponent([
+  `Service lane: ${serviceTitle}`,
+  'Objective or decision:',
+  'High-level context:',
+  'Audience and decision date:',
+  'Authority owner:',
+  'Applicability or boundary questions:',
+  '',
+  'I have not included credentials, secrets, customer records, private incident evidence, or live target details.',
+].join('\n'))}`;
+
 const lifecycle = [
   ['01', 'Qualify', 'Clarify the decision, the environment, the stakeholders, and what success must prove.'],
   ['02', 'Authorize', 'Confirm ownership, written authority, scope, timing, contacts, and rules of engagement.'],
@@ -263,7 +274,10 @@ export default function ServicesPage() {
                 <p className={styles.audience}><strong>Best starting point:</strong> {service.audience}</p>
                 <ul>{service.activities.map((activity) => <li key={activity}>{activity}</li>)}</ul>
                 <p className={styles.output}><strong>Typical output:</strong> {service.output}</p>
-                <p className={styles.serviceCardAction}><a className={styles.primaryLink} href={`#brief-${service.number}`} aria-label={`Review ${service.title} service briefing pack`}>Review the service briefing pack <span aria-hidden="true">↓</span></a></p>
+                <div className={styles.serviceCardActions}>
+                  <a className={styles.primaryLink} href={`#brief-${service.number}`} aria-label={`Review ${service.title} service briefing pack`}>Review the service briefing pack <span aria-hidden="true">↓</span></a>
+                  <a className={styles.primaryLink} href={serviceBriefMailto(service.title)} aria-label={`Prepare a safe first brief for ${service.title}`}>Prepare a safe first brief <span aria-hidden="true">↗</span></a>
+                </div>
               </article>
             ))}
           </div>
