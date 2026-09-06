@@ -157,7 +157,7 @@ requireText("app/methodology/page.tsx", methodologyPage, "twitter:");
 requireText("app/frameworks/page.tsx", frameworksPage, "NIST CSF 2.0");
 requireText("app/frameworks/page.tsx", frameworksPage, "NIST SP 800-30 Rev. 1");
 requireText("app/frameworks/page.tsx", frameworksPage, "NIST SP 800-61 Rev. 3");
-requireText("app/frameworks/page.tsx", frameworksPage, "NIST SP 800-171 Rev. 3");
+requireText("app/frameworks/page.tsx", frameworksPage, "NIST SP 800-171 / 800-171A");
 requireText("app/frameworks/page.tsx", frameworksPage, "NCSC Cyber Assessment Framework 4.0");
 requireText("app/frameworks/page.tsx", frameworksPage, "primary publisher reference");
 requireText("app/frameworks/page.tsx", frameworksPage, "SERVICE / FRAMEWORK FIT");

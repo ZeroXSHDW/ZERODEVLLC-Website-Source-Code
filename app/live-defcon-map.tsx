@@ -36,6 +36,7 @@ const MAX_ERRORS = 6;
 const MAX_ERROR_LENGTH = 160;
 const DEFAULT_REFRESH_AFTER_SECONDS = 60;
 const DEFAULT_REFRESH_COOLDOWN_SECONDS = 15;
+const DEFAULT_REQUEST_TIMEOUT_MS = 15_000;
 
 const mapNodes = [
   { name: 'NORTH AMERICA', x: 24, y: 42, tone: 'cyan', depth: 16 },
@@ -174,6 +175,8 @@ export function LiveDefconMap() {
   const [nextManualRefreshAt, setNextManualRefreshAt] = useState(0);
   const refreshInFlight = useRef(false);
   const nextManualRefreshAtRef = useRef(0);
+  const requestAbortRef = useRef<AbortController | null>(null);
+  const mountedRef = useRef(true);
   const { setStatus } = useHomeStatus();
 
   const refreshFeed = useCallback(async (force = false) => {
@@ -187,35 +190,53 @@ export function LiveDefconMap() {
       nextManualRefreshAtRef.current = localDeadline;
       setNextManualRefreshAt(localDeadline);
     }
+    const controller = new AbortController();
+    const requestTimer = window.setTimeout(() => controller.abort(), DEFAULT_REQUEST_TIMEOUT_MS);
+    requestAbortRef.current = controller;
     try {
       const endpoint = force ? `/api/attacks?refresh=${Date.now()}` : '/api/attacks';
       const response = await fetch(endpoint, {
         cache: force ? 'no-store' : 'default',
         headers: { accept: 'application/json' },
+        signal: controller.signal,
       });
       if (!response.ok) throw new Error('feed unavailable');
       const nextFeed = parseThreatFeed(await response.json());
+      if (!mountedRef.current) return;
       setFeed(nextFeed);
       if (force) {
         const serverDeadline = Date.now() + nextFeed.refreshCooldownSeconds * 1000;
         nextManualRefreshAtRef.current = serverDeadline;
         setNextManualRefreshAt(serverDeadline);
       }
-    } catch {
+    } catch (error) {
+      if (!mountedRef.current) return;
+      const errorMessage = error instanceof Error && error.name === 'AbortError'
+        ? 'Live public threat feed request timed out'
+        : 'Live public threat feed unavailable';
       setFeed((current) => {
-        const errors = [...new Set([...(current?.errors ?? []), 'Live public threat feed unavailable'])];
+        const errors = [...new Set([...(current?.errors ?? []), errorMessage])];
         return current
           ? { ...current, status: current.events.length > 0 ? 'degraded' : 'unavailable', stale: true, errors }
           : { status: 'unavailable', observedAt: new Date().toISOString(), checkedAt: new Date().toISOString(), refreshAfterSeconds: DEFAULT_REFRESH_AFTER_SECONDS, refreshCooldownSeconds: DEFAULT_REFRESH_COOLDOWN_SECONDS, events: [], errors, stale: true };
       });
     } finally {
-      setIsRefreshing(false);
+      window.clearTimeout(requestTimer);
+      if (requestAbortRef.current === controller) requestAbortRef.current = null;
+      if (mountedRef.current) setIsRefreshing(false);
       refreshInFlight.current = false;
     }
   }, []);
 
   const refreshWaitSeconds = now === null ? 0 : Math.max(0, Math.ceil((nextManualRefreshAt - now) / 1000));
   const feedState = getFeedStateCopy(feed, refreshWaitSeconds);
+
+  useEffect(() => {
+    return () => {
+      mountedRef.current = false;
+      requestAbortRef.current?.abort();
+    };
+  }, []);
 
   useEffect(() => {
     setStatus(feed?.status ?? 'connecting');
