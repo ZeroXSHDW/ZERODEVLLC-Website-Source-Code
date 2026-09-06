@@ -19,7 +19,7 @@ const structuredData = {
       url: 'https://zerodevllc.com',
       logo: 'https://zerodevllc.com/favicon.svg',
       email: 'mailto:hello@zerodevllc.com',
-      description: 'Authorized defensive cybersecurity, cyber-risk, due-diligence, compliance-readiness, and operational-resilience services from Ireland.',
+      description: 'Authorized defensive cybersecurity, penetration testing, cyber-risk, technical and vendor due diligence, compliance readiness, disaster recovery, business continuity planning, and operational resilience services for public-sector programs, military and defense suppliers, essential services, and regulated technology teams from Ireland.',
       areaServed: ['Ireland', 'European Union'],
       knowsAbout: serviceTypes.map(([name]) => name),
       contactPoint: {
@@ -33,7 +33,7 @@ const structuredData = {
       '@id': 'https://zerodevllc.com/#website',
       url: 'https://zerodevllc.com',
       name: 'ZeroDev LLC // Defensive cyber risk and resilience',
-      description: 'Public information about authorized defensive cybersecurity and operational resilience services; a capability description does not create a certification, clearance, contract, or government appointment.',
+      description: 'Public information about authorized defensive cybersecurity, penetration testing, due diligence, compliance readiness, disaster recovery, BCP, and operational resilience services; a capability description does not create a certification, clearance, contract, or government appointment.',
       publisher: { '@id': 'https://zerodevllc.com/#organization' },
       inLanguage: 'en-IE',
     },

@@ -5,8 +5,8 @@ import StructuredData from './structured-data';
 export const metadata: Metadata = {
   metadataBase: new URL('https://zerodevllc.com'),
   title: 'ZeroDev LLC // Defensive cyber risk and resilience',
-  description: 'Authorized defensive cybersecurity, cyber-risk, technical and vendor due diligence, compliance readiness, and operational resilience services from Ireland.',
-  keywords: ['ZeroDev LLC', 'authorized penetration testing', 'vulnerability assessment', 'cyber risk management', 'technical due diligence', 'vendor due diligence', 'compliance readiness', 'CMMC applicability', 'disaster recovery', 'business continuity', 'incident readiness', 'DEFCON', 'Ireland'],
+  description: 'Authorized defensive cybersecurity for public-sector programs, military and defense suppliers, essential services, and regulated technology teams: penetration testing, vulnerability assessment, cyber-risk management, technical and vendor due diligence, penetration-testing frameworks, compliance readiness, disaster recovery, business continuity planning, and incident readiness from Ireland.',
+  keywords: ['ZeroDev LLC', 'public-sector cybersecurity', 'government cybersecurity', 'military cybersecurity', 'defense supplier assurance', 'authorized penetration testing', 'vulnerability assessment', 'cyber risk management', 'technical due diligence', 'vendor due diligence', 'vendor risk management', 'penetration testing frameworks', 'compliance readiness', 'CMMC applicability', 'NIST CSF 2.0', 'NIS2', 'DORA', 'disaster recovery', 'business continuity planning', 'BCP', 'incident readiness', 'DEFCON', 'Ireland'],
   applicationName: 'ZeroDev LLC',
   creator: 'ZeroDev LLC',
   alternates: {
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'ZeroDev LLC // Defensive cyber risk and resilience',
-    description: 'Authorized defensive cybersecurity, due diligence, readiness, and resilience services from Ireland.',
+    description: 'Authorized defensive cybersecurity, penetration testing, due diligence, compliance readiness, disaster recovery, BCP, and resilience services for public-sector and defense-oriented teams from Ireland.',
     url: 'https://zerodevllc.com',
     siteName: 'ZeroDev LLC',
     type: 'website',
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'ZeroDev LLC // Defensive cyber risk and resilience',
-    description: 'Authorized defensive cybersecurity, due diligence, readiness, and resilience services from Ireland.',
+    description: 'Authorized defensive cybersecurity, penetration testing, due diligence, compliance readiness, disaster recovery, BCP, and resilience services for public-sector and defense-oriented teams from Ireland.',
     images: ['/og.png'],
   },
   icons: { icon: '/favicon.svg' },

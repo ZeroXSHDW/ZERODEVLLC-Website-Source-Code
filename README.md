@@ -1,10 +1,18 @@
 # ZeroDev LLC — public index
 
-The canonical public landing page for ZeroDev LLC. It provides a concise
-service-discovery surface for Threat Ops, DEFCON Signal Fusion, European
-operations, and the store.
+The canonical public landing page for ZeroDev LLC. It provides a reviewable,
+defensive cybersecurity and resilience surface for public-sector programs,
+military and defense suppliers, essential services, and regulated-technology
+teams. The `.com` surface covers authorized penetration testing, vulnerability
+assessment, cyber-risk management, technical and vendor due diligence,
+penetration-testing frameworks, compliance readiness, disaster recovery, BCP,
+and incident readiness.
 
-- Production: <https://zerodevllc.com>
+The `.eu` signal route and `.store` service/catalogue surface are separate
+external routes. This repository does not establish their source, provider,
+product, payment, checkout, or deployment status.
+
+- Production origin observed in the release record: <https://zerodevllc.com>
 - Sites preview: <https://zerodevllc-com.michaelmorangeometri.chatgpt.site>
 - Public source: <https://github.com/ZeroXSHDW/ZERODEVLLC-Website-Source-Code/tree/live-site>
 
