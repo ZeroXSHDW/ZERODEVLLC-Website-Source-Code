@@ -125,6 +125,9 @@ for (const marker of [
   "window.setTimeout(() => controller.abort(), DEFAULT_REQUEST_TIMEOUT_MS)",
   "Live public threat feed request timed out",
   "mountedRef.current",
+  "function getEventSeverity(value: number)",
+  "severity ${severity.label.toLowerCase()}",
+  '<th scope="col">Severity</th>',
   "cache: force ? 'no-store' : 'default'",
   "disabled={isRefreshing || refreshWaitSeconds > 0}",
   "Refresh public threat signals; available in ${refreshWaitSeconds} seconds",
@@ -142,6 +145,7 @@ for (const marker of [
   ".threat-feed-state { align-items: center;",
   ".threat-feed-state-detail { color: var(--dim);",
   ".threat-state-stale { background:",
+  ".severity-label-high { color: var(--red);",
 ]) {
   requireText("app/globals.css threat feed state contract", globalsCss, marker);
 }
@@ -380,8 +384,11 @@ const additionalRouteIndexContracts = [
     'Rev. 5 / Release 5.2.0 patch noted',
     'Rev. 1 / updates through 2024-11-01',
     'R3 public-comments draft linked; confirm current published text',
+    'Rev. 3 / final May 2026',
+    'Current publisher release; recheck latest',
     '4.0 / page reviewed 2025-08-06',
     '2019 + Amendment 1 (2024); to be revised / 2018',
+    'Government and defense readiness',
   ]],
   ["app/assurance/page.tsx", assurancePage, [
     'aria-label="Assurance page sections"',

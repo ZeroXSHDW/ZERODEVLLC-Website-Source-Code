@@ -67,6 +67,12 @@ function getEventKindLabel(kind: PublicThreatEvent['kind']) {
   return kind === 'known-exploited' ? 'known exploited' : kind === 'ics-advisory' ? 'ICS advisory' : 'advisory';
 }
 
+function getEventSeverity(value: number) {
+  if (value >= 75) return { tone: 'high', label: 'HIGH' } as const;
+  if (value >= 60) return { tone: 'watch', label: 'WATCH' } as const;
+  return { tone: 'info', label: 'INFO' } as const;
+}
+
 function boundedText(value: unknown, maxLength: number): value is string {
   return typeof value === 'string' && value.trim().length > 0 && value.length <= maxLength;
 }
@@ -329,11 +335,14 @@ export function LiveDefconMap() {
         {feed?.errors.length ? <p className="threat-feed-warning" role="status" aria-live="polite" aria-atomic="true">Partial source outage: {feed.errors.join(' · ')}</p> : null}
         <div className="threat-event-list">
           {feed?.events.slice(0, 4).map((event) => (
-            <a className="threat-event" href={event.url} key={event.id} target="_blank" rel="noopener noreferrer" aria-label={`${event.title} from ${event.source}; ${getEventKindLabel(event.kind)}; observed ${formatFeedTime(event.observedAt)}; open source advisory; opens in a new tab`}>
-              <span className={`threat-severity severity-${event.severity >= 75 ? 'high' : event.severity >= 60 ? 'watch' : 'info'}`} />
-              <span className="threat-event-copy"><strong>{event.title}</strong><small><b className="threat-source-badge">{event.source}</b> {getEventKindLabel(event.kind).toUpperCase()} · observed {formatFeedTime(event.observedAt)}</small></span>
-              <span className="threat-event-arrow" aria-hidden="true">↗</span>
-            </a>
+            (() => {
+              const severity = getEventSeverity(event.severity);
+              return <a className="threat-event" href={event.url} key={event.id} target="_blank" rel="noopener noreferrer" aria-label={`${event.title} from ${event.source}; severity ${severity.label.toLowerCase()}; ${getEventKindLabel(event.kind)}; observed ${formatFeedTime(event.observedAt)}; open source advisory; opens in a new tab`}>
+                <span className={`threat-severity severity-${severity.tone}`} aria-hidden="true" />
+                <span className="threat-event-copy"><strong>{event.title}</strong><small><b className={`threat-severity-label severity-label-${severity.tone}`}>{severity.label}</b><b className="threat-source-badge">{event.source}</b> {getEventKindLabel(event.kind).toUpperCase()} · observed {formatFeedTime(event.observedAt)}</small></span>
+                <span className="threat-event-arrow" aria-hidden="true">↗</span>
+              </a>;
+            })()
           ))}
           {feed && feed.events.length === 0 && <span className="threat-feed-empty">No public threat events returned in this refresh.</span>}
           {!feed && <span className="threat-feed-empty">Waiting for the first source refresh.</span>}
@@ -358,16 +367,17 @@ export function LiveDefconMap() {
             <h4>PUBLIC EVENTS</h4>
             <table>
               <caption className="sr-only">Source-linked public threat events</caption>
-              <thead><tr><th scope="col">Event</th><th scope="col">Source / observed</th></tr></thead>
+              <thead><tr><th scope="col">Event</th><th scope="col">Severity</th><th scope="col">Source / observed</th></tr></thead>
               <tbody>
                 {feed?.events.slice(0, 8).map((event) => (
                   <tr key={`data-${event.id}`}>
                     <th scope="row"><a href={event.url} target="_blank" rel="noopener noreferrer">{event.title} <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a></th>
+                    <td>{getEventSeverity(event.severity).label}</td>
                     <td>{event.source}<br /><span>{formatFeedTime(event.observedAt)}</span></td>
                   </tr>
                 ))}
-                {feed?.events.length === 0 && <tr><td colSpan={2}>No events returned in this refresh.</td></tr>}
-                {!feed && <tr><td colSpan={2}>Awaiting source refresh.</td></tr>}
+                {feed?.events.length === 0 && <tr><td colSpan={3}>No events returned in this refresh.</td></tr>}
+                {!feed && <tr><td colSpan={3}>Awaiting source refresh.</td></tr>}
               </tbody>
             </table>
           </div>

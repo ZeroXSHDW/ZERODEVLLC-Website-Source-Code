@@ -275,6 +275,10 @@ h2 span { color: var(--green); }
 .threat-event-copy { display: grid; gap: 4px; min-width: 0; }
 .threat-event-copy strong { color: var(--ink); font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .threat-event-copy small { color: var(--dim); font-size: 7px; letter-spacing: .08em; overflow: hidden; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+.threat-severity-label { font-weight: 600; margin-right: 7px; }
+.severity-label-high { color: var(--red); }
+.severity-label-watch { color: var(--amber); }
+.severity-label-info { color: var(--green); }
 .threat-source-badge { color: var(--cyan); font-weight: 500; }
 .threat-event-arrow { color: var(--green); font-size: 13px; }
 @keyframes globe-drift { from { transform: rotateX(4deg) rotateY(-8deg) translateY(2px); } to { transform: rotateX(-4deg) rotateY(8deg) translateY(-2px); } }
