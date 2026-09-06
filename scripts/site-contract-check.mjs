@@ -107,6 +107,15 @@ for (const marker of [
 }
 
 for (const marker of [
+  "const [activeSection, setActiveSection] = useState('#start')",
+  "new IntersectionObserver",
+  "aria-current={activeSection === item.href ? 'location' : undefined}",
+]) {
+  requireText("app/home-status.tsx active section navigation contract", homeStatus, marker);
+}
+requireText("app/globals.css active section navigation styles", globalsCss, ".nav a[aria-current='location']::after");
+
+for (const marker of [
   "FORCE_REFRESH_COOLDOWN_MS",
   "lastForcedRefreshAt",
   "requestTime - lastForcedRefreshAt < FORCE_REFRESH_COOLDOWN_MS",

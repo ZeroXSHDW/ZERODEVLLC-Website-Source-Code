@@ -61,8 +61,8 @@ button { font: inherit; }
 .nav a, .status-chip, .footer { color: var(--muted); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
 .nav a { position: relative; transition: color .2s ease; }
 .nav a::after { background: var(--green); bottom: -8px; content: ''; height: 1px; left: 0; position: absolute; transform: scaleX(0); transform-origin: left; transition: transform .2s ease; width: 100%; }
-.nav a:hover, .nav a:focus-visible, .footer a:hover { color: var(--green); }
-.nav a:hover::after, .nav a:focus-visible::after { transform: scaleX(1); }
+.nav a:hover, .nav a:focus-visible, .nav a[aria-current='location'], .footer a:hover { color: var(--green); }
+.nav a:hover::after, .nav a:focus-visible::after, .nav a[aria-current='location']::after { transform: scaleX(1); }
 .status-chip { align-items: center; background: rgba(178,255,202,.025); border: 1px solid var(--line); display: inline-flex; gap: 8px; padding: 9px 11px; transition: background .2s ease, border-color .2s ease, color .2s ease; white-space: nowrap; }
 .status-chip:hover { background: rgba(156,255,184,.08); border-color: var(--green); color: var(--green); }
 .status-chip.status-live, .signal-live, .terminal-state-live { color: var(--green); }

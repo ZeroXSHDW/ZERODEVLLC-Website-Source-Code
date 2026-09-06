@@ -36,12 +36,40 @@ export function useHomeStatus() {
 
 export function HomeHeader({ navigation, statusHref }: { navigation: readonly NavigationItem[]; statusHref: string }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('#start');
   const headerRef = useRef<HTMLElement | null>(null);
   const navigationRef = useRef<HTMLElement | null>(null);
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
   const { status } = useHomeStatus();
   const copy = getStatusCopy(status);
   const closeMobileMenu = () => setMobileMenuOpen(false);
+
+  useEffect(() => {
+    const sectionTargets = navigation
+      .map((item) => item.href)
+      .filter((href) => href.startsWith('#'))
+      .map((href) => document.getElementById(href.slice(1)))
+      .filter((target): target is HTMLElement => Boolean(target));
+
+    if (!('IntersectionObserver' in window) || sectionTargets.length === 0) return undefined;
+
+    const visibility = new Map<string, number>();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        visibility.set(`#${entry.target.id}`, entry.isIntersecting ? entry.intersectionRatio : 0);
+      });
+
+      const nextSection = sectionTargets
+        .map((target) => ({ id: `#${target.id}`, ratio: visibility.get(`#${target.id}`) ?? 0 }))
+        .sort((left, right) => right.ratio - left.ratio)
+        .find((section) => section.ratio > 0);
+
+      if (nextSection) setActiveSection(nextSection.id);
+    }, { rootMargin: '-92px 0px -55% 0px', threshold: [0, 0.1, 0.25, 0.5, 0.75, 1] });
+
+    sectionTargets.forEach((target) => observer.observe(target));
+    return () => observer.disconnect();
+  }, [navigation]);
 
   useEffect(() => {
     if (!mobileMenuOpen) return undefined;
@@ -100,7 +128,7 @@ export function HomeHeader({ navigation, statusHref }: { navigation: readonly Na
         <span>ZERODEVLLC<span className="brand-dim">.COM</span></span>
       </a>
       <nav className={`nav${mobileMenuOpen ? ' is-open' : ''}`} id="primary-navigation" ref={navigationRef} aria-label="Primary navigation">
-        {navigation.map((item) => <a href={item.href} key={item.href} onClick={closeMobileMenu}>{item.label}</a>)}
+        {navigation.map((item) => <a href={item.href} key={item.href} aria-current={activeSection === item.href ? 'location' : undefined} onClick={closeMobileMenu}>{item.label}</a>)}
       </nav>
       <button
         className="mobile-menu-toggle"
