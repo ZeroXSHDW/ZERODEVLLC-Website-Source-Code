@@ -45,6 +45,13 @@ const procurementQuestions = [
   'What treatment, acceptance, retest, escalation, or review decision follows the work?',
 ] as const;
 
+const reviewPath = [
+  ['01', 'Frame the question', 'Start with the decision, mission or service boundary, accountable owner, audience, and timing—without sending sensitive evidence.', '/engage', 'Prepare a safe first brief'],
+  ['02', 'Select the engagement', 'Map the question to authorized penetration testing, vulnerability assessment, due diligence, risk, compliance, recovery, or incident-readiness work.', '/services', 'Review security services'],
+  ['03', 'Review the evidence', 'Agree the output shape, evidence state, limitations, audience, and decision the work must support before the handoff.', '/deliverables', 'Review deliverable shapes'],
+  ['04', 'Treat and recheck', 'Give findings or gaps an owner, treatment choice, closeout evidence, residual-risk decision, and next review trigger.', '/remediation', 'Review remediation lifecycle'],
+] as const;
+
 export default function AssurancePage() {
   return (
     <main className={styles.page}>
@@ -124,6 +131,24 @@ export default function AssurancePage() {
           </div>
           <div className={styles.checkList}>
             {procurementQuestions.map((question, index) => <div key={question}><span>{String(index + 1).padStart(2, '0')}</span><p>{question}</p></div>)}
+          </div>
+        </section>
+
+        <section className={styles.frameworkSection} aria-labelledby="review-path-heading">
+          <div className={styles.sectionIntro}>
+            <p className={styles.eyebrow}>{'// PROCUREMENT REVIEW PATH'}</p>
+            <h2 id="review-path-heading">One route from<br /><span>question to evidence.</span></h2>
+            <p>Use the existing `.com` surfaces as one controlled journey. No sensitive evidence is required to move from the first question to a proportionate next step.</p>
+          </div>
+          <div className={styles.frameworkGrid}>
+            {reviewPath.map(([number, title, description, href, label]) => (
+              <article className={styles.frameworkCard} key={number}>
+                <span className={styles.frameworkTag}>{number} / REVIEW STAGE</span>
+                <h3>{title}</h3>
+                <p>{description}</p>
+                <p className={styles.cardBoundary}><strong>Next route:</strong> <Link href={href}>{label} <span aria-hidden="true">↗</span></Link></p>
+              </article>
+            ))}
           </div>
         </section>
 
