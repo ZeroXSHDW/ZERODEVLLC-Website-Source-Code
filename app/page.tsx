@@ -26,6 +26,7 @@ const systems = [
     freshness: 'Current provider link not recorded',
     limitation: 'The historical provider hostname is withheld until source and route ownership are reconciled.',
     detailHref: '#approach',
+    detailLabel: 'VIEW OPERATING APPROACH',
     external: false,
     actionLabel: 'VIEW STATUS',
   },
@@ -46,6 +47,7 @@ const systems = [
     freshness: 'Refresh state shown in feed',
     limitation: 'Indicators do not confirm an attack against ZeroDev.',
     detailHref: '#evidence',
+    detailLabel: 'VIEW EVIDENCE',
     external: true,
     actionLabel: 'OPEN SURFACE',
   },
@@ -66,6 +68,7 @@ const systems = [
     freshness: 'Scope confirmed directly',
     limitation: 'Payment, fulfilment, and provider state require separate review.',
     detailHref: '#services',
+    detailLabel: 'VIEW DELIVERY MODEL',
     external: true,
     actionLabel: 'OPEN SURFACE',
   },
@@ -210,14 +213,14 @@ export default function Home() {
             Authorized defensive cybersecurity for public-sector programs, defense suppliers, essential services, and regulated-technology teams—turning penetration testing, vulnerability, risk, due-diligence, and recovery questions into evidence and next action.
           </p>
           <div className="hero-actions">
-            <a className="button button-primary" href="/services">
-              Review security services <span aria-hidden="true">↗</span>
+            <a className="button button-primary" href="#start">
+              Choose the first route <span aria-hidden="true">↓</span>
             </a>
             <a className="button button-ghost" href="/engage">
               Prepare a safe first brief <span aria-hidden="true">↗</span>
             </a>
           </div>
-          <p className="hero-action-note"><span>FIRST MOVE</span> Start with a high-level objective. Authorized work begins with scope, authority, and a named decision owner.</p>
+          <p className="hero-action-note"><span>FIRST MOVE</span> Choose the decision route that fits the question, then bring the high-level objective, authority owner, and desired outcome.</p>
           <div className="hero-proof" aria-label="ZeroDev trust principles">
             <span><i aria-hidden="true" /> PUBLIC-SOURCE READOUTS</span>
             <span><i aria-hidden="true" /> READ-ONLY BY DEFAULT</span>
@@ -328,7 +331,7 @@ export default function Home() {
               <span className="card-mode">{system.mode}</span>
               <div className="card-actions">
                 <a className="card-link" href={system.href} {...(system.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} aria-label={system.external ? `${system.code === '02' ? 'Open the DEFCON Signal Fusion EU gateway' : `Open ${system.name} surface`}; opens in a new tab` : `View ${system.name} route status`}>{system.actionLabel} <span aria-hidden="true">{system.external ? '↗' : '↓'}</span></a>
-                <a className="card-detail-link" href={system.detailHref}>VIEW BRIEF <span aria-hidden="true">↓</span></a>
+                <a className="card-detail-link" href={system.detailHref}>{system.detailLabel} <span aria-hidden="true">↓</span></a>
               </div>
             </article>
           ))}
