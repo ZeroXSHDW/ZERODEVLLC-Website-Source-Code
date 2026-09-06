@@ -63,6 +63,15 @@ requireText("app/page.tsx", page, 'href="#start">\n              Choose the firs
 requireText("app/page.tsx", page, "START WITH THE DECISION");
 requireText("app/page.tsx", page, "Do not begin with a product label");
 requireText("app/page.tsx", page, "decision-card-${tone}");
+for (const marker of [
+  "decision-card-facts",
+  "Entry gate",
+  "Owner",
+  "First output",
+  "A reviewable evidence and treatment path",
+]) {
+  requireText("app/page.tsx decision card readiness facts", page, marker);
+}
 requireText("app/page.tsx skip target", page, 'id="start" tabIndex={-1}');
 requireText("app/page.tsx operating summary", page, "String(registeredSurfaceCount).padStart(2, '0')");
 requireText("app/page.tsx operating summary", page, "registered surfaces");
