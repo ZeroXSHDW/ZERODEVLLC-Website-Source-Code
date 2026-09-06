@@ -104,8 +104,8 @@ const SECURITY_EXPIRY_MAX_MS = 366 * 24 * 60 * 60 * 1000;
 const requireText = (label, text, marker) => {
   if (!text.includes(marker)) failures.push(`${label} is missing: ${marker}`);
 };
-requireText("proxy.ts", proxy, "zerodevllc-com-v50");
-requireText("next.config.ts", nextConfig, "zerodevllc-com-v50");
+requireText("proxy.ts", proxy, "zerodevllc-com-v51");
+requireText("next.config.ts", nextConfig, "zerodevllc-com-v51");
 requireText("app/layout.tsx", layout, "export const dynamic = 'force-dynamic'");
 requireText("app/layout.tsx", layout, "metadataBase: new URL('https://zerodevllc.com')");
 requireText("app/layout.tsx", layout, "Authorized defensive cybersecurity");
