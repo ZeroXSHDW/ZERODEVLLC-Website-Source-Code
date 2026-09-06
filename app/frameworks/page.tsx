@@ -45,6 +45,21 @@ const procurementRules = [
   'Separate technical readiness from certification, accreditation, legal advice, or procurement approval.',
 ];
 
+const serviceFrameworkMap = [
+  ['Authorized penetration testing', ['NIST SP 800-115', 'OWASP testing guidance'], 'Is the proposed test scope, authority, method, and evidence path proportionate?', 'Testing guidance does not grant authorization or prove that a system is secure.'],
+  ['Vulnerability assessment', ['NIST CSF 2.0', 'NIST SP 800-30 Rev. 1', 'CIS Controls v8.1'], 'How will an observed weakness become context, priority, ownership, and treatment?', 'A scanner result or control list is not, by itself, a validated finding or risk-acceptance decision.'],
+  ['Cyber risk management', ['NIST CSF 2.0', 'NIST SP 800-30 Rev. 1', 'ISO 22301:2019 / ISO 31000:2018'], 'What outcomes, risk criteria, evidence quality, and decision owner apply?', 'A reference family is not a universal score, board decision, or residual-risk acceptance.'],
+  ['Technical due diligence', ['NIST CSF 2.0', 'NIST SP 800-53 Rev. 5', 'NIST SP 800-161 Rev. 1'], 'Which architecture, control, dependency, or delivery questions could change the material decision?', 'Reference alignment is not independent assurance and does not create a legal, financial, investment, or procurement verdict.'],
+  ['Vendor due diligence', ['NIST SP 800-161 Rev. 1', 'NIST CSF 2.0', 'CIS Controls v8.1'], 'Does the supplier evidence fit the service, data, access, incident, concentration, and exit relationship?', 'A questionnaire or reference map is not supplier assurance or a procurement decision.'],
+  ['Compliance readiness', ['NIST SP 800-53 Rev. 5', 'NIST SP 800-171 Rev. 3 / 800-171A Rev. 3', 'ISO/IEC 27001:2022'], 'Which requirement applies, what evidence is expected, and who owns the control or exception?', 'Readiness mapping is not certification, accreditation, clearance, legal advice, or regulator approval.'],
+  ['Disaster recovery and BCP', ['NIST SP 800-34 Rev. 1', 'ISO 22301:2019 / ISO 31000:2018', 'NIST CSF 2.0'], 'What critical service, dependencies, recovery assumptions, and exercise evidence determine continuity?', 'A plan or framework does not prove recovery until the relevant capability is exercised and evidenced.'],
+  ['Incident readiness', ['NIST SP 800-61 Rev. 3', 'NIST CSF 2.0', 'NCSC Cyber Assessment Framework 4.0'], 'What roles, decisions, communications, evidence boundaries, and lessons must be practiced?', 'A readiness exercise is not live incident response, attribution, or a regulator decision.'],
+] as const;
+
+const frameworkReferenceByName = Object.fromEntries(
+  frameworks.map(([name, , , sourceLabel, sourceHref]) => [name, { sourceLabel, sourceHref }]),
+);
+
 export default function FrameworksPage() {
   return (
     <main className={styles.page}>
@@ -83,6 +98,45 @@ export default function FrameworksPage() {
                 <a className={styles.referenceLink} href={sourceHref} target="_blank" rel="noopener noreferrer" aria-label={`${name} primary reference`}>{sourceLabel} <span aria-hidden="true">↗</span></a>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section className={styles.outputSection} id="service-framework-map" aria-labelledby="service-framework-heading">
+          <div className={styles.sectionIntro}>
+            <p className={styles.eyebrow}>{'// SERVICE / FRAMEWORK FIT'}</p>
+            <h2 id="service-framework-heading">Choose a reference.<br /><span>Confirm applicability.</span></h2>
+            <p>This orientation map connects each service question to candidate reference families. It is not a formal crosswalk, audit plan, certification route, legal interpretation, or evidence of compliance.</p>
+            <p><Link className={styles.primaryLink} href="/services#briefing-packs">Review the service briefing packs <span aria-hidden="true">↗</span></Link></p>
+          </div>
+          <div className={styles.actionTableWrap}>
+            <table className={`${styles.actionTable} ${styles.frameworkMap}`}>
+              <caption className={styles.tableCaption}>Service-to-framework orientation map — confirm current publisher text, contract, jurisdiction, scope, authority, and evidence before relying on a reference.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Service question</th>
+                  <th scope="col">Candidate reference families</th>
+                  <th scope="col">Applicability question</th>
+                  <th scope="col">Boundary</th>
+                </tr>
+              </thead>
+              <tbody>
+                {serviceFrameworkMap.map(([service, references, applicability, boundary]) => (
+                  <tr key={service}>
+                    <td>{service}</td>
+                    <td>
+                      <ul className={styles.fieldList}>
+                        {references.map((referenceName) => {
+                          const reference = frameworkReferenceByName[referenceName];
+                          return <li key={referenceName}><a href={reference?.sourceHref ?? '#library-heading'} target={reference ? '_blank' : undefined} rel={reference ? 'noopener noreferrer' : undefined}>{reference?.sourceLabel ?? referenceName} <span aria-hidden="true">↗</span></a></li>;
+                        })}
+                      </ul>
+                    </td>
+                    <td>{applicability}</td>
+                    <td>{boundary}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </section>
 
