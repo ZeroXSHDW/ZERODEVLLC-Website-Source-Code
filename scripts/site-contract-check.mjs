@@ -5,9 +5,10 @@ import { fileURLToPath } from "node:url";
 const projectRoot = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const read = (relativePath) => readFile(join(projectRoot, relativePath), "utf8");
 
-const [page, homeStatus, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, assurancePage, sectorsPage, privacyPage, errorPage, notFoundPage, loadingPage, siteHeader, siteFooter] = await Promise.all([
+const [page, homeStatus, routeIndex, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, assurancePage, sectorsPage, privacyPage, errorPage, notFoundPage, loadingPage, siteHeader, siteFooter, structuredData, layout] = await Promise.all([
   read("app/page.tsx"),
   read("app/home-status.tsx"),
+  read("app/route-index.tsx"),
   read("app/globals.css"),
   read("app/api/attacks/route.ts"),
   read("app/live-defcon-map.tsx"),
@@ -26,6 +27,8 @@ const [page, homeStatus, globalsCss, attacksRoute, liveDefconMap, engagePage, se
   read("app/loading.tsx"),
   read("app/site-header.tsx"),
   read("app/site-footer.tsx"),
+  read("app/structured-data.tsx"),
+  read("app/layout.tsx"),
 ]);
 
 const failures = [];
@@ -114,6 +117,29 @@ for (const marker of [
   requireText("app/home-status.tsx active section navigation contract", homeStatus, marker);
 }
 requireText("app/globals.css active section navigation styles", globalsCss, ".nav a[aria-current='location']::after");
+
+for (const marker of [
+  "const [activeSection, setActiveSection] = useState(sections[0]?.href ?? '')",
+  "new IntersectionObserver",
+  "rootMargin: '-150px 0px -55% 0px'",
+  "aria-current={activeSection === section.href ? 'location' : undefined}",
+]) {
+  requireText("app/route-index.tsx active route index contract", routeIndex, marker);
+}
+requireText("app/services/services.module.css active route index styles", servicesCss, ".pageIndex a[aria-current='location']");
+
+for (const marker of [
+  "<StructuredData />",
+  "id=\"zerodevllc-structured-data\"",
+  "'@type': 'Organization'",
+  "'@type': 'WebSite'",
+  "'@type': 'ItemList'",
+  "'@type': 'Service'",
+  "Authorized penetration testing",
+  "does not create a certification",
+]) {
+  requireText("structured service discovery contract", `${layout}\n${structuredData}`, marker);
+}
 
 for (const marker of [
   "FORCE_REFRESH_COOLDOWN_MS",
