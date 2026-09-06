@@ -80,7 +80,8 @@ for (const marker of [
   './check --public-surface',
   'EU gateway / public signals',
   'Public signal status: ${copy.chip.toLowerCase()}',
-  'Open the DEFCON Signal Fusion EU gateway; opens in a new tab',
+  'Open the DEFCON Signal Fusion EU gateway',
+  "target: '_blank', rel: 'noopener noreferrer'",
   'Open the live DEFCON EU gateway; opens in a new tab',
   'Open live DEFCON EU map; opens in a new tab',
 ]) {
