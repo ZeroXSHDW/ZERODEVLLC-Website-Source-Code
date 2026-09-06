@@ -165,6 +165,7 @@ export default function FrameworksPage() {
           <p className={styles.eyebrow}>{'// CLAIMS CONTROL'}</p>
           <h2 id="claims-heading">Readiness support is not<br /><span>certification or clearance.</span></h2>
           <p>ZeroDev can help structure evidence, identify gaps, plan remediation, and prepare questions for an appropriate assessor, auditor, legal adviser, procurement owner, or authority. The site does not claim certification, accreditation, government approval, security clearance, or formal compliance without exact evidence.</p>
+          <p><Link className={styles.primaryLink} href="/assurance#claims-proof">Check the claims-to-proof matrix <span aria-hidden="true">→</span></Link></p>
         </section>
 
         <section className={styles.cta} aria-labelledby="frameworks-cta-heading">

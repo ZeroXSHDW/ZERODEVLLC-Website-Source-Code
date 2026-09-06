@@ -108,6 +108,7 @@ export default function SectorsPage() {
           <h2 id="claims-heading">Context is not<br /><span>credential.</span></h2>
           <p>Being relevant to a sector does not establish a government relationship, security clearance, contract award, regulatory appointment, certification, accreditation, or formal assessor status. Those claims require exact, current, owner-approved evidence and may require an independent authority.</p>
           <p>Review the <Link href="/services">service catalogue</Link>, <Link href="/frameworks">framework map</Link>, and <Link href="/deliverables">representative deliverables</Link> before starting a high-level conversation.</p>
+          <p><Link className={styles.primaryLink} href="/assurance#claims-proof">Check the claims-to-proof matrix <span aria-hidden="true">→</span></Link></p>
         </section>
 
         <section className={styles.cta} aria-labelledby="sectors-cta-heading">

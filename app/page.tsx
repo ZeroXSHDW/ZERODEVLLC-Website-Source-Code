@@ -359,6 +359,7 @@ export default function Home() {
               <span key={step}><b>{String(index + 1).padStart(2, '0')}</b>{step}{index < 4 ? <i aria-hidden="true">→</i> : null}</span>
             ))}
           </div>
+          <p><a className="text-link" href="/assurance#claims-proof">Review claims / proof / gates <span aria-hidden="true">→</span></a></p>
         </div>
         <div className="evidence-grid">
           {evidenceCards.map((card) => (

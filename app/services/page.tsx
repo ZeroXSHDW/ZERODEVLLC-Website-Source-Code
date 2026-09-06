@@ -373,6 +373,7 @@ export default function ServicesPage() {
             <p><strong>Testing is not permission.</strong> No system is tested without written authority, defined scope, safety contacts, and agreed rules of engagement.</p>
             <p><strong>Evidence is not a guarantee.</strong> Reports explain what was observed, what was validated, what was not tested, and what remains uncertain.</p>
             <p><strong>Due diligence is not a verdict.</strong> Supplier and technical reviews surface evidence gaps and decision risk; the client owns the final commercial, legal, and operational decision.</p>
+            <p><Link className={styles.primaryLink} href="/assurance#claims-proof">Check the claims-to-proof matrix before publishing a stronger statement <span aria-hidden="true">→</span></Link></p>
           </div>
         </section>
 

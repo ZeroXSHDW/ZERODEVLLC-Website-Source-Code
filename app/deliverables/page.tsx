@@ -242,6 +242,7 @@ export default function DeliverablesPage() {
             <p className={styles.eyebrow}>{'// PROVENANCE / CONFIDENCE'}</p>
             <h2 id="provenance-heading">Make confidence<br /><span>inspectable.</span></h2>
             <p>A review becomes more defensible when a reader can see where the evidence came from, what it covers, how it was checked, what remains uncertain, and when the conclusion should be revisited.</p>
+            <p><Link className={styles.primaryLink} href="/assurance#claims-proof">Use the claims-to-proof matrix before turning evidence into a public claim <span aria-hidden="true">→</span></Link></p>
           </div>
           <div className={styles.actionTableWrap}>
             <table className={`${styles.actionTable} ${styles.provenanceMap}`}>
