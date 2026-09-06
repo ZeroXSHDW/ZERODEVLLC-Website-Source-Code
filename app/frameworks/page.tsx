@@ -82,6 +82,7 @@ const frameworkLibraryClassNames: FrameworkLibraryClassNames = {
   libraryControlTop: styles.libraryControlTop,
   librarySearch: styles.librarySearch,
   libraryResults: styles.libraryResults,
+  libraryShareNote: styles.libraryShareNote,
   libraryFilters: styles.libraryFilters,
   libraryFilter: styles.libraryFilter,
   frameworkGrid: styles.frameworkGrid,

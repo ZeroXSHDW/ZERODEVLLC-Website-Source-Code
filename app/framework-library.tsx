@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export type FrameworkLibraryEntry = {
   name: string;
@@ -19,6 +19,7 @@ export type FrameworkLibraryClassNames = {
   libraryControlTop: string;
   librarySearch: string;
   libraryResults: string;
+  libraryShareNote: string;
   libraryFilters: string;
   libraryFilter: string;
   frameworkGrid: string;
@@ -48,9 +49,69 @@ const categories = [
   'Supply chain',
 ] as const;
 
+type FrameworkCategory = (typeof categories)[number];
+
+type LibraryFilterState = {
+  query: string;
+  category: FrameworkCategory;
+};
+
+const readFilterState = (): LibraryFilterState => {
+  if (typeof window === 'undefined') return { query: '', category: categories[0] };
+
+  const params = new URLSearchParams(window.location.search);
+  const requestedCategory = params.get('category');
+  const category = categories.includes(requestedCategory as FrameworkCategory)
+    ? requestedCategory as FrameworkCategory
+    : categories[0];
+
+  return { query: params.get('q') ?? '', category };
+};
+
+const writeFilterState = (query: string, category: FrameworkCategory) => {
+  if (typeof window === 'undefined') return;
+
+  const url = new URL(window.location.href);
+  const normalizedQuery = query.trim();
+  if (normalizedQuery) url.searchParams.set('q', normalizedQuery);
+  else url.searchParams.delete('q');
+  if (category === categories[0]) url.searchParams.delete('category');
+  else url.searchParams.set('category', category);
+  window.history.replaceState(window.history.state, '', `${url.pathname}${url.search}${url.hash}`);
+};
+
 export default function FrameworkLibrary({ frameworks, reviewDate, classNames }: FrameworkLibraryProps) {
   const [query, setQuery] = useState('');
-  const [category, setCategory] = useState<(typeof categories)[number]>('All references');
+  const [category, setCategory] = useState<FrameworkCategory>(categories[0]);
+
+  useEffect(() => {
+    const syncFilterState = () => {
+      const next = readFilterState();
+      setQuery(next.query);
+      setCategory(next.category);
+    };
+
+    syncFilterState();
+    window.addEventListener('popstate', syncFilterState);
+    return () => window.removeEventListener('popstate', syncFilterState);
+  }, []);
+
+  const handleQueryChange = (nextQuery: string) => {
+    setQuery(nextQuery);
+    writeFilterState(nextQuery, category);
+  };
+
+  const handleCategoryChange = (nextCategory: FrameworkCategory) => {
+    setCategory(nextCategory);
+    writeFilterState(query, nextCategory);
+  };
+
+  const clearFilters = () => {
+    setQuery('');
+    setCategory(categories[0]);
+    writeFilterState('', categories[0]);
+  };
+
   const normalizedQuery = query.trim().toLowerCase();
   const filteredFrameworks = frameworks.filter((framework) => {
     const matchesCategory = category === 'All references' || framework.category === category;
@@ -78,13 +139,14 @@ export default function FrameworkLibrary({ frameworks, reviewDate, classNames }:
               type="search"
               aria-label="Search framework references"
               value={query}
-              onChange={(event) => setQuery(event.target.value)}
+              onChange={(event) => handleQueryChange(event.target.value)}
               placeholder="Search framework, publisher, or decision question"
               aria-describedby="framework-library-hint"
             />
           </label>
           <p className={classNames.libraryResults} id="framework-library-hint" role="status" aria-live="polite">
             <strong>{filteredFrameworks.length}</strong> / {frameworks.length} {resultLabel} shown
+            <span className={classNames.libraryShareNote}>FILTERS PERSIST IN LINK</span>
           </p>
         </div>
         <div className={classNames.libraryFilters} role="group" aria-label="Filter framework references by category">
@@ -94,7 +156,7 @@ export default function FrameworkLibrary({ frameworks, reviewDate, classNames }:
               type="button"
               aria-pressed={category === option}
               key={option}
-              onClick={() => setCategory(option)}
+              onClick={() => handleCategoryChange(option)}
             >
               {option}
             </button>
@@ -122,7 +184,7 @@ export default function FrameworkLibrary({ frameworks, reviewDate, classNames }:
       ) : (
         <div className={classNames.libraryEmpty} role="status" aria-live="polite">
           <p><strong>No reference matches that route.</strong> Try a broader term or return to the full library.</p>
-          <button className={classNames.libraryClear} type="button" onClick={() => { setQuery(''); setCategory('All references'); }}>
+          <button className={classNames.libraryClear} type="button" onClick={clearFilters}>
             Clear library filters <span aria-hidden="true">↺</span>
           </button>
         </div>

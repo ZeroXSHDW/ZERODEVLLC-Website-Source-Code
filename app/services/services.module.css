@@ -253,6 +253,7 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .librarySearch input::placeholder { color: var(--dim); opacity: 1; }
 .libraryResults { color: var(--dim); font-size: 9px; letter-spacing: .1em; margin: 0; text-align: right; text-transform: uppercase; white-space: nowrap; }
 .libraryResults strong { color: var(--green); font-size: 17px; letter-spacing: 0; }
+.libraryShareNote { color: var(--green); display: block; font-size: 8px; letter-spacing: .1em; margin-top: 7px; }
 .libraryFilters { display: flex; flex-wrap: wrap; gap: 8px; }
 .libraryFilter, .libraryClear { background: transparent; border: 1px solid var(--line); color: var(--muted); cursor: pointer; font: inherit; font-size: 8px; letter-spacing: .1em; min-height: 42px; padding: 8px 11px; text-transform: uppercase; transition: background .2s ease, border-color .2s ease, color .2s ease; }
 .libraryFilter:hover, .libraryFilter:focus-visible, .libraryClear:hover, .libraryClear:focus-visible { border-color: var(--green); color: var(--green-bright); }

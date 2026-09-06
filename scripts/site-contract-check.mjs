@@ -634,8 +634,12 @@ for (const [label, source, markers] of additionalRouteIndexContracts) {
 
 for (const marker of [
   'framework-library-search',
+  'history.replaceState',
+  "window.addEventListener('popstate'",
   'role="group" aria-label="Filter framework references by category"',
   'aria-pressed={category === option}',
+  'className={classNames.libraryShareNote}',
+  'FILTERS PERSIST IN LINK',
   'className={classNames.frameworkSource}',
   '<dt>Publisher</dt>',
   '<dt>Version / edition named</dt>',
@@ -644,6 +648,10 @@ for (const marker of [
   'No reference matches that route.',
   'Clear library filters',
 ]) requireText("app/framework-library.tsx library controls", frameworkLibrary, marker);
+
+for (const marker of [
+  '.libraryShareNote { color: var(--green);',
+]) requireText("app/services/services.module.css framework library share state", servicesCss, marker);
 
 for (const marker of [
   'navigator.clipboard?.writeText',
