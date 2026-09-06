@@ -51,6 +51,15 @@ const evidenceRequestRows = [
   ['08', 'Incident readiness', 'Roles, escalation contacts, scenario, communications path, evidence boundary, exercise authority, and participant list.', 'Run a bounded tabletop or exercise, record decisions and evidence handling, and separate exercise observations from a live incident.', 'Incident or executive owner approves the lessons-learned backlog, communications actions, and next readiness review.'],
 ] as const;
 
+const procurementEvidencePath = [
+  ['01', 'Boundary and data flow', 'Service purpose, users, geography, data categories, access paths, critical dependencies, subprocessors, and material fourth parties.', 'Confirm the boundary with the procurement, service, security, and supplier owners; reconcile the service description with the proposed relationship.', 'Scope state, accountable owner, source date, and review trigger.', 'A generic architecture diagram or supplier description is not a complete boundary.'],
+  ['02', 'Control and incident posture', 'Current control summary, independent reports where applicable, incident route, notification terms, logging context, and unresolved exceptions.', 'Check provenance, coverage period, applicability, exclusions, exceptions, and whether the evidence addresses the actual service rather than the supplier generally.', 'Evidence state, provenance, confidence, limitation, and owner question.', 'A questionnaire answer or marketing claim is not independent assurance.'],
+  ['03', 'Access and third parties', 'Privileged access model, identity controls, support access, subprocessor or fourth-party register, segregation, monitoring, and review cadence.', 'Map who can access what, why access is needed, how it is approved, and how the relationship changes when the contract or service changes.', 'Access/data map, open gap, accountable owner, and decision condition.', 'Do not request secrets, private keys, credentials, or unnecessary customer records.'],
+  ['04', 'Continuity and exit', 'Critical-service dependencies, recovery assumptions, RTO/RPO context, tested recovery, portability, exit assistance, concentration, and substitution assumptions.', 'Tie continuity claims to an exercise, restore, or other permitted evidence; inspect dependencies and contract conditions that could affect exit or recovery.', 'Observed result, unresolved dependency, treatment action, and next test or review date.', 'A documented plan without an observed test is not proof of recovery.'],
+  ['05', 'Findings and exceptions', 'Open findings, risk acceptances, compensating controls, remediation commitments, material incidents, and overdue actions relevant to the service.', 'Check scope, owner, date, severity, residual risk, evidence quality, and the trigger that would cause escalation or re-review.', 'Action record, confidence, acceptance authority, due date, and escalation path.', 'Absence of supplied evidence is not evidence of a clean result.'],
+  ['06', 'Acceptance gate', 'The conditions, limitations, decisions, and follow-up work required from procurement, security, legal, continuity, service, and risk owners.', 'Record what is accepted, conditioned, deferred, escalated, or declined; identify the owner and the date or event that reopens the question.', 'Decision, accountable owner, residual-risk treatment, and revisit date.', 'ZeroDev does not approve a supplier, provide legal advice, or accept residual risk for the customer.'],
+] as const;
+
 const provenanceRows = [
   ['Source identity', 'Origin, owner, revision or observation date, and a stable reference.', 'A named source has a traceable revision, date, or explicit synthetic label.', 'An unattributed, stale, or untraceable source remains unverified.'],
   ['Scope and applicability', 'System, service, contract, framework, jurisdiction, objective, exclusions, and intended audience.', 'The evidence matches the agreed question and the boundary being reviewed.', 'A relevant document outside the agreed scope does not prove the in-scope condition.'],
@@ -96,10 +105,11 @@ export default function DeliverablesPage() {
           <ol>
             <li><a href="#output-shapes"><span>01</span>Output shapes</a></li>
             <li><a href="#evidence-request-map"><span>02</span>Evidence map</a></li>
-            <li><a href="#synthetic-preview"><span>03</span>Review preview</a></li>
-            <li><a href="#evidence-state"><span>04</span>Evidence state</a></li>
-            <li><a href="#provenance-confidence"><span>05</span>Provenance</a></li>
-            <li><a href="#handling-boundary"><span>06</span>Handling boundary</a></li>
+            <li><a href="#procurement-evidence"><span>03</span>Procurement path</a></li>
+            <li><a href="#synthetic-preview"><span>04</span>Review preview</a></li>
+            <li><a href="#evidence-state"><span>05</span>Evidence state</a></li>
+            <li><a href="#provenance-confidence"><span>06</span>Provenance</a></li>
+            <li><a href="#handling-boundary"><span>07</span>Handling boundary</a></li>
           </ol>
         </nav>
 
@@ -146,6 +156,40 @@ export default function DeliverablesPage() {
                     <td>{evidence}</td>
                     <td>{method}</td>
                     <td>{acceptance}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="procurement-evidence" aria-labelledby="procurement-evidence-heading">
+          <div className={styles.sectionIntro}>
+            <p className={styles.eyebrow}>{'// PROCUREMENT / VENDOR RISK EVIDENCE PATH'}</p>
+            <h2 id="procurement-evidence-heading">Review the supplier.<br /><span>Keep the decision owned.</span></h2>
+            <p>This path helps a procurement or third-party-risk team turn a supplier conversation into a bounded, reviewable evidence record. It separates the service boundary, verification method, confidence, accountable owner, and next gate.</p>
+            <p><Link className={styles.primaryLink} href="/engage#print-brief">Use the first-brief template <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/frameworks#service-framework-map">Check framework fit <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/privacy">Review information handling <span aria-hidden="true">↗</span></Link></p>
+          </div>
+          <div className={styles.actionTableWrap}>
+            <table className={`${styles.actionTable} ${styles.procurementEvidenceMap}`}>
+              <caption className={styles.tableCaption}>Illustrative procurement and vendor-risk evidence path — not a universal questionnaire, supplier approval, legal opinion, certification, regulator determination, or independent assurance report.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Evidence lane</th>
+                  <th scope="col">Safe starting evidence</th>
+                  <th scope="col">Review or verification method</th>
+                  <th scope="col">Record for the decision</th>
+                  <th scope="col">No-fit condition</th>
+                </tr>
+              </thead>
+              <tbody>
+                {procurementEvidencePath.map(([number, lane, evidence, method, record, boundary]) => (
+                  <tr key={lane}>
+                    <td><span className={styles.tableNumber}>{number}</span>{lane}</td>
+                    <td>{evidence}</td>
+                    <td>{method}</td>
+                    <td>{record}</td>
+                    <td>{boundary}</td>
                   </tr>
                 ))}
               </tbody>

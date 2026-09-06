@@ -153,6 +153,7 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .servicesMatrix { min-width: 1040px; }
 .frameworkMap { min-width: 1160px; }
 .evidenceRequestMap { min-width: 1240px; }
+.procurementEvidenceMap { min-width: 1420px; }
 .provenanceMap { min-width: 1180px; }
 .actionTable th, .actionTable td { border-bottom: 1px solid var(--line); padding: 14px 12px; text-align: left; vertical-align: top; }
 .actionTable th { color: var(--cyan); font-size: 8px; letter-spacing: .12em; text-transform: uppercase; }
@@ -164,6 +165,7 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .tableServiceLink:hover, .tableServiceLink:focus-visible { color: var(--green-bright); }
 .evidenceRequestLink { color: var(--green); }
 .evidenceRequestLink:hover, .evidenceRequestLink:focus-visible { color: var(--green-bright); }
+.tableNumber { color: var(--cyan); display: block; font-size: 8px; letter-spacing: .12em; margin-bottom: 7px; }
 .frameworkMap .fieldList { gap: 6px; }
 .actionTable tr:last-child td { border-bottom: 0; }
 .tableCaption { color: var(--dim); font-family: Arial, Helvetica, sans-serif; font-size: 10px; padding: 12px; text-align: left; }
@@ -259,6 +261,7 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
   .briefSheetFields dt, .briefSheetHeader .artifactAudience { color: #111813; }
   .briefSheetStatus { border-color: #111813; color: #111813; }
   .briefSheetBoundary { border-color: #111813; }
+  .tableNumber { color: #111813; }
   .actionTableWrap { overflow: visible; }
   .actionTable { min-width: 0; }
   .cta { background: #fff; border-color: #7d8a80; padding: 24pt 0; }

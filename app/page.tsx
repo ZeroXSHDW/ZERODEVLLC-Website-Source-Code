@@ -343,7 +343,7 @@ export default function Home() {
           <p className="eyebrow">{'// LIVE DEFCON SURFACE'}</p>
           <h2 id="defcon-map-heading">See the signal<br /><span>without the noise.</span></h2>
           <p>A first-party preview of the DEFCON coordination topology, paired with public-source indicators and clear limits on what the data proves.</p>
-          <a className="text-link" href={canonicalDomains.defcon}>Open live EU map <span aria-hidden="true">↗</span></a>
+          <a className="text-link" href={canonicalDomains.defcon} target="_blank" rel="noopener noreferrer" aria-label="Open live DEFCON EU map; opens in a new tab">Open live EU map <span aria-hidden="true">↗</span></a>
           <small>Canonical live route: zerodevllc.eu/defcon. Current evidence and source-linked readouts are presented through the public EU gateway.</small>
         </div>
         <LiveDefconMap />

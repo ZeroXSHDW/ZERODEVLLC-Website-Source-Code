@@ -80,8 +80,11 @@ for (const marker of [
   './check --public-surface',
   'EU gateway / public signals',
   'Public signal status: ${copy.chip.toLowerCase()}',
+  'Open the DEFCON Signal Fusion EU gateway; opens in a new tab',
+  'Open the live DEFCON EU gateway; opens in a new tab',
+  'Open live DEFCON EU map; opens in a new tab',
 ]) {
-  requireText("app/page.tsx and app/home-status.tsx trust language", `${page}\n${homeStatus}`, marker);
+  requireText("app/page.tsx, app/home-status.tsx, and app/live-defcon-map.tsx trust language", `${page}\n${homeStatus}\n${liveDefconMap}`, marker);
 }
 
 for (const marker of [
@@ -108,6 +111,7 @@ for (const marker of [
   "label: 'STALE CACHE'",
   "threat-feed-state",
   "threat-feed-state-detail",
+  'role="status" aria-live="polite">{feedState.label}',
 ]) {
   requireText("app/live-defcon-map.tsx refresh contract", liveDefconMap, marker);
 }
@@ -189,16 +193,21 @@ const additionalRouteIndexContracts = [
     'aria-label="Deliverables page sections"',
     'href="#output-shapes"',
     'href="#evidence-request-map"',
+    'href="#procurement-evidence"',
     'href="#synthetic-preview"',
     'href="#evidence-state"',
     'href="#provenance-confidence"',
     'href="#handling-boundary"',
     'id="output-shapes"',
     'id="evidence-request-map"',
+    'id="procurement-evidence"',
     'id="synthetic-preview"',
     'id="evidence-state"',
     'id="provenance-confidence"',
     'id="handling-boundary"',
+    'PROCUREMENT / VENDOR RISK EVIDENCE PATH',
+    'styles.procurementEvidenceMap',
+    'ZeroDev does not approve a supplier',
   ]],
   ["app/methodology/page.tsx", methodologyPage, [
     'aria-label="Methodology page sections"',

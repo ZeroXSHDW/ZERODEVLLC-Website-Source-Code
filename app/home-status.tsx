@@ -105,7 +105,7 @@ export function HomeHeader({ navigation, statusHref }: { navigation: readonly Na
         <span aria-hidden="true" />
         <span aria-hidden="true" />
       </button>
-      <a className={`status-chip status-${status}`} href={statusHref} aria-label={`Open the DEFCON Signal Fusion EU gateway. Public signal status: ${copy.chip.toLowerCase()}`}>
+      <a className={`status-chip status-${status}`} href={statusHref} target="_blank" rel="noopener noreferrer" aria-label={`Open the DEFCON Signal Fusion EU gateway; opens in a new tab. Public signal status: ${copy.chip.toLowerCase()}`}>
         <span className="status-dot" aria-hidden="true" /> <span className="status-label">{copy.chip}</span><span className="status-label-short" aria-hidden="true">{copy.short}</span> <span className="status-arrow" aria-hidden="true">↗</span>
       </a>
     </header>

@@ -244,7 +244,7 @@ export function LiveDefconMap() {
           <p className="eyebrow">{'// DEFCON SIGNAL FUSION'}</p>
           <h3>Live network map</h3>
         </div>
-        <a className="map-live-badge" href="https://zerodevllc.eu/defcon" aria-label="Open the live DEFCON EU gateway"><i /> EU GATEWAY / LIVE MAP ↗</a>
+        <a className="map-live-badge" href="https://zerodevllc.eu/defcon" target="_blank" rel="noopener noreferrer" aria-label="Open the live DEFCON EU gateway; opens in a new tab"><i /> EU GATEWAY / LIVE MAP ↗</a>
       </div>
 
       <div className={`defcon-map-stage${paused ? ' is-paused' : ''}`} role="img" aria-describedby="defcon-data-note" aria-label="Three-dimensional preview of the DEFCON coordination network">
@@ -299,9 +299,9 @@ export function LiveDefconMap() {
             </button>
           </div>
         </div>
-        <div className={`threat-feed-state threat-state-${feed?.status ?? 'connecting'}${feed?.stale ? ' threat-state-stale' : ''}`} aria-live="polite" aria-atomic="true">
+        <div className={`threat-feed-state threat-state-${feed?.status ?? 'connecting'}${feed?.stale ? ' threat-state-stale' : ''}`}>
           <span className="threat-feed-state-mark" aria-hidden="true" />
-          <strong>{feedState.label}</strong>
+          <strong role="status" aria-live="polite">{feedState.label}</strong>
           <span className="threat-feed-state-detail">{feedState.detail}</span>
         </div>
         <p className="threat-feed-notice">Public-source indicators only. Known exploitation or advisory activity is not confirmation of an attack against ZeroDev.</p>
