@@ -1,5 +1,6 @@
 import { HomeHeader, HomeSignalReadout, HomeStatusProvider, HomeTerminalStatus } from './home-status';
 import { LiveDefconMap } from './live-defcon-map';
+import SiteFooter from './site-footer';
 
 const canonicalDomains = Object.freeze({
   defcon: 'https://zerodevllc.eu/defcon',
@@ -404,11 +405,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="footer">
-        <span>© 2026 ZERO DEV LLC / IRELAND</span>
-        <span className="footer-center">MAKE USEFUL THINGS. KEEP THE SIGNAL CLEAN.</span>
-        <span><a href={canonicalDomains.defcon}>DEFCON</a> / <a href={canonicalDomains.eu}>EU HUB</a> / <a href={canonicalDomains.store}>STORE</a> / <a href="/privacy">PRIVACY</a></span>
-      </footer>
+      <SiteFooter />
       </main>
     </HomeStatusProvider>
   );

@@ -229,6 +229,7 @@ export default function ServicesPage() {
                 <p className={styles.audience}><strong>Best starting point:</strong> {service.audience}</p>
                 <ul>{service.activities.map((activity) => <li key={activity}>{activity}</li>)}</ul>
                 <p className={styles.output}><strong>Typical output:</strong> {service.output}</p>
+                <p className={styles.serviceCardAction}><a className={styles.primaryLink} href={`#brief-${service.number}`}>Review the service briefing pack <span aria-hidden="true">↓</span></a></p>
               </article>
             ))}
           </div>

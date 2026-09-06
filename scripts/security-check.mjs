@@ -135,6 +135,7 @@ requireText("app/services/page.tsx", servicesPage, "Capability decision matrix")
 requireText("app/services/page.tsx", servicesPage, "SERVICE BRIEFING PACKS");
 requireText("app/services/page.tsx", servicesPage, "SYNTHETIC BRIEF / NOT A PROPOSAL");
 requireText("app/services/page.tsx", servicesPage, "No-fit or owner gate");
+requireText("app/services/page.tsx", servicesPage, "Review the service briefing pack");
 requireText("app/services/page.tsx", servicesPage, "twitter:");
 requireText("app/services/page.tsx", servicesPage, "Minimum entry gate");
 requireText("app/services/page.tsx", servicesPage, "Written authority, in-scope assets");
@@ -265,6 +266,7 @@ requireText("app/page.tsx", page, "https://zerodevllc.store");
 requireText("app/page.tsx", page, "Open the DEFCON Signal Fusion EU gateway");
 requireText("app/page.tsx", page, "EU gateway / external");
 requireText("app/page.tsx", page, "DEFENSIVE CYBER / RESILIENCE");
+requireText("app/page.tsx", page, "SiteFooter");
 requireText("app/page.tsx", page, "Protect the mission.");
 requireText("app/page.tsx", page, "Authorized defensive cybersecurity for public-sector programs");
 requireText("app/page.tsx", page, "defense suppliers, essential services, and regulated-technology teams");
