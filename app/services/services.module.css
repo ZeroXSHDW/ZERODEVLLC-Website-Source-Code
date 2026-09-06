@@ -72,6 +72,10 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .roleContext strong { color: var(--ink); font-weight: 600; }
 .roleContextGate { border-left: 1px solid var(--amber); color: var(--dim) !important; font-size: 11px !important; padding-left: 10px; }
 .roleContextGate strong { color: var(--amber); font-weight: 500; }
+.briefContextLinks { align-items: center; display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 14px 0 0 !important; }
+.briefContextLink { color: var(--green); font-size: 9px; letter-spacing: .09em; text-transform: uppercase; }
+.briefContextLink span { font-size: 12px; margin-left: 5px; }
+.briefContextLink:hover, .briefContextLink:focus-visible { color: var(--green-bright); }
 .roleContextReset { color: var(--dim); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
 .roleContextReset:hover, .roleContextReset:focus-visible { color: var(--green-bright); }
 .primaryLink { color: var(--green); display: inline-flex; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }

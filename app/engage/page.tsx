@@ -119,12 +119,18 @@ type EngagePageProps = {
   searchParams?: Promise<{ role?: string | string[]; service?: string | string[] }>;
 };
 
+type BriefContextLink = {
+  href: string;
+  label: string;
+};
+
 type BriefContext = {
   key: 'role' | 'service';
   label: string;
   title: string;
   prompt: string;
   gate: string;
+  links: readonly BriefContextLink[];
 };
 
 export default async function EngagePage({ searchParams }: EngagePageProps) {
@@ -141,6 +147,7 @@ export default async function EngagePage({ searchParams }: EngagePageProps) {
       title: selectedRole.title,
       prompt: selectedRole.briefPrompt,
       gate: selectedRole.briefGate,
+      links: [{ href: selectedRole.href, label: selectedRole.action.replace(/^Start with /, 'Review ') }],
     });
   }
   if (selectedService) {
@@ -150,6 +157,10 @@ export default async function EngagePage({ searchParams }: EngagePageProps) {
       title: selectedService.title,
       prompt: selectedService.briefPrompt,
       gate: selectedService.briefGate,
+      links: [
+        { href: selectedService.serviceHref, label: 'Review service card' },
+        { href: selectedService.briefHref, label: 'Review briefing pack' },
+      ],
     });
   }
   const briefContextText = briefContexts.flatMap((context) => [
@@ -188,6 +199,9 @@ export default async function EngagePage({ searchParams }: EngagePageProps) {
                     <p className={styles.roleContextLabel}>{context.label}</p>
                     <p><strong id={index === 0 ? 'selected-brief-context-heading' : undefined}>{context.title}</strong><br />{context.prompt}</p>
                     <p className={styles.roleContextGate}><strong>First gate:</strong> {context.gate}</p>
+                    <p className={styles.briefContextLinks}>
+                      {context.links.map((link) => <Link className={styles.briefContextLink} href={link.href} key={link.href}>{link.label} <span aria-hidden="true">↗</span></Link>)}
+                    </p>
                   </div>
                 ))}
                 <Link className={styles.roleContextReset} href="/engage">Start with a neutral brief <span aria-hidden="true">↺</span></Link>

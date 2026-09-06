@@ -370,6 +370,14 @@ for (const marker of [
   'Security / engineering / technical owner',
   'Continuity / service / incident owner',
   'Prepare a role-aware brief for ${role}',
+  'type BriefContextLink =',
+  'links: readonly BriefContextLink[];',
+  'selectedService.serviceHref',
+  'selectedService.briefHref',
+  'styles.briefContextLinks',
+  'context.links.map((link)',
+  'Review service card',
+  'Review briefing pack',
   'PRINT / INTERNAL REVIEW COPY',
   'ENGAGEMENT READINESS / SOW STARTER',
   'styles.sowReadinessMap',
@@ -410,6 +418,13 @@ for (const marker of [
   ".frameworkRecord dt { color: var(--cyan);",
 ]) {
   requireText("app/services/services.module.css framework freshness", servicesCss, marker);
+}
+
+for (const marker of [
+  ".briefContextLinks { align-items: center;",
+  ".briefContextLink:hover, .briefContextLink:focus-visible",
+]) {
+  requireText("app/services/services.module.css brief context links", servicesCss, marker);
 }
 
 for (const marker of [
@@ -471,6 +486,8 @@ for (const marker of [
   "'incident-readiness'",
   "briefPrompt",
   "briefGate",
+  "serviceHref",
+  "briefHref",
 ]) {
   requireText("app/service-routes.ts service route source", serviceRoutes, marker);
 }

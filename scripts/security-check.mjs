@@ -367,6 +367,8 @@ requireText("app/role-routes.ts", roleRoutes, "briefGate");
 requireText("app/service-routes.ts", serviceRoutes, "serviceRoutes");
 requireText("app/service-routes.ts", serviceRoutes, "briefPrompt");
 requireText("app/service-routes.ts", serviceRoutes, "briefGate");
+requireText("app/service-routes.ts", serviceRoutes, "serviceHref");
+requireText("app/service-routes.ts", serviceRoutes, "briefHref");
 requireText("app/page.tsx", page, "authorized defensive assessments");
 requireText("app/page.tsx", page, "Make the next decision");
 requireText("app/page.tsx", page, "Prepare a safe first brief");
