@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const projectRoot = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const read = (relativePath) => readFile(join(projectRoot, relativePath), "utf8");
 
-const [page, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss] = await Promise.all([
+const [page, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, assurancePage, sectorsPage] = await Promise.all([
   read("app/page.tsx"),
   read("app/globals.css"),
   read("app/api/attacks/route.ts"),
@@ -13,6 +13,12 @@ const [page, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, 
   read("app/engage/page.tsx"),
   read("app/services/page.tsx"),
   read("app/services/services.module.css"),
+  read("app/deliverables/page.tsx"),
+  read("app/methodology/page.tsx"),
+  read("app/remediation/page.tsx"),
+  read("app/frameworks/page.tsx"),
+  read("app/assurance/page.tsx"),
+  read("app/sectors/page.tsx"),
 ]);
 
 const failures = [];
@@ -126,6 +132,85 @@ for (const marker of [
   'id="claims-limits"',
 ]) {
   requireText("app/services/page.tsx route index", servicesPage, marker);
+}
+
+const additionalRouteIndexContracts = [
+  ["app/deliverables/page.tsx", deliverablesPage, [
+    'aria-label="Deliverables page sections"',
+    'href="#output-shapes"',
+    'href="#evidence-request-map"',
+    'href="#synthetic-preview"',
+    'href="#evidence-state"',
+    'href="#provenance-confidence"',
+    'href="#handling-boundary"',
+    'id="output-shapes"',
+    'id="evidence-request-map"',
+    'id="synthetic-preview"',
+    'id="evidence-state"',
+    'id="provenance-confidence"',
+    'id="handling-boundary"',
+  ]],
+  ["app/methodology/page.tsx", methodologyPage, [
+    'aria-label="Methodology page sections"',
+    'href="#engagement-lifecycle"',
+    'href="#control-baseline"',
+    'href="#risk-interpretation"',
+    'href="#evidence-outputs"',
+    'id="engagement-lifecycle"',
+    'id="control-baseline"',
+    'id="risk-interpretation"',
+    'id="evidence-outputs"',
+  ]],
+  ["app/remediation/page.tsx", remediationPage, [
+    'aria-label="Remediation page sections"',
+    'href="#remediation-lifecycle"',
+    'href="#action-record"',
+    'href="#action-matrix"',
+    'href="#status-vocabulary"',
+    'href="#closure-boundary"',
+    'id="remediation-lifecycle"',
+    'id="action-record"',
+    'id="action-matrix"',
+    'id="status-vocabulary"',
+    'id="closure-boundary"',
+  ]],
+  ["app/frameworks/page.tsx", frameworksPage, [
+    'aria-label="Frameworks page sections"',
+    'href="#standards-library"',
+    'href="#service-framework-map"',
+    'href="#procurement-governance"',
+    'href="#claims-control"',
+    'id="standards-library"',
+    'id="service-framework-map"',
+    'id="procurement-governance"',
+    'id="claims-control"',
+  ]],
+  ["app/assurance/page.tsx", assurancePage, [
+    'aria-label="Assurance page sections"',
+    'href="#review-path"',
+    'href="#assurance-pillars"',
+    'href="#information-handling"',
+    'href="#procurement-governance"',
+    'href="#claims-control"',
+    'id="review-path"',
+    'id="assurance-pillars"',
+    'id="information-handling"',
+    'id="procurement-governance"',
+    'id="claims-control"',
+  ]],
+  ["app/sectors/page.tsx", sectorsPage, [
+    'aria-label="Sector fit page sections"',
+    'href="#decision-contexts"',
+    'href="#qualification-questions"',
+    'href="#claims-control"',
+    'id="decision-contexts"',
+    'id="qualification-questions"',
+    'id="claims-control"',
+  ]],
+];
+
+for (const [label, source, markers] of additionalRouteIndexContracts) {
+  for (const marker of markers) requireText(`${label} route index`, source, marker);
 }
 
 if (decisionPaths.split("\n").filter((line) => line.trim().startsWith("[")).length !== 4) {

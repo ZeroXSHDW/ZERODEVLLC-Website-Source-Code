@@ -82,7 +82,17 @@ export default function FrameworksPage() {
           </div>
         </section>
 
-        <section className={styles.frameworkSection} aria-labelledby="library-heading">
+        <nav className={styles.pageIndex} aria-label="Frameworks page sections">
+          <p className={styles.pageIndexLabel}>{'// ROUTE INDEX'}</p>
+          <ol>
+            <li><a href="#standards-library"><span>01</span>Standards library</a></li>
+            <li><a href="#service-framework-map"><span>02</span>Service fit</a></li>
+            <li><a href="#procurement-governance"><span>03</span>Procurement</a></li>
+            <li><a href="#claims-control"><span>04</span>Claims control</a></li>
+          </ol>
+        </nav>
+
+        <section className={`${styles.frameworkSection} ${styles.routeSection}`} id="standards-library" aria-labelledby="library-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// STANDARDS LIBRARY'}</p>
             <h2 id="library-heading">A useful map.<br /><span>Not a badge wall.</span></h2>
@@ -101,7 +111,7 @@ export default function FrameworksPage() {
           </div>
         </section>
 
-        <section className={styles.outputSection} id="service-framework-map" aria-labelledby="service-framework-heading">
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="service-framework-map" aria-labelledby="service-framework-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// SERVICE / FRAMEWORK FIT'}</p>
             <h2 id="service-framework-heading">Choose a reference.<br /><span>Confirm applicability.</span></h2>
@@ -140,7 +150,7 @@ export default function FrameworksPage() {
           </div>
         </section>
 
-        <section className={styles.twoColumn} aria-labelledby="procurement-heading">
+        <section className={`${styles.twoColumn} ${styles.routeSection}`} id="procurement-governance" aria-labelledby="procurement-heading">
           <div>
             <p className={styles.eyebrow}>{'// PROCUREMENT / GOVERNANCE'}</p>
             <h2 id="procurement-heading">Make the<br /><span>scope explicit.</span></h2>
@@ -151,7 +161,7 @@ export default function FrameworksPage() {
           </div>
         </section>
 
-        <section className={styles.noticeSection} aria-labelledby="claims-heading">
+        <section className={`${styles.noticeSection} ${styles.routeSection}`} id="claims-control" aria-labelledby="claims-heading">
           <p className={styles.eyebrow}>{'// CLAIMS CONTROL'}</p>
           <h2 id="claims-heading">Readiness support is not<br /><span>certification or clearance.</span></h2>
           <p>ZeroDev can help structure evidence, identify gaps, plan remediation, and prepare questions for an appropriate assessor, auditor, legal adviser, procurement owner, or authority. The site does not claim certification, accreditation, government approval, security clearance, or formal compliance without exact evidence.</p>

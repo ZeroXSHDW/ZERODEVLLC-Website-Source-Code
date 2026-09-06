@@ -79,7 +79,18 @@ export default function RemediationPage() {
           </div>
         </section>
 
-        <section className={styles.methodSection} aria-labelledby="lifecycle-heading">
+        <nav className={styles.pageIndex} aria-label="Remediation page sections">
+          <p className={styles.pageIndexLabel}>{'// ROUTE INDEX'}</p>
+          <ol>
+            <li><a href="#remediation-lifecycle"><span>01</span>Lifecycle</a></li>
+            <li><a href="#action-record"><span>02</span>Action record</a></li>
+            <li><a href="#action-matrix"><span>03</span>Action matrix</a></li>
+            <li><a href="#status-vocabulary"><span>04</span>Status vocabulary</a></li>
+            <li><a href="#closure-boundary"><span>05</span>Closure boundary</a></li>
+          </ol>
+        </nav>
+
+        <section className={`${styles.methodSection} ${styles.routeSection}`} id="remediation-lifecycle" aria-labelledby="lifecycle-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// REMEDIATION LIFECYCLE'}</p>
             <h2 id="lifecycle-heading">From finding<br /><span>to evidence.</span></h2>
@@ -96,7 +107,7 @@ export default function RemediationPage() {
           </div>
         </section>
 
-        <section className={styles.twoColumn} aria-labelledby="fields-heading">
+        <section className={`${styles.twoColumn} ${styles.routeSection}`} id="action-record" aria-labelledby="fields-heading">
           <div>
             <p className={styles.eyebrow}>{'// ACTION RECORD'}</p>
             <h2 id="fields-heading">No owner.<br /><span>No closure.</span></h2>
@@ -107,7 +118,7 @@ export default function RemediationPage() {
           </div>
         </section>
 
-        <section className={styles.outputSection} aria-labelledby="matrix-heading">
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="action-matrix" aria-labelledby="matrix-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// ILLUSTRATIVE ACTION MATRIX'}</p>
             <h2 id="matrix-heading">Turn risk into<br /><span>the next move.</span></h2>
@@ -140,7 +151,7 @@ export default function RemediationPage() {
           </div>
         </section>
 
-        <section className={styles.outputSection} aria-labelledby="status-heading">
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="status-vocabulary" aria-labelledby="status-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// STATUS VOCABULARY'}</p>
             <h2 id="status-heading">State the work<br /><span>without optimism.</span></h2>
@@ -157,7 +168,7 @@ export default function RemediationPage() {
           </div>
         </section>
 
-        <section className={styles.noticeSection} aria-labelledby="closure-heading">
+        <section className={`${styles.noticeSection} ${styles.routeSection}`} id="closure-boundary" aria-labelledby="closure-heading">
           <p className={styles.eyebrow}>{'// CLOSURE BOUNDARY'}</p>
           <h2 id="closure-heading">Closed is not<br /><span>the end of risk.</span></h2>
           <p>A control can change while the residual risk remains. A retest can pass while another dependency stays out of scope. A supplier can provide a response without independent verification. Record what changed, what was verified, what remains uncertain, who accepted the residual risk, and when the decision should be revisited.</p>

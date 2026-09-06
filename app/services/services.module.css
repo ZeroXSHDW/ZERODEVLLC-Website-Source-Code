@@ -41,7 +41,7 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .primaryLink span { font-size: 14px; margin-left: 8px; }
 .pageIndex { border-bottom: 1px solid var(--line); border-top: 1px solid var(--line); display: grid; gap: 24px; grid-template-columns: minmax(120px, .34fr) minmax(0, 1.66fr); padding: 14px 0; }
 .pageIndexLabel { color: var(--dim); font-size: 8px; letter-spacing: .16em; margin: 0; padding-top: 12px; text-transform: uppercase; }
-.pageIndex ol { display: grid; gap: 0 12px; grid-template-columns: repeat(5, minmax(0, 1fr)); list-style: none; margin: 0; padding: 0; }
+.pageIndex ol { display: grid; gap: 0 12px; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); list-style: none; margin: 0; padding: 0; }
 .pageIndex li { min-width: 0; }
 .pageIndex a { align-items: center; border-left: 1px solid var(--line); color: var(--muted); display: flex; flex-direction: column; gap: 7px; min-height: 42px; padding: 5px 8px; text-align: center; transition: background .2s ease, border-color .2s ease, color .2s ease; }
 .pageIndex a span { color: var(--green); font-size: 8px; letter-spacing: .12em; }

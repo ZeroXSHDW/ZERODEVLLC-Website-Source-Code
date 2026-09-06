@@ -91,7 +91,19 @@ export default function DeliverablesPage() {
           </div>
         </section>
 
-        <section className={styles.outputSection} aria-labelledby="artifacts-heading">
+        <nav className={styles.pageIndex} aria-label="Deliverables page sections">
+          <p className={styles.pageIndexLabel}>{'// ROUTE INDEX'}</p>
+          <ol>
+            <li><a href="#output-shapes"><span>01</span>Output shapes</a></li>
+            <li><a href="#evidence-request-map"><span>02</span>Evidence map</a></li>
+            <li><a href="#synthetic-preview"><span>03</span>Review preview</a></li>
+            <li><a href="#evidence-state"><span>04</span>Evidence state</a></li>
+            <li><a href="#provenance-confidence"><span>05</span>Provenance</a></li>
+            <li><a href="#handling-boundary"><span>06</span>Handling boundary</a></li>
+          </ol>
+        </nav>
+
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="output-shapes" aria-labelledby="artifacts-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// REPRESENTATIVE OUTPUTS'}</p>
             <h2 id="artifacts-heading">Evidence with<br /><span>a decision attached.</span></h2>
@@ -110,7 +122,7 @@ export default function DeliverablesPage() {
           </div>
         </section>
 
-        <section className={styles.outputSection} id="evidence-request-map" aria-labelledby="evidence-request-heading">
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="evidence-request-map" aria-labelledby="evidence-request-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// EVIDENCE REQUEST / ACCEPTANCE'}</p>
             <h2 id="evidence-request-heading">Ask for evidence.<br /><span>Record the decision.</span></h2>
@@ -141,7 +153,7 @@ export default function DeliverablesPage() {
           </div>
         </section>
 
-        <section className={styles.outputSection} aria-labelledby="preview-heading">
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="synthetic-preview" aria-labelledby="preview-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// SYNTHETIC REVIEW PREVIEW'}</p>
             <h2 id="preview-heading">See the review<br /><span>before the handoff.</span></h2>
@@ -170,7 +182,7 @@ export default function DeliverablesPage() {
           </div>
         </section>
 
-        <section className={styles.twoColumn} aria-labelledby="evidence-state-heading">
+        <section className={`${styles.twoColumn} ${styles.routeSection}`} id="evidence-state" aria-labelledby="evidence-state-heading">
           <div>
             <p className={styles.eyebrow}>{'// EVIDENCE STATE'}</p>
             <h2 id="evidence-state-heading">Received is not<br /><span>verified.</span></h2>
@@ -181,7 +193,7 @@ export default function DeliverablesPage() {
           </div>
         </section>
 
-        <section className={styles.outputSection} id="provenance-confidence" aria-labelledby="provenance-heading">
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="provenance-confidence" aria-labelledby="provenance-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// PROVENANCE / CONFIDENCE'}</p>
             <h2 id="provenance-heading">Make confidence<br /><span>inspectable.</span></h2>
@@ -212,7 +224,7 @@ export default function DeliverablesPage() {
           </div>
         </section>
 
-        <section className={styles.noticeSection} aria-labelledby="redaction-heading">
+        <section className={`${styles.noticeSection} ${styles.routeSection}`} id="handling-boundary" aria-labelledby="redaction-heading">
           <p className={styles.eyebrow}>{'// REDACTION / HANDLING'}</p>
           <h2 id="redaction-heading">Examples without<br /><span>exposure.</span></h2>
           <p>Any public or early-stage review material should be sanitized. Do not place credentials, tokens, private keys, customer records, payment details, private incident evidence, unredacted inventories, live target details, exploit payloads, or confidential government or defense information into ordinary email or public pages.</p>

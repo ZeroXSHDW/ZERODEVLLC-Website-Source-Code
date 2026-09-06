@@ -60,7 +60,16 @@ export default function SectorsPage() {
           </div>
         </section>
 
-        <section className={styles.outputSection} aria-labelledby="sector-cards-heading">
+        <nav className={styles.pageIndex} aria-label="Sector fit page sections">
+          <p className={styles.pageIndexLabel}>{'// ROUTE INDEX'}</p>
+          <ol>
+            <li><a href="#decision-contexts"><span>01</span>Decision contexts</a></li>
+            <li><a href="#qualification-questions"><span>02</span>Qualification</a></li>
+            <li><a href="#claims-control"><span>03</span>Claims control</a></li>
+          </ol>
+        </nav>
+
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="decision-contexts" aria-labelledby="sector-cards-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// DECISION CONTEXTS'}</p>
             <h2 id="sector-cards-heading">Start where<br /><span>the consequence lives.</span></h2>
@@ -83,7 +92,7 @@ export default function SectorsPage() {
           </div>
         </section>
 
-        <section className={styles.twoColumn} aria-labelledby="questions-heading">
+        <section className={`${styles.twoColumn} ${styles.routeSection}`} id="qualification-questions" aria-labelledby="questions-heading">
           <div>
             <p className={styles.eyebrow}>{'// QUALIFICATION QUESTIONS'}</p>
             <h2 id="questions-heading">Make the<br /><span>question precise.</span></h2>
@@ -94,7 +103,7 @@ export default function SectorsPage() {
           </div>
         </section>
 
-        <section className={styles.noticeSection} aria-labelledby="claims-heading">
+        <section className={`${styles.noticeSection} ${styles.routeSection}`} id="claims-control" aria-labelledby="claims-heading">
           <p className={styles.eyebrow}>{'// CLAIMS CONTROL'}</p>
           <h2 id="claims-heading">Context is not<br /><span>credential.</span></h2>
           <p>Being relevant to a sector does not establish a government relationship, security clearance, contract award, regulatory appointment, certification, accreditation, or formal assessor status. Those claims require exact, current, owner-approved evidence and may require an independent authority.</p>

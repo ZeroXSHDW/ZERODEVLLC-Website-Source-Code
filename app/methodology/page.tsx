@@ -75,7 +75,17 @@ export default function MethodologyPage() {
           </div>
         </section>
 
-        <section className={styles.methodSection} aria-labelledby="steps-heading">
+        <nav className={styles.pageIndex} aria-label="Methodology page sections">
+          <p className={styles.pageIndexLabel}>{'// ROUTE INDEX'}</p>
+          <ol>
+            <li><a href="#engagement-lifecycle"><span>01</span>Lifecycle</a></li>
+            <li><a href="#control-baseline"><span>02</span>Control baseline</a></li>
+            <li><a href="#risk-interpretation"><span>03</span>Risk interpretation</a></li>
+            <li><a href="#evidence-outputs"><span>04</span>Evidence outputs</a></li>
+          </ol>
+        </nav>
+
+        <section className={`${styles.methodSection} ${styles.routeSection}`} id="engagement-lifecycle" aria-labelledby="steps-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// ENGAGEMENT LIFECYCLE'}</p>
             <h2 id="steps-heading">From question<br /><span>to evidence.</span></h2>
@@ -92,7 +102,7 @@ export default function MethodologyPage() {
           </div>
         </section>
 
-        <section className={styles.twoColumn} aria-labelledby="controls-heading">
+        <section className={`${styles.twoColumn} ${styles.routeSection}`} id="control-baseline" aria-labelledby="controls-heading">
           <div>
             <p className={styles.eyebrow}>{'// CONTROL BASELINE'}</p>
             <h2 id="controls-heading">The boundary<br /><span>is the method.</span></h2>
@@ -103,7 +113,7 @@ export default function MethodologyPage() {
           </div>
         </section>
 
-        <section className={styles.twoColumn} aria-labelledby="risk-heading">
+        <section className={`${styles.twoColumn} ${styles.routeSection}`} id="risk-interpretation" aria-labelledby="risk-heading">
           <div>
             <p className={styles.eyebrow}>{'// RISK INTERPRETATION'}</p>
             <h2 id="risk-heading">Risk is<br /><span>contextual.</span></h2>
@@ -115,7 +125,7 @@ export default function MethodologyPage() {
           </div>
         </section>
 
-        <section className={styles.outputSection} aria-labelledby="outputs-heading">
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="evidence-outputs" aria-labelledby="outputs-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// EVIDENCE OUTPUTS'}</p>
             <h2 id="outputs-heading">Make the result<br /><span>usable.</span></h2>

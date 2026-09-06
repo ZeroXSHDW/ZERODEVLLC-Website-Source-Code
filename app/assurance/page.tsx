@@ -76,7 +76,18 @@ export default function AssurancePage() {
           </div>
         </section>
 
-        <section className={styles.frameworkSection} aria-labelledby="review-path-heading">
+        <nav className={styles.pageIndex} aria-label="Assurance page sections">
+          <p className={styles.pageIndexLabel}>{'// ROUTE INDEX'}</p>
+          <ol>
+            <li><a href="#review-path"><span>01</span>Review path</a></li>
+            <li><a href="#assurance-pillars"><span>02</span>Assurance pillars</a></li>
+            <li><a href="#information-handling"><span>03</span>Information handling</a></li>
+            <li><a href="#procurement-governance"><span>04</span>Procurement</a></li>
+            <li><a href="#claims-control"><span>05</span>Claims control</a></li>
+          </ol>
+        </nav>
+
+        <section className={`${styles.frameworkSection} ${styles.routeSection}`} id="review-path" aria-labelledby="review-path-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// PROCUREMENT REVIEW PATH'}</p>
             <h2 id="review-path-heading">One route from<br /><span>question to evidence.</span></h2>
@@ -94,7 +105,7 @@ export default function AssurancePage() {
           </ol>
         </section>
 
-        <section className={styles.outputSection} aria-labelledby="pillars-heading">
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="assurance-pillars" aria-labelledby="pillars-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// ASSURANCE PILLARS'}</p>
             <h2 id="pillars-heading">Trust is a<br /><span>working control.</span></h2>
@@ -113,7 +124,7 @@ export default function AssurancePage() {
           </div>
         </section>
 
-        <section className={styles.outputSection} aria-labelledby="handling-heading">
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="information-handling" aria-labelledby="handling-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// INFORMATION HANDLING'}</p>
             <h2 id="handling-heading">Match the<br /><span>channel to the risk.</span></h2>
@@ -142,7 +153,7 @@ export default function AssurancePage() {
           </div>
         </section>
 
-        <section className={styles.twoColumn} aria-labelledby="procurement-heading">
+        <section className={`${styles.twoColumn} ${styles.routeSection}`} id="procurement-governance" aria-labelledby="procurement-heading">
           <div>
             <p className={styles.eyebrow}>{'// PROCUREMENT / GOVERNANCE'}</p>
             <h2 id="procurement-heading">Ask the<br /><span>decision questions.</span></h2>
@@ -153,7 +164,7 @@ export default function AssurancePage() {
           </div>
         </section>
 
-        <section className={styles.noticeSection} aria-labelledby="claims-heading">
+        <section className={`${styles.noticeSection} ${styles.routeSection}`} id="claims-control" aria-labelledby="claims-heading">
           <p className={styles.eyebrow}>{'// CLAIMS CONTROL'}</p>
           <h2 id="claims-heading">Useful evidence is not<br /><span>invented authority.</span></h2>
           <p>ZeroDev can help organize a risk question, assess an agreed technical boundary, review supplier or control evidence, prepare a readiness path, and turn findings into owned treatment options. The final legal, commercial, operational, procurement, certification, accreditation, clearance, and residual-risk decisions remain with the responsible organization and any required independent authority.</p>
