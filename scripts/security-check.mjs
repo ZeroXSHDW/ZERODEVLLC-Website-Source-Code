@@ -173,6 +173,8 @@ requireText("app/assurance/page.tsx", assurancePage, "Data minimization");
 requireText("app/assurance/page.tsx", assurancePage, "Never through this site or ordinary email");
 requireText("app/assurance/page.tsx", assurancePage, "Readiness support is not certification");
 requireText("app/assurance/page.tsx", assurancePage, "PROCUREMENT REVIEW PATH");
+requireText("app/assurance/page.tsx", assurancePage, "aria-label=\"Procurement review stages\"");
+requireText("app/assurance/page.tsx", assurancePage, "<li className={styles.frameworkCard}");
 requireText("app/assurance/page.tsx", assurancePage, "Frame the question");
 requireText("app/assurance/page.tsx", assurancePage, "Review remediation lifecycle");
 requireText("app/assurance/page.tsx", assurancePage, "twitter:");

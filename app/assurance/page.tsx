@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader, { secondaryNavigation } from '../site-header';
+import SiteFooter from '../site-footer';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
@@ -140,16 +141,16 @@ export default function AssurancePage() {
             <h2 id="review-path-heading">One route from<br /><span>question to evidence.</span></h2>
             <p>Use the existing `.com` surfaces as one controlled journey. No sensitive evidence is required to move from the first question to a proportionate next step.</p>
           </div>
-          <div className={styles.frameworkGrid}>
+          <ol className={styles.frameworkGrid} aria-label="Procurement review stages">
             {reviewPath.map(([number, title, description, href, label]) => (
-              <article className={styles.frameworkCard} key={number}>
+              <li className={styles.frameworkCard} key={number}>
                 <span className={styles.frameworkTag}>{number} / REVIEW STAGE</span>
                 <h3>{title}</h3>
                 <p>{description}</p>
                 <p className={styles.cardBoundary}><strong>Next route:</strong> <Link href={href}>{label} <span aria-hidden="true">↗</span></Link></p>
-              </article>
+              </li>
             ))}
-          </div>
+          </ol>
         </section>
 
         <section className={styles.noticeSection} aria-labelledby="claims-heading">
@@ -167,6 +168,7 @@ export default function AssurancePage() {
           </div>
         </section>
       </div>
+      <SiteFooter />
     </main>
   );
 }
