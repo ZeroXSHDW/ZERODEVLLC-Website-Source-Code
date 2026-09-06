@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader, { secondaryNavigation } from '../site-header';
 import SiteFooter from '../site-footer';
+import RouteIndex from '../route-index';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
@@ -79,16 +80,13 @@ export default function RemediationPage() {
           </div>
         </section>
 
-        <nav className={styles.pageIndex} aria-label="Remediation page sections">
-          <p className={styles.pageIndexLabel}>{'// ROUTE INDEX'}</p>
-          <ol>
-            <li><a href="#remediation-lifecycle"><span>01</span>Lifecycle</a></li>
-            <li><a href="#action-record"><span>02</span>Action record</a></li>
-            <li><a href="#action-matrix"><span>03</span>Action matrix</a></li>
-            <li><a href="#status-vocabulary"><span>04</span>Status vocabulary</a></li>
-            <li><a href="#closure-boundary"><span>05</span>Closure boundary</a></li>
-          </ol>
-        </nav>
+        <RouteIndex ariaLabel="Remediation page sections" pageIndexClassName={styles.pageIndex} pageIndexLabelClassName={styles.pageIndexLabel} sections={[
+          { href: '#remediation-lifecycle', number: '01', label: 'Lifecycle' },
+          { href: '#action-record', number: '02', label: 'Action record' },
+          { href: '#action-matrix', number: '03', label: 'Action matrix' },
+          { href: '#status-vocabulary', number: '04', label: 'Status vocabulary' },
+          { href: '#closure-boundary', number: '05', label: 'Closure boundary' },
+        ]} />
 
         <section className={`${styles.methodSection} ${styles.routeSection}`} id="remediation-lifecycle" aria-labelledby="lifecycle-heading">
           <div className={styles.sectionIntro}>

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader, { secondaryNavigation } from '../site-header';
 import SiteFooter from '../site-footer';
+import RouteIndex from '../route-index';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
@@ -114,18 +115,15 @@ export default function EngagePage() {
           </div>
         </section>
 
-        <nav className={styles.pageIndex} aria-label="Engagement page sections">
-          <p className={styles.pageIndexLabel}>{'// ROUTE INDEX'}</p>
-          <ol>
-            <li><a href="#role-prep"><span>01</span>Prepare by role</a></li>
-            <li><a href="#intake"><span>02</span>Safe intake</a></li>
-            <li><a href="#brief-template"><span>03</span>Brief template</a></li>
-            <li><a href="#print-brief"><span>04</span>Print review copy</a></li>
-            <li><a href="#handling"><span>05</span>Handling rules</a></li>
-            <li><a href="#decision-lanes"><span>06</span>Decision lanes</a></li>
-            <li><a href="#response"><span>07</span>What happens next</a></li>
-          </ol>
-        </nav>
+        <RouteIndex ariaLabel="Engagement page sections" pageIndexClassName={styles.pageIndex} pageIndexLabelClassName={styles.pageIndexLabel} sections={[
+          { href: '#role-prep', number: '01', label: 'Prepare by role' },
+          { href: '#intake', number: '02', label: 'Safe intake' },
+          { href: '#brief-template', number: '03', label: 'Brief template' },
+          { href: '#print-brief', number: '04', label: 'Print review copy' },
+          { href: '#handling', number: '05', label: 'Handling rules' },
+          { href: '#decision-lanes', number: '06', label: 'Decision lanes' },
+          { href: '#response', number: '07', label: 'What happens next' },
+        ]} />
 
         <section className={`${styles.outputSection} ${styles.routeSection}`} id="role-prep" aria-labelledby="role-prep-heading">
           <div className={styles.sectionIntro}>

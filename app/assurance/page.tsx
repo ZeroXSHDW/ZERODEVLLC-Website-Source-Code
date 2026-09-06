@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader, { secondaryNavigation } from '../site-header';
 import SiteFooter from '../site-footer';
+import RouteIndex from '../route-index';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
@@ -87,17 +88,14 @@ export default function AssurancePage() {
           </div>
         </section>
 
-        <nav className={styles.pageIndex} aria-label="Assurance page sections">
-          <p className={styles.pageIndexLabel}>{'// ROUTE INDEX'}</p>
-          <ol>
-            <li><a href="#review-path"><span>01</span>Review path</a></li>
-            <li><a href="#assurance-pillars"><span>02</span>Assurance pillars</a></li>
-            <li><a href="#information-handling"><span>03</span>Information handling</a></li>
-            <li><a href="#procurement-governance"><span>04</span>Procurement</a></li>
-            <li><a href="#claims-control"><span>05</span>Claims control</a></li>
-            <li><a href="#claims-proof"><span>06</span>Claims / proof</a></li>
-          </ol>
-        </nav>
+        <RouteIndex ariaLabel="Assurance page sections" pageIndexClassName={styles.pageIndex} pageIndexLabelClassName={styles.pageIndexLabel} sections={[
+          { href: '#review-path', number: '01', label: 'Review path' },
+          { href: '#assurance-pillars', number: '02', label: 'Assurance pillars' },
+          { href: '#information-handling', number: '03', label: 'Information handling' },
+          { href: '#procurement-governance', number: '04', label: 'Procurement' },
+          { href: '#claims-control', number: '05', label: 'Claims control' },
+          { href: '#claims-proof', number: '06', label: 'Claims / proof' },
+        ]} />
 
         <section className={`${styles.frameworkSection} ${styles.routeSection}`} id="review-path" aria-labelledby="review-path-heading">
           <div className={styles.sectionIntro}>

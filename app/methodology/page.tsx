@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader, { secondaryNavigation } from '../site-header';
 import SiteFooter from '../site-footer';
+import RouteIndex from '../route-index';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
@@ -75,15 +76,12 @@ export default function MethodologyPage() {
           </div>
         </section>
 
-        <nav className={styles.pageIndex} aria-label="Methodology page sections">
-          <p className={styles.pageIndexLabel}>{'// ROUTE INDEX'}</p>
-          <ol>
-            <li><a href="#engagement-lifecycle"><span>01</span>Lifecycle</a></li>
-            <li><a href="#control-baseline"><span>02</span>Control baseline</a></li>
-            <li><a href="#risk-interpretation"><span>03</span>Risk interpretation</a></li>
-            <li><a href="#evidence-outputs"><span>04</span>Evidence outputs</a></li>
-          </ol>
-        </nav>
+        <RouteIndex ariaLabel="Methodology page sections" pageIndexClassName={styles.pageIndex} pageIndexLabelClassName={styles.pageIndexLabel} sections={[
+          { href: '#engagement-lifecycle', number: '01', label: 'Lifecycle' },
+          { href: '#control-baseline', number: '02', label: 'Control baseline' },
+          { href: '#risk-interpretation', number: '03', label: 'Risk interpretation' },
+          { href: '#evidence-outputs', number: '04', label: 'Evidence outputs' },
+        ]} />
 
         <section className={`${styles.methodSection} ${styles.routeSection}`} id="engagement-lifecycle" aria-labelledby="steps-heading">
           <div className={styles.sectionIntro}>

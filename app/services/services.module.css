@@ -52,6 +52,8 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .pageIndex a { align-items: center; border-left: 1px solid var(--line); color: var(--muted); display: flex; flex-direction: column; gap: 7px; min-height: 42px; padding: 5px 8px; text-align: center; transition: background .2s ease, border-color .2s ease, color .2s ease; }
 .pageIndex a span { color: var(--green); font-size: 8px; letter-spacing: .12em; }
 .pageIndex a { font-size: 8px; letter-spacing: .08em; text-transform: uppercase; }
+.pageIndex a[aria-current='location'] { background: rgba(156, 255, 184, .08); border-color: var(--green); box-shadow: inset 2px 0 0 var(--green); color: var(--green-bright); }
+.pageIndex a[aria-current='location'] span { color: var(--green-bright); }
 .pageIndex a:hover, .pageIndex a:focus-visible { background: rgba(156, 255, 184, .06); border-color: var(--green); color: var(--green-bright); }
 .routeSection { scroll-margin-top: 150px; }
 .recoveryActions { align-items: center; display: flex; flex-wrap: wrap; gap: 18px 24px; margin-top: 28px; }

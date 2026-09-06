@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader, { secondaryNavigation } from '../site-header';
 import SiteFooter from '../site-footer';
+import RouteIndex from '../route-index';
 import styles from './services.module.css';
 
 export const metadata: Metadata = {
@@ -238,17 +239,14 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        <nav className={styles.pageIndex} aria-label="Services page sections">
-          <p className={styles.pageIndexLabel}>{'// ROUTE INDEX'}</p>
-          <ol>
-            <li><a href="#engagement-areas"><span>01</span>Engagement areas</a></li>
-            <li><a href="#briefing-packs"><span>02</span>Briefing packs</a></li>
-            <li><a href="#decision-matrix"><span>03</span>Decision matrix</a></li>
-            <li><a href="#fit-contexts"><span>04</span>Fit contexts</a></li>
-            <li><a href="#controlled-engagement"><span>05</span>Controlled engagement</a></li>
-            <li><a href="#claims-limits"><span>06</span>Claims / limits</a></li>
-          </ol>
-        </nav>
+        <RouteIndex ariaLabel="Services page sections" pageIndexClassName={styles.pageIndex} pageIndexLabelClassName={styles.pageIndexLabel} sections={[
+          { href: '#engagement-areas', number: '01', label: 'Engagement areas' },
+          { href: '#briefing-packs', number: '02', label: 'Briefing packs' },
+          { href: '#decision-matrix', number: '03', label: 'Decision matrix' },
+          { href: '#fit-contexts', number: '04', label: 'Fit contexts' },
+          { href: '#controlled-engagement', number: '05', label: 'Controlled engagement' },
+          { href: '#claims-limits', number: '06', label: 'Claims / limits' },
+        ]} />
 
         <section className={`${styles.serviceSection} ${styles.routeSection}`} id="engagement-areas" aria-labelledby="engagements-heading">
           <div className={styles.sectionIntro}>

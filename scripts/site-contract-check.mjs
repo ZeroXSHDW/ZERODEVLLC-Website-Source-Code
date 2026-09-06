@@ -35,6 +35,12 @@ const failures = [];
 const requireText = (label, source, marker) => {
   if (!source.includes(marker)) failures.push(`${label} is missing: ${marker}`);
 };
+const requireRouteIndexText = (label, source, marker) => {
+  const variants = [marker];
+  if (marker.startsWith('aria-label="')) variants.push(marker.replace(/^aria-label=/, 'ariaLabel='));
+  if (marker.startsWith('href="#')) variants.push(marker.replace(/^href="#/, "href: '#").replace(/"$/, "'"));
+  if (!variants.some((variant) => source.includes(variant))) failures.push(`${label} is missing: ${marker}`);
+};
 
 const decisionPaths = page.match(/const decisionPaths = \[(.*?)\] as const;/s)?.[1] ?? "";
 for (const marker of [
@@ -296,7 +302,7 @@ for (const marker of [
   'ZERODEVLLC // FIRST BRIEF',
   'NOT AUTHORIZATION',
 ]) {
-  requireText("app/engage/page.tsx route index", engagePage, marker);
+  requireRouteIndexText("app/engage/page.tsx route index", engagePage, marker);
 }
 
 for (const marker of [
@@ -351,7 +357,7 @@ for (const marker of [
   'Review method',
   'Next gate',
 ]) {
-  requireText("app/services/page.tsx route index", servicesPage, marker);
+  requireRouteIndexText("app/services/page.tsx route index", servicesPage, marker);
 }
 
 const additionalRouteIndexContracts = [
@@ -464,7 +470,7 @@ const additionalRouteIndexContracts = [
 ];
 
 for (const [label, source, markers] of additionalRouteIndexContracts) {
-  for (const marker of markers) requireText(`${label} route index`, source, marker);
+  for (const marker of markers) requireRouteIndexText(`${label} route index`, source, marker);
 }
 
 if (decisionPaths.split("\n").filter((line) => line.trim().startsWith("[")).length !== 4) {

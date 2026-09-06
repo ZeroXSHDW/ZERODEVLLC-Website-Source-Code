@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader, { secondaryNavigation } from '../site-header';
 import SiteFooter from '../site-footer';
+import RouteIndex from '../route-index';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
@@ -95,16 +96,13 @@ export default function FrameworksPage() {
           </div>
         </section>
 
-        <nav className={styles.pageIndex} aria-label="Frameworks page sections">
-          <p className={styles.pageIndexLabel}>{'// ROUTE INDEX'}</p>
-          <ol>
-            <li><a href="#reference-control"><span>01</span>Reference control</a></li>
-            <li><a href="#standards-library"><span>02</span>Standards library</a></li>
-            <li><a href="#service-framework-map"><span>03</span>Service fit</a></li>
-            <li><a href="#procurement-governance"><span>04</span>Procurement</a></li>
-            <li><a href="#claims-control"><span>05</span>Claims control</a></li>
-          </ol>
-        </nav>
+        <RouteIndex ariaLabel="Frameworks page sections" pageIndexClassName={styles.pageIndex} pageIndexLabelClassName={styles.pageIndexLabel} sections={[
+          { href: '#reference-control', number: '01', label: 'Reference control' },
+          { href: '#standards-library', number: '02', label: 'Standards library' },
+          { href: '#service-framework-map', number: '03', label: 'Service fit' },
+          { href: '#procurement-governance', number: '04', label: 'Procurement' },
+          { href: '#claims-control', number: '05', label: 'Claims control' },
+        ]} />
 
         <section className={`${styles.twoColumn} ${styles.routeSection}`} id="reference-control" aria-labelledby="reference-control-heading">
           <div>

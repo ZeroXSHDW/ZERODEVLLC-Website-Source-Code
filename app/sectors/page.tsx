@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader, { secondaryNavigation } from '../site-header';
 import SiteFooter from '../site-footer';
+import RouteIndex from '../route-index';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
@@ -60,14 +61,11 @@ export default function SectorsPage() {
           </div>
         </section>
 
-        <nav className={styles.pageIndex} aria-label="Sector fit page sections">
-          <p className={styles.pageIndexLabel}>{'// ROUTE INDEX'}</p>
-          <ol>
-            <li><a href="#decision-contexts"><span>01</span>Decision contexts</a></li>
-            <li><a href="#qualification-questions"><span>02</span>Qualification</a></li>
-            <li><a href="#claims-control"><span>03</span>Claims control</a></li>
-          </ol>
-        </nav>
+        <RouteIndex ariaLabel="Sector fit page sections" pageIndexClassName={styles.pageIndex} pageIndexLabelClassName={styles.pageIndexLabel} sections={[
+          { href: '#decision-contexts', number: '01', label: 'Decision contexts' },
+          { href: '#qualification-questions', number: '02', label: 'Qualification' },
+          { href: '#claims-control', number: '03', label: 'Claims control' },
+        ]} />
 
         <section className={`${styles.outputSection} ${styles.routeSection}`} id="decision-contexts" aria-labelledby="sector-cards-heading">
           <div className={styles.sectionIntro}>

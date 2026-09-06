@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader, { secondaryNavigation } from '../site-header';
 import SiteFooter from '../site-footer';
+import RouteIndex from '../route-index';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
@@ -100,18 +101,15 @@ export default function DeliverablesPage() {
           </div>
         </section>
 
-        <nav className={styles.pageIndex} aria-label="Deliverables page sections">
-          <p className={styles.pageIndexLabel}>{'// ROUTE INDEX'}</p>
-          <ol>
-            <li><a href="#output-shapes"><span>01</span>Output shapes</a></li>
-            <li><a href="#evidence-request-map"><span>02</span>Evidence map</a></li>
-            <li><a href="#procurement-evidence"><span>03</span>Procurement path</a></li>
-            <li><a href="#synthetic-preview"><span>04</span>Review preview</a></li>
-            <li><a href="#evidence-state"><span>05</span>Evidence state</a></li>
-            <li><a href="#provenance-confidence"><span>06</span>Provenance</a></li>
-            <li><a href="#handling-boundary"><span>07</span>Handling boundary</a></li>
-          </ol>
-        </nav>
+        <RouteIndex ariaLabel="Deliverables page sections" pageIndexClassName={styles.pageIndex} pageIndexLabelClassName={styles.pageIndexLabel} sections={[
+          { href: '#output-shapes', number: '01', label: 'Output shapes' },
+          { href: '#evidence-request-map', number: '02', label: 'Evidence map' },
+          { href: '#procurement-evidence', number: '03', label: 'Procurement path' },
+          { href: '#synthetic-preview', number: '04', label: 'Review preview' },
+          { href: '#evidence-state', number: '05', label: 'Evidence state' },
+          { href: '#provenance-confidence', number: '06', label: 'Provenance' },
+          { href: '#handling-boundary', number: '07', label: 'Handling boundary' },
+        ]} />
 
         <section className={`${styles.outputSection} ${styles.routeSection}`} id="output-shapes" aria-labelledby="artifacts-heading">
           <div className={styles.sectionIntro}>
