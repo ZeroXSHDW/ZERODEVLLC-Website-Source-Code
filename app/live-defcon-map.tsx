@@ -19,6 +19,7 @@ type ThreatFeed = {
   observedAt: string;
   checkedAt: string;
   refreshAfterSeconds: number;
+  refreshAfterMs: number;
   refreshCooldownSeconds: number;
   events: PublicThreatEvent[];
   errors: string[];
@@ -34,7 +35,8 @@ const MAX_EVENT_SOURCE_LENGTH = 120;
 const MAX_EVENT_URL_LENGTH = 2_048;
 const MAX_ERRORS = 6;
 const MAX_ERROR_LENGTH = 160;
-const DEFAULT_REFRESH_AFTER_SECONDS = 60;
+const DEFAULT_REFRESH_AFTER_MS = 30_000;
+const DEFAULT_REFRESH_AFTER_SECONDS = DEFAULT_REFRESH_AFTER_MS / 1000;
 const DEFAULT_REFRESH_COOLDOWN_SECONDS = 15;
 const DEFAULT_REQUEST_TIMEOUT_MS = 15_000;
 
@@ -81,6 +83,10 @@ function boundedSeconds(value: unknown, fallback: number, maximum: number) {
   return typeof value === 'number' && Number.isInteger(value) && value >= 1 && value <= maximum ? value : fallback;
 }
 
+function boundedMilliseconds(value: unknown, fallback: number, maximum: number) {
+  return typeof value === 'number' && Number.isInteger(value) && value >= 1_000 && value <= maximum ? value : fallback;
+}
+
 function isSafeCisaUrl(value: unknown): value is string {
   if (!boundedText(value, MAX_EVENT_URL_LENGTH)) return false;
   try {
@@ -117,6 +123,7 @@ function parseThreatFeed(value: unknown): ThreatFeed {
     status: feed.status as ThreatFeed['status'],
     observedAt: boundedText(feed.observedAt, 64) && Number.isFinite(Date.parse(feed.observedAt)) ? feed.observedAt : now,
     checkedAt: boundedText(feed.checkedAt, 64) && Number.isFinite(Date.parse(feed.checkedAt)) ? feed.checkedAt : now,
+    refreshAfterMs: boundedMilliseconds(feed.refreshAfterMs, DEFAULT_REFRESH_AFTER_MS, 300_000),
     refreshAfterSeconds: boundedSeconds(feed.refreshAfterSeconds, DEFAULT_REFRESH_AFTER_SECONDS, 300),
     refreshCooldownSeconds: boundedSeconds(feed.refreshCooldownSeconds, DEFAULT_REFRESH_COOLDOWN_SECONDS, 60),
     events: Array.isArray(feed.events) ? feed.events.filter(isThreatEvent).slice(0, MAX_EVENTS) : [],
@@ -224,7 +231,7 @@ export function LiveDefconMap() {
         const errors = [...new Set([...(current?.errors ?? []), errorMessage])];
         return current
           ? { ...current, status: current.events.length > 0 ? 'degraded' : 'unavailable', stale: true, errors }
-          : { status: 'unavailable', observedAt: new Date().toISOString(), checkedAt: new Date().toISOString(), refreshAfterSeconds: DEFAULT_REFRESH_AFTER_SECONDS, refreshCooldownSeconds: DEFAULT_REFRESH_COOLDOWN_SECONDS, events: [], errors, stale: true };
+          : { status: 'unavailable', observedAt: new Date().toISOString(), checkedAt: new Date().toISOString(), refreshAfterSeconds: DEFAULT_REFRESH_AFTER_SECONDS, refreshAfterMs: DEFAULT_REFRESH_AFTER_MS, refreshCooldownSeconds: DEFAULT_REFRESH_COOLDOWN_SECONDS, events: [], errors, stale: true };
       });
     } finally {
       window.clearTimeout(requestTimer);
@@ -256,10 +263,10 @@ export function LiveDefconMap() {
   }, []);
 
   useEffect(() => {
-    const refreshAfterMs = (feed?.refreshAfterSeconds ?? 0) * 1000;
+    const refreshAfterMs = feed?.refreshAfterMs ?? DEFAULT_REFRESH_AFTER_MS;
     const refreshTimer = window.setTimeout(() => void refreshFeed(), refreshAfterMs);
     return () => window.clearTimeout(refreshTimer);
-  }, [feed?.checkedAt, feed?.refreshAfterSeconds, feed?.status, feed?.stale, refreshFeed]);
+  }, [feed?.checkedAt, feed?.refreshAfterMs, feed?.status, feed?.stale, refreshFeed]);
 
   return (
     <div className="defcon-map-card">
@@ -314,7 +321,7 @@ export function LiveDefconMap() {
         <div className="threat-feed-heading">
           <div>
             <span>LIVE PUBLIC THREAT SIGNALS</span>
-            <small>{feed ? <>{feed.events.length} source-linked events · observed <time dateTime={feed.observedAt}>{formatFeedTime(feed.observedAt)}</time> · checked <time dateTime={feed.checkedAt}>{formatFeedTime(feed.checkedAt)}</time> · auto-refresh {feed.refreshAfterSeconds}s{feed.stale ? ' · stale cache' : ''}{refreshWaitSeconds > 0 ? ` · manual refresh in ${refreshWaitSeconds}s` : ''}</> : 'Connecting to public sources…'}</small>
+            <small>{feed ? <>{feed.events.length} source-linked events · observed <time dateTime={feed.observedAt}>{formatFeedTime(feed.observedAt)}</time> · checked <time dateTime={feed.checkedAt}>{formatFeedTime(feed.checkedAt)}</time> · auto-refresh {feed.refreshAfterMs.toLocaleString('en-GB')}ms{feed.stale ? ' · stale cache' : ''}{refreshWaitSeconds > 0 ? ` · manual refresh in ${refreshWaitSeconds}s` : ''}</> : 'Connecting to public sources…'}</small>
           </div>
           <div className="threat-feed-controls">
             <span className={`threat-feed-status threat-status-${feed?.status ?? 'connecting'}`} role="status" aria-live="polite" aria-atomic="true"><i /> {feed?.status === 'live' ? 'LIVE' : feed?.status === 'degraded' ? 'DEGRADED' : feed?.status === 'unavailable' ? 'UNAVAILABLE' : 'CONNECTING'}</span>

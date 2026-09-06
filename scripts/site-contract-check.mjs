@@ -211,6 +211,7 @@ for (const marker of [
 
 for (const marker of [
   "FORCE_REFRESH_COOLDOWN_MS",
+  "DEFAULT_REFRESH_AFTER_MS",
   "lastForcedRefreshAt",
   "requestTime - lastForcedRefreshAt < FORCE_REFRESH_COOLDOWN_MS",
   "refreshCooldownSeconds",
@@ -222,6 +223,7 @@ for (const marker of [
 }
 
 for (const marker of [
+  "const DEFAULT_REFRESH_AFTER_MS = 30_000",
   "DEFAULT_REFRESH_COOLDOWN_SECONDS = 15",
   "const DEFAULT_REQUEST_TIMEOUT_MS = 15_000",
   "boundedSeconds(feed.refreshCooldownSeconds, DEFAULT_REFRESH_COOLDOWN_SECONDS, 60)",
@@ -229,8 +231,10 @@ for (const marker of [
   "requestAbortRef",
   "signal: controller.signal",
   "window.setTimeout(() => controller.abort(), DEFAULT_REQUEST_TIMEOUT_MS)",
-  "const refreshAfterMs = (feed?.refreshAfterSeconds ?? 0) * 1000",
-  "feed?.checkedAt, feed?.refreshAfterSeconds, feed?.status, feed?.stale",
+  "const refreshAfterMs = feed?.refreshAfterMs ?? DEFAULT_REFRESH_AFTER_MS",
+  "refreshAfterMs: boundedMilliseconds(feed.refreshAfterMs, DEFAULT_REFRESH_AFTER_MS, 300_000)",
+  "feed?.checkedAt, feed?.refreshAfterMs, feed?.status, feed?.stale",
+  "auto-refresh {feed.refreshAfterMs.toLocaleString('en-GB')}ms",
   '<time dateTime={feed.observedAt}>',
   '<time dateTime={event.observedAt}>',
   "Live public threat feed request timed out",

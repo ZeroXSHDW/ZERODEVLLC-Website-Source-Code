@@ -122,7 +122,7 @@ requireText("app/layout.tsx", layout, "penetration-testing frameworks");
 requireText("app/layout.tsx", layout, "business continuity planning");
 requireText("app/layout.tsx", layout, "summary_large_image");
 requireText("app/layout.tsx", layout, "url: '/og.png'");
-requireText("app/api/attacks/route.ts", attacksRoute, "stale-while-revalidate=300");
+requireText("app/api/attacks/route.ts", attacksRoute, "stale-while-revalidate=120");
 requireText("app/api/attacks/route.ts", attacksRoute, "safeCisaUrl");
 requireText("app/api/attacks/route.ts", attacksRoute, "memoryCache");
 requireText("app/api/attacks/route.ts", attacksRoute, "FORCE_REFRESH_COOLDOWN_MS");

@@ -6,7 +6,8 @@ const FEED_URLS = {
 
 const MAX_FEED_BYTES = 3 * 1024 * 1024;
 const MAX_EVENTS = 12;
-const CACHE_CONTROL = 'public, max-age=30, s-maxage=60, stale-while-revalidate=300';
+const DEFAULT_REFRESH_AFTER_MS = 30_000;
+const CACHE_CONTROL = 'public, max-age=5, s-maxage=30, stale-while-revalidate=120';
 const FORCE_REFRESH_COOLDOWN_MS = 15_000;
 const CISA_HOSTS = new Set(['cisa.gov', 'www.cisa.gov']);
 
@@ -26,6 +27,7 @@ type FeedPayload = {
   observedAt: string;
   checkedAt: string;
   refreshAfterSeconds: number;
+  refreshAfterMs: number;
   refreshCooldownSeconds: number;
   events: PublicThreatEvent[];
   sources: string[];
@@ -169,7 +171,8 @@ function cooldownPayload(now: string, requestTime: number): FeedPayload {
     status: 'unavailable',
     observedAt: now,
     checkedAt: now,
-    refreshAfterSeconds: 60,
+    refreshAfterSeconds: DEFAULT_REFRESH_AFTER_MS / 1000,
+    refreshAfterMs: DEFAULT_REFRESH_AFTER_MS,
     refreshCooldownSeconds,
     events: [],
     sources: [],
@@ -214,7 +217,8 @@ export async function GET(request: Request) {
     status: errors.length === 0 ? 'live' : ordered.length > 0 ? 'degraded' : 'unavailable',
     observedAt: now,
     checkedAt: now,
-    refreshAfterSeconds: 60,
+    refreshAfterSeconds: DEFAULT_REFRESH_AFTER_MS / 1000,
+    refreshAfterMs: DEFAULT_REFRESH_AFTER_MS,
     refreshCooldownSeconds: Math.ceil(FORCE_REFRESH_COOLDOWN_MS / 1000),
     events: ordered,
     sources: ['CISA Known Exploited Vulnerabilities', 'CISA Cybersecurity Advisories', 'CISA ICS Advisories'],
@@ -224,8 +228,8 @@ export async function GET(request: Request) {
   if (payload.status !== 'unavailable') {
     memoryCache = {
       payload,
-      freshUntil: requestTime + 60_000,
-      staleUntil: requestTime + 300_000,
+      freshUntil: requestTime + DEFAULT_REFRESH_AFTER_MS,
+      staleUntil: requestTime + 120_000,
     };
     return jsonResponse(payload);
   }
