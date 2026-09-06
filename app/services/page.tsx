@@ -214,7 +214,19 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        <section className={styles.serviceSection} aria-labelledby="engagements-heading">
+        <nav className={styles.pageIndex} aria-label="Services page sections">
+          <p className={styles.pageIndexLabel}>{'// ROUTE INDEX'}</p>
+          <ol>
+            <li><a href="#engagement-areas"><span>01</span>Engagement areas</a></li>
+            <li><a href="#briefing-packs"><span>02</span>Briefing packs</a></li>
+            <li><a href="#decision-matrix"><span>03</span>Decision matrix</a></li>
+            <li><a href="#fit-contexts"><span>04</span>Fit contexts</a></li>
+            <li><a href="#controlled-engagement"><span>05</span>Controlled engagement</a></li>
+            <li><a href="#claims-limits"><span>06</span>Claims / limits</a></li>
+          </ol>
+        </nav>
+
+        <section className={`${styles.serviceSection} ${styles.routeSection}`} id="engagement-areas" aria-labelledby="engagements-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// ENGAGEMENT AREAS'}</p>
             <h2 id="engagements-heading">One operating model.<br /><span>Eight decision surfaces.</span></h2>
@@ -235,7 +247,7 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        <section className={styles.outputSection} id="briefing-packs" aria-labelledby="briefing-packs-heading">
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="briefing-packs" aria-labelledby="briefing-packs-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// SERVICE BRIEFING PACKS'}</p>
             <h2 id="briefing-packs-heading">Know the<br /><span>first boundary.</span></h2>
@@ -258,7 +270,7 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        <section className={styles.outputSection} aria-labelledby="decision-matrix-heading">
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="decision-matrix" aria-labelledby="decision-matrix-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// CAPABILITY DECISION MATRIX'}</p>
             <h2 id="decision-matrix-heading">Choose the evidence<br /><span>the decision needs.</span></h2>
@@ -291,7 +303,7 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        <section className={styles.outputSection} aria-labelledby="fit-heading">
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="fit-contexts" aria-labelledby="fit-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// GOOD-FIT CONTEXTS'}</p>
             <h2 id="fit-heading">Built for decisions<br /><span>with consequences.</span></h2>
@@ -308,7 +320,7 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        <section className={styles.lifecycleSection} aria-labelledby="lifecycle-heading">
+        <section className={`${styles.lifecycleSection} ${styles.routeSection}`} id="controlled-engagement" aria-labelledby="lifecycle-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// CONTROLLED ENGAGEMENT'}</p>
             <h2 id="lifecycle-heading">Authority before<br /><span>activity.</span></h2>
@@ -324,7 +336,7 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        <section className={styles.boundarySection} aria-labelledby="boundary-heading">
+        <section className={`${styles.boundarySection} ${styles.routeSection}`} id="claims-limits" aria-labelledby="boundary-heading">
           <div>
             <p className={styles.eyebrow}>{'// CLAIMS / EVIDENCE / LIMITS'}</p>
             <h2 id="boundary-heading">Credibility is<br /><span>part of the deliverable.</span></h2>

@@ -5,12 +5,13 @@ import { fileURLToPath } from "node:url";
 const projectRoot = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const read = (relativePath) => readFile(join(projectRoot, relativePath), "utf8");
 
-const [page, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesCss] = await Promise.all([
+const [page, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss] = await Promise.all([
   read("app/page.tsx"),
   read("app/globals.css"),
   read("app/api/attacks/route.ts"),
   read("app/live-defcon-map.tsx"),
   read("app/engage/page.tsx"),
+  read("app/services/page.tsx"),
   read("app/services/services.module.css"),
 ]);
 
@@ -96,6 +97,24 @@ for (const marker of [
   ".pageIndex ol { gap: 6px; grid-template-columns: repeat(2, minmax(0, 1fr)); }",
 ]) {
   requireText("app/services/services.module.css route index", servicesCss, marker);
+}
+
+for (const marker of [
+  'aria-label="Services page sections"',
+  'href="#engagement-areas"',
+  'href="#briefing-packs"',
+  'href="#decision-matrix"',
+  'href="#fit-contexts"',
+  'href="#controlled-engagement"',
+  'href="#claims-limits"',
+  'id="engagement-areas"',
+  'id="briefing-packs"',
+  'id="decision-matrix"',
+  'id="fit-contexts"',
+  'id="controlled-engagement"',
+  'id="claims-limits"',
+]) {
+  requireText("app/services/page.tsx route index", servicesPage, marker);
 }
 
 if (decisionPaths.split("\n").filter((line) => line.trim().startsWith("[")).length !== 4) {
