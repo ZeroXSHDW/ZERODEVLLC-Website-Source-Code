@@ -14,7 +14,8 @@ const footerNavigation = [
 ] as const;
 
 const externalSurfaces = [
-  { href: 'https://zerodevllc.eu', label: 'EU / DEFCON gateway' },
+  { href: 'https://zerodevllc.eu', label: 'EU / public surface' },
+  { href: 'https://zerodevllc.eu/defcon', label: 'DEFCON / signal route' },
   { href: 'https://zerodevllc.store', label: 'Store / service surface' },
 ] as const;
 
@@ -40,7 +41,7 @@ export default function SiteFooter() {
       <section className={styles.siteFooterExternal} aria-labelledby="external-surfaces-heading">
         <div>
           <p className={styles.eyebrow} id="external-surfaces-heading">{'// SEPARATE EXTERNAL SURFACES'}</p>
-          <p className={styles.siteFooterExternalCopy}>The `.eu` and `.store` routes are separate public surfaces. This `.com` site does not establish their provider, source, product, payment, or checkout status.</p>
+          <p className={styles.siteFooterExternalCopy}>The `.eu` root, its `/defcon` signal route, and `.store` are separate public surfaces. This `.com` site does not establish their provider, source, product, payment, or checkout status.</p>
         </div>
         <div className={styles.siteFooterExternalLinks}>
           {externalSurfaces.map((surface) => <a href={surface.href} key={surface.href} target="_blank" rel="noopener noreferrer" aria-label={`${surface.label}; opens in a new tab`}>{surface.label} <span aria-hidden="true">↗</span></a>)}
