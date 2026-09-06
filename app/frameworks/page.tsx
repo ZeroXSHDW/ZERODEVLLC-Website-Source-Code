@@ -3,6 +3,7 @@ import Link from 'next/link';
 import SiteHeader, { secondaryNavigation } from '../site-header';
 import SiteFooter from '../site-footer';
 import RouteIndex from '../route-index';
+import FrameworkLibrary, { type FrameworkLibraryClassNames } from '../framework-library';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
@@ -65,6 +66,34 @@ const frameworkFreshnessRules = [
   'For CMMC or defense-contract references, confirm the solicitation or contract clause, FCI/CUI flow, contractor information system boundary, required level, assessment route, flow-down, current DoD guidance, and responsible assessor or authority.',
   'At engagement start, confirm the current text, contract, jurisdiction, system scope, evidence owner, applicable assessor or authority, and required review method.',
 ] as const;
+
+const frameworkCategory = (name: string) => {
+  if (name.startsWith('EU ')) return 'EU / regulatory';
+  if (name.includes('CMMC') || name.includes('800-171') || name.includes('800-172')) return 'Defense / CUI';
+  if (name.includes('testing') || name.includes('800-115') || name.includes('OWASP')) return 'Testing';
+  if (name.includes('800-34') || name.includes('800-61') || name.includes('22301') || name.includes('Cyber Assessment Framework')) return 'Resilience';
+  if (name.includes('800-161')) return 'Supply chain';
+  return 'Governance / controls';
+};
+
+const frameworkLibraryClassNames: FrameworkLibraryClassNames = {
+  libraryShell: styles.libraryShell,
+  libraryControls: styles.libraryControls,
+  libraryControlTop: styles.libraryControlTop,
+  librarySearch: styles.librarySearch,
+  libraryResults: styles.libraryResults,
+  libraryFilters: styles.libraryFilters,
+  libraryFilter: styles.libraryFilter,
+  frameworkGrid: styles.frameworkGrid,
+  frameworkCard: styles.frameworkCard,
+  frameworkTag: styles.frameworkTag,
+  frameworkSource: styles.frameworkSource,
+  frameworkFreshness: styles.frameworkFreshness,
+  cardBoundary: styles.cardBoundary,
+  referenceLink: styles.referenceLink,
+  libraryEmpty: styles.libraryEmpty,
+  libraryClear: styles.libraryClear,
+};
 
 const serviceFrameworkMap = [
   ['Authorized penetration testing', ['NIST SP 800-115', 'OWASP testing guidance'], 'Is the proposed test scope, authority, method, and evidence path proportionate?', 'Testing guidance does not grant authorization or prove that a system is secure.'],
@@ -129,22 +158,20 @@ export default function FrameworksPage() {
             <h2 id="library-heading">A useful map.<br /><span>Not a badge wall.</span></h2>
             <p>Use this library to frame a conversation, identify evidence, and choose a proportionate next action. Each card links to a primary publisher reference; confirm the current authoritative text and applicability before relying on a requirement.</p>
           </div>
-          <div className={styles.frameworkGrid}>
-            {frameworks.map(([name, publisher, version, purpose, boundary, sourceLabel, sourceHref]) => (
-              <article className={styles.frameworkCard} key={name}>
-                <span className={styles.frameworkTag}>REFERENCE / READINESS</span>
-                <h3>{name}</h3>
-                <dl className={styles.frameworkSource} aria-label={`${name} reference details`}>
-                  <div><dt>Publisher</dt><dd>{publisher}</dd></div>
-                  <div><dt>Version / edition named</dt><dd>{version}</dd></div>
-                </dl>
-                <p className={styles.frameworkFreshness}><strong>Source check:</strong> {frameworkReviewDate} / recheck before use</p>
-                <p>{purpose}</p>
-                <p className={styles.cardBoundary}><strong>Boundary:</strong> {boundary}</p>
-                <a className={styles.referenceLink} href={sourceHref} target="_blank" rel="noopener noreferrer" aria-label={`${name} primary reference; opens in a new tab`}>{sourceLabel} <span aria-hidden="true">↗</span></a>
-              </article>
-            ))}
-          </div>
+          <FrameworkLibrary
+            reviewDate={frameworkReviewDate}
+            classNames={frameworkLibraryClassNames}
+            frameworks={frameworks.map(([name, publisher, version, purpose, boundary, sourceLabel, sourceHref]) => ({
+              name,
+              publisher,
+              version,
+              purpose,
+              boundary,
+              sourceLabel,
+              sourceHref,
+              category: frameworkCategory(name),
+            }))}
+          />
         </section>
 
         <section className={`${styles.outputSection} ${styles.routeSection}`} id="service-framework-map" aria-labelledby="service-framework-heading">

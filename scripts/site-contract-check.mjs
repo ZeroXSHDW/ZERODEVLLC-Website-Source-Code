@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const projectRoot = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const read = (relativePath) => readFile(join(projectRoot, relativePath), "utf8");
 
-const [page, homeStatus, routeIndex, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, assurancePage, sectorsPage, privacyPage, errorPage, notFoundPage, loadingPage, siteHeader, siteFooter, structuredData, layout] = await Promise.all([
+const [page, homeStatus, routeIndex, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, frameworkLibrary, assurancePage, sectorsPage, privacyPage, errorPage, notFoundPage, loadingPage, siteHeader, siteFooter, structuredData, layout] = await Promise.all([
   read("app/page.tsx"),
   read("app/home-status.tsx"),
   read("app/route-index.tsx"),
@@ -19,6 +19,7 @@ const [page, homeStatus, routeIndex, globalsCss, attacksRoute, liveDefconMap, en
   read("app/methodology/page.tsx"),
   read("app/remediation/page.tsx"),
   read("app/frameworks/page.tsx"),
+  read("app/framework-library.tsx"),
   read("app/assurance/page.tsx"),
   read("app/sectors/page.tsx"),
   read("app/privacy/page.tsx"),
@@ -453,11 +454,7 @@ const additionalRouteIndexContracts = [
     "const frameworkReviewDate = '2026-09-06';",
     'REFERENCE CURRENCY CONTROL',
     'frameworkFreshnessRules',
-    'className={styles.frameworkSource}',
-    '<dt>Publisher</dt>',
-    '<dt>Version / edition named</dt>',
-    'Source check:</strong>',
-    'recheck before use',
+    'FrameworkLibrary',
     'Rev. 5 / Release 5.2.0 published August 27, 2025',
     'Rev. 1 / updates through 2024-11-01',
     'Rev. 3 final / published May 14, 2024',
@@ -508,6 +505,19 @@ const additionalRouteIndexContracts = [
 for (const [label, source, markers] of additionalRouteIndexContracts) {
   for (const marker of markers) requireRouteIndexText(`${label} route index`, source, marker);
 }
+
+for (const marker of [
+  'framework-library-search',
+  'role="group" aria-label="Filter framework references by category"',
+  'aria-pressed={category === option}',
+  'className={classNames.frameworkSource}',
+  '<dt>Publisher</dt>',
+  '<dt>Version / edition named</dt>',
+  'Source check:</strong>',
+  'recheck before use',
+  'No reference matches that route.',
+  'Clear library filters',
+]) requireText("app/framework-library.tsx library controls", frameworkLibrary, marker);
 
 if (decisionPaths.split("\n").filter((line) => line.trim().startsWith("[")).length !== 4) {
   failures.push("app/page.tsx decisionPaths must retain exactly four decision routes");

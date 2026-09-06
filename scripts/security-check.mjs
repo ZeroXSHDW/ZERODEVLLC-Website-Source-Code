@@ -28,6 +28,7 @@ const [
   servicesPage,
   methodologyPage,
   frameworksPage,
+  frameworkLibrary,
   engagePage,
   deliverablesPage,
   assurancePage,
@@ -64,6 +65,7 @@ const [
   read("app/services/page.tsx"),
   read("app/methodology/page.tsx"),
   read("app/frameworks/page.tsx"),
+  read("app/framework-library.tsx"),
   read("app/engage/page.tsx"),
   read("app/deliverables/page.tsx"),
   read("app/assurance/page.tsx"),
@@ -172,6 +174,11 @@ requireText("app/frameworks/page.tsx", frameworksPage, "EU GDPR Regulation (EU) 
 requireText("app/frameworks/page.tsx", frameworksPage, "EU Cyber Resilience Act (EU) 2024/2847");
 requireText("app/frameworks/page.tsx", frameworksPage, "EU Critical Entities Resilience Directive (EU) 2022/2557");
 requireText("app/frameworks/page.tsx", frameworksPage, "primary publisher reference");
+requireText("app/frameworks/page.tsx", frameworksPage, "FrameworkLibrary");
+requireText("app/framework-library.tsx", frameworkLibrary, "framework-library-search");
+requireText("app/framework-library.tsx", frameworkLibrary, "aria-pressed={category === option}");
+requireText("app/framework-library.tsx", frameworkLibrary, "No reference matches that route");
+requireText("app/framework-library.tsx", frameworkLibrary, "Clear library filters");
 requireText("app/frameworks/page.tsx", frameworksPage, "SERVICE / FRAMEWORK FIT");
 requireText("app/frameworks/page.tsx", frameworksPage, "Service-to-framework orientation map");
 requireText("app/frameworks/page.tsx", frameworksPage, "not a formal crosswalk");
