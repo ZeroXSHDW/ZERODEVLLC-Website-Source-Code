@@ -227,6 +227,16 @@ const serviceBriefs = [
   },
 ] as const;
 
+const decisionRecord = [
+  ['01', 'Decision and purpose', 'Name the mission, service, procurement, or risk question, the intended audience, and the date or event that makes the answer useful.'],
+  ['02', 'Authority and applicability', 'Record written authority, contract, jurisdiction, framework, policy, or exercise mandate; if it is unclear, stop or narrow the work.'],
+  ['03', 'Scope and safe evidence', 'Define the asset, supplier, service, or exercise boundary, exclusions, evidence owner, minimum necessary data, and approved handling path.'],
+  ['04', 'Method and confidence', 'State whether the work is a review, interview, sample, test, exercise, or independent verification, with coverage, confidence basis, and limitations.'],
+  ['05', 'Output and interpretation', 'Separate observed, verified, assumed, disputed, missing, and unresolved items, then connect the output to the decision it supports.'],
+  ['06', 'Acceptance and treatment', 'Name the accountable owner, acceptance authority, treatment or exception choice, residual-risk boundary, and next action; ZeroDev does not accept risk for the client.'],
+  ['07', 'Retest and review trigger', 'Record the retest, restore test, exercise, contract change, requirement update, threat update, or evidence-expiry event that should reopen the question.'],
+] as const;
+
 export default function ServicesPage() {
   return (
     <main className={styles.page}>
@@ -253,10 +263,11 @@ export default function ServicesPage() {
         <RouteIndex ariaLabel="Services page sections" pageIndexClassName={styles.pageIndex} pageIndexLabelClassName={styles.pageIndexLabel} sections={[
           { href: '#engagement-areas', number: '01', label: 'Engagement areas' },
           { href: '#briefing-packs', number: '02', label: 'Briefing packs' },
-          { href: '#decision-matrix', number: '03', label: 'Decision matrix' },
-          { href: '#fit-contexts', number: '04', label: 'Fit contexts' },
-          { href: '#controlled-engagement', number: '05', label: 'Controlled engagement' },
-          { href: '#claims-limits', number: '06', label: 'Claims / limits' },
+          { href: '#decision-record', number: '03', label: 'Decision record' },
+          { href: '#decision-matrix', number: '04', label: 'Decision matrix' },
+          { href: '#fit-contexts', number: '05', label: 'Fit contexts' },
+          { href: '#controlled-engagement', number: '06', label: 'Controlled engagement' },
+          { href: '#claims-limits', number: '07', label: 'Claims / limits' },
         ]} />
 
         <section className={`${styles.serviceSection} ${styles.routeSection}`} id="engagement-areas" aria-labelledby="engagements-heading">
@@ -288,7 +299,7 @@ export default function ServicesPage() {
             <p className={styles.eyebrow}>{'// SERVICE BRIEFING PACKS'}</p>
             <h2 id="briefing-packs-heading">Know the<br /><span>first boundary.</span></h2>
             <p>These synthetic service briefs help a buyer compare the decision, entry gate, representative output, and no-fit condition before a detailed proposal or sensitive exchange.</p>
-            <p><Link className={styles.primaryLink} href="/deliverables">Review deliverable shapes <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/deliverables#evidence-request-map">Review evidence request map <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/methodology#rules-of-engagement">Review rules-of-engagement starter <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/frameworks#service-framework-map">Review framework applicability <span aria-hidden="true">→</span></Link></p>
+            <p><Link className={styles.primaryLink} href="/deliverables">Review deliverable shapes <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/deliverables#evidence-request-map">Review evidence request map <span aria-hidden="true">→</span></Link><br /><a className={styles.primaryLink} href="#decision-record">Use the shared decision record <span aria-hidden="true">↓</span></a><br /><Link className={styles.primaryLink} href="/methodology#rules-of-engagement">Review rules-of-engagement starter <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/frameworks#service-framework-map">Review framework applicability <span aria-hidden="true">→</span></Link></p>
           </div>
           <div className={styles.briefingPackGrid}>
             {serviceBriefs.map((brief) => (
@@ -304,6 +315,24 @@ export default function ServicesPage() {
                   <div><dt>Next gate</dt><dd>{brief.nextGate}</dd></div>
                 </dl>
                 <p className={styles.briefingPackBoundary}><strong>No-fit or owner gate:</strong> {brief.noFit}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className={`${styles.methodSection} ${styles.routeSection}`} id="decision-record" aria-labelledby="decision-record-heading">
+          <div className={styles.sectionIntro}>
+            <p className={styles.eyebrow}>{'// SHARED DECISION RECORD'}</p>
+            <h2 id="decision-record-heading">One record.<br /><span>Seven gates.</span></h2>
+            <p>Every service briefing can use the same evidence-to-decision shape. It keeps authority, confidence, owner acceptance, and the next review visible before a detailed proposal or sensitive exchange.</p>
+            <p><Link className={styles.primaryLink} href="/deliverables#evidence-state">Review evidence states <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/remediation">Review treatment and closeout <span aria-hidden="true">→</span></Link></p>
+          </div>
+          <div className={styles.stepList}>
+            {decisionRecord.map(([number, title, description]) => (
+              <article className={styles.step} key={number}>
+                <span className={styles.stepNumber}>{number}</span>
+                <h3>{title}</h3>
+                <p>{description}</p>
               </article>
             ))}
           </div>

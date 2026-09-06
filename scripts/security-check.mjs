@@ -155,6 +155,10 @@ requireText("app/services/page.tsx", servicesPage, "Procurement or third-party r
 requireText("app/services/page.tsx", servicesPage, "service-${service.number}");
 requireText("app/services/page.tsx", servicesPage, "RTO/RPO discussion");
 requireText("app/services/page.tsx", servicesPage, "Start with the authorized engagement brief");
+requireText("app/services/page.tsx", servicesPage, "const decisionRecord =");
+requireText("app/services/page.tsx", servicesPage, "SHARED DECISION RECORD");
+requireText("app/services/page.tsx", servicesPage, "One record.");
+requireText("app/services/page.tsx", servicesPage, "ZeroDev does not accept risk for the client");
 requireText("app/methodology/page.tsx", methodologyPage, "Written authorization and named decision owner");
 requireText("app/methodology/page.tsx", methodologyPage, "does not perform unauthorized access");
 requireText("app/methodology/page.tsx", methodologyPage, "RULES OF ENGAGEMENT STARTER");
