@@ -52,6 +52,7 @@ const [
   globalsCss,
   servicesCss,
   privacyCss,
+  roleRoutes,
 ] = await Promise.all([
   read("proxy.ts"),
   read("app/robots.ts"),
@@ -90,6 +91,7 @@ const [
   read("app/globals.css"),
   read("app/services/services.module.css"),
   read("app/privacy/privacy.module.css"),
+  read("app/role-routes.ts"),
 ]);
 const nodeVersion = await read(".node-version");
 
@@ -346,10 +348,13 @@ requireText("app/page.tsx", page, "decision-card-${tone}");
 requireText("app/page.tsx", page, "Entry gate");
 requireText("app/page.tsx", page, "First output");
 requireText("app/page.tsx", page, "A bounded readiness exercise and action backlog");
-requireText("app/page.tsx", page, "rolePaths");
+requireText("app/page.tsx", page, "roleRoutes");
 requireText("app/page.tsx", page, "CHOOSE BY DECISION OWNER");
-requireText("app/page.tsx", page, "PROCUREMENT / RISK");
-requireText("app/page.tsx", page, "role-card-${tone}");
+requireText("app/page.tsx", page, "roleRoutes.map((role)");
+requireText("app/page.tsx", page, "role-card-${role.tone}");
+requireText("app/page.tsx", page, "role.briefHref");
+requireText("app/role-routes.ts", roleRoutes, "briefPrompt");
+requireText("app/role-routes.ts", roleRoutes, "briefGate");
 requireText("app/page.tsx", page, "authorized defensive assessments");
 requireText("app/page.tsx", page, "Make the next decision");
 requireText("app/page.tsx", page, "Prepare a safe first brief");

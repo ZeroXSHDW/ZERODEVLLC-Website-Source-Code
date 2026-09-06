@@ -181,8 +181,11 @@ h1 span { color: var(--green); display: block; }
 .role-card-topline span:last-child { color: var(--card-signal, var(--green)); text-align: right; }
 .role-card h3 { color: var(--ink); font-family: Arial, Helvetica, sans-serif; font-size: 17px; letter-spacing: -.04em; line-height: 1.08; margin: 42px 0 13px; text-transform: uppercase; }
 .role-card p { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.5; margin: 0 0 20px; }
-.role-card .text-link { color: var(--card-signal, var(--green)); font-size: 8px; margin-top: auto; }
+.role-card-actions { align-items: flex-start; display: flex; flex-direction: column; gap: 7px; margin-top: auto; }
+.role-card .text-link { color: var(--card-signal, var(--green)); font-size: 8px; }
 .role-card .text-link:hover, .role-card .text-link:focus-visible { color: var(--green-bright); }
+.role-brief-link { color: var(--dim); font-size: 8px; letter-spacing: .08em; text-transform: uppercase; }
+.role-brief-link:hover, .role-brief-link:focus-visible { color: var(--green-bright); }
 
 .system-section { border-bottom: 1px solid var(--line); margin: 0 auto; max-width: var(--max-width); padding: 96px clamp(20px, 7vw, 120px) 112px; }
 .section-heading { align-items: end; display: flex; gap: 55px; justify-content: space-between; margin-bottom: 44px; }

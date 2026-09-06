@@ -1,0 +1,73 @@
+export const roleRoutes = [
+  {
+    number: '01',
+    tag: 'PUBLIC PROGRAM',
+    title: 'Public-sector / government owner',
+    description: 'You need authority, procurement, and evidence handling visible before a decision.',
+    action: 'Start with public-sector fit',
+    href: '/sectors#sector-01',
+    briefHref: '/engage?role=public-program',
+    slug: 'public-program',
+    tone: 'cyan',
+    briefPrompt: 'Which public-sector decision, authority, procurement, or evidence-handling gate must become clearer?',
+    briefGate: 'Name the accountable program or procurement owner before discussing controlled or restricted material.',
+  },
+  {
+    number: '02',
+    tag: 'DEFENSE SUPPLIER',
+    title: 'Prime / subcontractor / technology provider',
+    description: 'You need controlled-information, supply-chain, and authorized testing boundaries in view.',
+    action: 'Start with defense-supplier fit',
+    href: '/sectors#sector-02',
+    briefHref: '/engage?role=defense-supplier',
+    slug: 'defense-supplier',
+    tone: 'violet',
+    briefPrompt: 'Which supplier, boundary, or authorized testing decision must become clearer?',
+    briefGate: 'Keep controlled, export-controlled, classified, or contract-restricted material out of ordinary email.',
+  },
+  {
+    number: '03',
+    tag: 'PROCUREMENT / RISK',
+    title: 'Buyer / third-party-risk owner',
+    description: 'You need a supplier evidence path with confidence, gaps, and an explicit next gate.',
+    action: 'Start with procurement governance',
+    href: '/assurance#procurement-governance',
+    briefHref: '/engage?role=procurement-risk',
+    slug: 'procurement-risk',
+    tone: 'amber',
+    briefPrompt: 'Which supplier-risk decision needs evidence, confidence, gaps, and a next gate?',
+    briefGate: 'Name the decision owner and evidence-handling route before sharing vendor or contract material.',
+  },
+  {
+    number: '04',
+    tag: 'ENGINEERING / SECURITY',
+    title: 'Security / engineering / technical owner',
+    description: 'You need a bounded technical question, evidence source, and treatment path.',
+    action: 'Start with the service matrix',
+    href: '/services#decision-matrix',
+    briefHref: '/engage?role=engineering-security',
+    slug: 'engineering-security',
+    tone: 'cyan',
+    briefPrompt: 'Which technical exposure, system boundary, or treatment decision needs evidence?',
+    briefGate: 'Name the authorization owner and test boundary; do not include credentials or live target details.',
+  },
+  {
+    number: '05',
+    tag: 'CONTINUITY / SERVICE',
+    title: 'Continuity / service / incident owner',
+    description: 'You need dependencies, recovery assumptions, and an exercise or restore condition.',
+    action: 'Start with resilience fit',
+    href: '/sectors#sector-03',
+    briefHref: '/engage?role=continuity-service',
+    slug: 'continuity-service',
+    tone: 'green',
+    briefPrompt: 'Which critical service, dependency, recovery objective, or exercise decision needs clarity?',
+    briefGate: 'Name the service owner and restore or exercise authority before sharing operational details.',
+  },
+] as const;
+
+export type RoleRoute = (typeof roleRoutes)[number];
+
+export function getRoleRoute(slug: string | undefined): RoleRoute | undefined {
+  return roleRoutes.find((route) => route.slug === slug);
+}

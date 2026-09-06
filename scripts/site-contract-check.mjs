@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const projectRoot = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const read = (relativePath) => readFile(join(projectRoot, relativePath), "utf8");
 
-const [page, homeStatus, routeIndex, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, frameworkLibrary, briefActions, assurancePage, sectorsPage, privacyPage, errorPage, notFoundPage, loadingPage, siteHeader, siteFooter, structuredData, layout] = await Promise.all([
+const [page, homeStatus, routeIndex, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, frameworkLibrary, briefActions, assurancePage, sectorsPage, privacyPage, errorPage, notFoundPage, loadingPage, siteHeader, siteFooter, structuredData, layout, roleRoutes] = await Promise.all([
   read("app/page.tsx"),
   read("app/home-status.tsx"),
   read("app/route-index.tsx"),
@@ -31,6 +31,7 @@ const [page, homeStatus, routeIndex, globalsCss, attacksRoute, liveDefconMap, en
   read("app/site-footer.tsx"),
   read("app/structured-data.tsx"),
   read("app/layout.tsx"),
+  read("app/role-routes.ts"),
 ]);
 
 const failures = [];
@@ -73,15 +74,24 @@ for (const marker of [
   requireText("app/page.tsx decision card readiness facts", page, marker);
 }
 for (const marker of [
-  "rolePaths",
   'href="#roles"',
   'id="roles"',
   "CHOOSE BY DECISION OWNER",
-  "PROCUREMENT / RISK",
-  "Start with resilience fit",
-  "role-card-${tone}",
+  "roleRoutes.map((role)",
+  "role-card-${role.tone}",
+  "role.briefHref",
 ]) {
   requireRouteIndexText("app/page.tsx role route chooser", page, marker);
+}
+for (const marker of [
+  "export const roleRoutes = [",
+  "'PROCUREMENT / RISK'",
+  "'Start with resilience fit'",
+  "briefHref",
+  "briefPrompt",
+  "briefGate",
+]) {
+  requireText("app/role-routes.ts role route source", roleRoutes, marker);
 }
 requireText("app/page.tsx skip target", page, 'id="start" tabIndex={-1}');
 requireText("app/page.tsx operating summary", page, "String(registeredSurfaceCount).padStart(2, '0')");

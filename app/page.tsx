@@ -1,5 +1,6 @@
 import { HomeHeader, HomeSignalReadout, HomeStatusProvider, HomeTerminalStatus } from './home-status';
 import { LiveDefconMap } from './live-defcon-map';
+import { roleRoutes } from './role-routes';
 import SiteFooter from './site-footer';
 
 const canonicalDomains = Object.freeze({
@@ -184,14 +185,6 @@ const decisionPaths = [
   ['04', 'RESPONSE', 'Can we act under pressure?', 'Start with roles, escalation, communications, evidence boundaries, and a bounded readiness exercise.', 'Named roles, escalation route, and exercise authorization', 'Incident / executive owner', 'A bounded readiness exercise and action backlog', 'Review incident readiness', '/services#service-08', 'red'],
 ] as const;
 
-const rolePaths = [
-  ['01', 'PUBLIC PROGRAM', 'Public-sector / government owner', 'You need authority, procurement, and evidence handling visible before a decision.', 'Start with public-sector fit', '/sectors#sector-01', 'cyan'],
-  ['02', 'DEFENSE SUPPLIER', 'Prime / subcontractor / technology provider', 'You need controlled-information, supply-chain, and authorized testing boundaries in view.', 'Start with defense-supplier fit', '/sectors#sector-02', 'violet'],
-  ['03', 'PROCUREMENT / RISK', 'Buyer / third-party-risk owner', 'You need a supplier evidence path with confidence, gaps, and an explicit next gate.', 'Start with procurement governance', '/assurance#procurement-governance', 'amber'],
-  ['04', 'ENGINEERING / SECURITY', 'Security / engineering / technical owner', 'You need a bounded technical question, evidence source, and treatment path.', 'Start with the service matrix', '/services#decision-matrix', 'cyan'],
-  ['05', 'CONTINUITY / SERVICE', 'Continuity / service / incident owner', 'You need dependencies, recovery assumptions, and an exercise or restore condition.', 'Start with resilience fit', '/sectors#sector-03', 'green'],
-] as const;
-
 const navigation = [
   { href: '#start', label: 'Start here' },
   { href: '#roles', label: 'Choose by role' },
@@ -329,12 +322,15 @@ export default function Home() {
           <p>Use the audience you represent as a second route signal. These links open existing qualification paths; they do not establish a client relationship, contract, authority, or sector credential.</p>
         </div>
         <div className="role-grid">
-          {rolePaths.map(([number, tag, title, description, action, href, tone]) => (
-            <article className={`role-card role-card-${tone}`} key={number}>
-              <div className="role-card-topline"><span>{number} / 05</span><span>{tag}</span></div>
-              <h3>{title}</h3>
-              <p>{description}</p>
-              <a className="text-link" href={href}>{action} <span aria-hidden="true">→</span></a>
+          {roleRoutes.map((role) => (
+            <article className={`role-card role-card-${role.tone}`} key={role.number}>
+              <div className="role-card-topline"><span>{role.number} / 05</span><span>{role.tag}</span></div>
+              <h3>{role.title}</h3>
+              <p>{role.description}</p>
+              <div className="role-card-actions">
+                <a className="text-link" href={role.href}>{role.action} <span aria-hidden="true">→</span></a>
+                <a className="role-brief-link" href={role.briefHref}>Prepare a role-aware brief <span aria-hidden="true">↗</span></a>
+              </div>
             </article>
           ))}
         </div>

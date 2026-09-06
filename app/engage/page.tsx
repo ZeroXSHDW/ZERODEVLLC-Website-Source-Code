@@ -4,6 +4,7 @@ import SiteHeader, { secondaryNavigation } from '../site-header';
 import SiteFooter from '../site-footer';
 import RouteIndex from '../route-index';
 import BriefActions, { type BriefActionClassNames } from '../brief-actions';
+import { getRoleRoute } from '../role-routes';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
@@ -54,7 +55,7 @@ const briefSheetFields = [
   ['Next gate', 'The smallest safe next step, including the owner who must confirm it.'],
 ] as const;
 
-const briefText = [
+const baseBriefText = [
   'Objective or decision:',
   'High-level context:',
   'Service question:',
@@ -66,8 +67,6 @@ const briefText = [
   '',
   'I have not included credentials, secrets, customer records, private incident evidence, or live target details.',
 ].join('\n');
-
-const briefMailto = `mailto:hello@zerodevllc.com?subject=ZeroDevLLC%20engagement%20brief&body=${encodeURIComponent(briefText)}`;
 
 const briefActionClassNames: BriefActionClassNames = {
   group: styles.briefActions,
@@ -114,7 +113,24 @@ const engagementReadiness = [
   ['07', 'Closeout and change control', 'Access removal, temporary-change cleanup, unresolved questions, source or revision record, disposition, next review date, and approved change path.', 'The authority or service owner confirms closeout; unresolved or changed scope stays open or is re-authorized.'],
 ] as const;
 
-export default function EngagePage() {
+type EngagePageProps = {
+  searchParams?: Promise<{ role?: string | string[] }>;
+};
+
+export default async function EngagePage({ searchParams }: EngagePageProps) {
+  const params = await searchParams;
+  const requestedRole = Array.isArray(params?.role) ? params.role[0] : params?.role;
+  const selectedRole = getRoleRoute(requestedRole);
+  const briefText = selectedRole ? [
+    `Role route: ${selectedRole.title}`,
+    `Role-specific question: ${selectedRole.briefPrompt}`,
+    `First gate: ${selectedRole.briefGate}`,
+    '',
+    baseBriefText,
+  ].join('\n') : baseBriefText;
+  const briefSubject = selectedRole ? `ZeroDevLLC ${selectedRole.tag.toLowerCase()} engagement brief` : 'ZeroDevLLC engagement brief';
+  const briefMailto = `mailto:hello@zerodevllc.com?subject=${encodeURIComponent(briefSubject)}&body=${encodeURIComponent(briefText)}`;
+
   return (
     <main className={styles.page}>
       <a className={styles.skipLink} href="#engage-content">Skip to engagement content</a>
@@ -133,6 +149,14 @@ export default function EngagePage() {
           <div className={styles.heroCopy}>
             <p>Bring the question, the decision owner, and the outcome you need to make clearer. A high-level brief is enough to begin a useful conversation.</p>
             <p className={styles.heroBoundary}><strong>Do not send secrets.</strong> Keep credentials, tokens, customer records, private incident evidence, and live target details out of ordinary email. We can establish a safer exchange path after scope and authority are understood.</p>
+            {selectedRole ? (
+              <aside className={styles.roleContext} aria-labelledby="selected-role-heading">
+                <p className={styles.roleContextLabel}>ROLE CONTEXT / {selectedRole.tag}</p>
+                <p><strong id="selected-role-heading">{selectedRole.title}</strong><br />{selectedRole.briefPrompt}</p>
+                <p className={styles.roleContextGate}><strong>First gate:</strong> {selectedRole.briefGate}</p>
+                <Link className={styles.roleContextReset} href="/engage">Start with a neutral brief <span aria-hidden="true">↺</span></Link>
+              </aside>
+            ) : null}
             <BriefActions mailtoHref={briefMailto} copyText={briefText} linkLabel="Open a high-level brief template" classNames={briefActionClassNames} />
           </div>
         </section>
@@ -189,6 +213,7 @@ export default function EngagePage() {
               {briefTemplate.map(([label, prompt], index) => <div key={label}><span>{String(index + 1).padStart(2, '0')}</span><p><strong>{label}:</strong> {prompt}</p></div>)}
             </div>
             <p className={styles.templateNote}><strong>Safe boundary:</strong> Do not add credentials, secrets, customer records, private incident evidence, or live target details to the template.</p>
+            {selectedRole ? <p className={styles.templateNote}><strong>Role route included:</strong> The email and copy actions include the {selectedRole.title.toLowerCase()} question above as planning context only.</p> : null}
             <BriefActions mailtoHref={briefMailto} copyText={briefText} linkLabel="Open this structure in email" classNames={briefActionClassNames} />
           </div>
         </section>
