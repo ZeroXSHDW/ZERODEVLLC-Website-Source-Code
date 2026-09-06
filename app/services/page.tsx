@@ -240,7 +240,7 @@ export default function ServicesPage() {
             <p className={styles.eyebrow}>{'// SERVICE BRIEFING PACKS'}</p>
             <h2 id="briefing-packs-heading">Know the<br /><span>first boundary.</span></h2>
             <p>These synthetic service briefs help a buyer compare the decision, entry gate, representative output, and no-fit condition before a detailed proposal or sensitive exchange.</p>
-            <p><Link className={styles.primaryLink} href="/deliverables">Review deliverable shapes <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/frameworks#service-framework-map">Review framework applicability <span aria-hidden="true">↗</span></Link></p>
+            <p><Link className={styles.primaryLink} href="/deliverables">Review deliverable shapes <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/deliverables#evidence-request-map">Review evidence request map <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/frameworks#service-framework-map">Review framework applicability <span aria-hidden="true">↗</span></Link></p>
           </div>
           <div className={styles.briefingPackGrid}>
             {serviceBriefs.map((brief) => (

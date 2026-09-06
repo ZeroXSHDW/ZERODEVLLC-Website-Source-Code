@@ -176,6 +176,10 @@ requireText("app/deliverables/page.tsx", deliverablesPage, "Synthetic executive 
 requireText("app/deliverables/page.tsx", deliverablesPage, "no live target, customer record, credential, or production export");
 requireText("app/deliverables/page.tsx", deliverablesPage, "Received is not");
 requireText("app/deliverables/page.tsx", deliverablesPage, "private incident evidence");
+requireText("app/deliverables/page.tsx", deliverablesPage, "EVIDENCE REQUEST / ACCEPTANCE");
+requireText("app/deliverables/page.tsx", deliverablesPage, "Illustrative evidence-request and acceptance map");
+requireText("app/deliverables/page.tsx", deliverablesPage, "Decision or acceptance condition");
+requireText("app/services/page.tsx", servicesPage, "Review evidence request map");
 requireText("app/deliverables/page.tsx", deliverablesPage, "twitter:");
 requireText("app/assurance/page.tsx", assurancePage, "Authority and scope");
 requireText("app/assurance/page.tsx", assurancePage, "Evidence discipline");

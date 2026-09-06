@@ -40,6 +40,17 @@ const evidenceStates = [
   'Rechecked — a changed control, recovery capability, or open question is reviewed again.',
 ] as const;
 
+const evidenceRequestRows = [
+  ['Authorized penetration testing', 'Written authority, in-scope assets, exclusions, rules of engagement, safety contact, and stop conditions.', 'Review authority and scope before any technical activity; confirm permitted methods, escalation, and evidence boundaries.', 'Named authority approves the scope, safety controls, permitted activity, and report audience.'],
+  ['Vulnerability assessment', 'Asset boundary, inventory or scanner context, source date, access permission, and the owner who can validate observations.', 'Reconcile the source and scope, verify material observations where permitted, and record severity, confidence, and limitations.', 'Security or engineering owner accepts the prioritized treatment path or records an authorized exception.'],
+  ['Cyber risk management', 'Mission or business objective, risk criteria, important services, existing controls, decision owner, and review date.', 'Map evidence to the risk question, control state, impact, likelihood, assumptions, and available treatment choices.', 'Risk or executive owner records treatment, transfer, avoidance, monitoring, or residual-risk acceptance.'],
+  ['Technical due diligence', 'The material decision, architecture boundary, delivery practices, critical dependencies, resilience evidence, and open questions.', 'Use bounded document, interview, and technical review methods; distinguish evidence, assumptions, gaps, and material unknowns.', 'Decision owner acknowledges the open questions, conditions, limitations, and decision implications.'],
+  ['Vendor due diligence', 'Supplier service and data flow, access model, subprocessors, continuity, incident evidence, contract context, and exit assumptions.', 'Check evidence provenance, coverage, recency, relationship fit, concentration, access, incident, and exit gaps.', 'Procurement or third-party risk owner records approval, conditions, mitigation, escalation, or decline.'],
+  ['Compliance readiness', 'Applicable requirement or contract, jurisdiction, control register, evidence owner, exception state, and target review date.', 'Confirm applicability and map evidence to the requirement; use sampling or specialist review without presenting the work as certification.', 'Control owner records the gap, exception, remediation route, or referral to the appropriate assessor or authority.'],
+  ['Disaster recovery and BCP', 'Critical service, business impact, dependencies, recovery assumptions, RTO/RPO discussion, runbooks, and exercise authority.', 'Review or exercise the agreed scenario, record decisions and observed results, and preserve unresolved dependency and recovery gaps.', 'Continuity or service owner accepts the exercise result, owned actions, residual risk, and next exercise or restore test.'],
+  ['Incident readiness', 'Roles, escalation contacts, scenario, communications path, evidence boundary, exercise authority, and participant list.', 'Run a bounded tabletop or exercise, record decisions and evidence handling, and separate exercise observations from a live incident.', 'Incident or executive owner approves the lessons-learned backlog, communications actions, and next readiness review.'],
+] as const;
+
 const briefPreviewRows = [
   ['Decision question', 'Can a critical public-facing service proceed to the next approved change window?', 'Synthetic question / not a client decision'],
   ['Agreed boundary', 'Illustrative external application surface; no live target, customer record, credential, or production export is included.', 'Template scope / no live assessment'],
@@ -87,6 +98,37 @@ export default function DeliverablesPage() {
                 <p className={styles.cardBoundary}><strong>Boundary:</strong> {boundary}</p>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section className={styles.outputSection} id="evidence-request-map" aria-labelledby="evidence-request-heading">
+          <div className={styles.sectionIntro}>
+            <p className={styles.eyebrow}>{'// EVIDENCE REQUEST / ACCEPTANCE'}</p>
+            <h2 id="evidence-request-heading">Ask for evidence.<br /><span>Record the decision.</span></h2>
+            <p>This orientation map helps a buyer prepare a proportionate starting set for each service. It is not a universal client checklist, a classification policy, an authorization, a certification route, or a substitute for the applicable contract and owner decision.</p>
+          </div>
+          <div className={styles.actionTableWrap}>
+            <table className={`${styles.actionTable} ${styles.evidenceRequestMap}`}>
+              <caption className={styles.tableCaption}>Illustrative evidence-request and acceptance map — confirm scope, authority, handling, and applicability before relying on a request.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Engagement lane</th>
+                  <th scope="col">Safe starting evidence</th>
+                  <th scope="col">Review or verification method</th>
+                  <th scope="col">Decision or acceptance condition</th>
+                </tr>
+              </thead>
+              <tbody>
+                {evidenceRequestRows.map(([lane, evidence, method, acceptance]) => (
+                  <tr key={lane}>
+                    <td>{lane}</td>
+                    <td>{evidence}</td>
+                    <td>{method}</td>
+                    <td>{acceptance}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </section>
 
