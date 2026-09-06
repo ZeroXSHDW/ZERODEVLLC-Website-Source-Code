@@ -166,6 +166,19 @@ for (const marker of [
   requireText("same-site and external route signal contract", routeSignalSources, marker);
 }
 
+const claimsProofDiscoveryRoutes = [
+  ["app/page.tsx", page, 'href="/assurance#claims-proof">Review claims / proof / gates'],
+  ["app/services/page.tsx", servicesPage, 'href="/assurance#claims-proof">Check the claims-to-proof matrix before publishing a stronger statement'],
+  ["app/deliverables/page.tsx", deliverablesPage, 'href="/assurance#claims-proof">Use the claims-to-proof matrix before turning evidence into a public claim'],
+  ["app/frameworks/page.tsx", frameworksPage, 'href="/assurance#claims-proof">Check the claims-to-proof matrix'],
+  ["app/sectors/page.tsx", sectorsPage, 'href="/assurance#claims-proof">Check the claims-to-proof matrix'],
+  ["app/methodology/page.tsx", methodologyPage, 'href="/assurance#claims-proof">claims-to-proof matrix'],
+  ["app/remediation/page.tsx", remediationPage, 'href="/assurance#claims-proof">Check the claims-to-proof matrix before describing closure publicly'],
+];
+for (const [label, source, marker] of claimsProofDiscoveryRoutes) {
+  requireText(`${label} claims-proof discovery`, source, marker);
+}
+
 for (const marker of [
   'aria-label="Engagement page sections"',
   'href="#role-prep"',
