@@ -27,9 +27,9 @@ export default function NotFound() {
           <div className={styles.heroCopy}>
             <p>The requested path is not registered on this public surface. Nothing has been inferred from the missing route.</p>
             <p className={styles.heroBoundary}><strong>Safe recovery.</strong> Return to a known route, review the service boundaries, or start with a high-level question.</p>
-            <p><Link className={styles.primaryLink} href="/">Return to the ZeroDev index <span aria-hidden="true">↗</span></Link></p>
-            <p><Link className={styles.primaryLink} href="/services">Review security and resilience services <span aria-hidden="true">↗</span></Link></p>
-            <p><Link className={styles.primaryLink} href="/engage">Prepare a safe first brief <span aria-hidden="true">↗</span></Link></p>
+            <p><Link className={styles.primaryLink} href="/">Return to the ZeroDev index <span aria-hidden="true">→</span></Link></p>
+            <p><Link className={styles.primaryLink} href="/services">Review security and resilience services <span aria-hidden="true">→</span></Link></p>
+            <p><Link className={styles.primaryLink} href="/engage">Prepare a safe first brief <span aria-hidden="true">→</span></Link></p>
           </div>
         </section>
       </div>

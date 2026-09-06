@@ -140,7 +140,7 @@ export default function EngagePage() {
                 <h3>{title}</h3>
                 <p>{guidance}</p>
                 <p className={styles.cardBoundary}><strong>Safe first step:</strong> Keep the description high-level; do not attach credentials, customer records, private incident evidence, or live target details.</p>
-                <p><Link className={styles.primaryLink} href={href}>{action} <span aria-hidden="true">↗</span></Link></p>
+                <p><Link className={styles.primaryLink} href={href}>{action} <span aria-hidden="true">→</span></Link></p>
               </article>
             ))}
           </div>
@@ -262,7 +262,7 @@ export default function EngagePage() {
 
         <section className={styles.cta} aria-labelledby="engage-cta-heading">
           <div><p className={styles.eyebrow}>{'// NEXT MOVE'}</p><h2 id="engage-cta-heading">Make the first<br /><span>message useful.</span></h2></div>
-          <div><p>Send only a high-level objective, the service question, the intended audience, and the person who can confirm authority. No sensitive evidence is required to start.</p><p><a className={styles.primaryLink} href={briefMailto}>Start with the brief template <span aria-hidden="true">↗</span></a><br /><Link className={styles.primaryLink} href="/services">Review all services <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/deliverables">Review deliverable shapes <span aria-hidden="true">↗</span></Link></p></div>
+          <div><p>Send only a high-level objective, the service question, the intended audience, and the person who can confirm authority. No sensitive evidence is required to start.</p><p><a className={styles.primaryLink} href={briefMailto}>Start with the brief template <span aria-hidden="true">↗</span></a><br /><Link className={styles.primaryLink} href="/services">Review all services <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/deliverables">Review deliverable shapes <span aria-hidden="true">→</span></Link></p></div>
         </section>
       </div>
       <SiteFooter />

@@ -234,7 +234,7 @@ export default function ServicesPage() {
           <div className={styles.heroCopy}>
             <p>ZeroDev helps organizations turn technical evidence into safer decisions, stronger controls, and more recoverable operations.</p>
             <p className={styles.heroBoundary}><strong>Authorized work only.</strong> Every assessment begins with scope, authority, safety boundaries, and an agreed evidence path.</p>
-            <p><Link className={styles.primaryLink} href="/engage">Start with the authorized engagement brief <span aria-hidden="true">↗</span></Link><br /><a className={styles.primaryLink} href="#briefing-packs">Review service briefing packs <span aria-hidden="true">↓</span></a></p>
+            <p><Link className={styles.primaryLink} href="/engage">Start with the authorized engagement brief <span aria-hidden="true">→</span></Link><br /><a className={styles.primaryLink} href="#briefing-packs">Review service briefing packs <span aria-hidden="true">↓</span></a></p>
           </div>
         </section>
 
@@ -276,7 +276,7 @@ export default function ServicesPage() {
             <p className={styles.eyebrow}>{'// SERVICE BRIEFING PACKS'}</p>
             <h2 id="briefing-packs-heading">Know the<br /><span>first boundary.</span></h2>
             <p>These synthetic service briefs help a buyer compare the decision, entry gate, representative output, and no-fit condition before a detailed proposal or sensitive exchange.</p>
-            <p><Link className={styles.primaryLink} href="/deliverables">Review deliverable shapes <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/deliverables#evidence-request-map">Review evidence request map <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/frameworks#service-framework-map">Review framework applicability <span aria-hidden="true">↗</span></Link></p>
+            <p><Link className={styles.primaryLink} href="/deliverables">Review deliverable shapes <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/deliverables#evidence-request-map">Review evidence request map <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/frameworks#service-framework-map">Review framework applicability <span aria-hidden="true">→</span></Link></p>
           </div>
           <div className={styles.briefingPackGrid}>
             {serviceBriefs.map((brief) => (
@@ -318,7 +318,7 @@ export default function ServicesPage() {
               <tbody>
                 {decisionMatrix.map(([number, path, question, evidence, owner, gate]) => (
                   <tr key={path}>
-                    <td><a className={styles.tableServiceLink} href={`/services#service-${number}`}>{path} <span aria-hidden="true">↗</span></a></td>
+                    <td><a className={styles.tableServiceLink} href={`/services#service-${number}`}>{path} <span aria-hidden="true">↓</span></a></td>
                     <td>{question}</td>
                     <td>{evidence}</td>
                     <td>{owner}</td>
@@ -352,7 +352,7 @@ export default function ServicesPage() {
             <p className={styles.eyebrow}>{'// CONTROLLED ENGAGEMENT'}</p>
             <h2 id="lifecycle-heading">Authority before<br /><span>activity.</span></h2>
             <p>The work is designed to be understandable to technical teams, executives, procurement, legal, and risk owners—not only to the person running the assessment.</p>
-            <Link className={styles.primaryLink} href="/methodology">Read the full methodology <span aria-hidden="true">↗</span></Link>
+            <Link className={styles.primaryLink} href="/methodology">Read the full methodology <span aria-hidden="true">→</span></Link>
           </div>
           <div className={styles.lifecycleGrid}>
             {lifecycle.map(([number, title, description]) => (
@@ -383,7 +383,7 @@ export default function ServicesPage() {
           </div>
           <div>
             <p>Start with a high-level objective. Do not send credentials, secrets, customer records, payment details, or private incident evidence through ordinary email.</p>
-            <Link className={styles.primaryLink} href="/engage">Prepare the engagement brief <span aria-hidden="true">↗</span></Link>
+            <Link className={styles.primaryLink} href="/engage">Prepare the engagement brief <span aria-hidden="true">→</span></Link>
           </div>
         </section>
       </div>

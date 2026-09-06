@@ -75,7 +75,7 @@ export default function RemediationPage() {
           <div className={styles.heroCopy}>
             <p>A useful finding becomes a managed decision when the owner, treatment, evidence, due date, retest condition, and residual risk are visible together.</p>
             <p className={styles.heroBoundary}><strong>Review model only.</strong> This page describes a remediation pattern. It is not a live client tracker, case system, customer-data store, or proof that an action has been completed.</p>
-            <p><Link className={styles.primaryLink} href="/deliverables">Review deliverable shapes <span aria-hidden="true">↗</span></Link></p>
+            <p><Link className={styles.primaryLink} href="/deliverables">Review deliverable shapes <span aria-hidden="true">→</span></Link></p>
           </div>
         </section>
 
@@ -173,11 +173,12 @@ export default function RemediationPage() {
           <h2 id="closure-heading">Closed is not<br /><span>the end of risk.</span></h2>
           <p>A control can change while the residual risk remains. A retest can pass while another dependency stays out of scope. A supplier can provide a response without independent verification. Record what changed, what was verified, what remains uncertain, who accepted the residual risk, and when the decision should be revisited.</p>
           <p>Do not place live client records, credentials, private incident material, or confidential government or defense information into this public site or ordinary email.</p>
+          <p><Link className={styles.primaryLink} href="/assurance#claims-proof">Check the claims-to-proof matrix before describing closure publicly <span aria-hidden="true">→</span></Link></p>
         </section>
 
         <section className={styles.cta} aria-labelledby="remediation-cta-heading">
           <div><p className={styles.eyebrow}>{'// NEXT MOVE'}</p><h2 id="remediation-cta-heading">Make the action<br /><span>reviewable.</span></h2></div>
-          <div><p>Start with the decision, finding or gap, owner, evidence question, and review trigger. No sensitive record is required to begin a high-level conversation.</p><p><Link className={styles.primaryLink} href="/engage">Prepare the first brief <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/methodology">Review the methodology <span aria-hidden="true">↗</span></Link></p></div>
+          <div><p>Start with the decision, finding or gap, owner, evidence question, and review trigger. No sensitive record is required to begin a high-level conversation.</p><p><Link className={styles.primaryLink} href="/engage">Prepare the first brief <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/methodology">Review the methodology <span aria-hidden="true">→</span></Link></p></div>
         </section>
       </div>
       <SiteFooter />

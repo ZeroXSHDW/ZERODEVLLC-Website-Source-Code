@@ -121,7 +121,7 @@ export default function SiteHeader({ navigation, current, ariaLabel }: SiteHeade
         ))}
       </nav>
       <Link className={styles.headerAction} href="/engage" aria-label="Prepare a safe first brief">
-        Prepare a brief <span aria-hidden="true">↗</span>
+        Prepare a brief <span aria-hidden="true">→</span>
       </Link>
     </header>
   );

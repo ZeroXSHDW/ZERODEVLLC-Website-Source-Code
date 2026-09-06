@@ -129,7 +129,8 @@ export default function MethodologyPage() {
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// EVIDENCE OUTPUTS'}</p>
             <h2 id="outputs-heading">Make the result<br /><span>usable.</span></h2>
-            <p><Link className={styles.primaryLink} href="/deliverables">See representative deliverable shapes <span aria-hidden="true">↗</span></Link></p>
+            <p>Before an output becomes a public capability or trust statement, compare its evidence state, owner, and limitations against the <Link className={styles.primaryLink} href="/assurance#claims-proof">claims-to-proof matrix <span aria-hidden="true">→</span></Link>.</p>
+            <p><Link className={styles.primaryLink} href="/deliverables">See representative deliverable shapes <span aria-hidden="true">→</span></Link></p>
           </div>
           <div className={styles.outputGrid}>
             <article className={styles.outputCard}><h3>Executive view</h3><p>Decision, risk, owner, treatment choices, residual risk, and the next review date.</p></article>
@@ -141,7 +142,7 @@ export default function MethodologyPage() {
 
         <section className={styles.cta} aria-labelledby="methodology-cta-heading">
           <div><p className={styles.eyebrow}>{'// CONTINUE'}</p><h2 id="methodology-cta-heading">Choose the<br /><span>right surface.</span></h2></div>
-          <div><p>Review the service areas, standards library, or remediation lifecycle before starting a conversation.</p><p><Link className={styles.primaryLink} href="/services">View services <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/frameworks">View frameworks <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/remediation">View remediation lifecycle <span aria-hidden="true">↗</span></Link></p></div>
+          <div><p>Review the service areas, standards library, or remediation lifecycle before starting a conversation.</p><p><Link className={styles.primaryLink} href="/services">View services <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/frameworks">View frameworks <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/remediation">View remediation lifecycle <span aria-hidden="true">→</span></Link></p></div>
         </section>
       </div>
       <SiteFooter />

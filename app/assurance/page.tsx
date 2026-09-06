@@ -53,6 +53,17 @@ const reviewPath = [
   ['04', 'Treat and recheck', 'Give findings or gaps an owner, treatment choice, closeout evidence, residual-risk decision, and next review trigger.', '/remediation', 'Review remediation lifecycle'],
 ] as const;
 
+const claimsProofRows = [
+  ['Authorized testing', 'ZeroDev describes authorized, bounded defensive testing as a service capability.', 'Written authority, named owner, scope, exclusions, rules of engagement, safety contact, permitted methods, and source date.', 'Authority owner + service owner', 'A public service description is not permission, a live finding, or a security guarantee.'],
+  ['Military, government, or defense fit', 'The site describes relevant decision contexts and defensive capabilities, not a client, appointment, contract, clearance, or endorsement.', 'Exact current owner-approved contract, appointment, public reference, or other substantiation permitted for publication.', 'Company owner + legal/commercial reviewer', 'Audience fit must not be presented as government affiliation, defense approval, or a security clearance.'],
+  ['Framework alignment', 'Reference families are used to frame applicability, control, evidence, and readiness questions.', 'Current primary reference, applicable jurisdiction or contract, mapped scope, evidence state, and any required assessor or authority.', 'Control owner + applicable assessor or authority', 'Framework discussion is not certification, accreditation, compliance, or publisher endorsement.'],
+  ['Supplier assurance', 'ZeroDev can organize supplier evidence, gaps, access, continuity, incident, concentration, and exit questions.', 'Supplier source, provenance, coverage, permitted verification, exceptions, accountable buyer, and recorded decision.', 'Procurement or third-party-risk owner', 'A questionnaire or review is not supplier approval or independent assurance.'],
+  ['Compliance readiness', 'Readiness support can map requirements to controls, evidence, gaps, owners, and treatment.', 'Applicable requirement or contract, control evidence, implementation state, exceptions, limitations, and independent review where required.', 'Control owner + required assessor or authority', 'Readiness support is not certification, accreditation, clearance, legal advice, or regulator approval.'],
+  ['Recovery capability', 'Plans, dependencies, exercises, and restore evidence can be reviewed to identify resilience gaps.', 'Observed restore or exercise result, RTO/RPO context, dependency evidence, owner decision, and next validation date.', 'Continuity or service owner', 'A documented plan or tabletop alone is not proof that recovery will succeed.'],
+  ['Client outcomes and case studies', 'No client, contract, outcome, testimonial, or case-study claim is made without exact publication authority and substantiation.', 'Named permission, source record, scope, date, and evidence that can be reviewed without exposing sensitive information.', 'Company owner + client/publication approver', 'Do not invent, infer, or generalize client results from a template, preview, or capability description.'],
+  ['Public deployment and external domains', 'The `.com` source candidate, `.eu` gateway, and `.store` surface are separate lifecycle records with separate owner decisions.', 'Provider receipt, deployed revision, DNS/TLS evidence, public acceptance, and domain-specific ownership/source/catalogue evidence.', 'Provider/domain owner + release approver', 'A local build, HTTP response, or `.com` page does not prove public release, `.eu` ownership, `.store` catalogue, payment, or checkout status.'],
+] as const;
+
 export default function AssurancePage() {
   return (
     <main className={styles.page}>
@@ -72,7 +83,7 @@ export default function AssurancePage() {
           <div className={styles.heroCopy}>
             <p>Serious security and resilience decisions need more than a capable test. They need visible authority, proportionate evidence, clear limitations, safe handling, and an accountable owner.</p>
             <p className={styles.heroBoundary}><strong>Public assurance map.</strong> This page explains the operating boundaries for a high-level conversation. It is not a certification, accreditation, security clearance, legal opinion, or contract commitment.</p>
-            <p><Link className={styles.primaryLink} href="/engage">Prepare a safe first brief <span aria-hidden="true">↗</span></Link></p>
+            <p><Link className={styles.primaryLink} href="/engage">Prepare a safe first brief <span aria-hidden="true">→</span></Link></p>
           </div>
         </section>
 
@@ -84,6 +95,7 @@ export default function AssurancePage() {
             <li><a href="#information-handling"><span>03</span>Information handling</a></li>
             <li><a href="#procurement-governance"><span>04</span>Procurement</a></li>
             <li><a href="#claims-control"><span>05</span>Claims control</a></li>
+            <li><a href="#claims-proof"><span>06</span>Claims / proof</a></li>
           </ol>
         </nav>
 
@@ -99,7 +111,7 @@ export default function AssurancePage() {
                 <span className={styles.frameworkTag}>{number} / REVIEW STAGE</span>
                 <h3>{title}</h3>
                 <p>{description}</p>
-                <p className={styles.cardBoundary}><strong>Next route:</strong> <Link href={href}>{label} <span aria-hidden="true">↗</span></Link></p>
+                <p className={styles.cardBoundary}><strong>Next route:</strong> <Link href={href}>{label} <span aria-hidden="true">→</span></Link></p>
               </li>
             ))}
           </ol>
@@ -171,11 +183,45 @@ export default function AssurancePage() {
           <p>Relevant sector language does not establish a government appointment, defense contract, security clearance, regulator relationship, certification, client relationship, or formal approval. Such claims require exact, current, owner-approved evidence.</p>
         </section>
 
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="claims-proof" aria-labelledby="claims-proof-heading">
+          <div className={styles.sectionIntro}>
+            <p className={styles.eyebrow}>{'// CLAIMS / PROOF / GATES'}</p>
+            <h2 id="claims-proof-heading">Let the evidence<br /><span>carry the claim.</span></h2>
+            <p>This matrix is a public claims-control aid. It distinguishes what the site can safely say now, what evidence would be required for a stronger statement, who must own the decision, and what the current boundary prevents the statement from proving.</p>
+            <p><Link className={styles.primaryLink} href="/deliverables#provenance-confidence">Review evidence provenance <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/privacy">Review information handling <span aria-hidden="true">→</span></Link></p>
+          </div>
+          <div className={styles.actionTableWrap}>
+            <table className={`${styles.actionTable} ${styles.claimsProofMap}`}>
+              <caption className={styles.tableCaption}>Claims-to-proof matrix — public orientation only; not a certification register, client evidence register, legal opinion, or release approval.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Claim area</th>
+                  <th scope="col">Safe current wording</th>
+                  <th scope="col">Evidence required for a stronger claim</th>
+                  <th scope="col">Accountable owner / gate</th>
+                  <th scope="col">Current boundary</th>
+                </tr>
+              </thead>
+              <tbody>
+                {claimsProofRows.map(([area, wording, evidence, owner, boundary]) => (
+                  <tr key={area}>
+                    <td>{area}</td>
+                    <td>{wording}</td>
+                    <td>{evidence}</td>
+                    <td>{owner}</td>
+                    <td>{boundary}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
         <section className={styles.cta} aria-labelledby="assurance-cta-heading">
           <div><p className={styles.eyebrow}>{'// NEXT MOVE'}</p><h2 id="assurance-cta-heading">Bring the<br /><span>evidence question.</span></h2></div>
           <div>
             <p>Start with the decision, service or mission boundary, accountable owner, and desired evidence. Keep secrets and restricted material out of ordinary email.</p>
-            <p><Link className={styles.primaryLink} href="/engage">Prepare the safe first brief <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/deliverables">Review deliverable shapes <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/frameworks">Review framework references <span aria-hidden="true">↗</span></Link></p>
+            <p><Link className={styles.primaryLink} href="/engage">Prepare the safe first brief <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/deliverables">Review deliverable shapes <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/frameworks">Review framework references <span aria-hidden="true">→</span></Link></p>
           </div>
         </section>
       </div>

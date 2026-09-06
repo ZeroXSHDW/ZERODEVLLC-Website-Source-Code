@@ -116,7 +116,7 @@ export default function FrameworksPage() {
             <p className={styles.eyebrow}>{'// SERVICE / FRAMEWORK FIT'}</p>
             <h2 id="service-framework-heading">Choose a reference.<br /><span>Confirm applicability.</span></h2>
             <p>This orientation map connects each service question to candidate reference families. It is not a formal crosswalk, audit plan, certification route, legal interpretation, or evidence of compliance.</p>
-            <p><Link className={styles.primaryLink} href="/services#briefing-packs">Review the service briefing packs <span aria-hidden="true">↗</span></Link></p>
+            <p><Link className={styles.primaryLink} href="/services#briefing-packs">Review the service briefing packs <span aria-hidden="true">→</span></Link></p>
           </div>
           <div className={styles.actionTableWrap}>
             <table className={`${styles.actionTable} ${styles.frameworkMap}`}>
@@ -169,7 +169,7 @@ export default function FrameworksPage() {
 
         <section className={styles.cta} aria-labelledby="frameworks-cta-heading">
           <div><p className={styles.eyebrow}>{'// NEXT MOVE'}</p><h2 id="frameworks-cta-heading">Choose the<br /><span>decision to support.</span></h2></div>
-          <div><p>Start with the requirement, the system, or the risk decision. Do not send secrets or sensitive evidence through ordinary email.</p><Link className={styles.primaryLink} href="/assurance">Review assurance boundaries <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/services">Review services <span aria-hidden="true">↗</span></Link></div>
+          <div><p>Start with the requirement, the system, or the risk decision. Do not send secrets or sensitive evidence through ordinary email.</p><Link className={styles.primaryLink} href="/assurance">Review assurance boundaries <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/services">Review services <span aria-hidden="true">→</span></Link></div>
         </section>
       </div>
       <SiteFooter />

@@ -56,7 +56,7 @@ export default function SectorsPage() {
           <div className={styles.heroCopy}>
             <p>Different operating contexts ask different questions of the same technical evidence. Use this map to start with the decision, not a vague “military-grade” claim.</p>
             <p className={styles.heroBoundary}><strong>Audience map only.</strong> ZeroDev does not claim government appointment, defense contracts, security clearance, regulatory designation, client relationships, or formal approval from this page.</p>
-            <p><Link className={styles.primaryLink} href="/engage">Prepare a safe first brief <span aria-hidden="true">↗</span></Link></p>
+            <p><Link className={styles.primaryLink} href="/engage">Prepare a safe first brief <span aria-hidden="true">→</span></Link></p>
           </div>
         </section>
 
@@ -112,7 +112,7 @@ export default function SectorsPage() {
 
         <section className={styles.cta} aria-labelledby="sectors-cta-heading">
           <div><p className={styles.eyebrow}>{'// NEXT MOVE'}</p><h2 id="sectors-cta-heading">Bring the<br /><span>real decision.</span></h2></div>
-          <div><p>Send the service or mission context, the decision owner, the intended audience, and the question you need evidence to answer. Do not send sensitive evidence through ordinary email.</p><p><Link className={styles.primaryLink} href="/engage">Prepare the first brief <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/services">Review services <span aria-hidden="true">↗</span></Link></p></div>
+          <div><p>Send the service or mission context, the decision owner, the intended audience, and the question you need evidence to answer. Do not send sensitive evidence through ordinary email.</p><p><Link className={styles.primaryLink} href="/engage">Prepare the first brief <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/services">Review services <span aria-hidden="true">→</span></Link></p></div>
         </section>
       </div>
       <SiteFooter />

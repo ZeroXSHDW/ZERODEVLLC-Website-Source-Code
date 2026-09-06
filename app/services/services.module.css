@@ -160,6 +160,7 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .frameworkMap { min-width: 1160px; }
 .evidenceRequestMap { min-width: 1240px; }
 .procurementEvidenceMap { min-width: 1420px; }
+.claimsProofMap { min-width: 1480px; }
 .provenanceMap { min-width: 1180px; }
 .actionTable th, .actionTable td { border-bottom: 1px solid var(--line); padding: 14px 12px; text-align: left; vertical-align: top; }
 .actionTable th { color: var(--cyan); font-size: 8px; letter-spacing: .12em; text-transform: uppercase; }

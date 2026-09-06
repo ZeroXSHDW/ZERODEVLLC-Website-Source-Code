@@ -29,8 +29,8 @@ export default function Error({ reset }: ErrorProps) {
             <p className={styles.heroBoundary}><strong>Safe recovery.</strong> Retry once, return to a known route, or start with a high-level question. Do not send credentials, tokens, customer records, or incident evidence through ordinary email.</p>
             <div className={styles.recoveryActions}>
               <button className={styles.recoveryButton} type="button" onClick={() => reset()}>Retry route <span aria-hidden="true">↻</span></button>
-              <Link className={styles.primaryLink} href="/">Return to the ZeroDev index <span aria-hidden="true">↗</span></Link>
-              <Link className={styles.primaryLink} href="/engage">Prepare a safe first brief <span aria-hidden="true">↗</span></Link>
+              <Link className={styles.primaryLink} href="/">Return to the ZeroDev index <span aria-hidden="true">→</span></Link>
+              <Link className={styles.primaryLink} href="/engage">Prepare a safe first brief <span aria-hidden="true">→</span></Link>
             </div>
           </div>
         </section>

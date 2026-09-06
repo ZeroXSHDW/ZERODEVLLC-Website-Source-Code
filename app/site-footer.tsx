@@ -33,7 +33,7 @@ export default function SiteFooter() {
             <Link href={item.href} key={item.href}>
               <span>{String(index + 1).padStart(2, '0')}</span>
               {item.label}
-              <span aria-hidden="true">↗</span>
+              <span aria-hidden="true">→</span>
             </Link>
           ))}
         </nav>

@@ -21,7 +21,7 @@ export default function Loading() {
             <p>Preparing the next reviewable route and its evidence boundary.</p>
             <div className={styles.loadingPulse} aria-hidden="true"><span /><span /><span /><span /></div>
             <p className={styles.heroBoundary}><strong>Public boundary.</strong> This transition does not request credentials, payment details, or private incident evidence.</p>
-            <p><Link className={styles.primaryLink} href="/">Return to the ZeroDev index <span aria-hidden="true">↗</span></Link></p>
+            <p><Link className={styles.primaryLink} href="/">Return to the ZeroDev index <span aria-hidden="true">→</span></Link></p>
           </div>
         </section>
       </div>

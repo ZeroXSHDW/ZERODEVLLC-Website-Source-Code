@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const projectRoot = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const read = (relativePath) => readFile(join(projectRoot, relativePath), "utf8");
 
-const [page, homeStatus, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, assurancePage, sectorsPage, siteHeader] = await Promise.all([
+const [page, homeStatus, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, assurancePage, sectorsPage, siteHeader, siteFooter] = await Promise.all([
   read("app/page.tsx"),
   read("app/home-status.tsx"),
   read("app/globals.css"),
@@ -21,6 +21,7 @@ const [page, homeStatus, globalsCss, attacksRoute, liveDefconMap, engagePage, se
   read("app/assurance/page.tsx"),
   read("app/sectors/page.tsx"),
   read("app/site-header.tsx"),
+  read("app/site-footer.tsx"),
 ]);
 
 const failures = [];
@@ -155,6 +156,16 @@ for (const marker of [
   requireText("app/services/services.module.css shared navigation styles", servicesCss, marker);
 }
 
+const routeSignalSources = `${page}\n${servicesPage}\n${engagePage}\n${deliverablesPage}\n${methodologyPage}\n${remediationPage}\n${frameworksPage}\n${assurancePage}\n${sectorsPage}\n${siteHeader}\n${siteFooter}`;
+for (const marker of [
+  'href="/engage">Prepare a safe first brief <span aria-hidden="true">→</span>',
+  'href="/services">Review security and resilience services <span aria-hidden="true">→</span>',
+  'href={`/services#service-${number}`}>{path} <span aria-hidden="true">↓</span>',
+  'target="_blank" rel="noopener noreferrer" aria-label={`${surface.label}; opens in a new tab`}>{surface.label} <span aria-hidden="true">↗</span>',
+]) {
+  requireText("same-site and external route signal contract", routeSignalSources, marker);
+}
+
 for (const marker of [
   'aria-label="Engagement page sections"',
   'href="#role-prep"',
@@ -258,6 +269,8 @@ const additionalRouteIndexContracts = [
     'id="control-baseline"',
     'id="risk-interpretation"',
     'id="evidence-outputs"',
+    'href="/assurance#claims-proof"',
+    'claims-to-proof matrix',
   ]],
   ["app/remediation/page.tsx", remediationPage, [
     'aria-label="Remediation page sections"',
@@ -271,6 +284,8 @@ const additionalRouteIndexContracts = [
     'id="action-matrix"',
     'id="status-vocabulary"',
     'id="closure-boundary"',
+    'href="/assurance#claims-proof"',
+    'Check the claims-to-proof matrix before describing closure publicly',
   ]],
   ["app/frameworks/page.tsx", frameworksPage, [
     'aria-label="Frameworks page sections"',
@@ -290,11 +305,16 @@ const additionalRouteIndexContracts = [
     'href="#information-handling"',
     'href="#procurement-governance"',
     'href="#claims-control"',
+    'href="#claims-proof"',
     'id="review-path"',
     'id="assurance-pillars"',
     'id="information-handling"',
     'id="procurement-governance"',
     'id="claims-control"',
+    'id="claims-proof"',
+    'CLAIMS / PROOF / GATES',
+    'styles.claimsProofMap',
+    'Claims-to-proof matrix',
   ]],
   ["app/sectors/page.tsx", sectorsPage, [
     'aria-label="Sector fit page sections"',

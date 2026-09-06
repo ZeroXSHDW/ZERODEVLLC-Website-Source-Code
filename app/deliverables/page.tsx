@@ -96,7 +96,7 @@ export default function DeliverablesPage() {
           <div className={styles.heroCopy}>
             <p>These representative output shapes show how technical observations become usable decisions for executives, engineers, procurement, risk owners, and continuity teams.</p>
             <p className={styles.heroBoundary}><strong>Template boundary.</strong> These are illustrative structures, not client reports, independent assurance, certification evidence, government records, or proof of a particular engagement.</p>
-            <p><Link className={styles.primaryLink} href="/engage">Prepare a safe first brief <span aria-hidden="true">↗</span></Link></p>
+            <p><Link className={styles.primaryLink} href="/engage">Prepare a safe first brief <span aria-hidden="true">→</span></Link></p>
           </div>
         </section>
 
@@ -152,7 +152,7 @@ export default function DeliverablesPage() {
               <tbody>
                 {evidenceRequestRows.map(([number, lane, evidence, method, acceptance]) => (
                   <tr key={lane}>
-                    <td><Link className={styles.evidenceRequestLink} href={`/services#service-${number}`}>{lane} <span aria-hidden="true">↗</span></Link></td>
+                    <td><Link className={styles.evidenceRequestLink} href={`/services#service-${number}`}>{lane} <span aria-hidden="true">→</span></Link></td>
                     <td>{evidence}</td>
                     <td>{method}</td>
                     <td>{acceptance}</td>
@@ -168,7 +168,7 @@ export default function DeliverablesPage() {
             <p className={styles.eyebrow}>{'// PROCUREMENT / VENDOR RISK EVIDENCE PATH'}</p>
             <h2 id="procurement-evidence-heading">Review the supplier.<br /><span>Keep the decision owned.</span></h2>
             <p>This path helps a procurement or third-party-risk team turn a supplier conversation into a bounded, reviewable evidence record. It separates the service boundary, verification method, confidence, accountable owner, and next gate.</p>
-            <p><Link className={styles.primaryLink} href="/engage#print-brief">Use the first-brief template <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/frameworks#service-framework-map">Check framework fit <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/privacy">Review information handling <span aria-hidden="true">↗</span></Link></p>
+            <p><Link className={styles.primaryLink} href="/engage#print-brief">Use the first-brief template <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/frameworks#service-framework-map">Check framework fit <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/privacy">Review information handling <span aria-hidden="true">→</span></Link></p>
           </div>
           <div className={styles.actionTableWrap}>
             <table className={`${styles.actionTable} ${styles.procurementEvidenceMap}`}>
@@ -277,7 +277,7 @@ export default function DeliverablesPage() {
 
         <section className={styles.cta} aria-labelledby="deliverables-cta-heading">
           <div><p className={styles.eyebrow}>{'// NEXT MOVE'}</p><h2 id="deliverables-cta-heading">Choose the<br /><span>evidence question.</span></h2></div>
-          <div><p>Start with the decision, audience, scope, and authority. The deliverable shape can then be adapted to the engagement without inventing certainty.</p><p><Link className={styles.primaryLink} href="/engage">Prepare the first brief <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/methodology">Review the methodology <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/remediation">Review the remediation lifecycle <span aria-hidden="true">↗</span></Link></p></div>
+          <div><p>Start with the decision, audience, scope, and authority. The deliverable shape can then be adapted to the engagement without inventing certainty.</p><p><Link className={styles.primaryLink} href="/engage">Prepare the first brief <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/methodology">Review the methodology <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/remediation">Review the remediation lifecycle <span aria-hidden="true">→</span></Link></p></div>
         </section>
       </div>
       <SiteFooter />

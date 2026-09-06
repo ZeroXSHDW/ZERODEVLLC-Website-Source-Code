@@ -217,7 +217,7 @@ export default function Home() {
               Choose the first route <span aria-hidden="true">↓</span>
             </a>
             <a className="button button-ghost" href="/engage">
-              Prepare a safe first brief <span aria-hidden="true">↗</span>
+              Prepare a safe first brief <span aria-hidden="true">→</span>
             </a>
           </div>
           <p className="hero-action-note"><span>FIRST MOVE</span> Choose the decision route that fits the question, then bring the high-level objective, authority owner, and desired outcome.</p>
@@ -266,9 +266,9 @@ export default function Home() {
           <p>ZeroDev helps public-sector programs, defense suppliers, essential services, and regulated-technology teams turn authorized security evidence into safer decisions, stronger controls, and tested recovery.</p>
           <p className="mission-boundary"><strong>Authority and evidence first.</strong> Scope, written authority, information handling, limitations, and owner decisions remain explicit before technical activity begins.</p>
           <div className="mission-links">
-            <a className="text-link" href="/services">Review security and resilience services <span aria-hidden="true">↗</span></a>
-            <a className="text-link" href="/sectors">Find your operating context <span aria-hidden="true">↗</span></a>
-            <a className="text-link" href="/assurance">Review the assurance approach <span aria-hidden="true">↗</span></a>
+            <a className="text-link" href="/services">Review security and resilience services <span aria-hidden="true">→</span></a>
+            <a className="text-link" href="/sectors">Find your operating context <span aria-hidden="true">→</span></a>
+            <a className="text-link" href="/assurance">Review the assurance approach <span aria-hidden="true">→</span></a>
           </div>
         </div>
         <div className="mission-lanes">
@@ -296,7 +296,7 @@ export default function Home() {
               <div className="decision-card-topline"><span>{number} / 04</span><span>{label}</span></div>
               <h3>{title}</h3>
               <p>{description}</p>
-              <a className="text-link" href={href}>{action} <span aria-hidden="true">↗</span></a>
+              <a className="text-link" href={href}>{action} <span aria-hidden="true">→</span></a>
             </article>
           ))}
         </div>
@@ -377,7 +377,7 @@ export default function Home() {
           <p className="eyebrow">{'// OPERATING APPROACH'}</p>
           <h2 id="approach-heading">Make the signal<br /><span>worth acting on.</span></h2>
           <p>Useful software keeps evidence, state, and next action in the same frame. That is how a surface earns trust.</p>
-          <a className="text-link" href="/engage">Prepare a safe first brief <span aria-hidden="true">↗</span></a>
+          <a className="text-link" href="/engage">Prepare a safe first brief <span aria-hidden="true">→</span></a>
         </div>
         <div className="principles-grid">
           {principles.map((principle) => (
@@ -395,8 +395,8 @@ export default function Home() {
           <p className="eyebrow">{'// DEFENSIVE DELIVERY / REVIEWABLE OUTPUT'}</p>
           <h2 id="services-heading">From evidence<br /><span>to safer action.</span></h2>
           <p>Bring the security question, supplier decision, recovery concern, or evidence surface that needs to become clearer. The work stays authorized, bounded, source-aware, and reviewable.</p>
-          <a className="text-link" href="/engage">Start with the safe brief <span aria-hidden="true">↗</span></a>
-          <a className="text-link" href="/services">View security and resilience catalogue <span aria-hidden="true">↗</span></a>
+          <a className="text-link" href="/engage">Start with the safe brief <span aria-hidden="true">→</span></a>
+          <a className="text-link" href="/services">View security and resilience catalogue <span aria-hidden="true">→</span></a>
         </div>
         <div className="services-detail">
           <div className="delivery-phases">
@@ -430,8 +430,8 @@ export default function Home() {
         <div className="contact-actions">
           <p>Have a security, supplier, recovery, or resilience question that needs a defensible next step? Bring the high-level objective and the owner who can confirm authority.</p>
           <div className="hero-actions">
-            <a className="button button-primary" href="/engage">Prepare a safe first brief <span aria-hidden="true">↗</span></a>
-            <a className="button button-ghost" href="/services">Review security services <span aria-hidden="true">↗</span></a>
+            <a className="button button-primary" href="/engage">Prepare a safe first brief <span aria-hidden="true">→</span></a>
+            <a className="button button-ghost" href="/services">Review security services <span aria-hidden="true">→</span></a>
           </div>
         </div>
       </section>
