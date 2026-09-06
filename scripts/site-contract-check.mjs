@@ -80,6 +80,8 @@ for (const marker of [
   "roleRoutes.map((role)",
   "role-card-${role.tone}",
   "role.briefHref",
+  "Review the qualification context or prepare a role-aware safe brief",
+  "Prepare a role-aware brief for ${role.title}",
 ]) {
   requireRouteIndexText("app/page.tsx role route chooser", page, marker);
 }

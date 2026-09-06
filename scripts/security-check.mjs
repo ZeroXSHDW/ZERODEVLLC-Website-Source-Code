@@ -353,6 +353,7 @@ requireText("app/page.tsx", page, "CHOOSE BY DECISION OWNER");
 requireText("app/page.tsx", page, "roleRoutes.map((role)");
 requireText("app/page.tsx", page, "role-card-${role.tone}");
 requireText("app/page.tsx", page, "role.briefHref");
+requireText("app/page.tsx", page, "Prepare a role-aware brief for ${role.title}");
 requireText("app/role-routes.ts", roleRoutes, "briefPrompt");
 requireText("app/role-routes.ts", roleRoutes, "briefGate");
 requireText("app/page.tsx", page, "authorized defensive assessments");

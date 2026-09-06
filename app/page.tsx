@@ -319,7 +319,7 @@ export default function Home() {
             <p className="eyebrow">{'// CHOOSE BY DECISION OWNER'}</p>
             <h2 id="roles-heading">Know your role.<br /><span>Take the route.</span></h2>
           </div>
-          <p>Use the audience you represent as a second route signal. These links open existing qualification paths; they do not establish a client relationship, contract, authority, or sector credential.</p>
+          <p>Use the audience you represent as a second route signal. Review the qualification context or prepare a role-aware safe brief; neither action establishes a client relationship, contract, authority, or sector credential.</p>
         </div>
         <div className="role-grid">
           {roleRoutes.map((role) => (
@@ -329,7 +329,7 @@ export default function Home() {
               <p>{role.description}</p>
               <div className="role-card-actions">
                 <a className="text-link" href={role.href}>{role.action} <span aria-hidden="true">→</span></a>
-                <a className="role-brief-link" href={role.briefHref}>Prepare a role-aware brief <span aria-hidden="true">↗</span></a>
+                <a className="role-brief-link" href={role.briefHref} aria-label={`Prepare a role-aware brief for ${role.title}`}>Prepare a role-aware brief <span aria-hidden="true">↗</span></a>
               </div>
             </article>
           ))}
