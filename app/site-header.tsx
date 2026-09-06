@@ -31,11 +31,15 @@ const navigationId = 'site-secondary-navigation';
 
 export default function SiteHeader({ navigation, current, ariaLabel }: SiteHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement | null>(null);
   const navigationRef = useRef<HTMLElement | null>(null);
   const toggleRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     if (!menuOpen) return undefined;
+
+    const previousBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
 
     const getLinks = () => Array.from(
       navigationRef.current?.querySelectorAll<HTMLElement>('a[href]') ?? [],
@@ -67,19 +71,28 @@ export default function SiteHeader({ navigation, current, ariaLabel }: SiteHeade
       }
     };
 
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!headerRef.current?.contains(event.target as Node)) setMenuOpen(false);
+    };
+
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener('pointerdown', handlePointerDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('pointerdown', handlePointerDown);
+      document.body.style.overflow = previousBodyOverflow;
+    };
   }, [menuOpen]);
 
   return (
-    <header className={styles.header} id="top">
+    <header className={styles.header} id="top" ref={headerRef}>
       <Link className={styles.brand} href="/" aria-label="ZeroDev LLC home">
         <span className={styles.brandMark}>Z/</span>
         <span>ZERODEVLLC<span className={styles.brandDim}>.COM</span></span>
       </Link>
       <button
         ref={toggleRef}
-        className={styles.headerMenuToggle}
+        className={`${styles.headerMenuToggle}${menuOpen ? ` ${styles.headerMenuToggleOpen}` : ''}`}
         type="button"
         aria-expanded={menuOpen}
         aria-controls={navigationId}
@@ -107,6 +120,9 @@ export default function SiteHeader({ navigation, current, ariaLabel }: SiteHeade
           </Link>
         ))}
       </nav>
+      <Link className={styles.headerAction} href="/engage" aria-label="Prepare a safe first brief">
+        Prepare a brief <span aria-hidden="true">↗</span>
+      </Link>
     </header>
   );
 }

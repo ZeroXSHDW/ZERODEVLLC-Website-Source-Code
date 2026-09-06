@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const projectRoot = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const read = (relativePath) => readFile(join(projectRoot, relativePath), "utf8");
 
-const [page, homeStatus, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, assurancePage, sectorsPage] = await Promise.all([
+const [page, homeStatus, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, assurancePage, sectorsPage, siteHeader] = await Promise.all([
   read("app/page.tsx"),
   read("app/home-status.tsx"),
   read("app/globals.css"),
@@ -20,6 +20,7 @@ const [page, homeStatus, globalsCss, attacksRoute, liveDefconMap, engagePage, se
   read("app/frameworks/page.tsx"),
   read("app/assurance/page.tsx"),
   read("app/sectors/page.tsx"),
+  read("app/site-header.tsx"),
 ]);
 
 const failures = [];
@@ -126,6 +127,27 @@ for (const marker of [
 }
 
 for (const marker of [
+  'aria-expanded={menuOpen}',
+  'styles.headerMenuToggleOpen',
+  "document.addEventListener('pointerdown', handlePointerDown)",
+  "document.body.style.overflow = 'hidden'",
+  'className={styles.headerAction}',
+  'href="/engage" aria-label="Prepare a safe first brief"',
+]) {
+  requireText("app/site-header.tsx shared navigation contract", siteHeader, marker);
+}
+
+for (const marker of [
+  ".headerAction { align-items: center;",
+  ".headerAction:hover, .headerAction:focus-visible",
+  ".headerMenuToggleOpen span:first-child",
+  ".headerMenuToggleOpen span:nth-child(2)",
+  ".headerMenuToggleOpen span:last-child",
+]) {
+  requireText("app/services/services.module.css shared navigation styles", servicesCss, marker);
+}
+
+for (const marker of [
   'aria-label="Engagement page sections"',
   'href="#role-prep"',
   'href="#intake"',
@@ -185,6 +207,11 @@ for (const marker of [
   'id="fit-contexts"',
   'id="controlled-engagement"',
   'id="claims-limits"',
+  'aria-labelledby={`service-heading-${service.number}`}',
+  'id={`service-heading-${service.number}`}',
+  'aria-label={`Review ${service.title} service briefing pack`}',
+  'aria-labelledby={`brief-heading-${brief.number}`}',
+  'id={`brief-heading-${brief.number}`}',
   'Safe evidence',
   'Review method',
   'Next gate',

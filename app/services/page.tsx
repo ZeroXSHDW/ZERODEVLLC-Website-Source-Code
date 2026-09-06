@@ -258,14 +258,14 @@ export default function ServicesPage() {
           </div>
           <div className={styles.serviceGrid}>
             {services.map((service) => (
-              <article className={`${styles.serviceCard} ${styles[`tone${service.tone}`]}`} id={`service-${service.number}`} key={service.number}>
+              <article className={`${styles.serviceCard} ${styles[`tone${service.tone}`]}`} id={`service-${service.number}`} aria-labelledby={`service-heading-${service.number}`} key={service.number}>
                 <div className={styles.cardTopline}><span>{service.number} / 08</span><span>ENGAGEMENT AREA</span></div>
-                <h3>{service.title}</h3>
+                <h3 id={`service-heading-${service.number}`}>{service.title}</h3>
                 <p>{service.summary}</p>
                 <p className={styles.audience}><strong>Best starting point:</strong> {service.audience}</p>
                 <ul>{service.activities.map((activity) => <li key={activity}>{activity}</li>)}</ul>
                 <p className={styles.output}><strong>Typical output:</strong> {service.output}</p>
-                <p className={styles.serviceCardAction}><a className={styles.primaryLink} href={`#brief-${service.number}`}>Review the service briefing pack <span aria-hidden="true">↓</span></a></p>
+                <p className={styles.serviceCardAction}><a className={styles.primaryLink} href={`#brief-${service.number}`} aria-label={`Review ${service.title} service briefing pack`}>Review the service briefing pack <span aria-hidden="true">↓</span></a></p>
               </article>
             ))}
           </div>
@@ -280,9 +280,9 @@ export default function ServicesPage() {
           </div>
           <div className={styles.briefingPackGrid}>
             {serviceBriefs.map((brief) => (
-              <article className={styles.briefingPackCard} id={`brief-${brief.number}`} key={brief.number}>
+              <article className={styles.briefingPackCard} id={`brief-${brief.number}`} aria-labelledby={`brief-heading-${brief.number}`} key={brief.number}>
                 <span className={styles.frameworkTag}>{brief.number} / SYNTHETIC BRIEF / NOT A PROPOSAL</span>
-                <h3>{brief.title}</h3>
+                <h3 id={`brief-heading-${brief.number}`}>{brief.title}</h3>
                 <dl className={styles.briefingPackFacts}>
                   <div><dt>Decision</dt><dd>{brief.decision}</dd></div>
                   <div><dt>Entry gate</dt><dd>{brief.gate}</dd></div>
