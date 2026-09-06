@@ -38,6 +38,7 @@ const MAX_ERROR_LENGTH = 160;
 const DEFAULT_REFRESH_AFTER_MS = 30_000;
 const DEFAULT_REFRESH_AFTER_SECONDS = DEFAULT_REFRESH_AFTER_MS / 1000;
 const DEFAULT_REFRESH_COOLDOWN_SECONDS = 15;
+const DEFAULT_REFRESH_COOLDOWN_MS = DEFAULT_REFRESH_COOLDOWN_SECONDS * 1000;
 const DEFAULT_REQUEST_TIMEOUT_MS = 15_000;
 
 const mapNodes = [
@@ -199,7 +200,7 @@ export function LiveDefconMap() {
     refreshInFlight.current = true;
     setIsRefreshing(true);
     if (force) {
-      const localDeadline = requestStartedAt + DEFAULT_REFRESH_COOLDOWN_SECONDS * 1000;
+      const localDeadline = requestStartedAt + DEFAULT_REFRESH_COOLDOWN_MS;
       nextManualRefreshAtRef.current = localDeadline;
       setNextManualRefreshAt(localDeadline);
     }
@@ -263,10 +264,24 @@ export function LiveDefconMap() {
   }, []);
 
   useEffect(() => {
-    const refreshAfterMs = feed?.refreshAfterMs ?? DEFAULT_REFRESH_AFTER_MS;
-    const refreshTimer = window.setTimeout(() => void refreshFeed(), refreshAfterMs);
-    return () => window.clearTimeout(refreshTimer);
-  }, [feed?.checkedAt, feed?.refreshAfterMs, feed?.status, feed?.stale, refreshFeed]);
+    const initialRefreshTimer = window.setTimeout(() => void refreshFeed(), 0);
+    return () => window.clearTimeout(initialRefreshTimer);
+  }, [refreshFeed]);
+
+  useEffect(() => {
+    const refreshTimer = window.setInterval(
+      () => void refreshFeed(),
+      feed?.refreshAfterMs ?? DEFAULT_REFRESH_AFTER_MS,
+    );
+    const refreshOnVisible = () => {
+      if (document.visibilityState === 'visible') void refreshFeed();
+    };
+    document.addEventListener('visibilitychange', refreshOnVisible);
+    return () => {
+      window.clearInterval(refreshTimer);
+      document.removeEventListener('visibilitychange', refreshOnVisible);
+    };
+  }, [feed?.refreshAfterMs, refreshFeed]);
 
   return (
     <div className="defcon-map-card">
