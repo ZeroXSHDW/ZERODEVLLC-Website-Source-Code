@@ -90,6 +90,14 @@ for (const marker of [
 }
 
 for (const marker of [
+  "document.addEventListener('pointerdown', closeOnPointerDown)",
+  "document.body.style.overflow = 'hidden'",
+  'ref={headerRef}',
+]) {
+  requireText("app/home-status.tsx mobile navigation contract", homeStatus, marker);
+}
+
+for (const marker of [
   "FORCE_REFRESH_COOLDOWN_MS",
   "lastForcedRefreshAt",
   "requestTime - lastForcedRefreshAt < FORCE_REFRESH_COOLDOWN_MS",

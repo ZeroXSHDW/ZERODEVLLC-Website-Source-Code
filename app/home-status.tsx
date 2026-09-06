@@ -36,6 +36,7 @@ export function useHomeStatus() {
 
 export function HomeHeader({ navigation, statusHref }: { navigation: readonly NavigationItem[]; statusHref: string }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement | null>(null);
   const navigationRef = useRef<HTMLElement | null>(null);
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
   const { status } = useHomeStatus();
@@ -44,6 +45,8 @@ export function HomeHeader({ navigation, statusHref }: { navigation: readonly Na
 
   useEffect(() => {
     if (!mobileMenuOpen) return undefined;
+    const previousBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     const getLinks = () => Array.from(
       navigationRef.current?.querySelectorAll<HTMLElement>('a[href]') ?? [],
     );
@@ -69,9 +72,15 @@ export function HomeHeader({ navigation, statusHref }: { navigation: readonly Na
         first.focus();
       }
     };
+    const closeOnPointerDown = (event: PointerEvent) => {
+      if (!headerRef.current?.contains(event.target as Node)) setMobileMenuOpen(false);
+    };
     window.addEventListener('keydown', closeOnEscape);
+    document.addEventListener('pointerdown', closeOnPointerDown);
     return () => {
       window.removeEventListener('keydown', closeOnEscape);
+      document.removeEventListener('pointerdown', closeOnPointerDown);
+      document.body.style.overflow = previousBodyOverflow;
       const previouslyFocused = previouslyFocusedRef.current;
       if (previouslyFocused?.isConnected) previouslyFocused.focus();
     };
@@ -85,7 +94,7 @@ export function HomeHeader({ navigation, statusHref }: { navigation: readonly Na
   };
 
   return (
-    <header className="topbar">
+    <header className="topbar" ref={headerRef}>
       <a className="brand" href="#top" aria-label="ZeroDev LLC home">
         <span className="brand-mark">Z/</span>
         <span>ZERODEVLLC<span className="brand-dim">.COM</span></span>
