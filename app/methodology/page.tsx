@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader, { secondaryNavigation } from '../site-header';
+import SiteFooter from '../site-footer';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
@@ -133,6 +134,7 @@ export default function MethodologyPage() {
           <div><p>Review the service areas, standards library, or remediation lifecycle before starting a conversation.</p><p><Link className={styles.primaryLink} href="/services">View services <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/frameworks">View frameworks <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/remediation">View remediation lifecycle <span aria-hidden="true">↗</span></Link></p></div>
         </section>
       </div>
+      <SiteFooter />
     </main>
   );
 }

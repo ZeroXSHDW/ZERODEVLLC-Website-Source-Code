@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader, { secondaryNavigation } from '../site-header';
+import SiteFooter from '../site-footer';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
@@ -195,6 +196,7 @@ export default function EngagePage() {
           <div><p>Send only a high-level objective, the service question, the intended audience, and the person who can confirm authority. No sensitive evidence is required to start.</p><p><a className={styles.primaryLink} href={briefMailto}>Start with the brief template <span aria-hidden="true">↗</span></a><br /><Link className={styles.primaryLink} href="/services">Review all services <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/deliverables">Review deliverable shapes <span aria-hidden="true">↗</span></Link></p></div>
         </section>
       </div>
+      <SiteFooter />
     </main>
   );
 }

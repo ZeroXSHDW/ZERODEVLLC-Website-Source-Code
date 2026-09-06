@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader, { secondaryNavigation } from '../site-header';
+import SiteFooter from '../site-footer';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
@@ -141,6 +142,7 @@ export default function DeliverablesPage() {
           <div><p>Start with the decision, audience, scope, and authority. The deliverable shape can then be adapted to the engagement without inventing certainty.</p><p><Link className={styles.primaryLink} href="/engage">Prepare the first brief <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/methodology">Review the methodology <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/remediation">Review the remediation lifecycle <span aria-hidden="true">↗</span></Link></p></div>
         </section>
       </div>
+      <SiteFooter />
     </main>
   );
 }

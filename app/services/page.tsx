@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader, { secondaryNavigation } from '../site-header';
+import SiteFooter from '../site-footer';
 import styles from './services.module.css';
 
 export const metadata: Metadata = {
@@ -256,6 +257,7 @@ export default function ServicesPage() {
           </div>
         </section>
       </div>
+      <SiteFooter />
     </main>
   );
 }

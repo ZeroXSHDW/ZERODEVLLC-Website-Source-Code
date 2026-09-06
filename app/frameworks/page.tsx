@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader, { secondaryNavigation } from '../site-header';
+import SiteFooter from '../site-footer';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
@@ -107,6 +108,7 @@ export default function FrameworksPage() {
           <div><p>Start with the requirement, the system, or the risk decision. Do not send secrets or sensitive evidence through ordinary email.</p><Link className={styles.primaryLink} href="/assurance">Review assurance boundaries <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href="/services">Review services <span aria-hidden="true">↗</span></Link></div>
         </section>
       </div>
+      <SiteFooter />
     </main>
   );
 }

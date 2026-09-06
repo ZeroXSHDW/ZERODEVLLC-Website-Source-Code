@@ -31,6 +31,7 @@ const [
   engagePage,
   deliverablesPage,
   assurancePage,
+  siteFooter,
   sectorsPage,
   remediationPage,
   notFoundPage,
@@ -66,6 +67,7 @@ const [
   read("app/engage/page.tsx"),
   read("app/deliverables/page.tsx"),
   read("app/assurance/page.tsx"),
+  read("app/site-footer.tsx"),
   read("app/sectors/page.tsx"),
   read("app/remediation/page.tsx"),
   read("app/not-found.tsx"),
@@ -178,6 +180,10 @@ requireText("app/assurance/page.tsx", assurancePage, "<li className={styles.fram
 requireText("app/assurance/page.tsx", assurancePage, "Frame the question");
 requireText("app/assurance/page.tsx", assurancePage, "Review remediation lifecycle");
 requireText("app/assurance/page.tsx", assurancePage, "twitter:");
+requireText("app/site-footer.tsx", siteFooter, "Footer navigation");
+requireText("app/site-footer.tsx", siteFooter, "Private security reporting");
+requireText("app/site-footer.tsx", siteFooter, "NO USER TELEMETRY / READ-ONLY BY DEFAULT");
+requireText("app/site-footer.tsx", siteFooter, "payments, or sensitive records");
 requireText("app/sectors/page.tsx", sectorsPage, "Public-sector and government programs");
 requireText("app/sectors/page.tsx", sectorsPage, "Defense suppliers and primes");
 requireText("app/sectors/page.tsx", sectorsPage, "Audience map only");
