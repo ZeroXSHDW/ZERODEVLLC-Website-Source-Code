@@ -51,6 +51,17 @@ for (const marker of [
 }
 
 for (const marker of [
+  "@media (max-width: 980px) {",
+  ".topbar { min-height: 64px; padding-left: 16px; padding-right: 16px; }",
+  ".nav.is-open { display: flex; }",
+  ".mobile-menu-toggle { display: inline-flex; margin-left: auto; margin-right: 8px; }",
+  ".status-label { display: none; }",
+  "@media (max-width: 640px) {",
+]) {
+  requireText("app/globals.css responsive header", globalsCss, marker);
+}
+
+for (const marker of [
   "FORCE_REFRESH_COOLDOWN_MS",
   "lastForcedRefreshAt",
   "requestTime - lastForcedRefreshAt < FORCE_REFRESH_COOLDOWN_MS",
