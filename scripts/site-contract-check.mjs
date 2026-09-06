@@ -203,10 +203,14 @@ for (const marker of [
 }
 
 for (const marker of [
-  ".pageIndex { border-bottom: 1px solid var(--line);",
+  ".pageIndex { backdrop-filter: blur(18px);",
+  "position: sticky; top: 76px; z-index: 9;",
+  "background: rgba(5, 10, 8, .96);",
   ".pageIndex ol { display: grid;",
   ".pageIndex a:hover, .pageIndex a:focus-visible",
-  ".routeSection { scroll-margin-top: 96px; }",
+  ".routeSection { scroll-margin-top: 150px; }",
+  ".pageIndex { top: 64px; }",
+  ".pageIndex { background: #fff; box-shadow: none; position: static; }",
   ".pageIndex ol { gap: 6px; grid-template-columns: repeat(2, minmax(0, 1fr)); }",
 ]) {
   requireText("app/services/services.module.css route index", servicesCss, marker);

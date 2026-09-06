@@ -45,7 +45,7 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .heroBoundary strong { color: var(--amber); font-weight: 500; }
 .primaryLink { color: var(--green); display: inline-flex; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
 .primaryLink span { font-size: 14px; margin-left: 8px; }
-.pageIndex { border-bottom: 1px solid var(--line); border-top: 1px solid var(--line); display: grid; gap: 24px; grid-template-columns: minmax(120px, .34fr) minmax(0, 1.66fr); padding: 14px 0; }
+.pageIndex { backdrop-filter: blur(18px); background: rgba(5, 10, 8, .96); border-bottom: 1px solid var(--line); border-top: 1px solid var(--line); box-shadow: 0 12px 28px rgba(0, 0, 0, .16); display: grid; gap: 24px; grid-template-columns: minmax(120px, .34fr) minmax(0, 1.66fr); padding: 14px 0; position: sticky; top: 76px; z-index: 9; }
 .pageIndexLabel { color: var(--dim); font-size: 8px; letter-spacing: .16em; margin: 0; padding-top: 12px; text-transform: uppercase; }
 .pageIndex ol { display: grid; gap: 0 12px; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); list-style: none; margin: 0; padding: 0; }
 .pageIndex li { min-width: 0; }
@@ -53,7 +53,7 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .pageIndex a span { color: var(--green); font-size: 8px; letter-spacing: .12em; }
 .pageIndex a { font-size: 8px; letter-spacing: .08em; text-transform: uppercase; }
 .pageIndex a:hover, .pageIndex a:focus-visible { background: rgba(156, 255, 184, .06); border-color: var(--green); color: var(--green-bright); }
-.routeSection { scroll-margin-top: 96px; }
+.routeSection { scroll-margin-top: 150px; }
 .recoveryActions { align-items: center; display: flex; flex-wrap: wrap; gap: 18px 24px; margin-top: 28px; }
 .recoveryButton { background: transparent; border: 0; color: var(--green); cursor: pointer; display: inline-flex; font-size: 10px; letter-spacing: .14em; padding: 0; text-transform: uppercase; }
 .recoveryButton:hover, .recoveryButton:focus-visible { color: var(--green-bright); }
@@ -212,7 +212,7 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
   .hero, .serviceSection, .lifecycleSection, .methodSection, .frameworkSection, .outputSection, .boundarySection, .twoColumn { gap: 60px; grid-template-columns: 1fr; }
   .heroCopy { padding-left: 22px; }
   .siteFooterTop, .siteFooterExternal { gap: 48px; grid-template-columns: 1fr; }
-  .pageIndex { grid-template-columns: 1fr; gap: 10px; }
+  .pageIndex { grid-template-columns: 1fr; gap: 10px; top: 76px; }
   .pageIndexLabel { padding-top: 0; }
 }
 
@@ -226,6 +226,7 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
   .headerNav a { align-items: center; display: flex; font-size: 8px; min-height: 42px; }
   .hero { padding: 78px 0 80px; }
   .serviceSection, .lifecycleSection, .methodSection, .frameworkSection, .outputSection, .boundarySection, .twoColumn { padding: 80px 0; }
+  .pageIndex { top: 64px; }
   .pageIndex ol { gap: 6px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .pageIndex a { align-items: flex-start; flex-direction: row; gap: 10px; min-height: 38px; padding: 10px 8px; text-align: left; }
   .serviceGrid, .outputGrid, .frameworkGrid, .briefingPackGrid { grid-template-columns: 1fr; }
@@ -259,6 +260,7 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 @media print {
   .page { background: #fff; color: #111813; min-height: auto; padding: 0; }
   .skipLink, .header, .headerMenuToggle, .siteFooterNav { display: none !important; }
+  .pageIndex { background: #fff; box-shadow: none; position: static; }
   .hero, .serviceSection, .lifecycleSection, .methodSection, .frameworkSection, .outputSection, .boundarySection, .twoColumn { gap: 24pt; grid-template-columns: 1fr; padding: 20pt 0; }
   .heroCopy, .boundaryBox, .noticeSection, .serviceCard, .outputCard, .frameworkCard, .actionTableWrap, .services-boundary { background: #fff; border-color: #7d8a80; color: #111813; }
   .hero h1, h2, h3, .hero h1 span, h2 span, h3 span { color: #111813; }
