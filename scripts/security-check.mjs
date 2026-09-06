@@ -164,6 +164,8 @@ requireText("app/frameworks/page.tsx", frameworksPage, "NIST SP 800-171 Rev. 3 /
 requireText("app/frameworks/page.tsx", frameworksPage, "NIST SP 800-172 Rev. 3 / 800-172A Rev. 3");
 requireText("app/frameworks/page.tsx", frameworksPage, "CISA Cross-Sector Cybersecurity Performance Goals");
 requireText("app/frameworks/page.tsx", frameworksPage, "NCSC Cyber Assessment Framework 4.0");
+requireText("app/frameworks/page.tsx", frameworksPage, "DoD CMMC Program");
+requireText("app/frameworks/page.tsx", frameworksPage, "CMMC assessment, certification, C3PAO, DIBCAC, or DoD authorization");
 requireText("app/frameworks/page.tsx", frameworksPage, "EU NIS2 Directive (EU) 2022/2555");
 requireText("app/frameworks/page.tsx", frameworksPage, "EU DORA Regulation (EU) 2022/2554");
 requireText("app/frameworks/page.tsx", frameworksPage, "EU GDPR Regulation (EU) 2016/679");

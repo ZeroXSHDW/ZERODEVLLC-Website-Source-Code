@@ -467,6 +467,8 @@ const additionalRouteIndexContracts = [
     'Publisher-controlled current release; recheck latest',
     '4.0 / page reviewed 2025-08-06',
     '2019 + Amendment 1 (2024); to be revised / 2018',
+    'DoD CMMC Program',
+    'CMMC assessment, certification, C3PAO, DIBCAC, or DoD authorization',
     'EU NIS2 Directive (EU) 2022/2555',
     'EU DORA Regulation (EU) 2022/2554',
     'EU GDPR Regulation (EU) 2016/679',

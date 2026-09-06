@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://zerodevllc.com'),
   title: 'ZeroDev LLC // Defensive cyber risk and resilience',
   description: 'Authorized defensive cybersecurity, cyber-risk, technical and vendor due diligence, compliance readiness, and operational resilience services from Ireland.',
-  keywords: ['ZeroDev LLC', 'authorized penetration testing', 'vulnerability assessment', 'cyber risk management', 'technical due diligence', 'vendor due diligence', 'compliance readiness', 'disaster recovery', 'business continuity', 'incident readiness', 'DEFCON', 'Ireland'],
+  keywords: ['ZeroDev LLC', 'authorized penetration testing', 'vulnerability assessment', 'cyber risk management', 'technical due diligence', 'vendor due diligence', 'compliance readiness', 'CMMC applicability', 'disaster recovery', 'business continuity', 'incident readiness', 'DEFCON', 'Ireland'],
   applicationName: 'ZeroDev LLC',
   creator: 'ZeroDev LLC',
   alternates: {
