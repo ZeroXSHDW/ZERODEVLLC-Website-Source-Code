@@ -110,16 +110,23 @@ for (const marker of [
 
 for (const marker of [
   'aria-label="Engagement page sections"',
+  'href="#role-prep"',
   'href="#intake"',
   'href="#brief-template"',
   'href="#handling"',
   'href="#decision-lanes"',
   'href="#response"',
+  'id="role-prep"',
   'id="intake"',
   'id="brief-template"',
   'id="handling"',
   'id="decision-lanes"',
   'id="response"',
+  'PREPARE BY RESPONSIBILITY',
+  'Security / engineering owner',
+  'Procurement / vendor risk',
+  'Continuity / service owner',
+  'Executive / risk / assurance',
 ]) {
   requireText("app/engage/page.tsx route index", engagePage, marker);
 }

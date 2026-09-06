@@ -59,6 +59,13 @@ const lanes = [
   ['03', 'Recover', 'You need to know whether critical work can continue and recover under pressure.', 'Incident readiness, disaster recovery, BCP, tabletop exercises, and recovery validation.', [['07', 'Disaster recovery and BCP'], ['08', 'Incident readiness'], ['03', 'Cyber risk management']]],
 ] as const;
 
+const rolePreparation = [
+  ['01', 'Security / engineering owner', 'Scope the technical boundary.', 'Bring the named asset, service, or architecture boundary; the authority owner; the safety contact; and the evidence or output the technical team needs to act on.', 'Review exposure services', '/services#service-01'],
+  ['02', 'Procurement / vendor risk', 'Make the supplier decision defensible.', 'Bring the relationship, service and data boundary, review purpose, evidence contact, contract or exit question, and the owner of the commercial or risk decision.', 'Review vendor due diligence', '/services#service-05'],
+  ['03', 'Continuity / service owner', 'Prepare for the disruption scenario.', 'Bring the critical service, impact priority, dependencies, recovery assumptions, decision date, and the authority to run a restore test or exercise.', 'Review recovery services', '/services#service-07'],
+  ['04', 'Executive / risk / assurance', 'Make the treatment decision explainable.', 'Bring the decision deadline, risk criteria, control or supplier evidence boundary, accountable owner, and the point at which residual risk must be revisited.', 'Review risk and assurance', '/services#service-03'],
+] as const;
+
 const firstResponse = [
   'Clarify the decision, service lane, stakeholders, and desired output.',
   'Confirm that the proposed work is authorized, bounded, and safe to discuss.',
@@ -100,13 +107,33 @@ export default function EngagePage() {
         <nav className={styles.pageIndex} aria-label="Engagement page sections">
           <p className={styles.pageIndexLabel}>{'// ROUTE INDEX'}</p>
           <ol>
-            <li><a href="#intake"><span>01</span>Safe intake</a></li>
-            <li><a href="#brief-template"><span>02</span>Brief template</a></li>
-            <li><a href="#handling"><span>03</span>Handling rules</a></li>
-            <li><a href="#decision-lanes"><span>04</span>Decision lanes</a></li>
-            <li><a href="#response"><span>05</span>What happens next</a></li>
+            <li><a href="#role-prep"><span>01</span>Prepare by role</a></li>
+            <li><a href="#intake"><span>02</span>Safe intake</a></li>
+            <li><a href="#brief-template"><span>03</span>Brief template</a></li>
+            <li><a href="#handling"><span>04</span>Handling rules</a></li>
+            <li><a href="#decision-lanes"><span>05</span>Decision lanes</a></li>
+            <li><a href="#response"><span>06</span>What happens next</a></li>
           </ol>
         </nav>
+
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="role-prep" aria-labelledby="role-prep-heading">
+          <div className={styles.sectionIntro}>
+            <p className={styles.eyebrow}>{'// PREPARE BY RESPONSIBILITY'}</p>
+            <h2 id="role-prep-heading">Bring the right<br /><span>decision owner.</span></h2>
+            <p>The first brief becomes more useful when it names who owns the question, what decision is due, and what evidence can safely support it. Choose the closest responsibility; the service lane can remain undecided.</p>
+          </div>
+          <div className={styles.outputGrid}>
+            {rolePreparation.map(([number, role, title, guidance, action, href]) => (
+              <article className={styles.outputCard} key={number}>
+                <p className={styles.artifactAudience}>{number} / {role}</p>
+                <h3>{title}</h3>
+                <p>{guidance}</p>
+                <p className={styles.cardBoundary}><strong>Safe first step:</strong> Keep the description high-level; do not attach credentials, customer records, private incident evidence, or live target details.</p>
+                <p><Link className={styles.primaryLink} href={href}>{action} <span aria-hidden="true">↗</span></Link></p>
+              </article>
+            ))}
+          </div>
+        </section>
 
         <section className={`${styles.twoColumn} ${styles.routeSection}`} id="intake" aria-labelledby="intake-heading">
           <div>
