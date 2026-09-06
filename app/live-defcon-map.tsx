@@ -256,13 +256,10 @@ export function LiveDefconMap() {
   }, []);
 
   useEffect(() => {
-    const initialTimer = window.setTimeout(() => void refreshFeed(), 0);
-    const timer = window.setInterval(() => void refreshFeed(), 60_000);
-    return () => {
-      window.clearTimeout(initialTimer);
-      window.clearInterval(timer);
-    };
-  }, [refreshFeed]);
+    const refreshAfterMs = (feed?.refreshAfterSeconds ?? 0) * 1000;
+    const refreshTimer = window.setTimeout(() => void refreshFeed(), refreshAfterMs);
+    return () => window.clearTimeout(refreshTimer);
+  }, [feed?.checkedAt, feed?.refreshAfterSeconds, feed?.status, feed?.stale, refreshFeed]);
 
   return (
     <div className="defcon-map-card">
@@ -317,7 +314,7 @@ export function LiveDefconMap() {
         <div className="threat-feed-heading">
           <div>
             <span>LIVE PUBLIC THREAT SIGNALS</span>
-            <small>{feed ? `${feed.events.length} source-linked events · observed ${formatFeedTime(feed.observedAt)} · checked ${formatFeedTime(feed.checkedAt)} · auto-refresh ${feed.refreshAfterSeconds}s${feed.stale ? ' · stale cache' : ''}${refreshWaitSeconds > 0 ? ` · manual refresh in ${refreshWaitSeconds}s` : ''}` : 'Connecting to public sources…'}</small>
+            <small>{feed ? <>{feed.events.length} source-linked events · observed <time dateTime={feed.observedAt}>{formatFeedTime(feed.observedAt)}</time> · checked <time dateTime={feed.checkedAt}>{formatFeedTime(feed.checkedAt)}</time> · auto-refresh {feed.refreshAfterSeconds}s{feed.stale ? ' · stale cache' : ''}{refreshWaitSeconds > 0 ? ` · manual refresh in ${refreshWaitSeconds}s` : ''}</> : 'Connecting to public sources…'}</small>
           </div>
           <div className="threat-feed-controls">
             <span className={`threat-feed-status threat-status-${feed?.status ?? 'connecting'}`} role="status" aria-live="polite"><i /> {feed?.status === 'live' ? 'LIVE' : feed?.status === 'degraded' ? 'DEGRADED' : feed?.status === 'unavailable' ? 'UNAVAILABLE' : 'CONNECTING'}</span>
@@ -339,7 +336,7 @@ export function LiveDefconMap() {
               const severity = getEventSeverity(event.severity);
               return <a className="threat-event" href={event.url} key={event.id} target="_blank" rel="noopener noreferrer" aria-label={`${event.title} from ${event.source}; severity ${severity.label.toLowerCase()}; ${getEventKindLabel(event.kind)}; observed ${formatFeedTime(event.observedAt)}; open source advisory; opens in a new tab`}>
                 <span className={`threat-severity severity-${severity.tone}`} aria-hidden="true" />
-                <span className="threat-event-copy"><strong>{event.title}</strong><small><b className={`threat-severity-label severity-label-${severity.tone}`}>{severity.label}</b><b className="threat-source-badge">{event.source}</b> {getEventKindLabel(event.kind).toUpperCase()} · observed {formatFeedTime(event.observedAt)}</small></span>
+                <span className="threat-event-copy"><strong>{event.title}</strong><small><b className={`threat-severity-label severity-label-${severity.tone}`}>{severity.label}</b><b className="threat-source-badge">{event.source}</b> {getEventKindLabel(event.kind).toUpperCase()} · observed <time dateTime={event.observedAt}>{formatFeedTime(event.observedAt)}</time></small></span>
                 <span className="threat-event-arrow" aria-hidden="true">↗</span>
               </a>;
             })()
@@ -373,7 +370,7 @@ export function LiveDefconMap() {
                   <tr key={`data-${event.id}`}>
                     <th scope="row"><a href={event.url} target="_blank" rel="noopener noreferrer">{event.title} <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a></th>
                     <td>{getEventSeverity(event.severity).label}</td>
-                    <td>{event.source}<br /><span>{formatFeedTime(event.observedAt)}</span></td>
+                    <td>{event.source}<br /><span><time dateTime={event.observedAt}>{formatFeedTime(event.observedAt)}</time></span></td>
                   </tr>
                 ))}
                 {feed?.events.length === 0 && <tr><td colSpan={3}>No events returned in this refresh.</td></tr>}
