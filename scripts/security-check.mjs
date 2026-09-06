@@ -133,6 +133,7 @@ requireText("app/services/page.tsx", servicesPage, "public-sector programs, mili
 requireText("app/services/page.tsx", servicesPage, "Vendor due diligence");
 requireText("app/services/page.tsx", servicesPage, "Disaster recovery and BCP");
 requireText("app/services/page.tsx", servicesPage, "Readiness is not certification");
+requireText("app/services/page.tsx", servicesPage, "confirm the contract, system boundary, assessment method, and responsible authority");
 requireText("app/services/page.tsx", servicesPage, "Public-sector procurement");
 requireText("app/services/page.tsx", servicesPage, "Defense-supplier assurance");
 requireText("app/services/page.tsx", servicesPage, "Capability decision matrix");
