@@ -44,7 +44,7 @@ export default function PrivacyPage() {
           <p className={styles.eyebrow}><span aria-hidden="true">&gt;_</span> PRIVACY / PUBLIC SURFACE</p>
           <h1 id="privacy-heading">Keep the<br /><span>signal clean.</span></h1>
           <p className={styles.lede}>This page describes the narrow privacy boundary of the public ZeroDev LLC index. It is a plain-language operating note for this read-only surface, not a substitute for provider terms or legal advice.</p>
-          <p className={styles.reviewed}>LAST REVIEWED / 2026-09-05</p>
+          <p className={styles.reviewed}><time dateTime="2026-09-06">LAST REVIEWED / 2026-09-06</time></p>
         </section>
 
         <div className={styles.content}>

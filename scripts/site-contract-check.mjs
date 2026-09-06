@@ -65,6 +65,9 @@ for (const marker of [
   ".decision-grid { grid-template-columns: 1fr; }",
   ".decision-card:hover, .decision-card:focus-within,",
   ".decision-card, .card-mode",
+  ".system-card:hover, .system-card:focus-within",
+  ".system-card:hover::before, .system-card:focus-within::before",
+  ".card-link, .card-detail-link { align-items: center;",
 ]) {
   requireText("app/globals.css decision layout", globalsCss, marker);
 }
