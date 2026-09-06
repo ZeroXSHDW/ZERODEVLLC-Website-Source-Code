@@ -96,15 +96,114 @@ const frameworkLibraryClassNames: FrameworkLibraryClassNames = {
 };
 
 const serviceFrameworkMap = [
-  ['Authorized penetration testing', ['NIST SP 800-115', 'OWASP testing guidance'], 'Is the proposed test scope, authority, method, and evidence path proportionate?', 'Testing guidance does not grant authorization or prove that a system is secure.'],
-  ['Vulnerability assessment', ['NIST CSF 2.0', 'NIST SP 800-30 Rev. 1', 'CIS Controls v8.1'], 'How will an observed weakness become context, priority, ownership, and treatment?', 'A scanner result or control list is not, by itself, a validated finding or risk-acceptance decision.'],
-  ['Cyber risk management', ['NIST CSF 2.0', 'NIST Risk Management Framework (SP 800-37 Rev. 2)', 'NIST SP 800-30 Rev. 1', 'CISA Cross-Sector Cybersecurity Performance Goals'], 'What outcomes, risk criteria, evidence quality, and decision owner apply?', 'A reference family is not a universal score, board decision, or residual-risk acceptance.'],
-  ['Technical due diligence', ['NIST CSF 2.0', 'NIST SP 800-53 Rev. 5', 'NIST SP 800-161 Rev. 1', 'EU GDPR Regulation (EU) 2016/679', 'EU Cyber Resilience Act (EU) 2024/2847'], 'Which architecture, control, dependency, product, data, or delivery questions could change the material decision?', 'Reference alignment is not independent assurance and does not create a legal, financial, investment, or procurement verdict.'],
-  ['Vendor due diligence', ['NIST SP 800-161 Rev. 1', 'NIST CSF 2.0', 'CIS Controls v8.1', 'DoD CMMC Program', 'EU NIS2 Directive (EU) 2022/2555', 'EU DORA Regulation (EU) 2022/2554', 'EU GDPR Regulation (EU) 2016/679'], 'Does the supplier evidence fit the service, data, access, incident, concentration, exit, and applicable contract or regulatory relationship?', 'A questionnaire or reference map is not supplier assurance, a CMMC status, a regulatory determination, or a procurement decision.'],
-  ['Government and defense readiness', ['NIST Risk Management Framework (SP 800-37 Rev. 2)', 'NIST SP 800-171 Rev. 3 / 800-171A Rev. 3', 'NIST SP 800-172 Rev. 3 / 800-172A Rev. 3', 'DoD CMMC Program', 'EU NIS2 Directive (EU) 2022/2555', 'EU Critical Entities Resilience Directive (EU) 2022/2557'], 'Which mission, solicitation or contract, FCI/CUI boundary, system boundary, required level, assessment route, critical-entity context, and authorizing role define the actual requirement?', 'Reference alignment is not an authorization to operate, CMMC status, clearance, contract award, critical-entity designation, or government approval.'],
-  ['Compliance readiness', ['NIST SP 800-53 Rev. 5', 'NIST Risk Management Framework (SP 800-37 Rev. 2)', 'NIST SP 800-171 Rev. 3 / 800-171A Rev. 3', 'NIST SP 800-172 Rev. 3 / 800-172A Rev. 3', 'DoD CMMC Program', 'ISO/IEC 27001:2022', 'EU NIS2 Directive (EU) 2022/2555', 'EU DORA Regulation (EU) 2022/2554', 'EU GDPR Regulation (EU) 2016/679', 'EU Cyber Resilience Act (EU) 2024/2847'], 'Which requirement applies, what evidence is expected, which legal, contracting, or supervisory role is relevant, and who owns the control or exception?', 'Readiness mapping is not certification, accreditation, clearance, CMMC status, legal advice, conformity assessment, or regulator approval.'],
-  ['Disaster recovery and BCP', ['NIST SP 800-34 Rev. 1', 'ISO 22301:2019 / ISO 31000:2018', 'NIST CSF 2.0', 'EU DORA Regulation (EU) 2022/2554', 'EU Critical Entities Resilience Directive (EU) 2022/2557'], 'What critical service, dependencies, recovery assumptions, regulatory context, and exercise evidence determine continuity?', 'A plan, directive, or framework does not prove recovery until the relevant capability is exercised and evidenced.'],
-  ['Incident readiness', ['NIST SP 800-61 Rev. 3', 'NIST CSF 2.0', 'CISA Cross-Sector Cybersecurity Performance Goals', 'NCSC Cyber Assessment Framework 4.0', 'EU NIS2 Directive (EU) 2022/2555', 'EU DORA Regulation (EU) 2022/2554', 'EU GDPR Regulation (EU) 2016/679'], 'What roles, decisions, communications, evidence boundaries, reporting duties, and lessons must be practiced?', 'A readiness exercise is not live incident response, attribution, a breach notification decision, or a regulator determination.'],
+  {
+    service: 'Authorized penetration testing',
+    references: ['NIST SP 800-115', 'OWASP testing guidance'],
+    applicability: 'Is the proposed test scope, authority, method, and evidence path proportionate?',
+    record: {
+      evidence: 'Written authority, target inventory, exclusions, rules of engagement, safety contact, and approved handling path.',
+      owner: 'Authority owner and security/service owner.',
+      treatment: 'Remediate, accept, or defer each validated finding; ZeroDev records options, not acceptance.',
+      retest: 'Scope change, remediation completion, or agreed retest window.',
+    },
+    boundary: 'Testing guidance does not grant authorization or prove that a system is secure.',
+  },
+  {
+    service: 'Vulnerability assessment',
+    references: ['NIST CSF 2.0', 'NIST SP 800-30 Rev. 1', 'CIS Controls v8.1'],
+    applicability: 'How will an observed weakness become context, priority, ownership, and treatment?',
+    record: {
+      evidence: 'Asset inventory or scanner context, source date, criticality, permission, and an owner who can validate observations.',
+      owner: 'Security, engineering, and asset owner.',
+      treatment: 'Validate, prioritize, assign, mitigate, monitor, or record an authorized exception.',
+      retest: 'Coverage change, patch/configuration change, or material exposure or threat change.',
+    },
+    boundary: 'A scanner result or control list is not, by itself, a validated finding or risk-acceptance decision.',
+  },
+  {
+    service: 'Cyber risk management',
+    references: ['NIST CSF 2.0', 'NIST Risk Management Framework (SP 800-37 Rev. 2)', 'NIST SP 800-30 Rev. 1', 'CISA Cross-Sector Cybersecurity Performance Goals'],
+    applicability: 'What outcomes, risk criteria, evidence quality, and decision owner apply?',
+    record: {
+      evidence: 'Mission or business objective, risk criteria, important services, current controls, dependencies, and review date.',
+      owner: 'Risk or executive owner with control owners.',
+      treatment: 'Choose treatment, transfer, avoidance, monitoring, or residual-risk acceptance through the accountable owner.',
+      retest: 'Decision review date, control change, mission change, or material threat and dependency change.',
+    },
+    boundary: 'A reference family is not a universal score, board decision, or residual-risk acceptance.',
+  },
+  {
+    service: 'Technical due diligence',
+    references: ['NIST CSF 2.0', 'NIST SP 800-53 Rev. 5', 'NIST SP 800-161 Rev. 1', 'EU GDPR Regulation (EU) 2016/679', 'EU Cyber Resilience Act (EU) 2024/2847'],
+    applicability: 'Which architecture, control, dependency, product, data, or delivery questions could change the material decision?',
+    record: {
+      evidence: 'Architecture and data-flow context, delivery evidence, critical dependencies, resilience evidence, and open questions.',
+      owner: 'Decision owner and technical lead.',
+      treatment: 'Set conditions, request remediation, escalate an open question, or defer the decision with limitations recorded.',
+      retest: 'Material architecture, product, provider, data-flow, or delivery-practice change.',
+    },
+    boundary: 'Reference alignment is not independent assurance and does not create a legal, financial, investment, or procurement verdict.',
+  },
+  {
+    service: 'Vendor due diligence',
+    references: ['NIST SP 800-161 Rev. 1', 'NIST CSF 2.0', 'CIS Controls v8.1', 'DoD CMMC Program', 'EU NIS2 Directive (EU) 2022/2555', 'EU DORA Regulation (EU) 2022/2554', 'EU GDPR Regulation (EU) 2016/679'],
+    applicability: 'Does the supplier evidence fit the service, data, access, incident, concentration, exit, and applicable contract or regulatory relationship?',
+    record: {
+      evidence: 'Contract and service boundary, data flow, evidence dates, subprocessors, continuity, incident route, and exit assumptions.',
+      owner: 'Procurement or third-party risk owner with the service owner.',
+      treatment: 'Approve with conditions, mitigate, escalate, defer, or decline; ZeroDev does not approve the supplier.',
+      retest: 'Renewal, material service or subprocessor change, incident, control expiry, or exit-plan change.',
+    },
+    boundary: 'A questionnaire or reference map is not supplier assurance, a CMMC status, a regulatory determination, or a procurement decision.',
+  },
+  {
+    service: 'Government and defense readiness',
+    references: ['NIST Risk Management Framework (SP 800-37 Rev. 2)', 'NIST SP 800-171 Rev. 3 / 800-171A Rev. 3', 'NIST SP 800-172 Rev. 3 / 800-172A Rev. 3', 'DoD CMMC Program', 'EU NIS2 Directive (EU) 2022/2555', 'EU Critical Entities Resilience Directive (EU) 2022/2557'],
+    applicability: 'Which mission, solicitation or contract, FCI/CUI boundary, system boundary, required level, assessment route, critical-entity context, and authorizing role define the actual requirement?',
+    record: {
+      evidence: 'Solicitation or contract clauses, FCI/CUI flow, system boundary, required level, assessment route, designation, and authority.',
+      owner: 'Responsible program authority and system owner, with the required assessor or authority.',
+      treatment: 'Record remediation, exception, assessment route, flow-down, or authority referral; do not infer status from a framework name.',
+      retest: 'Contract or data-flow change, boundary change, assessment rule update, or authority direction.',
+    },
+    boundary: 'Reference alignment is not an authorization to operate, CMMC status, clearance, contract award, critical-entity designation, or government approval.',
+  },
+  {
+    service: 'Compliance readiness',
+    references: ['NIST SP 800-53 Rev. 5', 'NIST Risk Management Framework (SP 800-37 Rev. 2)', 'NIST SP 800-171 Rev. 3 / 800-171A Rev. 3', 'NIST SP 800-172 Rev. 3 / 800-172A Rev. 3', 'DoD CMMC Program', 'ISO/IEC 27001:2022', 'EU NIS2 Directive (EU) 2022/2555', 'EU DORA Regulation (EU) 2022/2554', 'EU GDPR Regulation (EU) 2016/679', 'EU Cyber Resilience Act (EU) 2024/2847'],
+    applicability: 'Which requirement applies, what evidence is expected, which legal, contracting, or supervisory role is relevant, and who owns the control or exception?',
+    record: {
+      evidence: 'Requirement or contract, jurisdiction, control inventory, implementation state, evidence owner, exception record, and CUI applicability decision where relevant.',
+      owner: 'Compliance or control owner with the appropriate assessor, legal adviser, or authority.',
+      treatment: 'Record remediation, exception, referral, assessment route, or certification path without claiming the outcome.',
+      retest: 'Requirement/version change, evidence expiry, scope change, audit or assessment date, or control change.',
+    },
+    boundary: 'Readiness mapping is not certification, accreditation, clearance, CMMC status, legal advice, conformity assessment, or regulator approval.',
+  },
+  {
+    service: 'Disaster recovery and BCP',
+    references: ['NIST SP 800-34 Rev. 1', 'ISO 22301:2019 / ISO 31000:2018', 'NIST CSF 2.0', 'EU DORA Regulation (EU) 2022/2554', 'EU Critical Entities Resilience Directive (EU) 2022/2557'],
+    applicability: 'What critical service, dependencies, recovery assumptions, regulatory context, and exercise evidence determine continuity?',
+    record: {
+      evidence: 'Business-impact context, critical-service map, dependencies, recovery assumptions, RTO/RPO discussion, and test result.',
+      owner: 'Continuity or service owner with dependency owners.',
+      treatment: 'Prioritize recoverability actions, alternate arrangements, capacity, dependency mitigation, or residual-risk review.',
+      retest: 'Restore test, exercise, architecture/dependency change, or recovery-objective change.',
+    },
+    boundary: 'A plan, directive, or framework does not prove recovery until the relevant capability is exercised and evidenced.',
+  },
+  {
+    service: 'Incident readiness',
+    references: ['NIST SP 800-61 Rev. 3', 'NIST CSF 2.0', 'CISA Cross-Sector Cybersecurity Performance Goals', 'NCSC Cyber Assessment Framework 4.0', 'EU NIS2 Directive (EU) 2022/2555', 'EU DORA Regulation (EU) 2022/2554', 'EU GDPR Regulation (EU) 2016/679'],
+    applicability: 'What roles, decisions, communications, evidence boundaries, reporting duties, and lessons must be practiced?',
+    record: {
+      evidence: 'Scenario, roles, escalation, communications path, evidence boundary, exercise authority, and participant record.',
+      owner: 'Incident or executive owner with legal, privacy, and service authorities as applicable.',
+      treatment: 'Approve lessons, improve controls, escalate reporting questions, and route live-incident decisions to the authorized channel.',
+      retest: 'Exercise cadence, organization or technology change, contract/reporting change, or lessons-learned review.',
+    },
+    boundary: 'A readiness exercise is not live incident response, attribution, a breach notification decision, or a regulator determination.',
+  },
 ] as const;
 
 const frameworkReferenceByName = Object.fromEntries(
@@ -189,11 +288,12 @@ export default function FrameworksPage() {
                   <th scope="col">Service question</th>
                   <th scope="col">Candidate reference families</th>
                   <th scope="col">Applicability question</th>
+                  <th scope="col">Applicability record</th>
                   <th scope="col">Boundary</th>
                 </tr>
               </thead>
               <tbody>
-                {serviceFrameworkMap.map(([service, references, applicability, boundary]) => (
+                {serviceFrameworkMap.map(({ service, references, applicability, record, boundary }) => (
                   <tr key={service}>
                     <td>{service}</td>
                     <td>
@@ -205,6 +305,14 @@ export default function FrameworksPage() {
                       </ul>
                     </td>
                     <td>{applicability}</td>
+                    <td>
+                      <dl className={styles.frameworkRecord}>
+                        <div><dt>Evidence to confirm</dt><dd>{record.evidence}</dd></div>
+                        <div><dt>Decision owner</dt><dd>{record.owner}</dd></div>
+                        <div><dt>Treatment gate</dt><dd>{record.treatment}</dd></div>
+                        <div><dt>Retest trigger</dt><dd>{record.retest}</dd></div>
+                      </dl>
+                    </td>
                     <td>{boundary}</td>
                   </tr>
                 ))}
