@@ -117,6 +117,9 @@ for (const marker of [
 for (const marker of [
   "document.addEventListener('pointerdown', closeOnPointerDown)",
   "document.body.style.overflow = 'hidden'",
+  'mobileMenuToggleRef',
+  'previouslyFocused?.isConnected',
+  'preventScroll: true',
   'ref={headerRef}',
 ]) {
   requireText("app/home-status.tsx mobile navigation contract", homeStatus, marker);
@@ -217,6 +220,8 @@ for (const marker of [
   'styles.headerMenuToggleOpen',
   "document.addEventListener('pointerdown', handlePointerDown)",
   "document.body.style.overflow = 'hidden'",
+  'previouslyFocusedRef',
+  'toggleMenu',
   'className={styles.headerAction}',
   'href="/engage" aria-label="Prepare a safe first brief"',
   'className={styles.surfaceBar}',
@@ -285,6 +290,7 @@ const scrollableTableSources = [
   ["app/deliverables/page.tsx", deliverablesPage],
   ["app/assurance/page.tsx", assurancePage],
   ["app/frameworks/page.tsx", frameworksPage],
+  ["app/methodology/page.tsx", methodologyPage],
   ["app/remediation/page.tsx", remediationPage],
 ];
 for (const [label, source] of scrollableTableSources) {
@@ -415,12 +421,18 @@ const additionalRouteIndexContracts = [
     'aria-label="Methodology page sections"',
     'href="#engagement-lifecycle"',
     'href="#control-baseline"',
+    'href="#rules-of-engagement"',
     'href="#risk-interpretation"',
     'href="#evidence-outputs"',
     'id="engagement-lifecycle"',
     'id="control-baseline"',
+    'id="rules-of-engagement"',
     'id="risk-interpretation"',
     'id="evidence-outputs"',
+    'RULES OF ENGAGEMENT STARTER',
+    'styles.roeMap',
+    'aria-label="Rules of engagement starter table"',
+    'The public starter is not an authorization',
     'href="/assurance#claims-proof"',
     'claims-to-proof matrix',
   ]],

@@ -34,6 +34,7 @@ export default function SiteHeader({ navigation, current, ariaLabel }: SiteHeade
   const headerRef = useRef<HTMLElement | null>(null);
   const navigationRef = useRef<HTMLElement | null>(null);
   const toggleRef = useRef<HTMLButtonElement | null>(null);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (!menuOpen) return undefined;
@@ -52,7 +53,7 @@ export default function SiteHeader({ navigation, current, ariaLabel }: SiteHeade
         event.preventDefault();
         event.stopPropagation();
         setMenuOpen(false);
-        requestAnimationFrame(() => toggleRef.current?.focus());
+        requestAnimationFrame(() => toggleRef.current?.focus({ preventScroll: true }));
         return;
       }
 
@@ -77,16 +78,26 @@ export default function SiteHeader({ navigation, current, ariaLabel }: SiteHeade
 
     window.addEventListener('keydown', handleKeyDown);
     document.addEventListener('pointerdown', handlePointerDown);
+    const menuToggle = toggleRef.current;
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('pointerdown', handlePointerDown);
       document.body.style.overflow = previousBodyOverflow;
+      const previouslyFocused = previouslyFocusedRef.current;
+      if (previouslyFocused?.isConnected) previouslyFocused.focus({ preventScroll: true });
+      else if (menuToggle?.isConnected) menuToggle.focus({ preventScroll: true });
+      else document.getElementById('top')?.focus({ preventScroll: true });
     };
   }, [menuOpen]);
 
+  const toggleMenu = () => {
+    if (!menuOpen) previouslyFocusedRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    setMenuOpen((open) => !open);
+  };
+
   return (
     <>
-    <header className={styles.header} id="top" ref={headerRef}>
+    <header className={styles.header} id="top" ref={headerRef} tabIndex={-1}>
       <Link className={styles.brand} href="/" aria-label="ZeroDev LLC home">
         <span className={styles.brandMark}>Z/</span>
         <span>ZERODEVLLC<span className={styles.brandDim}>.COM</span></span>
@@ -98,7 +109,7 @@ export default function SiteHeader({ navigation, current, ariaLabel }: SiteHeade
         aria-expanded={menuOpen}
         aria-controls={navigationId}
         aria-label={menuOpen ? 'Close site navigation' : 'Open site navigation'}
-        onClick={() => setMenuOpen((open) => !open)}
+        onClick={toggleMenu}
       >
         <span aria-hidden="true" />
         <span aria-hidden="true" />

@@ -169,6 +169,7 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .actionTableWrap:focus-visible { border-color: var(--green); box-shadow: 0 0 0 2px rgba(178, 255, 202, .2); outline: none; }
 .actionTable { border-collapse: collapse; min-width: 760px; width: 100%; }
 .servicesMatrix { min-width: 1040px; }
+.roeMap { min-width: 980px; }
 .frameworkMap { min-width: 1160px; }
 .evidenceRequestMap { min-width: 1240px; }
 .procurementEvidenceMap { min-width: 1420px; }

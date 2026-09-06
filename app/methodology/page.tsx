@@ -45,6 +45,17 @@ const controls = [
   'Explicit limitations, assumptions, and residual risk',
 ];
 
+const rulesOfEngagement = [
+  ['Authority instrument', 'Owner, permission or contract reference, objective, named approver, and change authority.', 'The authority is missing, unclear, expired, or does not cover the proposed activity.'],
+  ['Target boundary', 'Assets, accounts, environments, dependencies, exclusions, source date, and ownership.', 'A target is outside the agreed boundary, unowned, or materially different from the approved scope.'],
+  ['Permitted methods', 'Test categories, validation depth, credential use, and whether social, physical, or other special activity is explicitly approved.', 'A method is not explicitly approved, or the activity would be destructive, unsafe, or outside the defensive objective.'],
+  ['Timing and safety', 'Test window, rate or volume limits, availability constraints, maintenance conflicts, safety contact, and stop conditions.', 'There is instability, unexpected impact, a safety signal, or no reachable safety contact.'],
+  ['Data and evidence', 'Minimum necessary data, redaction, storage and transfer channel, retention boundary, and evidence owner.', 'Sensitive, restricted, or unrelated data appears and the approved handling path is not confirmed.'],
+  ['Communications and escalation', 'Routine reporting, emergency route, incident distinction, and named decision points.', 'A live incident, material impact, or uncertainty requires an owner decision or approved escalation.'],
+  ['Closeout and cleanup', 'End time, access removal, temporary-change reversal, artifact handling, validation, limitations, and retest condition.', 'Access, temporary change, artifact, or unresolved effect cannot be reconciled at closeout.'],
+  ['Change control', 'How scope, timing, methods, contacts, and exceptions are approved and recorded.', 'A material change is requested without the authority owner’s approval and an updated record.'],
+] as const;
+
 const riskFactors = [
   'Mission consequence — effect on a critical service, safety objective, obligation, or decision',
   'Exposure — reachability, dependency, affected population, and operating conditions',
@@ -79,8 +90,9 @@ export default function MethodologyPage() {
         <RouteIndex ariaLabel="Methodology page sections" pageIndexClassName={styles.pageIndex} pageIndexLabelClassName={styles.pageIndexLabel} sections={[
           { href: '#engagement-lifecycle', number: '01', label: 'Lifecycle' },
           { href: '#control-baseline', number: '02', label: 'Control baseline' },
-          { href: '#risk-interpretation', number: '03', label: 'Risk interpretation' },
-          { href: '#evidence-outputs', number: '04', label: 'Evidence outputs' },
+          { href: '#rules-of-engagement', number: '03', label: 'Rules of engagement' },
+          { href: '#risk-interpretation', number: '04', label: 'Risk interpretation' },
+          { href: '#evidence-outputs', number: '05', label: 'Evidence outputs' },
         ]} />
 
         <section className={`${styles.methodSection} ${styles.routeSection}`} id="engagement-lifecycle" aria-labelledby="steps-heading">
@@ -108,6 +120,37 @@ export default function MethodologyPage() {
           </div>
           <div className={styles.checkList}>
             {controls.map((control, index) => <div key={control}><span>{String(index + 1).padStart(2, '0')}</span><p>{control}</p></div>)}
+          </div>
+        </section>
+
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="rules-of-engagement" aria-labelledby="rules-heading">
+          <div className={styles.sectionIntro}>
+            <p className={styles.eyebrow}>{'// RULES OF ENGAGEMENT STARTER'}</p>
+            <h2 id="rules-heading">Write the guardrails.<br /><span>Then test.</span></h2>
+            <p>This synthetic starter shows the control questions to resolve before an authorized assessment, validation activity, or exercise. It keeps the technical method subordinate to authority, safety, evidence handling, and owner decisions.</p>
+            <p className={styles.templateNote}><strong>Public boundary.</strong> The public starter is not an authorization, a target list, a test plan, or permission to access any system. The applicable contract, owner, security contact, and approved handling process control the real engagement.</p>
+            <p><Link className={styles.primaryLink} href="/engage#brief-template">Prepare the high-level brief <span aria-hidden="true">→</span></Link></p>
+          </div>
+          <div className={styles.actionTableWrap} tabIndex={0} role="region" aria-label="Rules of engagement starter table">
+            <table className={`${styles.actionTable} ${styles.roeMap}`}>
+              <caption className={styles.tableCaption}>Synthetic rules-of-engagement starter — control questions only; not a live authorization or operational test instruction.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Control area</th>
+                  <th scope="col">Record before activity</th>
+                  <th scope="col">Pause or escalate when</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rulesOfEngagement.map(([control, record, trigger], index) => (
+                  <tr key={control}>
+                    <td><span className={styles.tableNumber}>{String(index + 1).padStart(2, '0')}</span>{control}</td>
+                    <td>{record}</td>
+                    <td>{trigger}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </section>
 

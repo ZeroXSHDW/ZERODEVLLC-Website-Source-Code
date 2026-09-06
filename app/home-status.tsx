@@ -39,6 +39,7 @@ export function HomeHeader({ navigation, statusHref }: { navigation: readonly Na
   const [activeSection, setActiveSection] = useState('#start');
   const headerRef = useRef<HTMLElement | null>(null);
   const navigationRef = useRef<HTMLElement | null>(null);
+  const mobileMenuToggleRef = useRef<HTMLButtonElement | null>(null);
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
   const { status } = useHomeStatus();
   const copy = getStatusCopy(status);
@@ -105,12 +106,17 @@ export function HomeHeader({ navigation, statusHref }: { navigation: readonly Na
     };
     window.addEventListener('keydown', closeOnEscape);
     document.addEventListener('pointerdown', closeOnPointerDown);
+    const mobileMenuToggle = mobileMenuToggleRef.current;
     return () => {
       window.removeEventListener('keydown', closeOnEscape);
       document.removeEventListener('pointerdown', closeOnPointerDown);
       document.body.style.overflow = previousBodyOverflow;
       const previouslyFocused = previouslyFocusedRef.current;
-      if (previouslyFocused?.isConnected) previouslyFocused.focus();
+      if (previouslyFocused?.isConnected) previouslyFocused.focus({ preventScroll: true });
+      else mobileMenuToggle?.focus({ preventScroll: true });
+      if (!previouslyFocused?.isConnected && !mobileMenuToggle?.isConnected) {
+        document.getElementById('top')?.focus({ preventScroll: true });
+      }
     };
   }, [mobileMenuOpen]);
 
@@ -122,7 +128,7 @@ export function HomeHeader({ navigation, statusHref }: { navigation: readonly Na
   };
 
   return (
-    <header className="topbar" ref={headerRef}>
+    <header className="topbar" id="top" ref={headerRef} tabIndex={-1}>
       <a className="brand" href="#top" aria-label="ZeroDev LLC home">
         <span className="brand-mark">Z/</span>
         <span>ZERODEVLLC<span className="brand-dim">.COM</span></span>
@@ -131,6 +137,7 @@ export function HomeHeader({ navigation, statusHref }: { navigation: readonly Na
         {navigation.map((item) => <a href={item.href} key={item.href} aria-current={activeSection === item.href ? 'location' : undefined} onClick={closeMobileMenu}>{item.label}</a>)}
       </nav>
       <button
+        ref={mobileMenuToggleRef}
         className="mobile-menu-toggle"
         type="button"
         aria-expanded={mobileMenuOpen}
