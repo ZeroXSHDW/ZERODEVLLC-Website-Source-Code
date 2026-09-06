@@ -278,7 +278,7 @@ requireText("app/page.tsx", page, "defcon: 'https://zerodevllc.eu/defcon'");
 requireText("app/page.tsx", page, "https://zerodevllc.eu");
 requireText("app/page.tsx", page, "https://zerodevllc.store");
 requireText("app/page.tsx", page, "Open the DEFCON Signal Fusion EU gateway");
-requireText("app/page.tsx", page, "EU gateway / external");
+requireText("app/page.tsx", page, "EU gateway / public signals");
 requireText("app/page.tsx", page, "DEFENSIVE CYBER / RESILIENCE");
 requireText("app/page.tsx", page, "SiteFooter");
 requireText("app/page.tsx", page, "Protect the mission.");
