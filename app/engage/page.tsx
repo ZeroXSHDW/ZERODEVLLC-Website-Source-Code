@@ -61,6 +61,8 @@ const briefText = [
   'Audience and decision date:',
   'Authority owner:',
   'Applicability or boundary questions:',
+  'Evidence handling boundary:',
+  'Acceptance or next gate:',
   '',
   'I have not included credentials, secrets, customer records, private incident evidence, or live target details.',
 ].join('\n');
@@ -102,6 +104,16 @@ const handlingMatrix = [
   ['Credentials, secrets, or live targets', 'Passwords, tokens, private keys, exploit payloads, or live target details', 'Never include in the initial brief or ordinary email', 'Use a separate authorized technical handoff only if necessary'],
 ] as const;
 
+const engagementReadiness = [
+  ['01', 'Decision and outcome', 'Mission or service question, decision date, intended audience, and the outcome the work must make clearer or safer.', 'The decision owner confirms the objective; no technical activity is implied by a high-level brief.'],
+  ['02', 'Authority and scope', 'Named authority owner, written permission route, assets or services, inclusions, exclusions, timing, safety contact, and stop conditions.', 'The authority owner confirms the boundary and any changes; missing or mismatched authority pauses the work.'],
+  ['03', 'Rules and methods', 'Permitted review or test methods, prohibited actions, rate or availability limits, access assumptions, and escalation route.', 'The security or service owner confirms the method is proportionate; unapproved or unsafe activity is excluded.'],
+  ['04', 'Evidence and handling', 'Evidence sources, recency, confidence, minimum necessary data, redaction, transfer channel, retention, and restricted-information boundary.', 'The handling owner confirms the approved path; public pages and ordinary email remain high-level.'],
+  ['05', 'Deliverables and acceptance', 'Technical, executive, assurance, or resilience output; evidence states; limitations; audience; acceptance criteria; and named reviewer.', 'The responsible owner accepts a bounded record only; it is not certification, independent assurance, or a security guarantee.'],
+  ['06', 'Treatment and retest', 'Owners, priorities, treatment choice, residual-risk decision, retest or exercise condition, and review trigger.', 'The owner records remediation, exception, acceptance, retest, exercise, or escalation; ZeroDev does not accept risk for the client.'],
+  ['07', 'Closeout and change control', 'Access removal, temporary-change cleanup, unresolved questions, source or revision record, disposition, next review date, and approved change path.', 'The authority or service owner confirms closeout; unresolved or changed scope stays open or is re-authorized.'],
+] as const;
+
 export default function EngagePage() {
   return (
     <main className={styles.page}>
@@ -129,10 +141,11 @@ export default function EngagePage() {
           { href: '#role-prep', number: '01', label: 'Prepare by role' },
           { href: '#intake', number: '02', label: 'Safe intake' },
           { href: '#brief-template', number: '03', label: 'Brief template' },
-          { href: '#print-brief', number: '04', label: 'Print review copy' },
-          { href: '#handling', number: '05', label: 'Handling rules' },
-          { href: '#decision-lanes', number: '06', label: 'Decision lanes' },
-          { href: '#response', number: '07', label: 'What happens next' },
+          { href: '#engagement-readiness', number: '04', label: 'Engagement readiness' },
+          { href: '#print-brief', number: '05', label: 'Print review copy' },
+          { href: '#handling', number: '06', label: 'Handling rules' },
+          { href: '#decision-lanes', number: '07', label: 'Decision lanes' },
+          { href: '#response', number: '08', label: 'What happens next' },
         ]} />
 
         <section className={`${styles.outputSection} ${styles.routeSection}`} id="role-prep" aria-labelledby="role-prep-heading">
@@ -177,6 +190,37 @@ export default function EngagePage() {
             </div>
             <p className={styles.templateNote}><strong>Safe boundary:</strong> Do not add credentials, secrets, customer records, private incident evidence, or live target details to the template.</p>
             <BriefActions mailtoHref={briefMailto} copyText={briefText} linkLabel="Open this structure in email" classNames={briefActionClassNames} />
+          </div>
+        </section>
+
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="engagement-readiness" aria-labelledby="readiness-heading">
+          <div className={styles.sectionIntro}>
+            <p className={styles.eyebrow}>{'// ENGAGEMENT READINESS / SOW STARTER'}</p>
+            <h2 id="readiness-heading">Define the work.<br /><span>Own the gates.</span></h2>
+            <p>This synthetic outline helps a public-sector, defense-supplier, procurement, security, continuity, or risk owner prepare a proportionate engagement record before a proposal or controlled exchange.</p>
+            <p className={styles.templateNote}><strong>Owner gate.</strong> This is a readiness outline, not a proposal, statement of work, contract, authorization, classification policy, or certification evidence. The applicable contract, authority, handling process, and owner decisions control the real engagement.</p>
+            <p><Link className={styles.primaryLink} href="/methodology#rules-of-engagement">Review the rules-of-engagement starter <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/deliverables">Review deliverable acceptance shapes <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/assurance#claims-proof">Review claims and proof gates <span aria-hidden="true">→</span></Link></p>
+          </div>
+          <div className={styles.actionTableWrap} tabIndex={0} role="region" aria-label="Engagement readiness and SOW starter table">
+            <table className={`${styles.actionTable} ${styles.sowReadinessMap}`}>
+              <caption className={styles.tableCaption}>Synthetic engagement readiness and SOW starter — structure and owner gates only; not a contract, proposal, authorization, or operational instruction.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Readiness stage</th>
+                  <th scope="col">Draft record</th>
+                  <th scope="col">Owner acceptance or stop condition</th>
+                </tr>
+              </thead>
+              <tbody>
+                {engagementReadiness.map(([number, stage, record, gate]) => (
+                  <tr key={stage}>
+                    <td><span className={styles.tableNumber}>{number}</span>{stage}</td>
+                    <td>{record}</td>
+                    <td>{gate}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </section>
 

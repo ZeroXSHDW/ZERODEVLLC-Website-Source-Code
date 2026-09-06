@@ -196,6 +196,9 @@ requireText("app/frameworks/page.tsx", frameworksPage, "Readiness support is not
 requireText("app/frameworks/page.tsx", frameworksPage, "twitter:");
 requireText("app/engage/page.tsx", engagePage, "Do not send secrets");
 requireText("app/engage/page.tsx", engagePage, "decision owner");
+requireText("app/engage/page.tsx", engagePage, "ENGAGEMENT READINESS / SOW STARTER");
+requireText("app/engage/page.tsx", engagePage, "Deliverables and acceptance");
+requireText("app/engage/page.tsx", engagePage, "ZeroDev does not accept risk for the client");
 requireText("app/engage/page.tsx", engagePage, "briefMailto");
 requireText("app/engage/page.tsx", engagePage, "Open a high-level brief template");
 requireText("app/engage/page.tsx", engagePage, "INFORMATION HANDLING GUIDANCE");
