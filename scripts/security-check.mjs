@@ -129,6 +129,7 @@ requireText("app/privacy/page.tsx", privacyPage, "https://zerodevllc.com/privacy
 requireText("app/privacy/page.tsx", privacyPage, "Do not send credentials");
 requireText("app/privacy/page.tsx", privacyPage, "twitter:");
 requireText("app/services/page.tsx", servicesPage, "Authorized penetration testing");
+requireText("app/services/page.tsx", servicesPage, "public-sector programs, military and defense suppliers");
 requireText("app/services/page.tsx", servicesPage, "Vendor due diligence");
 requireText("app/services/page.tsx", servicesPage, "Disaster recovery and BCP");
 requireText("app/services/page.tsx", servicesPage, "Readiness is not certification");

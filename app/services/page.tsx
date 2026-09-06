@@ -6,18 +6,18 @@ import styles from './services.module.css';
 
 export const metadata: Metadata = {
   title: 'Services // ZeroDev LLC',
-  description: 'Authorized defensive cybersecurity, cyber-risk, due-diligence, compliance-readiness, and resilience engagement areas for ZeroDev LLC.',
+  description: 'Authorized defensive cybersecurity, cyber-risk, due-diligence, compliance-readiness, and resilience engagement areas for public-sector programs, military and defense suppliers, essential services, and regulated technology teams.',
   alternates: { canonical: 'https://zerodevllc.com/services' },
   openGraph: {
     title: 'Services // ZeroDev LLC',
-    description: 'Authorized defensive cybersecurity, cyber-risk, due-diligence, compliance-readiness, and resilience engagement areas.',
+    description: 'Authorized defensive cybersecurity, cyber-risk, due-diligence, compliance-readiness, and resilience engagement areas for public-sector programs, military and defense suppliers, essential services, and regulated technology teams.',
     url: 'https://zerodevllc.com/services',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Services // ZeroDev LLC',
-    description: 'Authorized defensive cybersecurity, cyber-risk, due-diligence, compliance-readiness, and resilience engagement areas.',
+    description: 'Authorized defensive cybersecurity, cyber-risk, due-diligence, compliance-readiness, and resilience engagement areas for public-sector programs, military and defense suppliers, essential services, and regulated technology teams.',
     images: ['/og.png'],
   },
 };
@@ -232,7 +232,7 @@ export default function ServicesPage() {
             <h1 id="services-heading">Make risk<br /><span>worth acting on.</span></h1>
           </div>
           <div className={styles.heroCopy}>
-            <p>ZeroDev helps organizations turn technical evidence into safer decisions, stronger controls, and more recoverable operations.</p>
+            <p>ZeroDev helps public-sector programs, military and defense suppliers, essential services, and regulated technology teams turn technical evidence into safer decisions, stronger controls, and more recoverable operations.</p>
             <p className={styles.heroBoundary}><strong>Authorized work only.</strong> Every assessment begins with scope, authority, safety boundaries, and an agreed evidence path.</p>
             <p><Link className={styles.primaryLink} href="/engage">Start with the authorized engagement brief <span aria-hidden="true">→</span></Link><br /><a className={styles.primaryLink} href="#briefing-packs">Review service briefing packs <span aria-hidden="true">↓</span></a></p>
           </div>
