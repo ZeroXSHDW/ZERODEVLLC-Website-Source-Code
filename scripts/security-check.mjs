@@ -53,6 +53,7 @@ const [
   servicesCss,
   privacyCss,
   roleRoutes,
+  serviceRoutes,
 ] = await Promise.all([
   read("proxy.ts"),
   read("app/robots.ts"),
@@ -92,6 +93,7 @@ const [
   read("app/services/services.module.css"),
   read("app/privacy/privacy.module.css"),
   read("app/role-routes.ts"),
+  read("app/service-routes.ts"),
 ]);
 const nodeVersion = await read(".node-version");
 
@@ -212,6 +214,9 @@ requireText("app/engage/page.tsx", engagePage, "briefMailto");
 requireText("app/engage/page.tsx", engagePage, "Open a high-level brief template");
 requireText("app/engage/page.tsx", engagePage, "INFORMATION HANDLING GUIDANCE");
 requireText("app/engage/page.tsx", engagePage, "classified-information handling policy");
+requireText("app/engage/page.tsx", engagePage, "Public-sector / government owner");
+requireText("app/engage/page.tsx", engagePage, "Defense supplier / technology provider");
+requireText("app/engage/page.tsx", engagePage, "Prepare a role-aware brief for ${role}");
 requireText("app/engage/page.tsx", engagePage, "Review aligned services");
 requireText("app/engage/page.tsx", engagePage, "service-${serviceNumber}");
 requireText("app/engage/page.tsx", engagePage, "twitter:");
@@ -359,6 +364,9 @@ requireText("app/page.tsx", page, "role.briefHref");
 requireText("app/page.tsx", page, "Prepare a role-aware brief for ${role.title}");
 requireText("app/role-routes.ts", roleRoutes, "briefPrompt");
 requireText("app/role-routes.ts", roleRoutes, "briefGate");
+requireText("app/service-routes.ts", serviceRoutes, "serviceRoutes");
+requireText("app/service-routes.ts", serviceRoutes, "briefPrompt");
+requireText("app/service-routes.ts", serviceRoutes, "briefGate");
 requireText("app/page.tsx", page, "authorized defensive assessments");
 requireText("app/page.tsx", page, "Make the next decision");
 requireText("app/page.tsx", page, "Prepare a safe first brief");

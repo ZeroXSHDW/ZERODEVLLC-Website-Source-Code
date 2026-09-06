@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const projectRoot = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const read = (relativePath) => readFile(join(projectRoot, relativePath), "utf8");
 
-const [page, homeStatus, routeIndex, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, frameworkLibrary, briefActions, assurancePage, sectorsPage, privacyPage, errorPage, notFoundPage, loadingPage, siteHeader, siteFooter, structuredData, layout, roleRoutes] = await Promise.all([
+const [page, homeStatus, routeIndex, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, frameworkLibrary, briefActions, assurancePage, sectorsPage, privacyPage, errorPage, notFoundPage, loadingPage, siteHeader, siteFooter, structuredData, layout, roleRoutes, serviceRoutes] = await Promise.all([
   read("app/page.tsx"),
   read("app/home-status.tsx"),
   read("app/route-index.tsx"),
@@ -32,6 +32,7 @@ const [page, homeStatus, routeIndex, globalsCss, attacksRoute, liveDefconMap, en
   read("app/structured-data.tsx"),
   read("app/layout.tsx"),
   read("app/role-routes.ts"),
+  read("app/service-routes.ts"),
 ]);
 
 const failures = [];
@@ -359,10 +360,12 @@ for (const marker of [
   'id="decision-lanes"',
   'id="response"',
   'PREPARE BY RESPONSIBILITY',
-  'Security / engineering owner',
-  'Procurement / vendor risk',
-  'Continuity / service owner',
-  'Executive / risk / assurance',
+  'Public-sector / government owner',
+  'Defense supplier / technology provider',
+  'Buyer / third-party-risk owner',
+  'Security / engineering / technical owner',
+  'Continuity / service / incident owner',
+  'Prepare a role-aware brief for ${role}',
   'PRINT / INTERNAL REVIEW COPY',
   'ENGAGEMENT READINESS / SOW STARTER',
   'styles.sowReadinessMap',
@@ -429,9 +432,8 @@ for (const marker of [
   'aria-labelledby={`service-heading-${service.number}`}',
   'id={`service-heading-${service.number}`}',
   'aria-label={`Review ${service.title} service briefing pack`}',
-  'const serviceBriefMailto = (serviceTitle: string)',
-  'Service lane: ${serviceTitle}',
-  'I have not included credentials, secrets, customer records, private incident evidence, or live target details.',
+  "service.slug",
+  'href={`/engage?service=${service.slug}`}',
   'aria-label={`Prepare a safe first brief for ${service.title}`}',
   'const decisionRecord =',
   'aria-labelledby="decision-record-heading"',
@@ -448,6 +450,15 @@ for (const marker of [
   'Next gate',
 ]) {
   requireRouteIndexText("app/services/page.tsx route index", servicesPage, marker);
+}
+for (const marker of [
+  "export const serviceRoutes = [",
+  "'authorized-penetration-testing'",
+  "'incident-readiness'",
+  "briefPrompt",
+  "briefGate",
+]) {
+  requireText("app/service-routes.ts service route source", serviceRoutes, marker);
 }
 
 const additionalRouteIndexContracts = [

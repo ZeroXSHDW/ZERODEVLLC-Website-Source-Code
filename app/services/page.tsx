@@ -26,6 +26,7 @@ export const metadata: Metadata = {
 const services = [
   {
     number: '01',
+    slug: 'authorized-penetration-testing',
     title: 'Authorized penetration testing',
     summary: 'Test agreed attack surfaces under written authority, bounded rules of engagement, and safety controls.',
     activities: ['External and internal surfaces', 'Web, API, cloud, identity, and segmentation review', 'Remediation validation and retesting'],
@@ -35,6 +36,7 @@ const services = [
   },
   {
     number: '02',
+    slug: 'vulnerability-assessment',
     title: 'Vulnerability assessment',
     summary: 'Turn scanner output and technical observations into a prioritized, evidence-backed risk view.',
     activities: ['Asset and exposure context', 'Manual verification where appropriate', 'Severity, exploitability, and business-impact analysis'],
@@ -44,6 +46,7 @@ const services = [
   },
   {
     number: '03',
+    slug: 'cyber-risk-management',
     title: 'Cyber risk management',
     summary: 'Connect assets, threats, controls, decisions, exceptions, and residual risk in one usable operating view.',
     activities: ['Risk identification and treatment planning', 'Control ownership and evidence mapping', 'Executive and board-ready reporting'],
@@ -53,6 +56,7 @@ const services = [
   },
   {
     number: '04',
+    slug: 'technical-due-diligence',
     title: 'Technical due diligence',
     summary: 'Assess architecture, delivery practices, dependencies, resilience, and technical risk before an important decision.',
     activities: ['Architecture and control review', 'Secure development and supply-chain review', 'Open questions, assumptions, and red flags'],
@@ -62,6 +66,7 @@ const services = [
   },
   {
     number: '05',
+    slug: 'vendor-due-diligence',
     title: 'Vendor due diligence',
     summary: 'Evaluate whether a supplier’s security, continuity, access, incident, and evidence posture fits the relationship.',
     activities: ['Questionnaire and evidence review', 'Data-flow, subprocessor, and access analysis', 'Concentration, exit, and fourth-party risk'],
@@ -71,6 +76,7 @@ const services = [
   },
   {
     number: '06',
+    slug: 'compliance-readiness',
     title: 'Compliance readiness',
     summary: 'Map applicable requirements to current evidence, owners, gaps, and an implementation sequence.',
     activities: ['Framework and control-family mapping', 'Evidence preparation and gap analysis', 'Exception and remediation tracking'],
@@ -80,6 +86,7 @@ const services = [
   },
   {
     number: '07',
+    slug: 'disaster-recovery-bcp',
     title: 'Disaster recovery and BCP',
     summary: 'Make critical services, dependencies, recovery priorities, and continuity assumptions testable.',
     activities: ['Business impact and dependency mapping', 'RTO/RPO and recovery strategy review', 'Restore testing, tabletop exercises, and lessons learned'],
@@ -89,6 +96,7 @@ const services = [
   },
   {
     number: '08',
+    slug: 'incident-readiness',
     title: 'Incident readiness',
     summary: 'Prepare people, decisions, evidence, communications, and technical response paths before pressure arrives.',
     activities: ['Roles, escalation, and evidence boundaries', 'Tabletop and purple-team exercise design', 'Post-exercise actions and control improvements'],
@@ -97,17 +105,6 @@ const services = [
     tone: 'red',
   },
 ] as const;
-
-const serviceBriefMailto = (serviceTitle: string) => `mailto:hello@zerodevllc.com?subject=${encodeURIComponent(`ZeroDevLLC ${serviceTitle} high-level brief`)}&body=${encodeURIComponent([
-  `Service lane: ${serviceTitle}`,
-  'Objective or decision:',
-  'High-level context:',
-  'Audience and decision date:',
-  'Authority owner:',
-  'Applicability or boundary questions:',
-  '',
-  'I have not included credentials, secrets, customer records, private incident evidence, or live target details.',
-].join('\n'))}`;
 
 const lifecycle = [
   ['01', 'Qualify', 'Clarify the decision, the environment, the stakeholders, and what success must prove.'],
@@ -287,7 +284,7 @@ export default function ServicesPage() {
                 <p className={styles.output}><strong>Typical output:</strong> {service.output}</p>
                 <div className={styles.serviceCardActions}>
                   <a className={styles.primaryLink} href={`#brief-${service.number}`} aria-label={`Review ${service.title} service briefing pack`}>Review the service briefing pack <span aria-hidden="true">↓</span></a>
-                  <a className={styles.primaryLink} href={serviceBriefMailto(service.title)} aria-label={`Prepare a safe first brief for ${service.title}`}>Prepare a safe first brief <span aria-hidden="true">↗</span></a>
+                  <Link className={styles.primaryLink} href={`/engage?service=${service.slug}`} aria-label={`Prepare a safe first brief for ${service.title}`}>Prepare a safe first brief <span aria-hidden="true">→</span></Link>
                 </div>
               </article>
             ))}

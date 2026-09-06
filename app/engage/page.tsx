@@ -5,22 +5,23 @@ import SiteFooter from '../site-footer';
 import RouteIndex from '../route-index';
 import BriefActions, { type BriefActionClassNames } from '../brief-actions';
 import { getRoleRoute } from '../role-routes';
+import { getServiceRoute } from '../service-routes';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
   title: 'Start an engagement // ZeroDev LLC',
-  description: 'A safe, high-level starting point for authorized cybersecurity, due-diligence, compliance-readiness, and resilience conversations.',
+  description: 'A safe, high-level starting point for authorized cybersecurity, due-diligence, compliance-readiness, and resilience conversations for public-sector programs, military and defense suppliers, and regulated technology teams.',
   alternates: { canonical: 'https://zerodevllc.com/engage' },
   openGraph: {
     title: 'Start an engagement // ZeroDev LLC',
-    description: 'Prepare a clear, safe first brief for an authorized ZeroDev cybersecurity or resilience engagement.',
+    description: 'Prepare a clear, safe first brief for an authorized ZeroDev cybersecurity or resilience engagement serving public-sector and defense-oriented teams.',
     url: 'https://zerodevllc.com/engage',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Start an engagement // ZeroDev LLC',
-    description: 'Prepare a clear, safe first brief for an authorized ZeroDev cybersecurity or resilience engagement.',
+    description: 'Prepare a clear, safe first brief for an authorized ZeroDev cybersecurity or resilience engagement serving public-sector and defense-oriented teams.',
     images: ['/og.png'],
   },
 };
@@ -82,10 +83,11 @@ const lanes = [
 ] as const;
 
 const rolePreparation = [
-  ['01', 'Security / engineering owner', 'Scope the technical boundary.', 'Bring the named asset, service, or architecture boundary; the authority owner; the safety contact; and the evidence or output the technical team needs to act on.', 'Review exposure services', '/services#service-01'],
-  ['02', 'Procurement / vendor risk', 'Make the supplier decision defensible.', 'Bring the relationship, service and data boundary, review purpose, evidence contact, contract or exit question, and the owner of the commercial or risk decision.', 'Review vendor due diligence', '/services#service-05'],
-  ['03', 'Continuity / service owner', 'Prepare for the disruption scenario.', 'Bring the critical service, impact priority, dependencies, recovery assumptions, decision date, and the authority to run a restore test or exercise.', 'Review recovery services', '/services#service-07'],
-  ['04', 'Executive / risk / assurance', 'Make the treatment decision explainable.', 'Bring the decision deadline, risk criteria, control or supplier evidence boundary, accountable owner, and the point at which residual risk must be revisited.', 'Review risk and assurance', '/services#service-03'],
+  ['01', 'Public-sector / government owner', 'Make authority and procurement visible.', 'Bring the program or procurement decision, accountable owner, public requirement or contract context, evidence-handling boundary, and what must be defensible. Keep controlled or restricted material out of ordinary email.', 'Review public-sector fit', '/sectors#sector-01', '/engage?role=public-program'],
+  ['02', 'Defense supplier / technology provider', 'Make the supplier boundary defensible.', 'Bring the prime, subcontract, or technology-provider context; system or service boundary; contract or requirement question; authorization owner; and supply-chain, continuity, or testing concern. Keep export-controlled, classified, and contract-restricted material out of ordinary email.', 'Review defense-supplier fit', '/sectors#sector-02', '/engage?role=defense-supplier'],
+  ['03', 'Buyer / third-party-risk owner', 'Make the supplier decision defensible.', 'Bring the relationship, service and data boundary, review purpose, evidence contact, contract or exit question, and the owner of the commercial or risk decision.', 'Review vendor due diligence', '/services#service-05', '/engage?role=procurement-risk'],
+  ['04', 'Security / engineering / technical owner', 'Scope the technical boundary.', 'Bring the named asset, service, or architecture boundary; the authorization owner; the safety contact; and the evidence or output the technical team needs to act on.', 'Review exposure services', '/services#service-01', '/engage?role=engineering-security'],
+  ['05', 'Continuity / service / incident owner', 'Prepare for the disruption scenario.', 'Bring the critical service, impact priority, dependencies, recovery assumptions, decision date, and the authority to run a restore test, tabletop, or exercise.', 'Review resilience services', '/services#service-07', '/engage?role=continuity-service'],
 ] as const;
 
 const firstResponse = [
@@ -114,21 +116,50 @@ const engagementReadiness = [
 ] as const;
 
 type EngagePageProps = {
-  searchParams?: Promise<{ role?: string | string[] }>;
+  searchParams?: Promise<{ role?: string | string[]; service?: string | string[] }>;
+};
+
+type BriefContext = {
+  key: 'role' | 'service';
+  label: string;
+  title: string;
+  prompt: string;
+  gate: string;
 };
 
 export default async function EngagePage({ searchParams }: EngagePageProps) {
   const params = await searchParams;
   const requestedRole = Array.isArray(params?.role) ? params.role[0] : params?.role;
+  const requestedService = Array.isArray(params?.service) ? params.service[0] : params?.service;
   const selectedRole = getRoleRoute(requestedRole);
-  const briefText = selectedRole ? [
-    `Role route: ${selectedRole.title}`,
-    `Role-specific question: ${selectedRole.briefPrompt}`,
-    `First gate: ${selectedRole.briefGate}`,
-    '',
-    baseBriefText,
-  ].join('\n') : baseBriefText;
-  const briefSubject = selectedRole ? `ZeroDevLLC ${selectedRole.tag.toLowerCase()} engagement brief` : 'ZeroDevLLC engagement brief';
+  const selectedService = getServiceRoute(requestedService);
+  const briefContexts: BriefContext[] = [];
+  if (selectedRole) {
+    briefContexts.push({
+      key: 'role',
+      label: `ROLE CONTEXT / ${selectedRole.tag}`,
+      title: selectedRole.title,
+      prompt: selectedRole.briefPrompt,
+      gate: selectedRole.briefGate,
+    });
+  }
+  if (selectedService) {
+    briefContexts.push({
+      key: 'service',
+      label: `SERVICE CONTEXT / ${selectedService.tag}`,
+      title: selectedService.title,
+      prompt: selectedService.briefPrompt,
+      gate: selectedService.briefGate,
+    });
+  }
+  const briefContextText = briefContexts.flatMap((context) => [
+    `${context.key === 'role' ? 'Role route' : 'Service lane'}: ${context.title}`,
+    `${context.key === 'role' ? 'Role-specific question' : 'Service question'}: ${context.prompt}`,
+    `First gate: ${context.gate}`,
+  ]);
+  const briefText = briefContextText.length ? [...briefContextText, '', baseBriefText].join('\n') : baseBriefText;
+  const briefSubjectParts = [selectedRole?.tag.toLowerCase(), selectedService?.title.toLowerCase()].filter(Boolean);
+  const briefSubject = briefSubjectParts.length ? `ZeroDevLLC ${briefSubjectParts.join(' / ')} engagement brief` : 'ZeroDevLLC engagement brief';
   const briefMailto = `mailto:hello@zerodevllc.com?subject=${encodeURIComponent(briefSubject)}&body=${encodeURIComponent(briefText)}`;
 
   return (
@@ -149,11 +180,16 @@ export default async function EngagePage({ searchParams }: EngagePageProps) {
           <div className={styles.heroCopy}>
             <p>Bring the question, the decision owner, and the outcome you need to make clearer. A high-level brief is enough to begin a useful conversation.</p>
             <p className={styles.heroBoundary}><strong>Do not send secrets.</strong> Keep credentials, tokens, customer records, private incident evidence, and live target details out of ordinary email. We can establish a safer exchange path after scope and authority are understood.</p>
-            {selectedRole ? (
-              <aside className={styles.roleContext} aria-labelledby="selected-role-heading">
-                <p className={styles.roleContextLabel}>ROLE CONTEXT / {selectedRole.tag}</p>
-                <p><strong id="selected-role-heading">{selectedRole.title}</strong><br />{selectedRole.briefPrompt}</p>
-                <p className={styles.roleContextGate}><strong>First gate:</strong> {selectedRole.briefGate}</p>
+            {briefContexts.length ? (
+              <aside className={styles.roleContext} aria-labelledby="selected-brief-context-heading">
+                <p className={styles.roleContextLabel}>SELECTED BRIEF CONTEXT</p>
+                {briefContexts.map((context, index) => (
+                  <div className={styles.briefContextEntry} key={context.key}>
+                    <p className={styles.roleContextLabel}>{context.label}</p>
+                    <p><strong id={index === 0 ? 'selected-brief-context-heading' : undefined}>{context.title}</strong><br />{context.prompt}</p>
+                    <p className={styles.roleContextGate}><strong>First gate:</strong> {context.gate}</p>
+                  </div>
+                ))}
                 <Link className={styles.roleContextReset} href="/engage">Start with a neutral brief <span aria-hidden="true">↺</span></Link>
               </aside>
             ) : null}
@@ -179,13 +215,13 @@ export default async function EngagePage({ searchParams }: EngagePageProps) {
             <p>The first brief becomes more useful when it names who owns the question, what decision is due, and what evidence can safely support it. Choose the closest responsibility; the service lane can remain undecided.</p>
           </div>
           <div className={styles.outputGrid}>
-            {rolePreparation.map(([number, role, title, guidance, action, href]) => (
+            {rolePreparation.map(([number, role, title, guidance, action, href, briefHref]) => (
               <article className={styles.outputCard} key={number}>
                 <p className={styles.artifactAudience}>{number} / {role}</p>
                 <h3>{title}</h3>
                 <p>{guidance}</p>
                 <p className={styles.cardBoundary}><strong>Safe first step:</strong> Keep the description high-level; do not attach credentials, customer records, private incident evidence, or live target details.</p>
-                <p><Link className={styles.primaryLink} href={href}>{action} <span aria-hidden="true">→</span></Link></p>
+                <p><Link className={styles.primaryLink} href={briefHref} aria-label={`Prepare a role-aware brief for ${role}`}>Prepare a role-aware brief <span aria-hidden="true">↗</span></Link><br /><Link className={styles.primaryLink} href={href}>{action} <span aria-hidden="true">→</span></Link></p>
               </article>
             ))}
           </div>
@@ -213,7 +249,7 @@ export default async function EngagePage({ searchParams }: EngagePageProps) {
               {briefTemplate.map(([label, prompt], index) => <div key={label}><span>{String(index + 1).padStart(2, '0')}</span><p><strong>{label}:</strong> {prompt}</p></div>)}
             </div>
             <p className={styles.templateNote}><strong>Safe boundary:</strong> Do not add credentials, secrets, customer records, private incident evidence, or live target details to the template.</p>
-            {selectedRole ? <p className={styles.templateNote}><strong>Role route included:</strong> The email and copy actions include the {selectedRole.title.toLowerCase()} question above as planning context only.</p> : null}
+            {briefContexts.length ? <p className={styles.templateNote}><strong>Context included:</strong> The email and copy actions include {briefContexts.map((context) => context.title.toLowerCase()).join(' and ')} as planning context only.</p> : null}
             <BriefActions mailtoHref={briefMailto} copyText={briefText} linkLabel="Open this structure in email" classNames={briefActionClassNames} />
           </div>
         </section>

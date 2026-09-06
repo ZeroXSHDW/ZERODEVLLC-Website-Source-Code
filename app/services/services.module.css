@@ -53,8 +53,9 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .heroBoundary strong { color: var(--amber); font-weight: 500; }
 .roleContext { background: rgba(12, 29, 19, .42); border: 1px solid var(--line-strong); margin: 24px 0 20px; padding: 16px 17px; }
 .roleContextLabel { color: var(--cyan) !important; font-size: 8px !important; letter-spacing: .14em; margin-bottom: 12px !important; text-transform: uppercase; }
-.roleContext > p:not(.roleContextLabel) { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.5; margin-bottom: 12px; }
-.roleContext > p:last-of-type { margin-bottom: 14px; }
+.roleContext > p:not(.roleContextLabel), .briefContextEntry > p:not(.roleContextLabel) { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.5; margin-bottom: 12px; }
+.briefContextEntry + .briefContextEntry { border-top: 1px solid var(--line); margin-top: 14px; padding-top: 14px; }
+.briefContextEntry:last-of-type > p:last-child { margin-bottom: 0; }
 .roleContext strong { color: var(--ink); font-weight: 600; }
 .roleContextGate { border-left: 1px solid var(--amber); color: var(--dim) !important; font-size: 11px !important; padding-left: 10px; }
 .roleContextGate strong { color: var(--amber); font-weight: 500; }
