@@ -97,7 +97,18 @@ export default function EngagePage() {
           </div>
         </section>
 
-        <section className={styles.twoColumn} aria-labelledby="intake-heading">
+        <nav className={styles.pageIndex} aria-label="Engagement page sections">
+          <p className={styles.pageIndexLabel}>{'// ROUTE INDEX'}</p>
+          <ol>
+            <li><a href="#intake"><span>01</span>Safe intake</a></li>
+            <li><a href="#brief-template"><span>02</span>Brief template</a></li>
+            <li><a href="#handling"><span>03</span>Handling rules</a></li>
+            <li><a href="#decision-lanes"><span>04</span>Decision lanes</a></li>
+            <li><a href="#response"><span>05</span>What happens next</a></li>
+          </ol>
+        </nav>
+
+        <section className={`${styles.twoColumn} ${styles.routeSection}`} id="intake" aria-labelledby="intake-heading">
           <div>
             <p className={styles.eyebrow}>{'// FIRST CONTACT'}</p>
             <h2 id="intake-heading">Give the work<br /><span>its boundary.</span></h2>
@@ -108,7 +119,7 @@ export default function EngagePage() {
           </div>
         </section>
 
-        <section className={styles.twoColumn} aria-labelledby="template-heading">
+        <section className={`${styles.twoColumn} ${styles.routeSection}`} id="brief-template" aria-labelledby="template-heading">
           <div>
             <p className={styles.eyebrow}>{'// SAFE BRIEF TEMPLATE'}</p>
             <h2 id="template-heading">Give the first<br /><span>message a shape.</span></h2>
@@ -123,7 +134,7 @@ export default function EngagePage() {
           </div>
         </section>
 
-        <section className={styles.outputSection} aria-labelledby="handling-heading">
+        <section className={`${styles.outputSection} ${styles.routeSection}`} id="handling" aria-labelledby="handling-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// INFORMATION HANDLING GUIDANCE'}</p>
             <h2 id="handling-heading">Match the evidence<br /><span>to the channel.</span></h2>
@@ -154,7 +165,7 @@ export default function EngagePage() {
           </div>
         </section>
 
-        <section className={styles.frameworkSection} aria-labelledby="lane-heading">
+        <section className={`${styles.frameworkSection} ${styles.routeSection}`} id="decision-lanes" aria-labelledby="lane-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// CHOOSE THE DECISION'}</p>
             <h2 id="lane-heading">Three lanes.<br /><span>One boundary.</span></h2>
@@ -173,7 +184,7 @@ export default function EngagePage() {
           </div>
         </section>
 
-        <section className={styles.twoColumn} aria-labelledby="response-heading">
+        <section className={`${styles.twoColumn} ${styles.routeSection}`} id="response" aria-labelledby="response-heading">
           <div>
             <p className={styles.eyebrow}>{'// WHAT HAPPENS NEXT'}</p>
             <h2 id="response-heading">Useful before<br /><span>technical activity.</span></h2>

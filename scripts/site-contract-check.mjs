@@ -5,11 +5,13 @@ import { fileURLToPath } from "node:url";
 const projectRoot = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const read = (relativePath) => readFile(join(projectRoot, relativePath), "utf8");
 
-const [page, globalsCss, attacksRoute, liveDefconMap] = await Promise.all([
+const [page, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesCss] = await Promise.all([
   read("app/page.tsx"),
   read("app/globals.css"),
   read("app/api/attacks/route.ts"),
   read("app/live-defcon-map.tsx"),
+  read("app/engage/page.tsx"),
+  read("app/services/services.module.css"),
 ]);
 
 const failures = [];
@@ -68,6 +70,32 @@ for (const marker of [
   "Refresh public threat signals; available in ${refreshWaitSeconds} seconds",
 ]) {
   requireText("app/live-defcon-map.tsx refresh contract", liveDefconMap, marker);
+}
+
+for (const marker of [
+  'aria-label="Engagement page sections"',
+  'href="#intake"',
+  'href="#brief-template"',
+  'href="#handling"',
+  'href="#decision-lanes"',
+  'href="#response"',
+  'id="intake"',
+  'id="brief-template"',
+  'id="handling"',
+  'id="decision-lanes"',
+  'id="response"',
+]) {
+  requireText("app/engage/page.tsx route index", engagePage, marker);
+}
+
+for (const marker of [
+  ".pageIndex { border-bottom: 1px solid var(--line);",
+  ".pageIndex ol { display: grid;",
+  ".pageIndex a:hover, .pageIndex a:focus-visible",
+  ".routeSection { scroll-margin-top: 96px; }",
+  ".pageIndex ol { gap: 6px; grid-template-columns: repeat(2, minmax(0, 1fr)); }",
+]) {
+  requireText("app/services/services.module.css route index", servicesCss, marker);
 }
 
 if (decisionPaths.split("\n").filter((line) => line.trim().startsWith("[")).length !== 4) {
