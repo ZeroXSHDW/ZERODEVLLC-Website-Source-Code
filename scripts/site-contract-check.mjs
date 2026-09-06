@@ -165,6 +165,9 @@ for (const marker of [
 
 for (const marker of [
   "const [activeSection, setActiveSection] = useState('#start')",
+  'const syncHash = () =>',
+  'window.location.hash',
+  "window.addEventListener('hashchange', syncHash)",
   "new IntersectionObserver",
   "aria-current={activeSection === item.href ? 'location' : undefined}",
 ]) {

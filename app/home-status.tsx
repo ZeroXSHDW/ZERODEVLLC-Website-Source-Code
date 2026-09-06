@@ -46,13 +46,25 @@ export function HomeHeader({ navigation, statusHref }: { navigation: readonly Na
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
   useEffect(() => {
+    const sectionHrefs = navigation
+      .map((item) => item.href)
+      .filter((href) => href.startsWith('#'));
+    const syncHash = () => {
+      if (sectionHrefs.includes(window.location.hash)) setActiveSection(window.location.hash);
+    };
+
+    syncHash();
+    window.addEventListener('hashchange', syncHash);
+
     const sectionTargets = navigation
       .map((item) => item.href)
-      .filter((href) => href.startsWith('#'))
+      .filter((href) => sectionHrefs.includes(href))
       .map((href) => document.getElementById(href.slice(1)))
       .filter((target): target is HTMLElement => Boolean(target));
 
-    if (!('IntersectionObserver' in window) || sectionTargets.length === 0) return undefined;
+    if (!('IntersectionObserver' in window) || sectionTargets.length === 0) {
+      return () => window.removeEventListener('hashchange', syncHash);
+    }
 
     const visibility = new Map<string, number>();
     const observer = new IntersectionObserver((entries) => {
@@ -69,7 +81,10 @@ export function HomeHeader({ navigation, statusHref }: { navigation: readonly Na
     }, { rootMargin: '-92px 0px -55% 0px', threshold: [0, 0.1, 0.25, 0.5, 0.75, 1] });
 
     sectionTargets.forEach((target) => observer.observe(target));
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('hashchange', syncHash);
+    };
   }, [navigation]);
 
   useEffect(() => {
