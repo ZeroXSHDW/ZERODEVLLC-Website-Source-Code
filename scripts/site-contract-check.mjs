@@ -634,8 +634,10 @@ for (const [label, source, markers] of additionalRouteIndexContracts) {
 
 for (const marker of [
   'framework-library-search',
+  'history.pushState',
   'history.replaceState',
   "window.addEventListener('popstate'",
+  'queryHistoryActiveRef',
   'role="group" aria-label="Filter framework references by category"',
   'aria-pressed={category === option}',
   'className={classNames.libraryShareNote}',

@@ -192,6 +192,8 @@ requireText("app/frameworks/page.tsx", frameworksPage, "EU Critical Entities Res
 requireText("app/frameworks/page.tsx", frameworksPage, "primary publisher reference");
 requireText("app/frameworks/page.tsx", frameworksPage, "FrameworkLibrary");
 requireText("app/framework-library.tsx", frameworkLibrary, "framework-library-search");
+requireText("app/framework-library.tsx", frameworkLibrary, "history.pushState");
+requireText("app/framework-library.tsx", frameworkLibrary, "window.addEventListener('popstate'");
 requireText("app/framework-library.tsx", frameworkLibrary, "aria-pressed={category === option}");
 requireText("app/framework-library.tsx", frameworkLibrary, "No reference matches that route");
 requireText("app/framework-library.tsx", frameworkLibrary, "Clear library filters");

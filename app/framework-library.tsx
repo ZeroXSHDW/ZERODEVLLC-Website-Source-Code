@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export type FrameworkLibraryEntry = {
   name: string;
@@ -56,6 +56,8 @@ type LibraryFilterState = {
   category: FrameworkCategory;
 };
 
+type FilterHistoryMode = 'push' | 'replace';
+
 const readFilterState = (): LibraryFilterState => {
   if (typeof window === 'undefined') return { query: '', category: categories[0] };
 
@@ -68,7 +70,7 @@ const readFilterState = (): LibraryFilterState => {
   return { query: params.get('q') ?? '', category };
 };
 
-const writeFilterState = (query: string, category: FrameworkCategory) => {
+const writeFilterState = (query: string, category: FrameworkCategory, historyMode: FilterHistoryMode) => {
   if (typeof window === 'undefined') return;
 
   const url = new URL(window.location.href);
@@ -77,15 +79,26 @@ const writeFilterState = (query: string, category: FrameworkCategory) => {
   else url.searchParams.delete('q');
   if (category === categories[0]) url.searchParams.delete('category');
   else url.searchParams.set('category', category);
-  window.history.replaceState(window.history.state, '', `${url.pathname}${url.search}${url.hash}`);
+  const nextLocation = `${url.pathname}${url.search}${url.hash}`;
+  const currentLocation = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  if (currentLocation === nextLocation) return;
+  if (historyMode === 'push') window.history.pushState(window.history.state, '', nextLocation);
+  else window.history.replaceState(window.history.state, '', nextLocation);
 };
 
 export default function FrameworkLibrary({ frameworks, reviewDate, classNames }: FrameworkLibraryProps) {
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState<FrameworkCategory>(categories[0]);
+  const queryHistoryActiveRef = useRef(false);
+  const queryHistoryTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     const syncFilterState = () => {
+      queryHistoryActiveRef.current = false;
+      if (queryHistoryTimerRef.current !== null) {
+        window.clearTimeout(queryHistoryTimerRef.current);
+        queryHistoryTimerRef.current = null;
+      }
       const next = readFilterState();
       setQuery(next.query);
       setCategory(next.category);
@@ -93,23 +106,43 @@ export default function FrameworkLibrary({ frameworks, reviewDate, classNames }:
 
     syncFilterState();
     window.addEventListener('popstate', syncFilterState);
-    return () => window.removeEventListener('popstate', syncFilterState);
+    return () => {
+      window.removeEventListener('popstate', syncFilterState);
+      if (queryHistoryTimerRef.current !== null) window.clearTimeout(queryHistoryTimerRef.current);
+    };
   }, []);
 
   const handleQueryChange = (nextQuery: string) => {
     setQuery(nextQuery);
-    writeFilterState(nextQuery, category);
+    const historyMode = queryHistoryActiveRef.current ? 'replace' : 'push';
+    queryHistoryActiveRef.current = true;
+    writeFilterState(nextQuery, category, historyMode);
+    if (queryHistoryTimerRef.current !== null) window.clearTimeout(queryHistoryTimerRef.current);
+    queryHistoryTimerRef.current = window.setTimeout(() => {
+      queryHistoryActiveRef.current = false;
+      queryHistoryTimerRef.current = null;
+    }, 700);
   };
 
   const handleCategoryChange = (nextCategory: FrameworkCategory) => {
+    queryHistoryActiveRef.current = false;
+    if (queryHistoryTimerRef.current !== null) {
+      window.clearTimeout(queryHistoryTimerRef.current);
+      queryHistoryTimerRef.current = null;
+    }
     setCategory(nextCategory);
-    writeFilterState(query, nextCategory);
+    writeFilterState(query, nextCategory, 'push');
   };
 
   const clearFilters = () => {
+    queryHistoryActiveRef.current = false;
+    if (queryHistoryTimerRef.current !== null) {
+      window.clearTimeout(queryHistoryTimerRef.current);
+      queryHistoryTimerRef.current = null;
+    }
     setQuery('');
     setCategory(categories[0]);
-    writeFilterState('', categories[0]);
+    writeFilterState('', categories[0], 'push');
   };
 
   const normalizedQuery = query.trim().toLowerCase();
