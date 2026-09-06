@@ -145,6 +145,9 @@ for (const marker of [
   "'@type': 'ItemList'",
   "'@type': 'Service'",
   "Authorized penetration testing",
+  "#service-01",
+  "#service-08",
+  "'@id': `https://zerodevllc.com/services${anchor}`",
   "does not create a certification",
 ]) {
   requireText("structured service discovery contract", `${layout}\n${structuredData}`, marker);
