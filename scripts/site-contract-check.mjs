@@ -270,6 +270,13 @@ for (const marker of [
 }
 
 for (const marker of [
+  ".frameworkSource { color: var(--dim) !important;",
+  ".frameworkFreshness { border-left: 1px solid var(--cyan);",
+]) {
+  requireText("app/services/services.module.css framework freshness", servicesCss, marker);
+}
+
+for (const marker of [
   'aria-label="Services page sections"',
   'href="#engagement-areas"',
   'href="#briefing-packs"',
@@ -346,14 +353,23 @@ const additionalRouteIndexContracts = [
   ]],
   ["app/frameworks/page.tsx", frameworksPage, [
     'aria-label="Frameworks page sections"',
+    'href="#reference-control"',
     'href="#standards-library"',
     'href="#service-framework-map"',
     'href="#procurement-governance"',
     'href="#claims-control"',
+    'id="reference-control"',
     'id="standards-library"',
     'id="service-framework-map"',
     'id="procurement-governance"',
     'id="claims-control"',
+    "const frameworkReviewDate = '2026-09-06';",
+    'REFERENCE CURRENCY CONTROL',
+    'frameworkFreshnessRules',
+    'Publisher:</strong>',
+    'Version / edition named:</strong>',
+    'Source check:</strong>',
+    'recheck before use',
   ]],
   ["app/assurance/page.tsx", assurancePage, [
     'aria-label="Assurance page sections"',

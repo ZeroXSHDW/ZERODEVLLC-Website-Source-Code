@@ -22,20 +22,22 @@ export const metadata: Metadata = {
   },
 };
 
+const frameworkReviewDate = '2026-09-06';
+
 const frameworks = [
-  ['NIST CSF 2.0', 'Organize cybersecurity outcomes across Govern, Identify, Protect, Detect, Respond, and Recover.', 'Use it as an outcome and communication layer; it is not itself a certification.', 'NIST CSF 2.0 resource center', 'https://www.nist.gov/cyberframework'],
-  ['NIST SP 800-115', 'Structure technical security testing, planning, execution, analysis, and reporting.', 'Apply it to an agreed testing scope and rules of engagement.', 'NIST SP 800-115', 'https://csrc.nist.gov/pubs/sp/800/115/final'],
-  ['NIST SP 800-30 Rev. 1', 'Support threat, vulnerability, likelihood, impact, and risk-assessment reasoning.', 'Risk scores require organizational context and evidence quality.', 'NIST SP 800-30 Rev. 1', 'https://csrc.nist.gov/pubs/sp/800/30/r1/final'],
-  ['NIST SP 800-34 Rev. 1', 'Frame contingency planning, recovery priorities, alternate operations, and testing.', 'A plan is not proof of recovery until it is exercised and evidenced.', 'NIST SP 800-34 Rev. 1', 'https://csrc.nist.gov/pubs/sp/800/34/r1/upd1/final'],
-  ['NIST SP 800-53 Rev. 5', 'Map security and privacy control families to systems, owners, and evidence.', 'Control presence must be verified in the relevant system and scope.', 'NIST SP 800-53 Rev. 5', 'https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final'],
-  ['NIST SP 800-61 Rev. 3', 'Structure incident-response preparation, handling, coordination, and lessons learned.', 'Incident readiness depends on people, authority, communications, and practice.', 'NIST SP 800-61 Rev. 3', 'https://csrc.nist.gov/pubs/sp/800/61/r3/final'],
-  ['NIST SP 800-161 Rev. 1', 'Assess cyber-supply-chain risk across products, services, dependencies, and suppliers.', 'Vendor questionnaires alone are not sufficient evidence of supplier security.', 'NIST SP 800-161 Rev. 1', 'https://csrc.nist.gov/pubs/sp/800/161/r1/upd1/final'],
-  ['NIST SP 800-171 Rev. 3 / 800-171A Rev. 3', 'Discuss protection and assessment of controlled unclassified information in applicable nonfederal systems.', 'Applicability, contract language, assessment method, and evidence expectations must be confirmed for each engagement.', 'NIST CUI publications', 'https://csrc.nist.gov/Projects/protecting-controlled-unclassified-information'],
-  ['NCSC Cyber Assessment Framework 4.0', 'Frame outcome-based cyber resilience assessment for essential functions, critical infrastructure, and public-sector contexts.', 'CAF alignment is a scoped assessment conversation; it is not an NCSC endorsement, regulatory decision, or certification.', 'NCSC CAF collection', 'https://www.ncsc.gov.uk/collection/cyber-assessment-framework'],
-  ['CIS Controls v8.1', 'Translate common defensive priorities into a practical control improvement sequence.', 'Control adoption should be tied to asset context, ownership, and evidence.', 'CIS Controls v8.1', 'https://www.cisecurity.org/controls/cis-controls-list'],
-  ['OWASP testing guidance', 'Support web, API, and application-security testing conversations and verification.', 'Testing remains authorized, bounded, and appropriate to the application and environment.', 'OWASP Web Security Testing Guide', 'https://wstg.owasp.org/'],
-  ['ISO/IEC 27001:2022', 'Support information-security management, control, risk, and evidence discussions.', 'Readiness support does not create certification or an auditor’s opinion.', 'ISO/IEC 27001:2022', 'https://www.iso.org/cms/live/live/en/sites/isoorg/contents/data/standard/08/28/82875.html'],
-  ['ISO 22301:2019 / ISO 31000:2018', 'Frame continuity, risk, impact, decision, and improvement conversations.', 'Business continuity and risk management must reflect the organization’s actual objectives.', 'ISO 22301:2019', 'https://www.iso.org/standard/75106.html'],
+  ['NIST CSF 2.0', 'NIST', '2.0', 'Organize cybersecurity outcomes across Govern, Identify, Protect, Detect, Respond, and Recover.', 'Use it as an outcome and communication layer; it is not itself a certification.', 'NIST CSF 2.0 resource center', 'https://www.nist.gov/cyberframework'],
+  ['NIST SP 800-115', 'NIST', 'Final / September 2008', 'Structure technical security testing, planning, execution, analysis, and reporting.', 'Apply it to an agreed testing scope and rules of engagement.', 'NIST SP 800-115', 'https://csrc.nist.gov/pubs/sp/800/115/final'],
+  ['NIST SP 800-30 Rev. 1', 'NIST', 'Rev. 1 / September 2012', 'Support threat, vulnerability, likelihood, impact, and risk-assessment reasoning.', 'Risk scores require organizational context and evidence quality.', 'NIST SP 800-30 Rev. 1', 'https://csrc.nist.gov/pubs/sp/800/30/r1/final'],
+  ['NIST SP 800-34 Rev. 1', 'NIST', 'Rev. 1 / updated November 2010', 'Frame contingency planning, recovery priorities, alternate operations, and testing.', 'A plan is not proof of recovery until it is exercised and evidenced.', 'NIST SP 800-34 Rev. 1', 'https://csrc.nist.gov/pubs/sp/800/34/r1/upd1/final'],
+  ['NIST SP 800-53 Rev. 5', 'NIST', 'Rev. 5', 'Map security and privacy control families to systems, owners, and evidence.', 'Control presence must be verified in the relevant system and scope.', 'NIST SP 800-53 Rev. 5', 'https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final'],
+  ['NIST SP 800-61 Rev. 3', 'NIST', 'Rev. 3', 'Structure incident-response preparation, handling, coordination, and lessons learned.', 'Incident readiness depends on people, authority, communications, and practice.', 'NIST SP 800-61 Rev. 3', 'https://csrc.nist.gov/pubs/sp/800/61/r3/final'],
+  ['NIST SP 800-161 Rev. 1', 'NIST', 'Rev. 1 / update 1', 'Assess cyber-supply-chain risk across products, services, dependencies, and suppliers.', 'Vendor questionnaires alone are not sufficient evidence of supplier security.', 'NIST SP 800-161 Rev. 1', 'https://csrc.nist.gov/pubs/sp/800/161/r1/upd1/final'],
+  ['NIST SP 800-171 Rev. 3 / 800-171A Rev. 3', 'NIST', 'Rev. 3', 'Discuss protection and assessment of controlled unclassified information in applicable nonfederal systems.', 'Applicability, contract language, assessment method, and evidence expectations must be confirmed for each engagement.', 'NIST CUI publications', 'https://csrc.nist.gov/Projects/protecting-controlled-unclassified-information'],
+  ['NCSC Cyber Assessment Framework 4.0', 'UK NCSC', '4.0', 'Frame outcome-based cyber resilience assessment for essential functions, critical infrastructure, and public-sector contexts.', 'CAF alignment is a scoped assessment conversation; it is not an NCSC endorsement, regulatory decision, or certification.', 'NCSC CAF collection', 'https://www.ncsc.gov.uk/collection/cyber-assessment-framework'],
+  ['CIS Controls v8.1', 'Center for Internet Security', 'v8.1', 'Translate common defensive priorities into a practical control improvement sequence.', 'Control adoption should be tied to asset context, ownership, and evidence.', 'CIS Controls v8.1', 'https://www.cisecurity.org/controls/cis-controls-list'],
+  ['OWASP testing guidance', 'OWASP', 'Publisher-controlled WSTG release', 'Support web, API, and application-security testing conversations and verification.', 'Testing remains authorized, bounded, and appropriate to the application and environment.', 'OWASP Web Security Testing Guide', 'https://wstg.owasp.org/'],
+  ['ISO/IEC 27001:2022', 'ISO', '2022', 'Support information-security management, control, risk, and evidence discussions.', 'Readiness support does not create certification or an auditor’s opinion.', 'ISO/IEC 27001:2022', 'https://www.iso.org/cms/live/live/en/sites/isoorg/contents/data/standard/08/28/82875.html'],
+  ['ISO 22301:2019 / ISO 31000:2018', 'ISO', '2019 / 2018', 'Frame continuity, risk, impact, decision, and improvement conversations.', 'Business continuity and risk management must reflect the organization’s actual objectives.', 'ISO 22301:2019', 'https://www.iso.org/standard/75106.html'],
 ] as const;
 
 const procurementRules = [
@@ -44,6 +46,13 @@ const procurementRules = [
   'Record what the control or framework does not prove.',
   'Separate technical readiness from certification, accreditation, legal advice, or procurement approval.',
 ];
+
+const frameworkFreshnessRules = [
+  'Version or edition labels describe the reference named for orientation; they are not a promise that the text remains current or applicable.',
+  'Each card links to a primary publisher source. Recheck revision history, errata, withdrawal, replacement, and publisher-controlled releases before relying on it.',
+  `Primary source labels and URLs were reviewed for this candidate on ${frameworkReviewDate}; that local review date is not certification, regulator validation, or an assessor opinion.`,
+  'At engagement start, confirm the current text, contract, jurisdiction, system scope, evidence owner, applicable assessor or authority, and required review method.',
+] as const;
 
 const serviceFrameworkMap = [
   ['Authorized penetration testing', ['NIST SP 800-115', 'OWASP testing guidance'], 'Is the proposed test scope, authority, method, and evidence path proportionate?', 'Testing guidance does not grant authorization or prove that a system is secure.'],
@@ -57,7 +66,7 @@ const serviceFrameworkMap = [
 ] as const;
 
 const frameworkReferenceByName = Object.fromEntries(
-  frameworks.map(([name, , , sourceLabel, sourceHref]) => [name, { sourceLabel, sourceHref }]),
+  frameworks.map(([name, publisher, version, , , sourceLabel, sourceHref]) => [name, { publisher, version, sourceLabel, sourceHref }]),
 );
 
 export default function FrameworksPage() {
@@ -85,12 +94,24 @@ export default function FrameworksPage() {
         <nav className={styles.pageIndex} aria-label="Frameworks page sections">
           <p className={styles.pageIndexLabel}>{'// ROUTE INDEX'}</p>
           <ol>
-            <li><a href="#standards-library"><span>01</span>Standards library</a></li>
-            <li><a href="#service-framework-map"><span>02</span>Service fit</a></li>
-            <li><a href="#procurement-governance"><span>03</span>Procurement</a></li>
-            <li><a href="#claims-control"><span>04</span>Claims control</a></li>
+            <li><a href="#reference-control"><span>01</span>Reference control</a></li>
+            <li><a href="#standards-library"><span>02</span>Standards library</a></li>
+            <li><a href="#service-framework-map"><span>03</span>Service fit</a></li>
+            <li><a href="#procurement-governance"><span>04</span>Procurement</a></li>
+            <li><a href="#claims-control"><span>05</span>Claims control</a></li>
           </ol>
         </nav>
+
+        <section className={`${styles.twoColumn} ${styles.routeSection}`} id="reference-control" aria-labelledby="reference-control-heading">
+          <div>
+            <p className={styles.eyebrow}>{'// REFERENCE CURRENCY CONTROL'}</p>
+            <h2 id="reference-control-heading">Keep the source<br /><span>current at the gate.</span></h2>
+            <p className={styles.bodyCopy}>A framework name on a public page is an orientation signal, not a compliance result. Treat the publisher page, contract, jurisdiction, scope, and evidence owner as the source of truth at the start of each engagement.</p>
+          </div>
+          <div className={styles.checkList}>
+            {frameworkFreshnessRules.map((rule, index) => <div key={rule}><span>{String(index + 1).padStart(2, '0')}</span><p>{rule}</p></div>)}
+          </div>
+        </section>
 
         <section className={`${styles.frameworkSection} ${styles.routeSection}`} id="standards-library" aria-labelledby="library-heading">
           <div className={styles.sectionIntro}>
@@ -99,10 +120,12 @@ export default function FrameworksPage() {
             <p>Use this library to frame a conversation, identify evidence, and choose a proportionate next action. Each card links to a primary publisher reference; confirm the current authoritative text and applicability before relying on a requirement.</p>
           </div>
           <div className={styles.frameworkGrid}>
-            {frameworks.map(([name, purpose, boundary, sourceLabel, sourceHref]) => (
+            {frameworks.map(([name, publisher, version, purpose, boundary, sourceLabel, sourceHref]) => (
               <article className={styles.frameworkCard} key={name}>
                 <span className={styles.frameworkTag}>REFERENCE / READINESS</span>
                 <h3>{name}</h3>
+                <p className={styles.frameworkSource}><strong>Publisher:</strong> {publisher}<br /><strong>Version / edition named:</strong> {version}</p>
+                <p className={styles.frameworkFreshness}><strong>Source check:</strong> {frameworkReviewDate} / recheck before use</p>
                 <p>{purpose}</p>
                 <p className={styles.cardBoundary}><strong>Boundary:</strong> {boundary}</p>
                 <a className={styles.referenceLink} href={sourceHref} target="_blank" rel="noopener noreferrer" aria-label={`${name} primary reference; opens in a new tab`}>{sourceLabel} <span aria-hidden="true">↗</span></a>
