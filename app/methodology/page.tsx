@@ -63,7 +63,7 @@ export default function MethodologyPage() {
         navigation={secondaryNavigation}
       />
 
-      <div className={styles.layout} id="methodology-content">
+      <div className={styles.layout} id="methodology-content" tabIndex={-1}>
         <section className={styles.hero} aria-labelledby="methodology-heading">
           <div>
             <p className={styles.eyebrow}><span aria-hidden="true">&gt;_</span> METHODOLOGY / CONTROLLED ENGAGEMENT</p>

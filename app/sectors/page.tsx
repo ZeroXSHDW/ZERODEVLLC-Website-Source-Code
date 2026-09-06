@@ -47,7 +47,7 @@ export default function SectorsPage() {
         navigation={secondaryNavigation}
       />
 
-      <div className={styles.layout} id="sectors-content">
+      <div className={styles.layout} id="sectors-content" tabIndex={-1}>
         <section className={styles.hero} aria-labelledby="sectors-heading">
           <div>
             <p className={styles.eyebrow}><span aria-hidden="true">&gt;_</span> SECTOR FIT / DECISION PATHS</p>

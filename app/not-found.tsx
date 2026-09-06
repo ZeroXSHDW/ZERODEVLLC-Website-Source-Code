@@ -18,7 +18,7 @@ export default function NotFound() {
         navigation={secondaryNavigation}
       />
 
-      <div className={styles.layout} id="not-found-content">
+      <div className={styles.layout} id="not-found-content" tabIndex={-1}>
         <section className={styles.hero} aria-labelledby="not-found-heading">
           <div>
             <p className={styles.eyebrow}><span aria-hidden="true">&gt;_</span> 404 / ROUTE NOT FOUND</p>

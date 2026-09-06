@@ -87,7 +87,7 @@ export default function DeliverablesPage() {
         navigation={secondaryNavigation}
       />
 
-      <div className={styles.layout} id="deliverables-content">
+      <div className={styles.layout} id="deliverables-content" tabIndex={-1}>
         <section className={styles.hero} aria-labelledby="deliverables-heading">
           <div>
             <p className={styles.eyebrow}><span aria-hidden="true">&gt;_</span> DELIVERABLES / EVIDENCE SHAPES</p>
@@ -138,7 +138,7 @@ export default function DeliverablesPage() {
             <h2 id="evidence-request-heading">Ask for evidence.<br /><span>Record the decision.</span></h2>
             <p>This orientation map helps a buyer prepare a proportionate starting set for each service. It is not a universal client checklist, a classification policy, an authorization, a certification route, or a substitute for the applicable contract and owner decision.</p>
           </div>
-          <div className={styles.actionTableWrap}>
+          <div className={styles.actionTableWrap} tabIndex={0} role="region" aria-label="Evidence request and acceptance map table">
             <table className={`${styles.actionTable} ${styles.evidenceRequestMap}`}>
               <caption className={styles.tableCaption}>Illustrative evidence-request and acceptance map — confirm scope, authority, handling, and applicability before relying on a request.</caption>
               <thead>
@@ -170,7 +170,7 @@ export default function DeliverablesPage() {
             <p>This path helps a procurement or third-party-risk team turn a supplier conversation into a bounded, reviewable evidence record. It separates the service boundary, verification method, confidence, accountable owner, and next gate.</p>
             <p><Link className={styles.primaryLink} href="/engage#print-brief">Use the first-brief template <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/frameworks#service-framework-map">Check framework fit <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/privacy">Review information handling <span aria-hidden="true">→</span></Link></p>
           </div>
-          <div className={styles.actionTableWrap}>
+          <div className={styles.actionTableWrap} tabIndex={0} role="region" aria-label="Procurement and vendor-risk evidence path table">
             <table className={`${styles.actionTable} ${styles.procurementEvidenceMap}`}>
               <caption className={styles.tableCaption}>Illustrative procurement and vendor-risk evidence path — not a universal questionnaire, supplier approval, legal opinion, certification, regulator determination, or independent assurance report.</caption>
               <thead>
@@ -203,7 +203,7 @@ export default function DeliverablesPage() {
             <h2 id="preview-heading">See the review<br /><span>before the handoff.</span></h2>
             <p>A useful deliverable makes the decision, boundary, evidence state, owner, treatment, and closeout condition visible together. This example is intentionally synthetic and contains no client, provider, target, or production evidence.</p>
           </div>
-          <div className={styles.actionTableWrap}>
+          <div className={styles.actionTableWrap} tabIndex={0} role="region" aria-label="Synthetic executive risk brief preview table">
             <table className={styles.actionTable}>
               <caption className={styles.tableCaption}>Synthetic executive risk brief preview — not client evidence, a live finding, or a security guarantee.</caption>
               <thead>
@@ -244,7 +244,7 @@ export default function DeliverablesPage() {
             <p>A review becomes more defensible when a reader can see where the evidence came from, what it covers, how it was checked, what remains uncertain, and when the conclusion should be revisited.</p>
             <p><Link className={styles.primaryLink} href="/assurance#claims-proof">Use the claims-to-proof matrix before turning evidence into a public claim <span aria-hidden="true">→</span></Link></p>
           </div>
-          <div className={styles.actionTableWrap}>
+          <div className={styles.actionTableWrap} tabIndex={0} role="region" aria-label="Provenance and confidence record table">
             <table className={`${styles.actionTable} ${styles.provenanceMap}`}>
               <caption className={styles.tableCaption}>Illustrative provenance and confidence record — not a client evidence register or independent assurance opinion.</caption>
               <thead>

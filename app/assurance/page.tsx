@@ -74,7 +74,7 @@ export default function AssurancePage() {
         navigation={secondaryNavigation}
       />
 
-      <div className={styles.layout} id="assurance-content">
+      <div className={styles.layout} id="assurance-content" tabIndex={-1}>
         <section className={styles.hero} aria-labelledby="assurance-heading">
           <div>
             <p className={styles.eyebrow}><span aria-hidden="true">&gt;_</span> ASSURANCE / TRUST BOUNDARIES</p>
@@ -142,7 +142,7 @@ export default function AssurancePage() {
             <h2 id="handling-heading">Match the<br /><span>channel to the risk.</span></h2>
             <p>Qualification should be possible without sensitive disclosure. If the objective requires restricted evidence, the exchange path is agreed separately with the responsible owner.</p>
           </div>
-          <div className={styles.actionTableWrap}>
+          <div className={styles.actionTableWrap} tabIndex={0} role="region" aria-label="Public-to-controlled information handling map table">
             <table className={styles.actionTable}>
               <caption className={styles.tableCaption}>Illustrative public-to-controlled handling map — not a classification policy.</caption>
               <thead>
@@ -190,7 +190,7 @@ export default function AssurancePage() {
             <p>This matrix is a public claims-control aid. It distinguishes what the site can safely say now, what evidence would be required for a stronger statement, who must own the decision, and what the current boundary prevents the statement from proving.</p>
             <p><Link className={styles.primaryLink} href="/deliverables#provenance-confidence">Review evidence provenance <span aria-hidden="true">→</span></Link><br /><Link className={styles.primaryLink} href="/privacy">Review information handling <span aria-hidden="true">→</span></Link></p>
           </div>
-          <div className={styles.actionTableWrap}>
+          <div className={styles.actionTableWrap} tabIndex={0} role="region" aria-label="Claims-to-proof matrix table">
             <table className={`${styles.actionTable} ${styles.claimsProofMap}`}>
               <caption className={styles.tableCaption}>Claims-to-proof matrix — public orientation only; not a certification register, client evidence register, legal opinion, or release approval.</caption>
               <thead>

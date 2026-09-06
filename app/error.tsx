@@ -18,7 +18,7 @@ export default function Error({ reset }: ErrorProps) {
         navigation={secondaryNavigation}
       />
 
-      <div className={styles.layout} id="error-content">
+      <div className={styles.layout} id="error-content" tabIndex={-1}>
         <section className={styles.hero} aria-labelledby="error-heading">
           <div>
             <p className={styles.eyebrow}><span aria-hidden="true">!_</span> 500 / SURFACE DEGRADED</p>

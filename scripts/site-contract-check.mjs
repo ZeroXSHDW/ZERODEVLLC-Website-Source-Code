@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const projectRoot = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const read = (relativePath) => readFile(join(projectRoot, relativePath), "utf8");
 
-const [page, homeStatus, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, assurancePage, sectorsPage, siteHeader, siteFooter] = await Promise.all([
+const [page, homeStatus, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, assurancePage, sectorsPage, privacyPage, errorPage, notFoundPage, loadingPage, siteHeader, siteFooter] = await Promise.all([
   read("app/page.tsx"),
   read("app/home-status.tsx"),
   read("app/globals.css"),
@@ -20,6 +20,10 @@ const [page, homeStatus, globalsCss, attacksRoute, liveDefconMap, engagePage, se
   read("app/frameworks/page.tsx"),
   read("app/assurance/page.tsx"),
   read("app/sectors/page.tsx"),
+  read("app/privacy/page.tsx"),
+  read("app/error.tsx"),
+  read("app/not-found.tsx"),
+  read("app/loading.tsx"),
   read("app/site-header.tsx"),
   read("app/site-footer.tsx"),
 ]);
@@ -48,6 +52,7 @@ requireText("app/page.tsx", page, 'href="#start">\n              Choose the firs
 requireText("app/page.tsx", page, "START WITH THE DECISION");
 requireText("app/page.tsx", page, "Do not begin with a product label");
 requireText("app/page.tsx", page, "decision-card-${tone}");
+requireText("app/page.tsx skip target", page, 'id="start" tabIndex={-1}');
 for (const marker of ["VIEW OPERATING APPROACH", "VIEW EVIDENCE", "VIEW DELIVERY MODEL"]) {
   requireText("app/page.tsx registered-surface actions", page, marker);
 }
@@ -166,6 +171,24 @@ for (const marker of [
   requireText("same-site and external route signal contract", routeSignalSources, marker);
 }
 
+const skipTargetContracts = [
+  ["app/services/page.tsx", servicesPage, 'id="services-content" tabIndex={-1}'],
+  ["app/engage/page.tsx", engagePage, 'id="engage-content" tabIndex={-1}'],
+  ["app/sectors/page.tsx", sectorsPage, 'id="sectors-content" tabIndex={-1}'],
+  ["app/deliverables/page.tsx", deliverablesPage, 'id="deliverables-content" tabIndex={-1}'],
+  ["app/methodology/page.tsx", methodologyPage, 'id="methodology-content" tabIndex={-1}'],
+  ["app/remediation/page.tsx", remediationPage, 'id="remediation-content" tabIndex={-1}'],
+  ["app/frameworks/page.tsx", frameworksPage, 'id="frameworks-content" tabIndex={-1}'],
+  ["app/assurance/page.tsx", assurancePage, 'id="assurance-content" tabIndex={-1}'],
+  ["app/privacy/page.tsx", privacyPage, 'id="privacy-content" tabIndex={-1}'],
+  ["app/error.tsx", errorPage, 'id="error-content" tabIndex={-1}'],
+  ["app/not-found.tsx", notFoundPage, 'id="not-found-content" tabIndex={-1}'],
+  ["app/loading.tsx", loadingPage, 'id="loading-content" tabIndex={-1}'],
+];
+for (const [label, source, marker] of skipTargetContracts) {
+  requireText(`${label} skip target`, source, marker);
+}
+
 const claimsProofDiscoveryRoutes = [
   ["app/page.tsx", page, 'href="/assurance#claims-proof">Review claims / proof / gates'],
   ["app/services/page.tsx", servicesPage, 'href="/assurance#claims-proof">Check the claims-to-proof matrix before publishing a stronger statement'],
@@ -178,6 +201,23 @@ const claimsProofDiscoveryRoutes = [
 for (const [label, source, marker] of claimsProofDiscoveryRoutes) {
   requireText(`${label} claims-proof discovery`, source, marker);
 }
+
+const scrollableTableSources = [
+  ["app/engage/page.tsx", engagePage],
+  ["app/services/page.tsx", servicesPage],
+  ["app/deliverables/page.tsx", deliverablesPage],
+  ["app/assurance/page.tsx", assurancePage],
+  ["app/frameworks/page.tsx", frameworksPage],
+  ["app/remediation/page.tsx", remediationPage],
+];
+for (const [label, source] of scrollableTableSources) {
+  const wrapperCount = (source.match(/className=\{styles\.actionTableWrap\}/g) ?? []).length;
+  const accessibleWrapperCount = (source.match(/className=\{styles\.actionTableWrap\} tabIndex=\{0\} role="region" aria-label="[^"]+"/g) ?? []).length;
+  if (wrapperCount !== accessibleWrapperCount) {
+    failures.push(`${label} has ${wrapperCount} table wrapper(s) but ${accessibleWrapperCount} keyboard-named wrapper(s)`);
+  }
+}
+requireText("app/services/services.module.css accessible table focus", servicesCss, ".actionTableWrap:focus-visible {");
 
 for (const marker of [
   'aria-label="Engagement page sections"',

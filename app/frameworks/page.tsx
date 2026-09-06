@@ -70,7 +70,7 @@ export default function FrameworksPage() {
         navigation={secondaryNavigation}
       />
 
-      <div className={styles.layout} id="frameworks-content">
+      <div className={styles.layout} id="frameworks-content" tabIndex={-1}>
         <section className={styles.hero} aria-labelledby="frameworks-heading">
           <div>
             <p className={styles.eyebrow}><span aria-hidden="true">&gt;_</span> FRAMEWORKS / EVIDENCE MAP</p>
@@ -118,7 +118,7 @@ export default function FrameworksPage() {
             <p>This orientation map connects each service question to candidate reference families. It is not a formal crosswalk, audit plan, certification route, legal interpretation, or evidence of compliance.</p>
             <p><Link className={styles.primaryLink} href="/services#briefing-packs">Review the service briefing packs <span aria-hidden="true">→</span></Link></p>
           </div>
-          <div className={styles.actionTableWrap}>
+          <div className={styles.actionTableWrap} tabIndex={0} role="region" aria-label="Service-to-framework orientation map table">
             <table className={`${styles.actionTable} ${styles.frameworkMap}`}>
               <caption className={styles.tableCaption}>Service-to-framework orientation map — confirm current publisher text, contract, jurisdiction, scope, authority, and evidence before relying on a reference.</caption>
               <thead>

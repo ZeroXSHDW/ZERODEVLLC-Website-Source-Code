@@ -66,7 +66,7 @@ export default function RemediationPage() {
         navigation={secondaryNavigation}
       />
 
-      <div className={styles.layout} id="remediation-content">
+      <div className={styles.layout} id="remediation-content" tabIndex={-1}>
         <section className={styles.hero} aria-labelledby="remediation-heading">
           <div>
             <p className={styles.eyebrow}><span aria-hidden="true">&gt;_</span> REMEDIATION / ACCOUNTABLE CLOSURE</p>
@@ -124,7 +124,7 @@ export default function RemediationPage() {
             <h2 id="matrix-heading">Turn risk into<br /><span>the next move.</span></h2>
             <p>Use a decision signal to make treatment, accountability, closure evidence, and the next review trigger explicit.</p>
           </div>
-          <div className={styles.actionTableWrap}>
+          <div className={styles.actionTableWrap} tabIndex={0} role="region" aria-label="Illustrative remediation action matrix table">
             <table className={styles.actionTable}>
               <caption className={styles.tableCaption}>Illustrative action matrix — not client evidence.</caption>
               <thead>

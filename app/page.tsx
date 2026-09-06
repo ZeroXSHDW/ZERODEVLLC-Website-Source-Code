@@ -282,7 +282,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="decision-section" id="start" aria-labelledby="decision-heading">
+      <section className="decision-section" id="start" tabIndex={-1} aria-labelledby="decision-heading">
         <div className="decision-intro">
           <div>
             <p className="eyebrow">{'// START WITH THE DECISION'}</p>

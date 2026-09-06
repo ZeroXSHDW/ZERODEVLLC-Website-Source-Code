@@ -101,7 +101,7 @@ export default function EngagePage() {
         navigation={secondaryNavigation}
       />
 
-      <div className={styles.layout} id="engage-content">
+      <div className={styles.layout} id="engage-content" tabIndex={-1}>
         <section className={styles.hero} aria-labelledby="engage-heading">
           <div>
             <p className={styles.eyebrow}><span aria-hidden="true">&gt;_</span> ENGAGE / SAFE FIRST BRIEF</p>
@@ -198,7 +198,7 @@ export default function EngagePage() {
             <h2 id="handling-heading">Match the evidence<br /><span>to the channel.</span></h2>
             <p>Use the least sensitive information needed to decide whether an engagement is appropriate. This is public engagement guidance, not a classification policy or a substitute for the applicable contract and authority.</p>
           </div>
-          <div className={styles.actionTableWrap}>
+          <div className={styles.actionTableWrap} tabIndex={0} role="region" aria-label="Information handling guidance table">
             <table className={styles.actionTable}>
               <caption className={styles.tableCaption}>Illustrative handling guidance — not a classified-information handling policy.</caption>
               <thead>

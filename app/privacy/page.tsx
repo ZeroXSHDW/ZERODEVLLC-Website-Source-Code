@@ -39,7 +39,7 @@ export default function PrivacyPage() {
         navigation={secondaryNavigation}
       />
 
-      <div className={styles.layout} id="privacy-content">
+      <div className={styles.layout} id="privacy-content" tabIndex={-1}>
         <section className={styles.intro} aria-labelledby="privacy-heading">
           <p className={styles.eyebrow}><span aria-hidden="true">&gt;_</span> PRIVACY / PUBLIC SURFACE</p>
           <h1 id="privacy-heading">Keep the<br /><span>signal clean.</span></h1>

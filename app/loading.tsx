@@ -11,7 +11,7 @@ export default function Loading() {
         navigation={secondaryNavigation}
       />
 
-      <div className={styles.layout} id="loading-content">
+      <div className={styles.layout} id="loading-content" tabIndex={-1}>
         <section className={styles.hero} aria-labelledby="loading-heading">
           <div>
             <p className={styles.eyebrow}><span aria-hidden="true">&gt;_</span> TRANSITION / LOADING</p>

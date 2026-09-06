@@ -225,7 +225,7 @@ export default function ServicesPage() {
         navigation={secondaryNavigation}
       />
 
-      <div className={styles.layout} id="services-content">
+      <div className={styles.layout} id="services-content" tabIndex={-1}>
         <section className={styles.hero} aria-labelledby="services-heading">
           <div>
             <p className={styles.eyebrow}><span aria-hidden="true">&gt;_</span> SERVICES / DEFENSIVE CYBER OPERATIONS</p>
@@ -303,7 +303,7 @@ export default function ServicesPage() {
             <h2 id="decision-matrix-heading">Choose the evidence<br /><span>the decision needs.</span></h2>
             <p>These paths can overlap in one engagement, but they are not interchangeable. Start with the decision question, then agree the authority, scope, evidence, and accountable owner.</p>
           </div>
-          <div className={styles.actionTableWrap}>
+          <div className={styles.actionTableWrap} tabIndex={0} role="region" aria-label="Capability decision matrix table">
             <table className={`${styles.actionTable} ${styles.servicesMatrix}`}>
               <caption className={styles.tableCaption}>Capability decision matrix — illustrative scope, not a service guarantee.</caption>
               <thead>
