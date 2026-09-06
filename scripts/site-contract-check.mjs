@@ -62,6 +62,8 @@ requireText("app/page.tsx", page, "START WITH THE DECISION");
 requireText("app/page.tsx", page, "Do not begin with a product label");
 requireText("app/page.tsx", page, "decision-card-${tone}");
 requireText("app/page.tsx skip target", page, 'id="start" tabIndex={-1}');
+requireText("app/page.tsx operating summary", page, "String(registeredSurfaceCount).padStart(2, '0')");
+requireText("app/page.tsx operating summary", page, "registered surfaces");
 for (const marker of ["VIEW OPERATING APPROACH", "VIEW EVIDENCE", "VIEW DELIVERY MODEL"]) {
   requireText("app/page.tsx registered-surface actions", page, marker);
 }
@@ -77,6 +79,7 @@ for (const marker of [
   ".system-card:hover, .system-card:focus-within",
   ".system-card:hover::before, .system-card:focus-within::before",
   ".card-link, .card-detail-link { align-items: center;",
+  ".text-link { align-items: center; color: var(--green); display: inline-flex;",
 ]) {
   requireText("app/globals.css decision layout", globalsCss, marker);
 }

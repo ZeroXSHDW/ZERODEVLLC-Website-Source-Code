@@ -74,6 +74,8 @@ const systems = [
   },
 ];
 
+const registeredSurfaceCount = systems.length;
+
 const principles = [
   {
     number: '01',
@@ -253,7 +255,7 @@ export default function Home() {
       </div>
 
       <section className="signal-ribbon" aria-label="ZeroDev operating summary">
-        <div><strong>03</strong><span>connected surfaces</span></div>
+        <div><strong>{String(registeredSurfaceCount).padStart(2, '0')}</strong><span>registered surfaces</span></div>
         <div><strong>01</strong><span>EU signal gateway</span></div>
         <div><strong>RO</strong><span>read-only public signals</span></div>
         <div><strong>0</strong><span>invented security claims</span></div>
