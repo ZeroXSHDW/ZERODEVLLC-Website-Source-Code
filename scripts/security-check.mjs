@@ -139,6 +139,8 @@ requireText("app/services/page.tsx", servicesPage, "SERVICE BRIEFING PACKS");
 requireText("app/services/page.tsx", servicesPage, "SYNTHETIC BRIEF / NOT A PROPOSAL");
 requireText("app/services/page.tsx", servicesPage, "No-fit or owner gate");
 requireText("app/services/page.tsx", servicesPage, "Review the service briefing pack");
+requireText("app/services/page.tsx", servicesPage, "tableServiceLink");
+requireText("app/services/page.tsx", servicesPage, "service-${number}");
 requireText("app/services/page.tsx", servicesPage, "twitter:");
 requireText("app/services/page.tsx", servicesPage, "Minimum entry gate");
 requireText("app/services/page.tsx", servicesPage, "Written authority, in-scope assets");

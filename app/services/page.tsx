@@ -114,14 +114,14 @@ const fitContexts = [
 ] as const;
 
 const decisionMatrix = [
-  ['Authorized penetration testing', 'Can agreed attack paths be safely demonstrated under written authority?', 'Scoped test evidence, validated findings, limitations, and retest condition', 'Security and service owner', 'Written authority, in-scope assets, rules of engagement, safety contact, and stop conditions'],
-  ['Vulnerability assessment', 'Which assets, configurations, or dependencies expose a material weakness?', 'Asset context, verified observations, prioritization, and treatment path', 'Security and engineering owner', 'Named asset boundary, permission to assess, source or inventory context, and evidence owner'],
-  ['Cyber risk management', 'Which risks require treatment, acceptance, transfer, avoidance, or monitoring?', 'Risk register, control evidence, owner, residual risk, and review trigger', 'Risk and executive owner', 'Decision owner, mission or business context, risk criteria, and treatment authority'],
-  ['Technical due diligence', 'What technical conditions could change an important business or investment decision?', 'Architecture, delivery practice, dependency, resilience, and open-question brief', 'Decision and technical owner', 'Defined decision, review boundary, permitted evidence sources, and technical owner'],
-  ['Vendor due diligence', 'Does the supplier evidence fit the service, data, access, and exit relationship?', 'Evidence state, data flow, subprocessor, concentration, incident, and exit view', 'Procurement and third-party risk owner', 'Supplier relationship, service/data boundary, evidence contact, and procurement owner'],
-  ['Compliance readiness', 'What requirement applies, what evidence exists, and what remains to be addressed?', 'Control map, applicability decision, owner, gap, exception, and review date', 'Assurance and control owner', 'Applicable contract, framework, jurisdiction, control owner, and evidence boundary'],
-  ['Disaster recovery and BCP', 'Can the critical service continue and recover under the agreed scenario?', 'Impact priorities, dependencies, RTO/RPO discussion, exercise or restore result', 'Continuity and service owner', 'Critical service, scenario, dependency owner, recovery assumptions, and exercise authority'],
-  ['Incident readiness', 'Can the organization make safe decisions, coordinate, preserve evidence, and improve after an exercise?', 'Roles, escalation, communications, exercise record, lessons, and owned actions', 'Incident and risk owner', 'Scenario, participants, escalation owner, evidence boundary, and exercise authorization'],
+  ['01', 'Authorized penetration testing', 'Can agreed attack paths be safely demonstrated under written authority?', 'Scoped test evidence, validated findings, limitations, and retest condition', 'Security and service owner', 'Written authority, in-scope assets, rules of engagement, safety contact, and stop conditions'],
+  ['02', 'Vulnerability assessment', 'Which assets, configurations, or dependencies expose a material weakness?', 'Asset context, verified observations, prioritization, and treatment path', 'Security and engineering owner', 'Named asset boundary, permission to assess, source or inventory context, and evidence owner'],
+  ['03', 'Cyber risk management', 'Which risks require treatment, acceptance, transfer, avoidance, or monitoring?', 'Risk register, control evidence, owner, residual risk, and review trigger', 'Risk and executive owner', 'Decision owner, mission or business context, risk criteria, and treatment authority'],
+  ['04', 'Technical due diligence', 'What technical conditions could change an important business or investment decision?', 'Architecture, delivery practice, dependency, resilience, and open-question brief', 'Decision and technical owner', 'Defined decision, review boundary, permitted evidence sources, and technical owner'],
+  ['05', 'Vendor due diligence', 'Does the supplier evidence fit the service, data, access, and exit relationship?', 'Evidence state, data flow, subprocessor, concentration, incident, and exit view', 'Procurement and third-party risk owner', 'Supplier relationship, service/data boundary, evidence contact, and procurement owner'],
+  ['06', 'Compliance readiness', 'What requirement applies, what evidence exists, and what remains to be addressed?', 'Control map, applicability decision, owner, gap, exception, and review date', 'Assurance and control owner', 'Applicable contract, framework, jurisdiction, control owner, and evidence boundary'],
+  ['07', 'Disaster recovery and BCP', 'Can the critical service continue and recover under the agreed scenario?', 'Impact priorities, dependencies, RTO/RPO discussion, exercise or restore result', 'Continuity and service owner', 'Critical service, scenario, dependency owner, recovery assumptions, and exercise authority'],
+  ['08', 'Incident readiness', 'Can the organization make safe decisions, coordinate, preserve evidence, and improve after an exercise?', 'Roles, escalation, communications, exercise record, lessons, and owned actions', 'Incident and risk owner', 'Scenario, participants, escalation owner, evidence boundary, and exercise authorization'],
 ] as const;
 
 const serviceBriefs = [
@@ -277,9 +277,9 @@ export default function ServicesPage() {
                 </tr>
               </thead>
               <tbody>
-                {decisionMatrix.map(([path, question, evidence, owner, gate]) => (
+                {decisionMatrix.map(([number, path, question, evidence, owner, gate]) => (
                   <tr key={path}>
-                    <td>{path}</td>
+                    <td><a className={styles.tableServiceLink} href={`/services#service-${number}`}>{path} <span aria-hidden="true">↗</span></a></td>
                     <td>{question}</td>
                     <td>{evidence}</td>
                     <td>{owner}</td>

@@ -139,6 +139,8 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .actionTable td:first-child { color: var(--ink); font-weight: 600; }
 .frameworkMap td a { color: var(--green); }
 .frameworkMap td a:hover, .frameworkMap td a:focus-visible { color: var(--green-bright); }
+.tableServiceLink { color: var(--green); }
+.tableServiceLink:hover, .tableServiceLink:focus-visible { color: var(--green-bright); }
 .evidenceRequestLink { color: var(--green); }
 .evidenceRequestLink:hover, .evidenceRequestLink:focus-visible { color: var(--green-bright); }
 .frameworkMap .fieldList { gap: 6px; }
