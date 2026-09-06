@@ -231,7 +231,7 @@ export function LiveDefconMap() {
         {feed?.errors.length ? <p className="threat-feed-warning" role="status" aria-live="polite" aria-atomic="true">Partial source outage: {feed.errors.join(' · ')}</p> : null}
         <div className="threat-event-list">
           {feed?.events.slice(0, 4).map((event) => (
-            <a className="threat-event" href={event.url} key={event.id} target="_blank" rel="noopener noreferrer" aria-label={`${event.title} from ${event.source}; ${getEventKindLabel(event.kind)}; observed ${formatFeedTime(event.observedAt)}; open source advisory`}>
+            <a className="threat-event" href={event.url} key={event.id} target="_blank" rel="noopener noreferrer" aria-label={`${event.title} from ${event.source}; ${getEventKindLabel(event.kind)}; observed ${formatFeedTime(event.observedAt)}; open source advisory; opens in a new tab`}>
               <span className={`threat-severity severity-${event.severity >= 75 ? 'high' : event.severity >= 60 ? 'watch' : 'info'}`} />
               <span className="threat-event-copy"><strong>{event.title}</strong><small><b className="threat-source-badge">{event.source}</b> {getEventKindLabel(event.kind).toUpperCase()} · observed {formatFeedTime(event.observedAt)}</small></span>
               <span className="threat-event-arrow" aria-hidden="true">↗</span>
@@ -264,7 +264,7 @@ export function LiveDefconMap() {
               <tbody>
                 {feed?.events.slice(0, 8).map((event) => (
                   <tr key={`data-${event.id}`}>
-                    <th scope="row"><a href={event.url} target="_blank" rel="noopener noreferrer">{event.title} ↗</a></th>
+                    <th scope="row"><a href={event.url} target="_blank" rel="noopener noreferrer">{event.title} <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a></th>
                     <td>{event.source}<br /><span>{formatFeedTime(event.observedAt)}</span></td>
                   </tr>
                 ))}

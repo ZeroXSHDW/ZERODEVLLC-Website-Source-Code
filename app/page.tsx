@@ -299,7 +299,7 @@ export default function Home() {
               <p className="system-card-limit"><strong>Limit:</strong> {system.limitation}</p>
               <span className="card-mode">{system.mode}</span>
               <div className="card-actions">
-                <a className="card-link" href={system.href} {...(system.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} aria-label={system.external ? (system.code === '02' ? 'Open the DEFCON Signal Fusion EU gateway' : `Open ${system.name} surface`) : `View ${system.name} route status`}>{system.actionLabel} <span aria-hidden="true">{system.external ? '↗' : '↓'}</span></a>
+                <a className="card-link" href={system.href} {...(system.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} aria-label={system.external ? `${system.code === '02' ? 'Open the DEFCON Signal Fusion EU gateway' : `Open ${system.name} surface`}; opens in a new tab` : `View ${system.name} route status`}>{system.actionLabel} <span aria-hidden="true">{system.external ? '↗' : '↓'}</span></a>
                 <a className="card-detail-link" href={system.detailHref}>VIEW BRIEF <span aria-hidden="true">↓</span></a>
               </div>
             </article>

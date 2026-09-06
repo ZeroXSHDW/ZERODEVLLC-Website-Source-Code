@@ -43,7 +43,7 @@ export default function SiteFooter() {
           <p className={styles.siteFooterExternalCopy}>The `.eu` and `.store` routes are separate public surfaces. This `.com` site does not establish their provider, source, product, payment, or checkout status.</p>
         </div>
         <div className={styles.siteFooterExternalLinks}>
-          {externalSurfaces.map((surface) => <a href={surface.href} key={surface.href} target="_blank" rel="noopener noreferrer">{surface.label} <span aria-hidden="true">↗</span></a>)}
+          {externalSurfaces.map((surface) => <a href={surface.href} key={surface.href} target="_blank" rel="noopener noreferrer" aria-label={`${surface.label}; opens in a new tab`}>{surface.label} <span aria-hidden="true">↗</span></a>)}
         </div>
       </section>
       <div className={styles.siteFooterBottom}>

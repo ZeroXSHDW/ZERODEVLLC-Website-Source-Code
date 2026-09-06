@@ -95,7 +95,7 @@ export default function FrameworksPage() {
                 <h3>{name}</h3>
                 <p>{purpose}</p>
                 <p className={styles.cardBoundary}><strong>Boundary:</strong> {boundary}</p>
-                <a className={styles.referenceLink} href={sourceHref} target="_blank" rel="noopener noreferrer" aria-label={`${name} primary reference`}>{sourceLabel} <span aria-hidden="true">↗</span></a>
+                <a className={styles.referenceLink} href={sourceHref} target="_blank" rel="noopener noreferrer" aria-label={`${name} primary reference; opens in a new tab`}>{sourceLabel} <span aria-hidden="true">↗</span></a>
               </article>
             ))}
           </div>
@@ -127,7 +127,7 @@ export default function FrameworksPage() {
                       <ul className={styles.fieldList}>
                         {references.map((referenceName) => {
                           const reference = frameworkReferenceByName[referenceName];
-                          return <li key={referenceName}><a href={reference?.sourceHref ?? '#library-heading'} target={reference ? '_blank' : undefined} rel={reference ? 'noopener noreferrer' : undefined}>{reference?.sourceLabel ?? referenceName} <span aria-hidden="true">↗</span></a></li>;
+                          return <li key={referenceName}><a href={reference?.sourceHref ?? '#library-heading'} target={reference ? '_blank' : undefined} rel={reference ? 'noopener noreferrer' : undefined}>{reference?.sourceLabel ?? referenceName} <span aria-hidden="true">↗</span>{reference ? <span className="sr-only"> (opens in a new tab)</span> : null}</a></li>;
                         })}
                       </ul>
                     </td>
