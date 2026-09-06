@@ -160,6 +160,8 @@ export default async function EngagePage({ searchParams }: EngagePageProps) {
       links: [
         { href: selectedService.serviceHref, label: 'Review service card' },
         { href: selectedService.briefHref, label: 'Review briefing pack' },
+        { href: selectedService.evidenceHref, label: 'Review evidence lane' },
+        { href: selectedService.frameworkHref, label: 'Review framework fit' },
       ],
     });
   }

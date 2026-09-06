@@ -377,10 +377,14 @@ for (const marker of [
   'links: readonly BriefContextLink[];',
   'selectedService.serviceHref',
   'selectedService.briefHref',
+  'selectedService.evidenceHref',
+  'selectedService.frameworkHref',
   'styles.briefContextLinks',
   'context.links.map((link)',
   'Review service card',
   'Review briefing pack',
+  'Review evidence lane',
+  'Review framework fit',
   'PRINT / INTERNAL REVIEW COPY',
   'ENGAGEMENT READINESS / SOW STARTER',
   'styles.sowReadinessMap',
@@ -497,8 +501,26 @@ for (const marker of [
   "briefGate",
   "serviceHref",
   "briefHref",
+  "evidenceHref",
+  "frameworkHref",
 ]) {
   requireText("app/service-routes.ts service route source", serviceRoutes, marker);
+}
+
+const expectedServiceNumbers = Array.from({ length: 8 }, (_, index) => String(index + 1).padStart(2, "0"));
+const routeNumbers = [...serviceRoutes.matchAll(/number: '(\d{2})'/g)].map(([, number]) => number);
+const evidenceNumbers = [...serviceRoutes.matchAll(/evidenceHref: '\/deliverables#evidence-request-(\d{2})'/g)].map(([, number]) => number);
+const frameworkNumbers = [...serviceRoutes.matchAll(/frameworkHref: '\/frameworks#framework-fit-(\d{2})'/g)].map(([, number]) => number);
+const frameworkMapSource = frameworksPage.match(/const serviceFrameworkMap = \[(?<map>[\s\S]*?)\n\] as const;/)?.groups?.map ?? '';
+const frameworkFitNumbers = [...frameworkMapSource.matchAll(/number: '([^']+)'/g)]
+  .map(([, number]) => number)
+  .filter((number) => /^\d{2}$/.test(number));
+const sorted = (values) => [...values].sort();
+if (JSON.stringify(sorted(routeNumbers)) !== JSON.stringify(expectedServiceNumbers)
+  || JSON.stringify(sorted(evidenceNumbers)) !== JSON.stringify(expectedServiceNumbers)
+  || JSON.stringify(sorted(frameworkNumbers)) !== JSON.stringify(expectedServiceNumbers)
+  || JSON.stringify(sorted(frameworkFitNumbers)) !== JSON.stringify(expectedServiceNumbers)) {
+  failures.push("service proof-pack route catalogue must align all eight service, evidence, and framework-fit numbers");
 }
 
 const additionalRouteIndexContracts = [
@@ -598,6 +620,7 @@ const additionalRouteIndexContracts = [
     'record.evidenceHref',
     'record.evidenceLabel',
     'styles.frameworkRecordLink',
+    'id={`framework-fit-${number}`}',
     'const serviceFrameworkMap = [',
   ]],
   ["app/assurance/page.tsx", assurancePage, [

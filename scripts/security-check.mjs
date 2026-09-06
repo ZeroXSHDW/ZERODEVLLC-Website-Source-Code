@@ -204,6 +204,7 @@ requireText("app/brief-actions.tsx", briefActions, "Clipboard unavailable here; 
 requireText("app/frameworks/page.tsx", frameworksPage, "SERVICE / FRAMEWORK FIT");
 requireText("app/frameworks/page.tsx", frameworksPage, "Service-to-framework orientation map");
 requireText("app/frameworks/page.tsx", frameworksPage, "not a formal crosswalk");
+requireText("app/frameworks/page.tsx", frameworksPage, "framework-fit-${number}");
 requireText("app/frameworks/page.tsx", frameworksPage, "Review the service briefing packs");
 requireText("app/frameworks/page.tsx", frameworksPage, "Readiness support is not");
 requireText("app/frameworks/page.tsx", frameworksPage, "twitter:");
@@ -221,6 +222,8 @@ requireText("app/engage/page.tsx", engagePage, "Defense supplier / technology pr
 requireText("app/engage/page.tsx", engagePage, "Prepare a role-aware brief for ${role}");
 requireText("app/engage/page.tsx", engagePage, "Review aligned services");
 requireText("app/engage/page.tsx", engagePage, "service-${serviceNumber}");
+requireText("app/engage/page.tsx", engagePage, "selectedService.evidenceHref");
+requireText("app/engage/page.tsx", engagePage, "selectedService.frameworkHref");
 requireText("app/engage/page.tsx", engagePage, "twitter:");
 requireText("app/deliverables/page.tsx", deliverablesPage, "TEMPLATE SHAPE / NOT CLIENT EVIDENCE");
 requireText("app/deliverables/page.tsx", deliverablesPage, "SYNTHETIC REVIEW PREVIEW");

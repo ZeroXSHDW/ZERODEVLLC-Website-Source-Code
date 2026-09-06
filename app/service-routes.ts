@@ -8,6 +8,8 @@ export const serviceRoutes = [
     briefGate: 'Name the written authority, in-scope assets, safety contact, and stop conditions before technical activity.',
     serviceHref: '/services#service-01',
     briefHref: '/services#brief-01',
+    evidenceHref: '/deliverables#evidence-request-01',
+    frameworkHref: '/frameworks#framework-fit-01',
   },
   {
     number: '02',
@@ -18,6 +20,8 @@ export const serviceRoutes = [
     briefGate: 'Name the asset boundary, permission to assess, source or inventory context, and evidence owner.',
     serviceHref: '/services#service-02',
     briefHref: '/services#brief-02',
+    evidenceHref: '/deliverables#evidence-request-02',
+    frameworkHref: '/frameworks#framework-fit-02',
   },
   {
     number: '03',
@@ -28,6 +32,8 @@ export const serviceRoutes = [
     briefGate: 'Name the decision owner, risk criteria, control evidence, and authority for treatment.',
     serviceHref: '/services#service-03',
     briefHref: '/services#brief-03',
+    evidenceHref: '/deliverables#evidence-request-03',
+    frameworkHref: '/frameworks#framework-fit-03',
   },
   {
     number: '04',
@@ -38,6 +44,8 @@ export const serviceRoutes = [
     briefGate: 'Name the decision, review boundary, permitted evidence sources, and technical owner.',
     serviceHref: '/services#service-04',
     briefHref: '/services#brief-04',
+    evidenceHref: '/deliverables#evidence-request-04',
+    frameworkHref: '/frameworks#framework-fit-04',
   },
   {
     number: '05',
@@ -48,6 +56,8 @@ export const serviceRoutes = [
     briefGate: 'Name the supplier relationship, service or data boundary, procurement owner, and evidence contact.',
     serviceHref: '/services#service-05',
     briefHref: '/services#brief-05',
+    evidenceHref: '/deliverables#evidence-request-05',
+    frameworkHref: '/frameworks#framework-fit-05',
   },
   {
     number: '06',
@@ -58,6 +68,8 @@ export const serviceRoutes = [
     briefGate: 'Name the applicable contract, framework, jurisdiction, control owner, and evidence boundary.',
     serviceHref: '/services#service-06',
     briefHref: '/services#brief-06',
+    evidenceHref: '/deliverables#evidence-request-06',
+    frameworkHref: '/frameworks#framework-fit-06',
   },
   {
     number: '07',
@@ -68,6 +80,8 @@ export const serviceRoutes = [
     briefGate: 'Name the critical service, disruption scenario, dependency owner, recovery assumptions, and exercise authority.',
     serviceHref: '/services#service-07',
     briefHref: '/services#brief-07',
+    evidenceHref: '/deliverables#evidence-request-07',
+    frameworkHref: '/frameworks#framework-fit-07',
   },
   {
     number: '08',
@@ -78,6 +92,8 @@ export const serviceRoutes = [
     briefGate: 'Name the scenario, participants, escalation owner, evidence boundary, and exercise authorization.',
     serviceHref: '/services#service-08',
     briefHref: '/services#brief-08',
+    evidenceHref: '/deliverables#evidence-request-08',
+    frameworkHref: '/frameworks#framework-fit-08',
   },
 ] as const;
 

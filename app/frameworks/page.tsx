@@ -98,6 +98,7 @@ const frameworkLibraryClassNames: FrameworkLibraryClassNames = {
 
 const serviceFrameworkMap = [
   {
+    number: '01',
     service: 'Authorized penetration testing',
     references: ['NIST SP 800-115', 'OWASP testing guidance'],
     applicability: 'Is the proposed test scope, authority, method, and evidence path proportionate?',
@@ -112,6 +113,7 @@ const serviceFrameworkMap = [
     boundary: 'Testing guidance does not grant authorization or prove that a system is secure.',
   },
   {
+    number: '02',
     service: 'Vulnerability assessment',
     references: ['NIST CSF 2.0', 'NIST SP 800-30 Rev. 1', 'CIS Controls v8.1'],
     applicability: 'How will an observed weakness become context, priority, ownership, and treatment?',
@@ -126,6 +128,7 @@ const serviceFrameworkMap = [
     boundary: 'A scanner result or control list is not, by itself, a validated finding or risk-acceptance decision.',
   },
   {
+    number: '03',
     service: 'Cyber risk management',
     references: ['NIST CSF 2.0', 'NIST Risk Management Framework (SP 800-37 Rev. 2)', 'NIST SP 800-30 Rev. 1', 'CISA Cross-Sector Cybersecurity Performance Goals'],
     applicability: 'What outcomes, risk criteria, evidence quality, and decision owner apply?',
@@ -140,6 +143,7 @@ const serviceFrameworkMap = [
     boundary: 'A reference family is not a universal score, board decision, or residual-risk acceptance.',
   },
   {
+    number: '04',
     service: 'Technical due diligence',
     references: ['NIST CSF 2.0', 'NIST SP 800-53 Rev. 5', 'NIST SP 800-161 Rev. 1', 'EU GDPR Regulation (EU) 2016/679', 'EU Cyber Resilience Act (EU) 2024/2847'],
     applicability: 'Which architecture, control, dependency, product, data, or delivery questions could change the material decision?',
@@ -154,6 +158,7 @@ const serviceFrameworkMap = [
     boundary: 'Reference alignment is not independent assurance and does not create a legal, financial, investment, or procurement verdict.',
   },
   {
+    number: '05',
     service: 'Vendor due diligence',
     references: ['NIST SP 800-161 Rev. 1', 'NIST CSF 2.0', 'CIS Controls v8.1', 'DoD CMMC Program', 'EU NIS2 Directive (EU) 2022/2555', 'EU DORA Regulation (EU) 2022/2554', 'EU GDPR Regulation (EU) 2016/679'],
     applicability: 'Does the supplier evidence fit the service, data, access, incident, concentration, exit, and applicable contract or regulatory relationship?',
@@ -168,6 +173,7 @@ const serviceFrameworkMap = [
     boundary: 'A questionnaire or reference map is not supplier assurance, a CMMC status, a regulatory determination, or a procurement decision.',
   },
   {
+    number: 'government',
     service: 'Government and defense readiness',
     references: ['NIST Risk Management Framework (SP 800-37 Rev. 2)', 'NIST SP 800-171 Rev. 3 / 800-171A Rev. 3', 'NIST SP 800-172 Rev. 3 / 800-172A Rev. 3', 'DoD CMMC Program', 'EU NIS2 Directive (EU) 2022/2555', 'EU Critical Entities Resilience Directive (EU) 2022/2557'],
     applicability: 'Which mission, solicitation or contract, FCI/CUI boundary, system boundary, required level, assessment route, critical-entity context, and authorizing role define the actual requirement?',
@@ -182,6 +188,7 @@ const serviceFrameworkMap = [
     boundary: 'Reference alignment is not an authorization to operate, CMMC status, clearance, contract award, critical-entity designation, or government approval.',
   },
   {
+    number: '06',
     service: 'Compliance readiness',
     references: ['NIST SP 800-53 Rev. 5', 'NIST Risk Management Framework (SP 800-37 Rev. 2)', 'NIST SP 800-171 Rev. 3 / 800-171A Rev. 3', 'NIST SP 800-172 Rev. 3 / 800-172A Rev. 3', 'DoD CMMC Program', 'ISO/IEC 27001:2022', 'EU NIS2 Directive (EU) 2022/2555', 'EU DORA Regulation (EU) 2022/2554', 'EU GDPR Regulation (EU) 2016/679', 'EU Cyber Resilience Act (EU) 2024/2847'],
     applicability: 'Which requirement applies, what evidence is expected, which legal, contracting, or supervisory role is relevant, and who owns the control or exception?',
@@ -196,6 +203,7 @@ const serviceFrameworkMap = [
     boundary: 'Readiness mapping is not certification, accreditation, clearance, CMMC status, legal advice, conformity assessment, or regulator approval.',
   },
   {
+    number: '07',
     service: 'Disaster recovery and BCP',
     references: ['NIST SP 800-34 Rev. 1', 'ISO 22301:2019 / ISO 31000:2018', 'NIST CSF 2.0', 'EU DORA Regulation (EU) 2022/2554', 'EU Critical Entities Resilience Directive (EU) 2022/2557'],
     applicability: 'What critical service, dependencies, recovery assumptions, regulatory context, and exercise evidence determine continuity?',
@@ -210,6 +218,7 @@ const serviceFrameworkMap = [
     boundary: 'A plan, directive, or framework does not prove recovery until the relevant capability is exercised and evidenced.',
   },
   {
+    number: '08',
     service: 'Incident readiness',
     references: ['NIST SP 800-61 Rev. 3', 'NIST CSF 2.0', 'CISA Cross-Sector Cybersecurity Performance Goals', 'NCSC Cyber Assessment Framework 4.0', 'EU NIS2 Directive (EU) 2022/2555', 'EU DORA Regulation (EU) 2022/2554', 'EU GDPR Regulation (EU) 2016/679'],
     applicability: 'What roles, decisions, communications, evidence boundaries, reporting duties, and lessons must be practiced?',
@@ -312,8 +321,8 @@ export default function FrameworksPage() {
                 </tr>
               </thead>
               <tbody>
-                {serviceFrameworkMap.map(({ service, references, applicability, record, boundary }) => (
-                  <tr key={service}>
+                {serviceFrameworkMap.map(({ number, service, references, applicability, record, boundary }) => (
+                  <tr id={`framework-fit-${number}`} key={service}>
                     <td>{service}</td>
                     <td>
                       <ul className={styles.fieldList}>
