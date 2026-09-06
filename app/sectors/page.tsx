@@ -75,9 +75,9 @@ export default function SectorsPage() {
           </div>
           <div className={styles.outputGrid}>
             {sectors.map(([number, title, description, priorities, boundary, brief, serviceRefs, evidenceRefs, methodRefs]) => (
-              <article className={styles.outputCard} key={number}>
+              <article className={styles.outputCard} id={`sector-${number}`} aria-labelledby={`sector-heading-${number}`} key={number}>
                 <span className={styles.frameworkTag}>{number} / FIT CONTEXT / NOT CLIENT EVIDENCE</span>
-                <h3>{title}</h3>
+                <h3 id={`sector-heading-${number}`}>{title}</h3>
                 <p>{description}</p>
                 <ul className={styles.fieldList}>{priorities.map((priority) => <li key={priority}>{priority}</li>)}</ul>
                 <p className={styles.cardBoundary}><strong>First brief should cover:</strong> {brief}</p>

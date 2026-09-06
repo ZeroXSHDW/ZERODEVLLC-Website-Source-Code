@@ -72,6 +72,17 @@ for (const marker of [
 ]) {
   requireText("app/page.tsx decision card readiness facts", page, marker);
 }
+for (const marker of [
+  "rolePaths",
+  'href="#roles"',
+  'id="roles"',
+  "CHOOSE BY DECISION OWNER",
+  "PROCUREMENT / RISK",
+  "Start with resilience fit",
+  "role-card-${tone}",
+]) {
+  requireRouteIndexText("app/page.tsx role route chooser", page, marker);
+}
 requireText("app/page.tsx skip target", page, 'id="start" tabIndex={-1}');
 requireText("app/page.tsx operating summary", page, "String(registeredSurfaceCount).padStart(2, '0')");
 requireText("app/page.tsx operating summary", page, "registered surfaces");
@@ -86,7 +97,11 @@ for (const marker of [
   ".decision-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }",
   ".decision-grid { grid-template-columns: 1fr; }",
   ".decision-card:hover, .decision-card:focus-within,",
-  ".decision-card, .card-mode",
+  ".decision-card, .role-card, .card-mode",
+  ".role-grid { display: grid;",
+  ".role-card:hover, .role-card:focus-within",
+  ".role-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }",
+  ".role-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }",
   ".system-card:hover, .system-card:focus-within",
   ".system-card:hover::before, .system-card:focus-within::before",
   ".card-link, .card-detail-link { align-items: center;",
@@ -528,6 +543,8 @@ const additionalRouteIndexContracts = [
     'id="decision-contexts"',
     'id="qualification-questions"',
     'id="claims-control"',
+    'id={`sector-${number}`}',
+    'aria-labelledby={`sector-heading-${number}`}',
   ]],
 ];
 
