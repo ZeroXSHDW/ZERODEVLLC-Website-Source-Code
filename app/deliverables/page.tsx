@@ -41,14 +41,23 @@ const evidenceStates = [
 ] as const;
 
 const evidenceRequestRows = [
-  ['Authorized penetration testing', 'Written authority, in-scope assets, exclusions, rules of engagement, safety contact, and stop conditions.', 'Review authority and scope before any technical activity; confirm permitted methods, escalation, and evidence boundaries.', 'Named authority approves the scope, safety controls, permitted activity, and report audience.'],
-  ['Vulnerability assessment', 'Asset boundary, inventory or scanner context, source date, access permission, and the owner who can validate observations.', 'Reconcile the source and scope, verify material observations where permitted, and record severity, confidence, and limitations.', 'Security or engineering owner accepts the prioritized treatment path or records an authorized exception.'],
-  ['Cyber risk management', 'Mission or business objective, risk criteria, important services, existing controls, decision owner, and review date.', 'Map evidence to the risk question, control state, impact, likelihood, assumptions, and available treatment choices.', 'Risk or executive owner records treatment, transfer, avoidance, monitoring, or residual-risk acceptance.'],
-  ['Technical due diligence', 'The material decision, architecture boundary, delivery practices, critical dependencies, resilience evidence, and open questions.', 'Use bounded document, interview, and technical review methods; distinguish evidence, assumptions, gaps, and material unknowns.', 'Decision owner acknowledges the open questions, conditions, limitations, and decision implications.'],
-  ['Vendor due diligence', 'Supplier service and data flow, access model, subprocessors, continuity, incident evidence, contract context, and exit assumptions.', 'Check evidence provenance, coverage, recency, relationship fit, concentration, access, incident, and exit gaps.', 'Procurement or third-party risk owner records approval, conditions, mitigation, escalation, or decline.'],
-  ['Compliance readiness', 'Applicable requirement or contract, jurisdiction, control register, evidence owner, exception state, and target review date.', 'Confirm applicability and map evidence to the requirement; use sampling or specialist review without presenting the work as certification.', 'Control owner records the gap, exception, remediation route, or referral to the appropriate assessor or authority.'],
-  ['Disaster recovery and BCP', 'Critical service, business impact, dependencies, recovery assumptions, RTO/RPO discussion, runbooks, and exercise authority.', 'Review or exercise the agreed scenario, record decisions and observed results, and preserve unresolved dependency and recovery gaps.', 'Continuity or service owner accepts the exercise result, owned actions, residual risk, and next exercise or restore test.'],
-  ['Incident readiness', 'Roles, escalation contacts, scenario, communications path, evidence boundary, exercise authority, and participant list.', 'Run a bounded tabletop or exercise, record decisions and evidence handling, and separate exercise observations from a live incident.', 'Incident or executive owner approves the lessons-learned backlog, communications actions, and next readiness review.'],
+  ['01', 'Authorized penetration testing', 'Written authority, in-scope assets, exclusions, rules of engagement, safety contact, and stop conditions.', 'Review authority and scope before any technical activity; confirm permitted methods, escalation, and evidence boundaries.', 'Named authority approves the scope, safety controls, permitted activity, and report audience.'],
+  ['02', 'Vulnerability assessment', 'Asset boundary, inventory or scanner context, source date, access permission, and the owner who can validate observations.', 'Reconcile the source and scope, verify material observations where permitted, and record severity, confidence, and limitations.', 'Security or engineering owner accepts the prioritized treatment path or records an authorized exception.'],
+  ['03', 'Cyber risk management', 'Mission or business objective, risk criteria, important services, existing controls, decision owner, and review date.', 'Map evidence to the risk question, control state, impact, likelihood, assumptions, and available treatment choices.', 'Risk or executive owner records treatment, transfer, avoidance, monitoring, or residual-risk acceptance.'],
+  ['04', 'Technical due diligence', 'The material decision, architecture boundary, delivery practices, critical dependencies, resilience evidence, and open questions.', 'Use bounded document, interview, and technical review methods; distinguish evidence, assumptions, gaps, and material unknowns.', 'Decision owner acknowledges the open questions, conditions, limitations, and decision implications.'],
+  ['05', 'Vendor due diligence', 'Supplier service and data flow, access model, subprocessors, continuity, incident evidence, contract context, and exit assumptions.', 'Check evidence provenance, coverage, recency, relationship fit, concentration, access, incident, and exit gaps.', 'Procurement or third-party risk owner records approval, conditions, mitigation, escalation, or decline.'],
+  ['06', 'Compliance readiness', 'Applicable requirement or contract, jurisdiction, control register, evidence owner, exception state, and target review date.', 'Confirm applicability and map evidence to the requirement; use sampling or specialist review without presenting the work as certification.', 'Control owner records the gap, exception, remediation route, or referral to the appropriate assessor or authority.'],
+  ['07', 'Disaster recovery and BCP', 'Critical service, business impact, dependencies, recovery assumptions, RTO/RPO discussion, runbooks, and exercise authority.', 'Review or exercise the agreed scenario, record decisions and observed results, and preserve unresolved dependency and recovery gaps.', 'Continuity or service owner accepts the exercise result, owned actions, residual risk, and next exercise or restore test.'],
+  ['08', 'Incident readiness', 'Roles, escalation contacts, scenario, communications path, evidence boundary, exercise authority, and participant list.', 'Run a bounded tabletop or exercise, record decisions and evidence handling, and separate exercise observations from a live incident.', 'Incident or executive owner approves the lessons-learned backlog, communications actions, and next readiness review.'],
+] as const;
+
+const provenanceRows = [
+  ['Source identity', 'Origin, owner, revision or observation date, and a stable reference.', 'A named source has a traceable revision, date, or explicit synthetic label.', 'An unattributed, stale, or untraceable source remains unverified.'],
+  ['Scope and applicability', 'System, service, contract, framework, jurisdiction, objective, exclusions, and intended audience.', 'The evidence matches the agreed question and the boundary being reviewed.', 'A relevant document outside the agreed scope does not prove the in-scope condition.'],
+  ['Method and confidence', 'Review, interview, sampling, test, exercise, or independent verification method and sample limits.', 'The method, sample, limitations, and confidence basis are visible to the decision-maker.', 'Confidence describes evidence quality; it is not a security guarantee or auditor opinion.'],
+  ['Interpretation and limitation', 'Observed, verified, assumed, disputed, missing, and unresolved elements.', 'Facts, analysis, assumptions, and open questions are kept distinct.', 'Interpretation does not create legal, procurement, regulatory, or certification authority.'],
+  ['Owner and decision', 'Accountable owner, decision owner, treatment, exception, and acceptance authority.', 'A named owner acknowledges the conclusion and the next action.', 'A report cannot accept residual risk on behalf of an organization.'],
+  ['Review trigger and disposition', 'Retest, exercise, contract change, threat update, requirement change, and retention or disposition date.', 'The record states when evidence expires, changes meaning, or needs rechecking.', 'A historical pass does not prove current security, resilience, or continuity.'],
 ] as const;
 
 const briefPreviewRows = [
@@ -119,9 +128,9 @@ export default function DeliverablesPage() {
                 </tr>
               </thead>
               <tbody>
-                {evidenceRequestRows.map(([lane, evidence, method, acceptance]) => (
+                {evidenceRequestRows.map(([number, lane, evidence, method, acceptance]) => (
                   <tr key={lane}>
-                    <td>{lane}</td>
+                    <td><Link className={styles.evidenceRequestLink} href={`/services#service-${number}`}>{lane} <span aria-hidden="true">↗</span></Link></td>
                     <td>{evidence}</td>
                     <td>{method}</td>
                     <td>{acceptance}</td>
@@ -169,6 +178,37 @@ export default function DeliverablesPage() {
           </div>
           <div className={styles.checkList}>
             {evidenceStates.map((state, index) => <div key={state}><span>{String(index + 1).padStart(2, '0')}</span><p>{state}</p></div>)}
+          </div>
+        </section>
+
+        <section className={styles.outputSection} id="provenance-confidence" aria-labelledby="provenance-heading">
+          <div className={styles.sectionIntro}>
+            <p className={styles.eyebrow}>{'// PROVENANCE / CONFIDENCE'}</p>
+            <h2 id="provenance-heading">Make confidence<br /><span>inspectable.</span></h2>
+            <p>A review becomes more defensible when a reader can see where the evidence came from, what it covers, how it was checked, what remains uncertain, and when the conclusion should be revisited.</p>
+          </div>
+          <div className={styles.actionTableWrap}>
+            <table className={`${styles.actionTable} ${styles.provenanceMap}`}>
+              <caption className={styles.tableCaption}>Illustrative provenance and confidence record — not a client evidence register or independent assurance opinion.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Provenance field</th>
+                  <th scope="col">Record</th>
+                  <th scope="col">Confidence signal</th>
+                  <th scope="col">Boundary</th>
+                </tr>
+              </thead>
+              <tbody>
+                {provenanceRows.map(([field, record, signal, boundary]) => (
+                  <tr key={field}>
+                    <td>{field}</td>
+                    <td>{record}</td>
+                    <td>{signal}</td>
+                    <td>{boundary}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </section>
 

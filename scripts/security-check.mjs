@@ -179,6 +179,11 @@ requireText("app/deliverables/page.tsx", deliverablesPage, "private incident evi
 requireText("app/deliverables/page.tsx", deliverablesPage, "EVIDENCE REQUEST / ACCEPTANCE");
 requireText("app/deliverables/page.tsx", deliverablesPage, "Illustrative evidence-request and acceptance map");
 requireText("app/deliverables/page.tsx", deliverablesPage, "Decision or acceptance condition");
+requireText("app/deliverables/page.tsx", deliverablesPage, "services#service-${number}");
+requireText("app/deliverables/page.tsx", deliverablesPage, "evidenceRequestLink");
+requireText("app/deliverables/page.tsx", deliverablesPage, "PROVENANCE / CONFIDENCE");
+requireText("app/deliverables/page.tsx", deliverablesPage, "Illustrative provenance and confidence record");
+requireText("app/deliverables/page.tsx", deliverablesPage, "A historical pass does not prove current security");
 requireText("app/services/page.tsx", servicesPage, "Review evidence request map");
 requireText("app/deliverables/page.tsx", deliverablesPage, "twitter:");
 requireText("app/assurance/page.tsx", assurancePage, "Authority and scope");
