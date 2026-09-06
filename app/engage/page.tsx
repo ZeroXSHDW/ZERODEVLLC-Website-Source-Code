@@ -3,6 +3,7 @@ import Link from 'next/link';
 import SiteHeader, { secondaryNavigation } from '../site-header';
 import SiteFooter from '../site-footer';
 import RouteIndex from '../route-index';
+import BriefActions, { type BriefActionClassNames } from '../brief-actions';
 import styles from '../services/services.module.css';
 
 export const metadata: Metadata = {
@@ -53,7 +54,7 @@ const briefSheetFields = [
   ['Next gate', 'The smallest safe next step, including the owner who must confirm it.'],
 ] as const;
 
-const briefMailto = `mailto:hello@zerodevllc.com?subject=ZeroDevLLC%20engagement%20brief&body=${encodeURIComponent([
+const briefText = [
   'Objective or decision:',
   'High-level context:',
   'Service question:',
@@ -62,7 +63,16 @@ const briefMailto = `mailto:hello@zerodevllc.com?subject=ZeroDevLLC%20engagement
   'Applicability or boundary questions:',
   '',
   'I have not included credentials, secrets, customer records, private incident evidence, or live target details.',
-].join('\n'))}`;
+].join('\n');
+
+const briefMailto = `mailto:hello@zerodevllc.com?subject=ZeroDevLLC%20engagement%20brief&body=${encodeURIComponent(briefText)}`;
+
+const briefActionClassNames: BriefActionClassNames = {
+  group: styles.briefActions,
+  link: styles.primaryLink,
+  button: styles.briefActionButton,
+  status: styles.briefActionStatus,
+};
 
 const lanes = [
   ['01', 'Assess', 'You need to understand exposure, weakness, risk, or technical condition.', 'Penetration testing, vulnerability assessment, technical due diligence, and cyber-risk review.', [['01', 'Authorized penetration testing'], ['02', 'Vulnerability assessment'], ['04', 'Technical due diligence'], ['03', 'Cyber risk management']]],
@@ -111,7 +121,7 @@ export default function EngagePage() {
           <div className={styles.heroCopy}>
             <p>Bring the question, the decision owner, and the outcome you need to make clearer. A high-level brief is enough to begin a useful conversation.</p>
             <p className={styles.heroBoundary}><strong>Do not send secrets.</strong> Keep credentials, tokens, customer records, private incident evidence, and live target details out of ordinary email. We can establish a safer exchange path after scope and authority are understood.</p>
-            <p><a className={styles.primaryLink} href={briefMailto}>Open a high-level brief template <span aria-hidden="true">↗</span></a></p>
+            <BriefActions mailtoHref={briefMailto} copyText={briefText} linkLabel="Open a high-level brief template" classNames={briefActionClassNames} />
           </div>
         </section>
 
@@ -166,7 +176,7 @@ export default function EngagePage() {
               {briefTemplate.map(([label, prompt], index) => <div key={label}><span>{String(index + 1).padStart(2, '0')}</span><p><strong>{label}:</strong> {prompt}</p></div>)}
             </div>
             <p className={styles.templateNote}><strong>Safe boundary:</strong> Do not add credentials, secrets, customer records, private incident evidence, or live target details to the template.</p>
-            <p><a className={styles.primaryLink} href={briefMailto}>Open this structure in email <span aria-hidden="true">↗</span></a></p>
+            <BriefActions mailtoHref={briefMailto} copyText={briefText} linkLabel="Open this structure in email" classNames={briefActionClassNames} />
           </div>
         </section>
 

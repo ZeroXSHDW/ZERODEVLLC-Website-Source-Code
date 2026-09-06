@@ -53,6 +53,11 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .heroBoundary strong { color: var(--amber); font-weight: 500; }
 .primaryLink { color: var(--green); display: inline-flex; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
 .primaryLink span { font-size: 14px; margin-left: 8px; }
+.briefActions { align-items: center; display: flex; flex-wrap: wrap; gap: 7px 18px; margin-top: 4px; }
+.briefActionButton { align-items: center; background: transparent; border: 0; color: var(--cyan); cursor: pointer; display: inline-flex; font: inherit; font-size: 10px; letter-spacing: .14em; min-height: 42px; padding: 8px 0; text-transform: uppercase; }
+.briefActionButton span { font-size: 13px; margin-left: 8px; }
+.briefActionButton:hover, .briefActionButton:focus-visible { color: var(--green-bright); }
+.briefActionStatus { color: var(--dim); font-family: Arial, Helvetica, sans-serif; font-size: 10px; line-height: 1.4; }
 .pageIndex { backdrop-filter: blur(18px); background: rgba(5, 10, 8, .96); border-bottom: 1px solid var(--line); border-top: 1px solid var(--line); box-shadow: 0 12px 28px rgba(0, 0, 0, .16); display: grid; gap: 24px; grid-template-columns: minmax(120px, .34fr) minmax(0, 1.66fr); padding: 14px 0; position: sticky; top: 76px; z-index: 9; }
 .pageIndexLabel { color: var(--dim); font-size: 8px; letter-spacing: .16em; margin: 0; padding-top: 12px; text-transform: uppercase; }
 .pageIndex ol { display: grid; gap: 0 12px; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); list-style: none; margin: 0; padding: 0; }

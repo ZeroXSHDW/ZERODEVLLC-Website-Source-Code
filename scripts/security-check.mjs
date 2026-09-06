@@ -29,6 +29,7 @@ const [
   methodologyPage,
   frameworksPage,
   frameworkLibrary,
+  briefActions,
   engagePage,
   deliverablesPage,
   assurancePage,
@@ -66,6 +67,7 @@ const [
   read("app/methodology/page.tsx"),
   read("app/frameworks/page.tsx"),
   read("app/framework-library.tsx"),
+  read("app/brief-actions.tsx"),
   read("app/engage/page.tsx"),
   read("app/deliverables/page.tsx"),
   read("app/assurance/page.tsx"),
@@ -182,6 +184,10 @@ requireText("app/framework-library.tsx", frameworkLibrary, "framework-library-se
 requireText("app/framework-library.tsx", frameworkLibrary, "aria-pressed={category === option}");
 requireText("app/framework-library.tsx", frameworkLibrary, "No reference matches that route");
 requireText("app/framework-library.tsx", frameworkLibrary, "Clear library filters");
+requireText("app/engage/page.tsx", engagePage, "briefText");
+requireText("app/engage/page.tsx", engagePage, "BriefActions");
+requireText("app/brief-actions.tsx", briefActions, "navigator.clipboard?.writeText");
+requireText("app/brief-actions.tsx", briefActions, "Clipboard unavailable here; use the email template.");
 requireText("app/frameworks/page.tsx", frameworksPage, "SERVICE / FRAMEWORK FIT");
 requireText("app/frameworks/page.tsx", frameworksPage, "Service-to-framework orientation map");
 requireText("app/frameworks/page.tsx", frameworksPage, "not a formal crosswalk");

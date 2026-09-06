@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const projectRoot = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const read = (relativePath) => readFile(join(projectRoot, relativePath), "utf8");
 
-const [page, homeStatus, routeIndex, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, frameworkLibrary, assurancePage, sectorsPage, privacyPage, errorPage, notFoundPage, loadingPage, siteHeader, siteFooter, structuredData, layout] = await Promise.all([
+const [page, homeStatus, routeIndex, globalsCss, attacksRoute, liveDefconMap, engagePage, servicesPage, servicesCss, deliverablesPage, methodologyPage, remediationPage, frameworksPage, frameworkLibrary, briefActions, assurancePage, sectorsPage, privacyPage, errorPage, notFoundPage, loadingPage, siteHeader, siteFooter, structuredData, layout] = await Promise.all([
   read("app/page.tsx"),
   read("app/home-status.tsx"),
   read("app/route-index.tsx"),
@@ -20,6 +20,7 @@ const [page, homeStatus, routeIndex, globalsCss, attacksRoute, liveDefconMap, en
   read("app/remediation/page.tsx"),
   read("app/frameworks/page.tsx"),
   read("app/framework-library.tsx"),
+  read("app/brief-actions.tsx"),
   read("app/assurance/page.tsx"),
   read("app/sectors/page.tsx"),
   read("app/privacy/page.tsx"),
@@ -530,6 +531,13 @@ for (const marker of [
   'No reference matches that route.',
   'Clear library filters',
 ]) requireText("app/framework-library.tsx library controls", frameworkLibrary, marker);
+
+for (const marker of [
+  'navigator.clipboard?.writeText',
+  'aria-label="Copy the safe high-level brief to the clipboard"',
+  'Copied safe brief.',
+  'Clipboard unavailable here; use the email template.',
+]) requireText("app/brief-actions.tsx safe copy controls", briefActions, marker);
 
 if (decisionPaths.split("\n").filter((line) => line.trim().startsWith("[")).length !== 4) {
   failures.push("app/page.tsx decisionPaths must retain exactly four decision routes");
