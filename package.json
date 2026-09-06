@@ -11,7 +11,8 @@
     "start": "vinext start",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "typecheck": "tsc --noEmit",
-    "security": "node scripts/security-check.mjs && node scripts/secret-hygiene.mjs",
+    "site-contract": "node scripts/site-contract-check.mjs",
+    "security": "node scripts/security-check.mjs && node scripts/secret-hygiene.mjs && npm run site-contract",
     "security-audit": "node scripts/security-audit.mjs",
     "quality": "npm run security && npm run typecheck && npm run lint && npm run build && npm run security-audit"
   },
