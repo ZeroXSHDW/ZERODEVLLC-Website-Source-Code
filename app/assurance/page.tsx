@@ -76,6 +76,24 @@ export default function AssurancePage() {
           </div>
         </section>
 
+        <section className={styles.frameworkSection} aria-labelledby="review-path-heading">
+          <div className={styles.sectionIntro}>
+            <p className={styles.eyebrow}>{'// PROCUREMENT REVIEW PATH'}</p>
+            <h2 id="review-path-heading">One route from<br /><span>question to evidence.</span></h2>
+            <p>Use the existing `.com` surfaces as one controlled journey. No sensitive evidence is required to move from the first question to a proportionate next step.</p>
+          </div>
+          <ol className={styles.frameworkGrid} aria-label="Procurement review stages">
+            {reviewPath.map(([number, title, description, href, label]) => (
+              <li className={styles.frameworkCard} key={number}>
+                <span className={styles.frameworkTag}>{number} / REVIEW STAGE</span>
+                <h3>{title}</h3>
+                <p>{description}</p>
+                <p className={styles.cardBoundary}><strong>Next route:</strong> <Link href={href}>{label} <span aria-hidden="true">↗</span></Link></p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
         <section className={styles.outputSection} aria-labelledby="pillars-heading">
           <div className={styles.sectionIntro}>
             <p className={styles.eyebrow}>{'// ASSURANCE PILLARS'}</p>
@@ -133,24 +151,6 @@ export default function AssurancePage() {
           <div className={styles.checkList}>
             {procurementQuestions.map((question, index) => <div key={question}><span>{String(index + 1).padStart(2, '0')}</span><p>{question}</p></div>)}
           </div>
-        </section>
-
-        <section className={styles.frameworkSection} aria-labelledby="review-path-heading">
-          <div className={styles.sectionIntro}>
-            <p className={styles.eyebrow}>{'// PROCUREMENT REVIEW PATH'}</p>
-            <h2 id="review-path-heading">One route from<br /><span>question to evidence.</span></h2>
-            <p>Use the existing `.com` surfaces as one controlled journey. No sensitive evidence is required to move from the first question to a proportionate next step.</p>
-          </div>
-          <ol className={styles.frameworkGrid} aria-label="Procurement review stages">
-            {reviewPath.map(([number, title, description, href, label]) => (
-              <li className={styles.frameworkCard} key={number}>
-                <span className={styles.frameworkTag}>{number} / REVIEW STAGE</span>
-                <h3>{title}</h3>
-                <p>{description}</p>
-                <p className={styles.cardBoundary}><strong>Next route:</strong> <Link href={href}>{label} <span aria-hidden="true">↗</span></Link></p>
-              </li>
-            ))}
-          </ol>
         </section>
 
         <section className={styles.noticeSection} aria-labelledby="claims-heading">
