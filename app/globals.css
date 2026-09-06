@@ -139,6 +139,26 @@ h1 span { color: var(--green); display: block; }
 .mission-lane p, .mission-lane small { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5; margin: 0; }
 .mission-lane small { color: var(--dim); display: block; font-size: 11px; margin-top: 8px; }
 
+.decision-section { border-bottom: 1px solid var(--line); margin: 0 auto; max-width: var(--max-width); padding: 96px clamp(20px, 7vw, 120px) 112px; }
+.decision-intro { align-items: end; display: grid; gap: 55px; grid-template-columns: minmax(280px, .78fr) minmax(0, 1.22fr); margin-bottom: 44px; }
+.decision-intro > p { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.6; margin: 0 0 4px; max-width: 490px; }
+.decision-intro .eyebrow { margin-bottom: 16px; }
+.decision-grid { display: grid; gap: 12px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.decision-card { background: var(--panel-soft); border: 1px solid var(--line); display: flex; flex-direction: column; min-height: 258px; padding: 22px; position: relative; transition: background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+.decision-card::before { background: var(--card-signal, var(--green)); content: ''; height: 2px; left: 22px; opacity: .55; position: absolute; top: -1px; transition: opacity .2s ease, width .2s ease; width: 38px; }
+.decision-card:hover, .decision-card:focus-within { background: rgba(156,255,184,.065); border-color: var(--line-strong); box-shadow: 0 18px 40px rgba(0,0,0,.18); transform: translateY(-5px); }
+.decision-card:hover::before, .decision-card:focus-within::before { opacity: 1; width: 72px; }
+.decision-card-cyan { --card-signal: var(--cyan); }
+.decision-card-violet { --card-signal: var(--violet); }
+.decision-card-green { --card-signal: var(--green); }
+.decision-card-red { --card-signal: var(--red); }
+.decision-card-topline { color: var(--dim); display: flex; font-size: 8px; justify-content: space-between; letter-spacing: .12em; }
+.decision-card-topline span:last-child { color: var(--card-signal, var(--green)); }
+.decision-card h3 { font-family: Arial, Helvetica, sans-serif; font-size: 22px; letter-spacing: -.05em; line-height: 1; margin: 55px 0 15px; text-transform: uppercase; }
+.decision-card p { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.55; margin: 0 0 24px; }
+.decision-card .text-link { color: var(--card-signal, var(--green)); font-size: 9px; margin-top: auto; }
+.decision-card .text-link:hover, .decision-card .text-link:focus-visible { color: var(--green-bright); }
+
 .system-section { border-bottom: 1px solid var(--line); margin: 0 auto; max-width: var(--max-width); padding: 96px clamp(20px, 7vw, 120px) 112px; }
 .section-heading { align-items: end; display: flex; gap: 55px; justify-content: space-between; margin-bottom: 44px; }
 .section-heading .eyebrow { margin-bottom: 16px; }
@@ -327,7 +347,8 @@ h2 span { color: var(--green); }
   .nav { gap: 18px; margin-right: 20px; }
   .hero-grid { gap: 70px; grid-template-columns: 1fr; min-height: auto; padding-bottom: 90px; padding-top: 82px; }
   .terminal-card { max-width: 520px; transform: none; width: 100%; }
-  .mission-brief { gap: 60px; grid-template-columns: 1fr; }
+  .mission-brief, .decision-intro { gap: 60px; grid-template-columns: 1fr; }
+  .decision-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .signal-ribbon { grid-template-columns: repeat(2, 1fr); row-gap: 15px; }
   .signal-ribbon div:nth-child(3) { border-left: 0; padding-left: 0; }
   .system-grid { grid-template-columns: 1fr; }
@@ -353,6 +374,8 @@ h2 span { color: var(--green); }
   .terminal-body { font-size: 10px; padding-left: 13px; padding-right: 13px; }
   .terminal-footer { align-items: start; flex-direction: column; font-size: 7px; gap: 6px; }
   .mission-brief { padding-bottom: 80px; padding-top: 80px; }
+  .decision-section { padding-bottom: 80px; padding-top: 80px; }
+  .decision-grid { grid-template-columns: 1fr; }
   .mission-lane { gap: 10px; grid-template-columns: 34px 1fr; }
   .mission-lane > div { grid-column: 2; }
   .signal-ribbon { display: block; padding-bottom: 8px; padding-top: 8px; }
@@ -386,11 +409,11 @@ h2 span { color: var(--green); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-  .terminal-card, .system-card:hover, .system-card:focus-visible, .button:hover { transform: none; }
+  .terminal-card, .system-card:hover, .system-card:focus-visible, .decision-card:hover, .decision-card:focus-within, .button:hover { transform: none; }
 }
 
 @media (forced-colors: active) {
-  .brand-mark, .status-chip, .button, .system-card, .card-mode, .defcon-map-card, .defcon-map-footer button, .threat-event { border-color: ButtonText; }
+  .brand-mark, .status-chip, .button, .system-card, .decision-card, .card-mode, .defcon-map-card, .defcon-map-footer button, .threat-event { border-color: ButtonText; }
   .button-primary { background: Highlight; color: HighlightText; }
 }
 
@@ -420,11 +443,11 @@ h2 span { color: var(--green); }
   .noise, .scanlines, .topbar, .mobile-menu-toggle, .status-chip, .map-live-badge, .defcon-map-stage, .defcon-map-footer button, .threat-feed-controls, .cursor { display: none !important; }
   .com-shell { background: #fff !important; color: #111813 !important; min-height: auto; overflow: visible; }
   .com-shell::before { display: none; }
-  .hero-grid, .mission-brief, .system-section, .map-section, .evidence-section, .approach-section, .services-section, .contact-section { display: block; min-height: auto; padding: 20pt 0; }
-  .hero-copy, .terminal-card, .system-card, .defcon-map-card, .evidence-card, .principle-card, .delivery-phase, .services-boundary { background: #fff !important; border-color: #7d8a80 !important; color: #111813 !important; }
+  .hero-grid, .mission-brief, .decision-section, .system-section, .map-section, .evidence-section, .approach-section, .services-section, .contact-section { display: block; min-height: auto; padding: 20pt 0; }
+  .hero-copy, .terminal-card, .system-card, .decision-card, .defcon-map-card, .evidence-card, .principle-card, .delivery-phase, .services-boundary { background: #fff !important; border-color: #7d8a80 !important; color: #111813 !important; }
   .hero-copy, .terminal-card { margin-bottom: 18pt; }
   .terminal-card { transform: none; }
-  .system-grid, .evidence-grid, .principles-grid, .delivery-phases { display: grid; gap: 12pt; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .system-grid, .decision-grid, .evidence-grid, .principles-grid, .delivery-phases { display: grid; gap: 12pt; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .signal-ribbon { background: #fff; border-color: #7d8a80; color: #111813; }
   .com-shell h1, .com-shell h2, .com-shell h3, .com-shell p, .com-shell small, .com-shell dt, .com-shell dd, .terminal-muted, .terminal-footer, .footer { color: #111813 !important; }
   .map-data-details { display: block; }

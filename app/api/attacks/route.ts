@@ -26,6 +26,7 @@ type FeedPayload = {
   observedAt: string;
   checkedAt: string;
   refreshAfterSeconds: number;
+  refreshCooldownSeconds: number;
   events: PublicThreatEvent[];
   sources: string[];
   errors: string[];
@@ -151,12 +152,14 @@ function jsonResponse(payload: FeedPayload, cacheControl = CACHE_CONTROL) {
   });
 }
 
-function cooldownPayload(now: string): FeedPayload {
+function cooldownPayload(now: string, requestTime: number): FeedPayload {
+  const refreshCooldownSeconds = Math.max(1, Math.ceil((FORCE_REFRESH_COOLDOWN_MS - (requestTime - lastForcedRefreshAt)) / 1000));
   if (memoryCache) {
     return {
       ...memoryCache.payload,
       status: memoryCache.payload.status === 'unavailable' ? 'unavailable' : 'degraded',
       checkedAt: now,
+      refreshCooldownSeconds,
       stale: true,
       errors: [...new Set([...memoryCache.payload.errors, 'Refresh cooling down; showing the last known public signals'])],
     };
@@ -167,6 +170,7 @@ function cooldownPayload(now: string): FeedPayload {
     observedAt: now,
     checkedAt: now,
     refreshAfterSeconds: 60,
+    refreshCooldownSeconds,
     events: [],
     sources: [],
     errors: ['Refresh cooling down; try again shortly'],
@@ -183,7 +187,7 @@ export async function GET(request: Request) {
 
   const now = new Date(requestTime).toISOString();
   if (forceRefresh && requestTime - lastForcedRefreshAt < FORCE_REFRESH_COOLDOWN_MS) {
-    return jsonResponse(cooldownPayload(now), memoryCache ? CACHE_CONTROL : 'no-store, max-age=0');
+    return jsonResponse(cooldownPayload(now, requestTime), memoryCache ? CACHE_CONTROL : 'no-store, max-age=0');
   }
   if (forceRefresh) lastForcedRefreshAt = requestTime;
 
@@ -211,6 +215,7 @@ export async function GET(request: Request) {
     observedAt: now,
     checkedAt: now,
     refreshAfterSeconds: 60,
+    refreshCooldownSeconds: Math.ceil(FORCE_REFRESH_COOLDOWN_MS / 1000),
     events: ordered,
     sources: ['CISA Known Exploited Vulnerabilities', 'CISA Cybersecurity Advisories', 'CISA ICS Advisories'],
     errors,

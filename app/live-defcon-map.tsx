@@ -18,6 +18,8 @@ type ThreatFeed = {
   status: 'live' | 'degraded' | 'unavailable';
   observedAt: string;
   checkedAt: string;
+  refreshAfterSeconds: number;
+  refreshCooldownSeconds: number;
   events: PublicThreatEvent[];
   errors: string[];
   stale?: boolean;
@@ -32,6 +34,8 @@ const MAX_EVENT_SOURCE_LENGTH = 120;
 const MAX_EVENT_URL_LENGTH = 2_048;
 const MAX_ERRORS = 6;
 const MAX_ERROR_LENGTH = 160;
+const DEFAULT_REFRESH_AFTER_SECONDS = 60;
+const DEFAULT_REFRESH_COOLDOWN_SECONDS = 15;
 
 const mapNodes = [
   { name: 'NORTH AMERICA', x: 24, y: 42, tone: 'cyan', depth: 16 },
@@ -64,6 +68,10 @@ function getEventKindLabel(kind: PublicThreatEvent['kind']) {
 
 function boundedText(value: unknown, maxLength: number): value is string {
   return typeof value === 'string' && value.trim().length > 0 && value.length <= maxLength;
+}
+
+function boundedSeconds(value: unknown, fallback: number, maximum: number) {
+  return typeof value === 'number' && Number.isInteger(value) && value >= 1 && value <= maximum ? value : fallback;
 }
 
 function isSafeCisaUrl(value: unknown): value is string {
@@ -102,6 +110,8 @@ function parseThreatFeed(value: unknown): ThreatFeed {
     status: feed.status as ThreatFeed['status'],
     observedAt: boundedText(feed.observedAt, 64) && Number.isFinite(Date.parse(feed.observedAt)) ? feed.observedAt : now,
     checkedAt: boundedText(feed.checkedAt, 64) && Number.isFinite(Date.parse(feed.checkedAt)) ? feed.checkedAt : now,
+    refreshAfterSeconds: boundedSeconds(feed.refreshAfterSeconds, DEFAULT_REFRESH_AFTER_SECONDS, 300),
+    refreshCooldownSeconds: boundedSeconds(feed.refreshCooldownSeconds, DEFAULT_REFRESH_COOLDOWN_SECONDS, 60),
     events: Array.isArray(feed.events) ? feed.events.filter(isThreatEvent).slice(0, MAX_EVENTS) : [],
     errors: Array.isArray(feed.errors)
       ? feed.errors
@@ -117,13 +127,22 @@ export function LiveDefconMap() {
   const [paused, setPaused] = useState(false);
   const [feed, setFeed] = useState<ThreatFeed | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [nextManualRefreshAt, setNextManualRefreshAt] = useState(0);
   const refreshInFlight = useRef(false);
+  const nextManualRefreshAtRef = useRef(0);
   const { setStatus } = useHomeStatus();
 
   const refreshFeed = useCallback(async (force = false) => {
     if (refreshInFlight.current) return;
+    const requestStartedAt = Date.now();
+    if (force && requestStartedAt < nextManualRefreshAtRef.current) return;
     refreshInFlight.current = true;
     setIsRefreshing(true);
+    if (force) {
+      const localDeadline = requestStartedAt + DEFAULT_REFRESH_COOLDOWN_SECONDS * 1000;
+      nextManualRefreshAtRef.current = localDeadline;
+      setNextManualRefreshAt(localDeadline);
+    }
     try {
       const endpoint = force ? `/api/attacks?refresh=${Date.now()}` : '/api/attacks';
       const response = await fetch(endpoint, {
@@ -131,19 +150,27 @@ export function LiveDefconMap() {
         headers: { accept: 'application/json' },
       });
       if (!response.ok) throw new Error('feed unavailable');
-      setFeed(parseThreatFeed(await response.json()));
+      const nextFeed = parseThreatFeed(await response.json());
+      setFeed(nextFeed);
+      if (force) {
+        const serverDeadline = Date.now() + nextFeed.refreshCooldownSeconds * 1000;
+        nextManualRefreshAtRef.current = serverDeadline;
+        setNextManualRefreshAt(serverDeadline);
+      }
     } catch {
       setFeed((current) => {
         const errors = [...new Set([...(current?.errors ?? []), 'Live public threat feed unavailable'])];
         return current
           ? { ...current, status: current.events.length > 0 ? 'degraded' : 'unavailable', stale: true, errors }
-          : { status: 'unavailable', observedAt: new Date().toISOString(), checkedAt: new Date().toISOString(), events: [], errors, stale: true };
+          : { status: 'unavailable', observedAt: new Date().toISOString(), checkedAt: new Date().toISOString(), refreshAfterSeconds: DEFAULT_REFRESH_AFTER_SECONDS, refreshCooldownSeconds: DEFAULT_REFRESH_COOLDOWN_SECONDS, events: [], errors, stale: true };
       });
     } finally {
       setIsRefreshing(false);
       refreshInFlight.current = false;
     }
   }, []);
+
+  const refreshWaitSeconds = now === null ? 0 : Math.max(0, Math.ceil((nextManualRefreshAt - now) / 1000));
 
   useEffect(() => {
     setStatus(feed?.status ?? 'connecting');
@@ -218,12 +245,12 @@ export function LiveDefconMap() {
         <div className="threat-feed-heading">
           <div>
             <span>LIVE PUBLIC THREAT SIGNALS</span>
-            <small>{feed ? `${feed.events.length} source-linked events · observed ${formatFeedTime(feed.observedAt)} · checked ${formatFeedTime(feed.checkedAt)}${feed.stale ? ' · stale cache' : ''}` : 'Connecting to public sources…'}</small>
+            <small>{feed ? `${feed.events.length} source-linked events · observed ${formatFeedTime(feed.observedAt)} · checked ${formatFeedTime(feed.checkedAt)} · auto-refresh ${feed.refreshAfterSeconds}s${feed.stale ? ' · stale cache' : ''}${refreshWaitSeconds > 0 ? ` · manual refresh in ${refreshWaitSeconds}s` : ''}` : 'Connecting to public sources…'}</small>
           </div>
           <div className="threat-feed-controls">
             <span className={`threat-feed-status threat-status-${feed?.status ?? 'connecting'}`} role="status" aria-live="polite"><i /> {feed?.status === 'live' ? 'LIVE' : feed?.status === 'degraded' ? 'DEGRADED' : feed?.status === 'unavailable' ? 'UNAVAILABLE' : 'CONNECTING'}</span>
-            <button type="button" onClick={() => void refreshFeed(true)} disabled={isRefreshing} aria-label="Refresh public threat signals">
-              {isRefreshing ? 'CHECKING…' : 'REFRESH'}
+            <button type="button" onClick={() => void refreshFeed(true)} disabled={isRefreshing || refreshWaitSeconds > 0} aria-label={refreshWaitSeconds > 0 ? `Refresh public threat signals; available in ${refreshWaitSeconds} seconds` : 'Refresh public threat signals'}>
+              {isRefreshing ? 'CHECKING…' : refreshWaitSeconds > 0 ? `WAIT ${refreshWaitSeconds}s` : 'REFRESH'}
             </button>
           </div>
         </div>

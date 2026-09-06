@@ -171,7 +171,15 @@ const missionLanes = [
   ['03', 'RECOVER', 'Disaster recovery, BCP, and incident readiness', 'Keep critical services moving through tested decisions and known dependencies.'],
 ] as const;
 
+const decisionPaths = [
+  ['01', 'EXPOSURE', 'Do we know what is exposed?', 'Start with an authorized test or a verified view of assets, weaknesses, and remediation priorities.', 'Review exposure services', '/services#service-01', 'cyan'],
+  ['02', 'ASSURANCE', 'Can we defend the decision?', 'Start with risk, technical, supplier, or readiness evidence that an owner can explain and act on.', 'Review assurance services', '/services#service-03', 'violet'],
+  ['03', 'RECOVERY', 'Can the service keep moving?', 'Start with critical-service priorities, dependencies, recovery assumptions, and an exercise or restore condition.', 'Review recovery service', '/services#service-07', 'green'],
+  ['04', 'RESPONSE', 'Can we act under pressure?', 'Start with roles, escalation, communications, evidence boundaries, and a bounded readiness exercise.', 'Review incident readiness', '/services#service-08', 'red'],
+] as const;
+
 const navigation = [
+  { href: '#start', label: 'Start here' },
   { href: '#systems', label: 'Systems' },
   { href: '/services', label: 'Security services' },
   { href: '/engage', label: 'Prepare a brief' },
@@ -266,6 +274,26 @@ export default function Home() {
               <span>{number}</span>
               <h3>{title}</h3>
               <div><p>{description}</p><small>{outcome}</small></div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="decision-section" id="start" aria-labelledby="decision-heading">
+        <div className="decision-intro">
+          <div>
+            <p className="eyebrow">{'// START WITH THE DECISION'}</p>
+            <h2 id="decision-heading">Find the right<br /><span>first route.</span></h2>
+          </div>
+          <p>Do not begin with a product label. Begin with the decision your team needs to make, then follow the smallest evidence path that can support it.</p>
+        </div>
+        <div className="decision-grid">
+          {decisionPaths.map(([number, label, title, description, action, href, tone]) => (
+            <article className={`decision-card decision-card-${tone}`} key={number}>
+              <div className="decision-card-topline"><span>{number} / 04</span><span>{label}</span></div>
+              <h3>{title}</h3>
+              <p>{description}</p>
+              <a className="text-link" href={href}>{action} <span aria-hidden="true">↗</span></a>
             </article>
           ))}
         </div>
