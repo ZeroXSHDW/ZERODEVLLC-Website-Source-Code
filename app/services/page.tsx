@@ -124,6 +124,73 @@ const decisionMatrix = [
   ['Incident readiness', 'Can the organization make safe decisions, coordinate, preserve evidence, and improve after an exercise?', 'Roles, escalation, communications, exercise record, lessons, and owned actions', 'Incident and risk owner', 'Scenario, participants, escalation owner, evidence boundary, and exercise authorization'],
 ] as const;
 
+const serviceBriefs = [
+  {
+    number: '01',
+    title: 'Authorized penetration testing',
+    decision: 'Can approved attack paths be demonstrated safely against the named boundary?',
+    gate: 'Written authority, in-scope assets, rules of engagement, safety contact, and stop conditions.',
+    output: 'Scoped findings, evidence confidence, limitations, remediation choices, and a retest condition.',
+    noFit: 'No written authority, unclear ownership, or live target details supplied through a public channel.',
+  },
+  {
+    number: '02',
+    title: 'Vulnerability assessment',
+    decision: 'Which assets, configurations, or dependencies need priority and verified treatment?',
+    gate: 'Named asset boundary, permission to assess, source or inventory context, and an evidence owner.',
+    output: 'A validated findings register with prioritization, owners, treatment path, and next checks.',
+    noFit: 'An unbounded scanner export with no asset owner, permission, or business-impact context.',
+  },
+  {
+    number: '03',
+    title: 'Cyber risk management',
+    decision: 'Which risks require treatment, acceptance, transfer, avoidance, or monitoring?',
+    gate: 'Decision owner, mission or business context, risk criteria, control evidence, and treatment authority.',
+    output: 'A decision-ready risk register, control/evidence map, treatment roadmap, and review trigger.',
+    noFit: 'A request for an objective score without context, criteria, evidence quality, or an accountable owner.',
+  },
+  {
+    number: '04',
+    title: 'Technical due diligence',
+    decision: 'What technical conditions could change an important program, investment, or supplier decision?',
+    gate: 'Defined decision, review boundary, permitted evidence sources, and a technical decision owner.',
+    output: 'A technical brief covering architecture, delivery practice, dependencies, assumptions, and open questions.',
+    noFit: 'A request for a legal, financial, investment, or procurement verdict beyond the agreed technical review.',
+  },
+  {
+    number: '05',
+    title: 'Vendor due diligence',
+    decision: 'Does the supplier evidence fit the service, data, access, incident, and exit relationship?',
+    gate: 'Supplier relationship, service/data boundary, procurement owner, evidence contact, and review purpose.',
+    output: 'A supplier-risk matrix with evidence states, gaps, subprocessor, concentration, fourth-party, and exit questions.',
+    noFit: 'Treating a questionnaire response as independent assurance or asking for a supplier verdict without owner judgment.',
+  },
+  {
+    number: '06',
+    title: 'Compliance readiness',
+    decision: 'What requirement applies, what evidence exists, and what remains to be addressed?',
+    gate: 'Applicable contract, framework, jurisdiction, control owner, evidence boundary, and assessment objective.',
+    output: 'A control map with applicability decisions, implementation state, gaps, exceptions, and remediation sequence.',
+    noFit: 'A request for certification, accreditation, clearance, legal advice, or regulator approval from a readiness review.',
+  },
+  {
+    number: '07',
+    title: 'Disaster recovery and BCP',
+    decision: 'Can the critical service continue and recover under the agreed disruption scenario?',
+    gate: 'Critical service, impact priorities, dependencies, recovery assumptions, RTO/RPO discussion, and exercise authority.',
+    output: 'A resilience roadmap tied to restore or exercise results, unresolved gaps, owners, and next validation.',
+    noFit: 'Claiming recovery capability from a document or unexercised plan without an observed result and owner decision.',
+  },
+  {
+    number: '08',
+    title: 'Incident readiness',
+    decision: 'Can the organization make safe decisions, coordinate, preserve evidence, and improve after an exercise?',
+    gate: 'Scenario, participants, escalation owner, evidence boundary, communications path, and exercise authorization.',
+    output: 'An exercise record, decision points, lessons learned, owned actions, and a rehearsal or retest trigger.',
+    noFit: 'A live incident or sensitive evidence transfer through this public site; use the approved incident channel and authority.',
+  },
+] as const;
+
 export default function ServicesPage() {
   return (
     <main className={styles.page}>
@@ -143,7 +210,7 @@ export default function ServicesPage() {
           <div className={styles.heroCopy}>
             <p>ZeroDev helps organizations turn technical evidence into safer decisions, stronger controls, and more recoverable operations.</p>
             <p className={styles.heroBoundary}><strong>Authorized work only.</strong> Every assessment begins with scope, authority, safety boundaries, and an agreed evidence path.</p>
-            <p><Link className={styles.primaryLink} href="/engage">Start with the authorized engagement brief <span aria-hidden="true">↗</span></Link></p>
+            <p><Link className={styles.primaryLink} href="/engage">Start with the authorized engagement brief <span aria-hidden="true">↗</span></Link><br /><a className={styles.primaryLink} href="#briefing-packs">Review service briefing packs <span aria-hidden="true">↓</span></a></p>
           </div>
         </section>
 
@@ -162,6 +229,29 @@ export default function ServicesPage() {
                 <p className={styles.audience}><strong>Best starting point:</strong> {service.audience}</p>
                 <ul>{service.activities.map((activity) => <li key={activity}>{activity}</li>)}</ul>
                 <p className={styles.output}><strong>Typical output:</strong> {service.output}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className={styles.outputSection} id="briefing-packs" aria-labelledby="briefing-packs-heading">
+          <div className={styles.sectionIntro}>
+            <p className={styles.eyebrow}>{'// SERVICE BRIEFING PACKS'}</p>
+            <h2 id="briefing-packs-heading">Know the<br /><span>first boundary.</span></h2>
+            <p>These synthetic service briefs help a buyer compare the decision, entry gate, representative output, and no-fit condition before a detailed proposal or sensitive exchange.</p>
+            <p><Link className={styles.primaryLink} href="/deliverables">Review deliverable shapes <span aria-hidden="true">↗</span></Link></p>
+          </div>
+          <div className={styles.briefingPackGrid}>
+            {serviceBriefs.map((brief) => (
+              <article className={styles.briefingPackCard} id={`brief-${brief.number}`} key={brief.number}>
+                <span className={styles.frameworkTag}>{brief.number} / SYNTHETIC BRIEF / NOT A PROPOSAL</span>
+                <h3>{brief.title}</h3>
+                <dl className={styles.briefingPackFacts}>
+                  <div><dt>Decision</dt><dd>{brief.decision}</dd></div>
+                  <div><dt>Entry gate</dt><dd>{brief.gate}</dd></div>
+                  <div><dt>Typical output</dt><dd>{brief.output}</dd></div>
+                </dl>
+                <p className={styles.briefingPackBoundary}><strong>No-fit or owner gate:</strong> {brief.noFit}</p>
               </article>
             ))}
           </div>

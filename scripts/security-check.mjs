@@ -132,6 +132,9 @@ requireText("app/services/page.tsx", servicesPage, "Readiness is not certificati
 requireText("app/services/page.tsx", servicesPage, "Public-sector procurement");
 requireText("app/services/page.tsx", servicesPage, "Defense-supplier assurance");
 requireText("app/services/page.tsx", servicesPage, "Capability decision matrix");
+requireText("app/services/page.tsx", servicesPage, "SERVICE BRIEFING PACKS");
+requireText("app/services/page.tsx", servicesPage, "SYNTHETIC BRIEF / NOT A PROPOSAL");
+requireText("app/services/page.tsx", servicesPage, "No-fit or owner gate");
 requireText("app/services/page.tsx", servicesPage, "twitter:");
 requireText("app/services/page.tsx", servicesPage, "Minimum entry gate");
 requireText("app/services/page.tsx", servicesPage, "Written authority, in-scope assets");

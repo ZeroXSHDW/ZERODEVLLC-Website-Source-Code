@@ -104,6 +104,16 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
 .outputGrid, .frameworkGrid { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .frameworkGrid { list-style: none; margin: 0; padding: 0; }
 .outputCard, .frameworkCard { border: 1px solid var(--line); padding: 21px; }
+.briefingPackGrid { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.briefingPackCard { background: rgba(12, 29, 19, .3); border: 1px solid var(--line); padding: 21px; scroll-margin-top: 92px; }
+.briefingPackCard:target { border-color: var(--green); box-shadow: 0 0 0 1px var(--green), 0 18px 40px rgba(0, 0, 0, .18); }
+.briefingPackCard h3 { color: var(--ink); font-size: 18px; margin-bottom: 18px; }
+.briefingPackFacts { border-top: 1px solid var(--line); display: grid; gap: 0; margin: 0; }
+.briefingPackFacts > div { border-bottom: 1px solid var(--line); display: grid; gap: 14px; grid-template-columns: minmax(82px, .34fr) minmax(0, 1fr); padding: 13px 0; }
+.briefingPackFacts dt { color: var(--cyan); font-size: 8px; letter-spacing: .1em; text-transform: uppercase; }
+.briefingPackFacts dd { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.5; margin: 0; }
+.briefingPackBoundary { border-left: 1px solid var(--amber); color: var(--dim); font-family: Arial, Helvetica, sans-serif; font-size: 11px; line-height: 1.5; margin: 16px 0 0; padding-left: 12px; }
+.briefingPackBoundary strong { color: var(--amber); font-weight: 500; }
 .outputCard { scroll-margin-top: 92px; }
 .outputCard:target { border-color: var(--green); box-shadow: 0 0 0 1px var(--green), 0 18px 40px rgba(0, 0, 0, .18); }
 .outputCard h3, .frameworkCard h3 { color: var(--green); font-size: 19px; margin-bottom: 10px; }
@@ -171,7 +181,7 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
   .headerNav a { align-items: center; display: flex; font-size: 8px; min-height: 42px; }
   .hero { padding: 78px 0 80px; }
   .serviceSection, .lifecycleSection, .methodSection, .frameworkSection, .outputSection, .boundarySection, .twoColumn { padding: 80px 0; }
-  .serviceGrid, .outputGrid, .frameworkGrid { grid-template-columns: 1fr; }
+  .serviceGrid, .outputGrid, .frameworkGrid, .briefingPackGrid { grid-template-columns: 1fr; }
   .serviceCard { min-height: 0; }
   .serviceCard .cardTopline { margin-bottom: 34px; }
   .lifecycleCard, .step { gap: 10px; grid-template-columns: 34px 1fr; }
@@ -204,8 +214,8 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
   .hero, .serviceSection, .lifecycleSection, .methodSection, .frameworkSection, .outputSection, .boundarySection, .twoColumn { gap: 24pt; grid-template-columns: 1fr; padding: 20pt 0; }
   .heroCopy, .boundaryBox, .noticeSection, .serviceCard, .outputCard, .frameworkCard, .actionTableWrap, .services-boundary { background: #fff; border-color: #7d8a80; color: #111813; }
   .hero h1, h2, h3, .hero h1 span, h2 span, h3 span { color: #111813; }
-  .heroCopy > p, .sectionIntro > p:not(.eyebrow), .bodyCopy, .noticeSection > p:last-child, .serviceCard > p, .outputCard p, .frameworkCard p, .actionTable td, .lifecycleCard p, .step p, .services-boundary p { color: #111813; }
-  .serviceGrid, .outputGrid, .frameworkGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .heroCopy > p, .sectionIntro > p:not(.eyebrow), .bodyCopy, .noticeSection > p:last-child, .serviceCard > p, .outputCard p, .frameworkCard p, .briefingPackFacts dd, .briefingPackBoundary, .actionTable td, .lifecycleCard p, .step p, .services-boundary p { color: #111813; }
+  .serviceGrid, .outputGrid, .frameworkGrid, .briefingPackGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .actionTableWrap { overflow: visible; }
   .actionTable { min-width: 0; }
   .cta { background: #fff; border-color: #7d8a80; padding: 24pt 0; }
@@ -218,5 +228,5 @@ h3 { font-family: Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-tra
   .siteFooterExternalCopy, .siteFooterExternalLinks a { color: #111813; }
   .siteFooterExternalLinks { margin-top: 10pt; }
   a { color: #111813; text-decoration: underline; }
-  .serviceCard, .outputCard, .frameworkCard, .lifecycleCard, .step, .noticeSection, .cta { break-inside: avoid; }
+  .serviceCard, .outputCard, .frameworkCard, .briefingPackCard, .lifecycleCard, .step, .noticeSection, .cta { break-inside: avoid; }
 }
