@@ -75,6 +75,7 @@ const systems = [
 ];
 
 const registeredSurfaceCount = systems.length;
+const terminalSystemKey = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
 
 const principles = [
   {
@@ -245,8 +246,9 @@ export default function Home() {
             <p><span className="prompt">root@zerodev</span>:~$ ./check --public-surface</p>
             <p className="terminal-muted">scanning registered surfaces...</p>
             <HomeTerminalStatus />
-            <p><span className="terminal-ok">[LINK]</span> defcon_fusion <span className="terminal-muted">EU gateway / public signals</span></p>
-            <p><span className="terminal-ok">[LINK]</span> store_catalogue <span className="terminal-muted">catalogue / contact first</span></p>
+            {systems.map((system) => (
+              <p key={system.code}><span className={system.external ? 'terminal-ok' : 'terminal-warn'}>[{system.external ? 'LINK' : 'HOLD'}]</span> {terminalSystemKey(system.name)} <span className="terminal-muted">{system.mode.toLowerCase()} / {system.status.toLowerCase()}</span></p>
+            ))}
             <p className="terminal-spacer"> </p>
             <p><span className="prompt">root@zerodev</span>:~$ <span className="cursor" aria-hidden="true" /></p>
           </div>
@@ -318,7 +320,7 @@ export default function Home() {
               className={`system-card system-card-${system.tone}`}
               key={system.code}
             >
-              <div className="card-topline"><span>{system.code} / 03</span><span className="card-tag">{system.tag}</span></div>
+              <div className="card-topline"><span>{system.code} / {String(registeredSurfaceCount).padStart(2, '0')}</span><span className="card-tag">{system.tag}</span></div>
               <div className="card-icon" aria-hidden="true">{system.icon}</div>
               <h3>{system.name}</h3>
               <p>{system.description}</p>

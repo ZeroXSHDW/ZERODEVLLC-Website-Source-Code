@@ -100,7 +100,10 @@ for (const marker of [
   'aria-label="ZeroDev public signal status"',
   'READ ONLY',
   './check --public-surface',
-  'EU gateway / public signals',
+  'systems.map((system)',
+  'terminalSystemKey(system.name)',
+  "system.external ? 'LINK' : 'HOLD'",
+  'system.mode.toLowerCase()',
   'Public signal status: ${copy.chip.toLowerCase()}',
   'Open the DEFCON Signal Fusion EU gateway',
   "target: '_blank', rel: 'noopener noreferrer'",
@@ -129,9 +132,13 @@ requireText("app/globals.css active section navigation styles", globalsCss, ".na
 
 for (const marker of [
   "const [activeSection, setActiveSection] = useState(sections[0]?.href ?? '')",
+  "const syncHash = () =>",
+  "window.addEventListener('hashchange', syncHash)",
+  "window.removeEventListener('hashchange', syncHash)",
   "new IntersectionObserver",
   "rootMargin: '-150px 0px -55% 0px'",
   "aria-current={activeSection === section.href ? 'location' : undefined}",
+  "onClick={() => setActiveSection(section.href)}",
 ]) {
   requireText("app/route-index.tsx active route index contract", routeIndex, marker);
 }

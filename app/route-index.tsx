@@ -19,11 +19,20 @@ export default function RouteIndex({ ariaLabel, pageIndexClassName, pageIndexLab
   const [activeSection, setActiveSection] = useState(sections[0]?.href ?? '');
 
   useEffect(() => {
+    const syncHash = () => {
+      const nextHash = window.location.hash as `#${string}`;
+      if (sections.some((section) => section.href === nextHash)) setActiveSection(nextHash);
+    };
+    syncHash();
+    window.addEventListener('hashchange', syncHash);
+
     const sectionTargets = sections
       .map((section) => document.getElementById(section.href.slice(1)))
       .filter((target): target is HTMLElement => Boolean(target));
 
-    if (!('IntersectionObserver' in window) || sectionTargets.length === 0) return undefined;
+    if (!('IntersectionObserver' in window) || sectionTargets.length === 0) {
+      return () => window.removeEventListener('hashchange', syncHash);
+    }
 
     const visibility = new Map<string, number>();
     const observer = new IntersectionObserver((entries) => {
@@ -40,7 +49,10 @@ export default function RouteIndex({ ariaLabel, pageIndexClassName, pageIndexLab
     }, { rootMargin: '-150px 0px -55% 0px', threshold: [0, 0.1, 0.25, 0.5, 0.75, 1] });
 
     sectionTargets.forEach((target) => observer.observe(target));
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('hashchange', syncHash);
+    };
   }, [sections]);
 
   return (
@@ -49,7 +61,7 @@ export default function RouteIndex({ ariaLabel, pageIndexClassName, pageIndexLab
       <ol>
         {sections.map((section) => (
           <li key={section.href}>
-            <a href={section.href} aria-current={activeSection === section.href ? 'location' : undefined}>
+            <a href={section.href} aria-current={activeSection === section.href ? 'location' : undefined} onClick={() => setActiveSection(section.href)}>
               <span>{section.number}</span>{section.label}
             </a>
           </li>
